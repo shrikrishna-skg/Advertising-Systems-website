@@ -125,7 +125,7 @@ const webPageSchema = {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -167,7 +167,8 @@ const webPageSchema = {
     <!-- Preload font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet" />
 
     <!-- Apply saved theme before paint to avoid flash (site-wide dark mode) -->
     <script is:inline>
@@ -186,7 +187,7 @@ const webPageSchema = {
     {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body class="bg-[var(--surface)] text-[var(--text-secondary)] transition-colors duration-300 min-w-0">
+  <body class="bg-[var(--surface)] text-[var(--text-secondary)] transition-colors duration-300 min-w-0 pb-safe">
     <!-- Dark mode toggle: sync with html.dark and localStorage (applies site-wide on every page) -->
     <input type="checkbox" id="dark-mode-toggle" class="hidden" aria-hidden="true" />
     <script is:inline>
