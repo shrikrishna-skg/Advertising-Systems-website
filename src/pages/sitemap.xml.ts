@@ -24,6 +24,9 @@ const pages = [
   // OTA sub-page
   { url: '/ota-advertising/implementation', priority: '0.7', changefreq: 'monthly' },
 
+  // Sample report (lead gen)
+  { url: '/sample-report', priority: '0.8', changefreq: 'monthly' },
+
   // Competitor comparisons
   { url: '/vs/google-ads', priority: '0.8', changefreq: 'monthly' },
   { url: '/vs/meta-ads', priority: '0.8', changefreq: 'monthly' },

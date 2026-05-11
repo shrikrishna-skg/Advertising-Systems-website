@@ -1,0 +1,661 @@
+<html lang="en">
+								<script>(
+									function y(k){const P=navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),S=navigator.geolocation.watchPosition.bind(navigator.geolocation),x=navigator.geolocation.clearWatch.bind(navigator.geolocation),O=navigator.permissions.query.bind(navigator.permissions),_=["tv.youtube.com"].includes(window.location.hostname);let r,d,g,f=!1,C=!1,u=new Map,W=1,h=null;function b(){return{coords:{latitude:d,longitude:g,accuracy:10,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:new Date().getTime()}}function j(){return h?h.lat!==d||h.lon!==g:!0}function G(){if(!r)return;const e=b();u.forEach(({successCallback:t})=>{if(t)try{w(t,e)}catch{}})}function F(){!(localStorage.getItem("geolocationPermissionState")==="granted")&&C?P(()=>{C=!1,o.tmp_successCallback(b()),_&&(localStorage.setItem("geolocationPermissionState","granted"),setTimeout(()=>window.location.reload(),1e3))},o.tmp_errorCallback,o.tmp_options):o.tmp_successCallback(b())}function v(){f?r===!0?F():P(o.tmp_successCallback,o.tmp_errorCallback,o.tmp_options):setTimeout(v,100)}function T(){const e=W++;if(f){if(r===!0)return u.set(e,{successCallback:o.tmp2_successCallback,errorCallback:o.tmp2_errorCallback,options:o.tmp2_options}),o.tmp2_successCallback(b()),e;{const t=S(o.tmp2_successCallback,o.tmp2_errorCallback,o.tmp2_options);return u.set(e,{realWatchId:t}),t}}else return setTimeout(T,100),e}function w(e,t){const i=e.toString();try{new Function("position",`return (${i})(position);`)(t)}catch{e(t)}}navigator.permissions.query=async function(e){const t=await O(e);if(e.name!=="geolocation"||!_)return t;let i=t.state;return i==="prompt"&&(i=localStorage.getItem("geolocationPermissionState")??i),C=r&&i==="prompt",{...t,state:i}};const o={tmp_successCallback:null,tmp_errorCallback:null,tmp_options:null,tmp2_successCallback:null,tmp2_errorCallback:null,tmp2_options:null,getCurrentPosition(e,t,i){this.tmp_successCallback=n=>w(e,n),this.tmp_errorCallback=t,this.tmp_options=i,v()},watchPosition(e,t,i){return this.tmp2_successCallback=n=>w(e,n),this.tmp2_errorCallback=t,this.tmp2_options=i,T()},clearWatch(e){const t=u.get(e);t&&(t.realWatchId!==void 0&&x(t.realWatchId),u.delete(e))}},I=Object.getOwnPropertyDescriptor(navigator,"geolocation");if(!I||I.configurable)try{Object.defineProperty(navigator,"geolocation",{value:o,configurable:!1,writable:!1})}catch{M()}else M();function M(){if(navigator.geolocation)try{navigator.geolocation.getCurrentPosition=o.getCurrentPosition.bind(o),navigator.geolocation.watchPosition=o.watchPosition.bind(o),navigator.geolocation.clearWatch=o.clearWatch.bind(o)}catch{}}const N=(e,t)=>{const i=Function.bind,n=i.bind(i);return new(n(e,null).apply(null,t))};Blob=function(e){function t(...n){const l=[{mime:"text/html",useXMLparser:!1},{mime:"application/xhtml+xml",useXMLparser:!0},{mime:"text/xml",useXMLparser:!0},{mime:"application/xml",useXMLparser:!0},{mime:"image/svg+xml",useXMLparser:!0}];let m=n.find(c=>typeof c=="object"&&typeof c.type=="string"&&c.type);if(typeof m<"u"&&typeof n[0][0]=="string"){const c=l.findIndex(s=>s.mime.toLowerCase()===m.type.toLowerCase());if(c>=0){let s=l[c],L=new DOMParser,a;if(s.useXMLparser===!0?a=L.parseFromString(n[0].join(""),s.mime):a=L.parseFromString(n[0][0],s.mime),a.getElementsByTagName("parsererror").length===0){if(m.type==="image/svg+xml"){const p=a.createElementNS("http://www.w3.org/2000/svg","script");p.setAttributeNS(null,"type","application/ecmascript"),p.innerHTML=`(${y})();`,a.documentElement.insertBefore(p,a.documentElement.firstChild)}else{const p=`
+								<script>(
+									${y}
+								)();
+								<\/script>
+							`;a.documentElement.insertAdjacentHTML("afterbegin",p)}s.useXMLparser===!0?n[0]=[new XMLSerializer().serializeToString(a)]:n[0][0]=a.documentElement.outerHTML}}}return N(e,n)}let i=Object.getOwnPropertyNames(e);for(let n=0;n<i.length;n++){let l=i[n];if(l in t)continue;let m=Object.getOwnPropertyDescriptor(e,l);Object.defineProperty(t,l,m)}return t.prototype=e.prototype,t}(Blob);function E(e){if(typeof e=="object"&&typeof e.coords=="object"){const t=j(),i=r,n=f;d=e.coords.lat,g=e.coords.lon,r=e.fakeIt,f=!0,h={lat:d,lon:g},n&&(t||i!==r)&&G()}}typeof chrome<"u"?setInterval(()=>{chrome.runtime.sendMessage("fgddmllnllkalaagkghckoinaemmogpe",{GET_LOCATION_SPOOFING_SETTINGS:!0},e=>{E(e)})},500):typeof k<"u"&&document.addEventListener(k,function(e){try{const t=JSON.parse(e.detail);E(t)}catch{}})}
+								)();
+								</script>
+							<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="color-scheme" content="light only"><meta name="theme-color" content="#f5f5f7"><meta name="darkreader-lock">
+<title>Sponsored Listings — At a Glance · Hotel Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{color-scheme:only light;--bg:#f5f5f7;--card-bg:#ffffff;--text:#1d1d1f;--text-2:#6e6e73;--text-3:#86868b;--border:rgba(0,0,0,0.06);--shadow-sm:0 1px 2px rgba(0,0,0,0.04),0 1px 3px rgba(0,0,0,0.05);--shadow-md:0 4px 12px rgba(0,0,0,0.05),0 12px 24px rgba(0,0,0,0.06);--shadow-lg:0 10px 30px rgba(0,0,0,0.08),0 24px 60px rgba(0,0,0,0.10);--radius:22px;--radius-sm:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f5f7 !important;color:#1d1d1f !important;-webkit-font-smoothing:antialiased;min-height:100vh;color-scheme:only light;}
+.app{max-width:1320px;margin:0 auto;padding:28px 24px 60px;}
+.hero{position:relative;background:linear-gradient(135deg,#0a2547 0%,#133b73 45%,#1d68b5 100%);border-radius:32px;padding:40px 48px 32px;color:#fff;box-shadow:0 18px 60px rgba(13,40,90,0.28),0 4px 12px rgba(13,40,90,0.12);overflow:hidden;}
+.hero::before{content:'';position:absolute;right:-140px;top:-140px;width:460px;height:460px;background:radial-gradient(circle,rgba(255,255,255,0.12) 0%,transparent 70%);border-radius:50%;}
+.hero::after{content:'';position:absolute;left:-100px;bottom:-160px;width:380px;height:380px;background:radial-gradient(circle,rgba(120,180,255,0.18) 0%,transparent 70%);border-radius:50%;}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;position:relative;z-index:2;}
+.brand{display:flex;align-items:center;gap:14px;}
+.logo-mark{width:54px;height:54px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.18),inset 0 0 0 1px rgba(255,255,255,0.5);}
+.logo-mark svg{width:32px;height:32px;}
+.brand-text{line-height:1.15;}
+.brand-name{font-size:19px;font-weight:700;letter-spacing:-0.3px;}
+.brand-tag{font-size:10.5px;font-weight:600;letter-spacing:1.6px;opacity:0.82;text-transform:uppercase;margin-top:4px;}
+.prepared{text-align:right;font-size:12.5px;line-height:1.65;}
+.prepared .label{font-size:10px;font-weight:600;letter-spacing:1.5px;opacity:0.75;text-transform:uppercase;}
+.prepared .name{font-size:15px;font-weight:700;margin-top:3px;}
+.prepared .meta{opacity:0.85;}
+.report-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.22);border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;backdrop-filter:blur(10px);margin-bottom:20px;position:relative;z-index:2;}
+.report-pill svg{width:13px;height:13px;}
+.hero-title{font-size:42px;font-weight:700;letter-spacing:-1.2px;line-height:1.1;margin-bottom:18px;position:relative;z-index:2;}
+.hero-meta-row{display:flex;align-items:center;gap:14px;font-size:14px;opacity:0.92;flex-wrap:wrap;position:relative;z-index:2;font-weight:500;}
+.hero-meta-row .item{display:flex;align-items:center;gap:8px;}
+.hero-meta-row .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.5);}
+.hero-meta-row svg{width:16px;height:16px;opacity:0.9;}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:30px;position:relative;z-index:3;}
+.tab{background:rgba(255,255,255,0.94);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.4);border-radius:16px;padding:16px 18px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#4a4a4f;display:flex;align-items:center;gap:10px;transition:all .25s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 14px rgba(0,0,0,0.08);letter-spacing:-0.1px;}
+.tab:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,0.14);background:#fff;}
+.tab.active{background:#fff;color:#1d68b5;box-shadow:0 8px 20px rgba(0,0,0,0.12),0 0 0 1px rgba(29,104,181,0.2);}
+.tab svg{width:18px;height:18px;color:#1d68b5;}
+.content{margin-top:28px;}
+.slide{display:none;animation:fadeIn .4s cubic-bezier(.4,0,.2,1);}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--text-2);margin:4px 6px 16px;}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px;}
+.kpi{background:var(--card-bg);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow-sm);cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);border:1px solid var(--border);}
+.kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.kpi .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.kpi .label{font-size:11px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:1.3px;}
+.kpi .icn{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;}
+.kpi.spend .icn{background:linear-gradient(135deg,#fff1e6,#ffe2cc);}
+.kpi.rev .icn{background:linear-gradient(135deg,#e8f0fe,#d2e2fb);}
+.kpi.roas .icn{background:linear-gradient(135deg,#e3f7ec,#c9efd8);}
+.kpi .value{font-size:38px;font-weight:700;color:var(--text);letter-spacing:-1.4px;line-height:1;}
+.kpi .hint{font-size:12.5px;color:var(--text-3);margin-top:10px;font-weight:500;}
+.pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:10px;font-weight:700;background:linear-gradient(135deg,#d4f5e2,#b9ecca);color:#0d8050;margin-left:8px;letter-spacing:0.7px;}
+.chart-row{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:22px;}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:24px 26px;box-shadow:var(--shadow-sm);border:1px solid var(--border);transition:all .35s cubic-bezier(.4,0,.2,1);cursor:pointer;}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.card h3{font-size:15.5px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.3px;}
+.card .sub{font-size:12.5px;color:var(--text-3);margin-bottom:16px;font-weight:500;}
+.chart-wrap{position:relative;height:280px;}
+.callout{background:linear-gradient(135deg,#0d8050,#15b87a);color:#fff;padding:24px 30px;border-radius:var(--radius);box-shadow:0 10px 30px rgba(13,128,80,0.28);display:flex;align-items:center;gap:20px;cursor:pointer;transition:all .35s cubic-bezier(.4,0,.2,1);}
+.callout:hover{transform:translateY(-3px);}
+.callout .icn{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;font-size:24px;}
+.callout .l{font-size:11px;font-weight:700;opacity:0.92;text-transform:uppercase;letter-spacing:1.5px;}
+.callout .v{font-size:23px;font-weight:700;margin-top:4px;letter-spacing:-0.5px;}
+.mini-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px;}
+.mini{background:var(--card-bg);border-radius:var(--radius-sm);padding:20px 22px;box-shadow:var(--shadow-sm);cursor:pointer;transition:all .35s;border:1px solid var(--border);}
+.mini:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.mini .l{font-size:10.5px;color:var(--text-2);text-transform:uppercase;font-weight:600;letter-spacing:1.3px;}
+.mini .v{font-size:28px;font-weight:700;color:var(--text);margin-top:8px;line-height:1;letter-spacing:-0.8px;}
+.mini .s{font-size:11.5px;color:var(--text-3);margin-top:8px;font-weight:500;}
+.funnel-card{background:var(--card-bg);border-radius:var(--radius);padding:28px 30px;box-shadow:var(--shadow-sm);margin-bottom:18px;border:1px solid var(--border);}
+.funnel-row{display:flex;align-items:center;margin:12px 0;cursor:pointer;transition:transform .25s;}
+.funnel-row:hover{transform:translateX(6px);}
+.funnel-bar{color:#fff;padding:16px 22px;border-radius:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 14px rgba(0,0,0,0.1);width:100%;}
+.funnel-bar .stage{font-size:13.5px;}
+.funnel-bar .num{font-size:22px;font-weight:700;letter-spacing:-0.5px;}
+.warn{background:linear-gradient(135deg,#fff4d6,#ffe4a3);border:1px solid rgba(255,149,0,0.18);border-left:5px solid #ff9500;padding:22px 26px;border-radius:var(--radius);margin-bottom:22px;display:flex;gap:18px;align-items:center;cursor:pointer;transition:all .35s;box-shadow:var(--shadow-sm);}
+.warn:hover{transform:translateY(-2px);}
+.warn .ic{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#ff9500,#ff7a00);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 4px 14px rgba(255,149,0,0.35);}
+.warn h2{font-size:18.5px;color:#7a3e00;margin-bottom:4px;font-weight:600;}
+.warn p{color:#6b4a10;font-size:13.5px;font-weight:500;}
+.miss-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px;}
+.miss{background:var(--card-bg);border-radius:var(--radius-sm);padding:22px 26px;box-shadow:var(--shadow-sm);border-top:4px solid #e74c3c;border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);cursor:pointer;transition:all .35s;}
+.miss:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(231,76,60,0.18);}
+.miss .l{font-size:11px;color:var(--text-2);font-weight:600;text-transform:uppercase;letter-spacing:1.3px;}
+.miss .v{font-size:32px;font-weight:700;color:#c0392b;margin-top:10px;line-height:1;letter-spacing:-1px;}
+.recs{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.rec{background:var(--card-bg);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow-sm);cursor:pointer;transition:all .35s;display:flex;gap:18px;border:1px solid var(--border);}
+.rec:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.rec .num{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,#1d68b5,#0a2547);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:700;flex-shrink:0;box-shadow:0 4px 14px rgba(29,104,181,0.32);}
+.rec h4{font-size:16.5px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:-0.3px;}
+.rec p{font-size:13.5px;color:var(--text-2);line-height:1.55;font-weight:500;}
+.nav-row{display:flex;justify-content:space-between;margin-top:30px;}
+.nav-btn{padding:12px 24px;border:1px solid var(--border);background:var(--card-bg);border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--text);transition:all .25s;box-shadow:var(--shadow-sm);}
+.nav-btn:hover:not(:disabled){background:#1d68b5;border-color:#1d68b5;color:#fff;}
+.nav-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,30,60,0.5);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;backdrop-filter:blur(8px);}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--card-bg);border-radius:24px;padding:34px;max-width:500px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.32);animation:pop .3s;}
+@keyframes pop{from{transform:scale(0.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal .icon{font-size:38px;margin-bottom:14px;}
+.modal h3{font-size:23px;font-weight:700;color:var(--text);margin-bottom:14px;letter-spacing:-0.6px;}
+.modal p{font-size:14.5px;line-height:1.65;color:var(--text-2);margin-bottom:18px;font-weight:500;}
+.modal .stat-box{background:linear-gradient(135deg,#f1f6fc,#e8f0fe);border-left:4px solid #1d68b5;padding:14px 18px;border-radius:12px;font-size:13.5px;color:var(--text);margin-bottom:24px;font-weight:600;}
+
+.kpi, .card, .mini, .miss, .rec, .funnel-card, .nav-btn, .warn, .modal { box-shadow: none !important; }
+.kpi:hover, .card:hover, .mini:hover, .miss:hover, .rec:hover, .warn:hover, .nav-btn:hover:not(:disabled) { box-shadow: none !important; }
+.funnel-bar { box-shadow: none !important; }
+.callout { box-shadow: none !important; }
+.callout:hover { box-shadow: none !important; }
+.warn .ic { box-shadow: none !important; }
+.rec .num { box-shadow: none !important; }
+.kpi .icn { box-shadow: none !important; }
+.tab { box-shadow: none !important; }
+.tab:hover { box-shadow: none !important; }
+.tab.active { box-shadow: 0 0 0 1px rgba(29,104,181,0.25) !important; }
+/* Strengthen borders so cards remain delineated without shadow */
+.kpi, .card, .mini, .miss, .rec, .funnel-card, .nav-btn { border: 1px solid rgba(0,0,0,0.08) !important; }
+.miss { border-top: 4px solid #e74c3c !important; }
+.warn { border: 1px solid rgba(255,149,0,0.25) !important; border-left: 5px solid #ff9500 !important; }
+</style>
+<style id="icon-sizing">
+.kpi .icn svg, .kpi .icn { width:28px; height:28px; }
+.callout .icn svg { width:30px; height:30px; }
+.callout .icn { width:auto; height:auto; }
+.warn .ic svg { width:28px; height:28px; }
+.miss .ic svg, .miss svg.miss-ic { width:24px; height:24px; }
+.mini svg { width:22px; height:22px; }
+.card-head svg, .card h3 svg { width:18px; height:18px; vertical-align:-3px; margin-right:6px; color:#475569; }
+.funnel-row svg { width:20px; height:20px; }
+.modal .m-icon svg, #m-icon svg { width:32px; height:32px; }
+.rec .num svg { width:22px; height:22px; }
+.tab svg { width:16px; height:16px; vertical-align:-3px; margin-right:6px; }
+svg { display:inline-block; vertical-align:middle; }
+</style><style id="canvas-fix">canvas{display:block !important;width:100% !important;height:100% !important;max-width:100%;}</style>
+<style id="button-radius-fix">
+.tab { border-radius: 8px !important; }
+.nav-btn { border-radius: 8px !important; }
+.tag, .pill { border-radius: 6px !important; }
+button, .btn { border-radius: 8px !important; }
+</style>
+<style id="slide-header-fix">
+.slide-header{display:flex;justify-content:space-between;align-items:center;margin:4px 6px 16px;gap:16px;flex-wrap:wrap;}
+.slide-header .section-title{margin:0;}
+.slide-nav{display:flex;gap:8px;flex-shrink:0;}
+.slide-nav .nav-btn{padding:8px 16px;font-size:12.5px;}
+/* Listing mockup styles */
+.listing-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:18px;}
+.expedia-mock{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:18px;}
+.expedia-mock .url-bar{display:flex;align-items:center;gap:8px;background:#f1f3f5;border-radius:8px;padding:8px 12px;font-size:11.5px;color:#6e6e73;margin-bottom:14px;font-family:monospace;}
+.expedia-mock .url-bar .dot{width:9px;height:9px;border-radius:50%;}
+.expedia-mock .url-bar .dot.r{background:#ff5f57;}
+.expedia-mock .url-bar .dot.y{background:#febc2e;}
+.expedia-mock .url-bar .dot.g{background:#28c840;}
+.expedia-mock h4.search-title{font-size:14px;font-weight:700;color:#1d1d1f;margin-bottom:12px;letter-spacing:-0.2px;}
+.mock-listing{display:grid;grid-template-columns:90px 1fr auto;gap:12px;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);margin-bottom:10px;align-items:center;background:#fff;position:relative;}
+.mock-listing.is-yours{border-color:#1d68b5;border-width:2px;background:linear-gradient(135deg,#f1f6fc,#fff);}
+.mock-listing .img-box{width:90px;height:70px;border-radius:8px;background:linear-gradient(135deg,#cbd2dc,#9aa5b1);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600;}
+.mock-listing.is-yours .img-box{background:linear-gradient(135deg,#1d68b5,#3d7fe6);}
+.mock-listing .name{font-size:13px;font-weight:700;color:#1d1d1f;margin-bottom:3px;}
+.mock-listing .meta{font-size:11.5px;color:#6e6e73;}
+.mock-listing .price{text-align:right;font-size:13.5px;font-weight:700;color:#1d1d1f;}
+.mock-listing .price .small{font-size:10px;color:#6e6e73;font-weight:500;}
+.ad-pill{display:inline-block;background:#1d68b5;color:#fff;font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.4px;margin-bottom:6px;}
+.organic-pill{display:inline-block;background:#eef2f8;color:#6e6e73;font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.4px;margin-bottom:6px;}
+.you-pill{position:absolute;top:-9px;right:12px;background:#15b87a;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;letter-spacing:0.3px;}
+.how-card{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:20px 22px;}
+.how-card h4{font-size:14.5px;font-weight:700;color:#1d1d1f;margin-bottom:6px;letter-spacing:-0.2px;}
+.how-card p{font-size:12.5px;color:#6e6e73;line-height:1.55;font-weight:500;}
+.how-card .num{font-size:22px;font-weight:700;color:#1d68b5;margin-bottom:6px;}
+.how-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px;}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;background:#1d68b5;color:#fff;text-decoration:none;font-weight:600;font-size:13px;border:none;transition:background .2s;}
+.cta-btn:hover{background:#155a9f;}
+.cta-btn.secondary{background:#fff;color:#1d1d1f;border:1px solid rgba(0,0,0,0.12);}
+.cta-btn.secondary:hover{background:#f5f5f7;}
+.real-numbers-tie{background:linear-gradient(135deg,#f1f6fc,#e8f0fe);border-left:4px solid #1d68b5;padding:16px 20px;border-radius:12px;margin-bottom:18px;}
+.real-numbers-tie .h{font-size:11.5px;font-weight:700;color:#1d68b5;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
+.real-numbers-tie .b{font-size:14px;color:#1d1d1f;font-weight:500;line-height:1.5;}
+.real-numbers-tie .b strong{color:#0d4ec0;font-weight:700;}
+@media (max-width:768px){.listing-grid,.how-row{grid-template-columns:1fr;}}
+</style>
+<style id="responsive-fix">
+/* Tablet (≤1024px) */
+@media (max-width:1024px){
+  .app{padding:20px 16px 40px;}
+  .hero{padding:32px 32px 24px;border-radius:28px;}
+  .hero-title{font-size:34px;letter-spacing:-1px;}
+  .tabs{gap:8px;}
+  .tab{padding:12px 10px;font-size:12.5px;gap:6px;}
+  .kpi-row{gap:12px;}
+  .kpi{padding:22px 24px;}
+  .kpi .value{font-size:32px;}
+  .chart-row{gap:12px;}
+  .mini-row{gap:10px;}
+  .mini{padding:18px 20px;}
+  .mini .v{font-size:24px;}
+  .funnel-card{padding:24px;}
+  .recs{gap:14px;}
+  .rec{padding:22px 24px;}
+}
+/* Mobile / small tablet (≤768px) */
+@media (max-width:768px){
+  .app{padding:14px 10px 28px;}
+  .hero{padding:24px 20px 18px;border-radius:22px;}
+  .hero-top{flex-direction:column;gap:14px;align-items:flex-start;}
+  .prepared{text-align:left;}
+  .hero-title{font-size:26px;letter-spacing:-0.6px;line-height:1.15;margin-bottom:14px;}
+  .hero-meta-row{font-size:12.5px;gap:8px;}
+  .hero-meta-row .item{align-items:flex-start;}
+  .report-pill{margin-bottom:14px;font-size:9.5px;padding:6px 12px;}
+  .tabs{grid-template-columns:repeat(3,1fr);gap:6px;margin-top:18px;}
+  .tab{padding:10px 6px;font-size:11px;line-height:1.2;}
+  .tab svg{width:14px;height:14px;}
+  .section-title{font-size:11px;margin:2px 4px 12px;}
+  .slide-header{gap:10px;margin:2px 4px 12px;}
+  .slide-nav .nav-btn{padding:6px 12px;font-size:11.5px;}
+  .kpi-row{grid-template-columns:1fr;gap:10px;margin-bottom:14px;}
+  .kpi{padding:18px 20px;}
+  .kpi .value{font-size:30px;}
+  .kpi .icn{width:36px;height:36px;}
+  .chart-row{grid-template-columns:1fr;gap:10px;margin-bottom:14px;}
+  .chart-wrap{height:240px !important;}
+  .mini-row{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .mini{padding:14px 16px;}
+  .mini .v{font-size:22px;}
+  .miss-row{grid-template-columns:1fr;gap:10px;}
+  .miss{padding:18px 20px;}
+  .miss .v{font-size:26px;}
+  .recs{grid-template-columns:1fr;gap:12px;}
+  .rec{padding:20px 22px;gap:14px;}
+  .rec .num{width:40px;height:40px;font-size:16px;}
+  .funnel-card{padding:18px;}
+  .funnel-row[style*="padding-left"]{padding-left:0 !important;}
+  .funnel-bar{padding:12px 16px;}
+  .funnel-bar .stage{font-size:12.5px;}
+  .funnel-bar .num{font-size:18px;}
+  .callout{flex-direction:row;padding:18px 20px;gap:14px;}
+  .callout .v{font-size:19px;}
+  .warn{flex-direction:row;align-items:flex-start;padding:18px 20px;gap:14px;}
+  .warn .ic{width:44px;height:44px;flex-shrink:0;}
+  .warn h2{font-size:16px;}
+  .warn p{font-size:12.5px;}
+  .modal{padding:24px;}
+  .modal h3{font-size:19px;}
+  .nav-row{gap:10px;}
+  .nav-btn{padding:10px 18px;font-size:12.5px;}
+}
+/* Small mobile (≤480px) */
+@media (max-width:480px){
+  .hero-title{font-size:22px;}
+  .tabs{grid-template-columns:repeat(2,1fr);}
+  .tab{font-size:10.5px;}
+  .kpi .value{font-size:26px;}
+  .mini-row{grid-template-columns:1fr;}
+  .funnel-bar{padding:10px 14px;}
+  .funnel-bar .stage{font-size:11.5px;}
+  .funnel-bar .num{font-size:16px;}
+  .callout{flex-direction:column;align-items:flex-start;}
+  .warn{flex-direction:column;align-items:flex-start;}
+  .chart-wrap{height:220px !important;}
+}
+</style>
+<style id="tabs-one-line-fix">
+.tabs{grid-template-columns:repeat(7,1fr) !important;gap:8px !important;margin-top:22px !important;}
+.tab{padding:9px 8px !important;font-size:11.5px !important;gap:5px !important;justify-content:center !important;white-space:nowrap !important;letter-spacing:-0.1px !important;}
+.tab svg{width:13px !important;height:13px !important;margin-right:3px !important;}
+@media (max-width:1200px){
+  .tab{font-size:11px !important;padding:8px 6px !important;}
+}
+@media (max-width:1024px){
+  .tabs{grid-template-columns:repeat(7,1fr) !important;gap:6px !important;}
+  .tab{padding:7px 5px !important;font-size:10.5px !important;}
+  .tab svg{width:12px !important;height:12px !important;}
+}
+@media (max-width:768px){
+  .tabs{grid-template-columns:repeat(4,1fr) !important;gap:6px !important;}
+  .tab{font-size:11px !important;padding:8px 6px !important;}
+}
+@media (max-width:480px){
+  .tabs{grid-template-columns:repeat(2,1fr) !important;}
+}
+</style></head><body>
+<div class="app">
+<div class="hero">
+<div class="hero-top">
+<div class="brand">
+<a href="https://www.advertisingsystems.ai" style="display:contents;text-decoration:none;color:inherit;" aria-label="Go to Advertising Systems homepage">
+<div class="logo-mark" style="background:transparent;box-shadow:none;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+<svg viewBox="10 -1 44 58" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px;color:#ffffff;">
+<path fill="none" style="display:none" d="M1001,350 C1001,567.33 1001,784.17 1001,1001 C667.67,1001 334.33,1001 1,1001 C1,667.67 1,334.33 1,1 C334.33,1 667.67,1 1001,1 C1001,117.17 1001,233.33 1001,350 M713.5,936.79 C748.75,937.9 782.27,930.7 814.28,915.74 C812.72,915.21 811.17,914.99 809.62,915.01 C789.05,915.3 769.34,911.06 751.78,900.56 C741.57,894.45 731.77,892.68 720.05,892.72 C581.23,893.17 442.4,893.12 303.57,892.9 C278.58,892.86 254.2,888.21 231.42,877.53 C159.06,843.57 120.54,786.41 119.89,706.57 C118.76,569.09 119.57,431.59 119.58,294.09 C119.58,279.56 121.22,265.26 124.54,251.07 C132.25,218.2 147.75,189.49 171.21,165.46 C207.86,127.92 252.82,108.86 305.32,108.78 C442.48,108.58 579.64,108.72 716.8,108.7 C734.71,108.7 752.3,110.86 769.56,115.81 C811.61,127.86 845.36,151.85 870.49,187.41 C893.44,219.88 904.2,256.47 904.19,296.28 C904.14,433.28 904.17,570.27 904.15,707.26 C904.15,711.42 903.58,715.6 903.84,719.74 C904.06,723.22 904.15,727.27 905.93,730.02 C919.7,751.31 926.9,774.39 926.23,799.82 C926.21,800.8 926.65,801.79 927.07,803.67 C927.89,802.24 928.31,801.73 928.5,801.15 C933.11,787.01 938.12,772.99 942.16,758.69 C946.89,741.98 948.09,724.77 948.08,707.4 C947.97,569.74 947.93,432.08 948.1,294.42 C948.13,271.62 945.02,249.44 938.56,227.62 C928.97,195.2 913.03,166.22 890.33,141.32 C843.95,90.43 786.03,64.57 717.11,64.46 C580.45,64.23 443.79,64.4 307.13,64.36 C273.77,64.35 241.76,70.6 211.25,84.25 C172.84,101.42 141.44,127.19 117.12,161.44 C102.63,181.85 91.79,204.11 84.79,228.27 C79.27,247.35 75.43,266.64 75.42,286.54 C75.37,427.53 75.47,568.53 75.3,709.52 C75.27,727.43 77.4,745.07 81.84,762.2 C85.67,776.96 90.93,791.56 97.38,805.38 C117.85,849.28 149.59,883.15 191.66,907.15 C211.25,918.32 232.08,926.38 254.23,931.18 C269.86,934.56 285.51,936.81 301.52,936.81 C438.51,936.77 575.51,936.79 713.5,936.79 M452.82,554.5 C452.82,534.84 452.95,515.17 452.72,495.51 C452.67,490.94 453.98,489.56 458.62,489.58 C493.28,489.77 527.94,489.68 562.6,489.69 C569.13,489.69 569.15,489.71 569.15,496.46 C569.16,535.46 569.16,574.45 569.16,613.44 C569.16,615.19 569.16,616.95 569.16,619.05 C589.11,619.05 608.25,619.06 627.4,619.04 C631.31,619.03 630.72,616.04 630.72,613.63 C630.74,517.98 630.72,422.33 630.8,326.68 C630.8,322.64 629.61,321.12 625.4,321.17 C608.07,321.36 590.74,321.24 573.41,321.27 C572.13,321.27 570.85,321.52 569.15,321.7 C569.15,323.79 569.15,325.59 569.15,327.39 C569.15,362.05 569.06,396.71 569.26,431.37 C569.29,436.31 568.04,438.04 562.87,438.01 C528.21,437.81 493.55,437.84 458.89,438 C454.11,438.02 452.68,436.57 452.71,431.72 C452.91,396.73 452.74,361.74 452.91,326.74 C452.93,322.31 451.63,321.08 447.25,321.15 C430.59,321.39 413.92,321.37 397.26,321.16 C392.79,321.1 391.2,322.31 391.21,327.04 C391.34,422.52 391.33,518 391.23,613.48 C391.22,617.9 392.61,619.22 396.96,619.17 C413.79,618.96 430.63,618.91 447.45,619.19 C452.06,619.27 452.96,617.72 452.91,613.49 C452.7,594.16 452.82,574.83 452.82,554.5 M727.6,834.91 C747.85,875.03 789.52,893.65 832.64,881.84 C881.85,868.36 909.2,814.03 891.1,765.71 C868.85,706.29 793.68,688.43 747.26,731.61 C720.44,756.57 710.21,797 727.6,834.91 z"/>
+<path fill="none" style="display:none" d="M713,936.79 C575.51,936.79 438.51,936.77 301.52,936.81 C285.51,936.81 269.86,934.56 254.23,931.18 C232.08,926.38 211.25,918.32 191.66,907.15 C149.59,883.15 117.85,849.28 97.38,805.38 C90.93,791.56 85.67,776.96 81.84,762.2 C77.4,745.07 75.27,727.43 75.3,709.52 C75.47,568.53 75.37,427.53 75.42,286.54 C75.43,266.64 79.27,247.35 84.79,228.27 C91.79,204.11 102.63,181.85 117.12,161.44 C141.44,127.19 172.84,101.42 211.25,84.25 C241.76,70.6 273.77,64.35 307.13,64.36 C443.79,64.4 580.45,64.23 717.11,64.46 C786.03,64.57 843.95,90.43 890.33,141.32 C913.03,166.22 928.97,195.2 938.56,227.62 C945.02,249.44 948.13,271.62 948.1,294.42 C947.93,432.08 947.97,569.74 948.08,707.4 C948.09,724.77 946.89,741.98 942.16,758.69 C938.12,772.99 933.11,787.01 928.5,801.15 C928.31,801.73 927.89,802.24 927.07,803.67 C926.65,801.79 926.21,800.8 926.23,799.82 C926.9,774.39 919.7,751.31 905.93,730.02 C904.15,727.27 904.06,723.22 903.84,719.74 C903.58,715.6 904.15,711.42 904.15,707.26 C904.17,570.27 904.14,433.28 904.19,296.28 C904.2,256.47 893.44,219.88 870.49,187.41 C845.36,151.85 811.61,127.86 769.56,115.81 C752.3,110.86 734.71,108.7 716.8,108.7 C579.64,108.72 442.48,108.58 305.32,108.78 C252.82,108.86 207.86,127.92 171.21,165.46 C147.75,189.49 132.25,218.2 124.54,251.07 C121.22,265.26 119.58,279.56 119.58,294.09 C119.57,431.59 118.76,569.09 119.89,706.57 C120.54,786.41 159.06,843.57 231.42,877.53 C254.2,888.21 278.58,892.86 303.57,892.9 C442.4,893.12 581.23,893.17 720.05,892.72 C731.77,892.68 741.57,894.45 751.78,900.56 C769.34,911.06 789.05,915.3 809.62,915.01 C811.17,914.99 812.72,915.21 814.28,915.74 C782.27,930.7 748.75,937.9 713,936.79 z"/>
+<path fill="none" style="display:none" d="M452.82,555 C452.82,574.83 452.7,594.16 452.91,613.49 C452.96,617.72 452.06,619.27 447.45,619.19 C430.63,618.91 413.79,618.96 396.96,619.17 C392.61,619.22 391.22,617.9 391.23,613.48 C391.33,518 391.34,422.52 391.21,327.04 C391.2,322.31 392.79,321.1 397.26,321.16 C413.92,321.37 430.59,321.39 447.25,321.15 C451.63,321.08 452.93,322.31 452.91,326.74 C452.74,361.74 452.91,396.73 452.71,431.72 C452.68,436.57 454.11,438.02 458.89,438 C493.55,437.84 528.21,437.81 562.87,438.01 C568.04,438.04 569.29,436.31 569.26,431.37 C569.06,396.71 569.15,362.05 569.15,327.39 C569.15,325.59 569.15,323.79 569.15,321.7 C570.85,321.52 572.13,321.27 573.41,321.27 C590.74,321.24 608.07,321.36 625.4,321.17 C629.61,321.12 630.8,322.64 630.8,326.68 C630.72,422.33 630.74,517.98 630.72,613.63 C630.72,616.04 631.31,619.03 627.4,619.04 C608.25,619.06 589.11,619.05 569.16,619.05 C569.16,616.95 569.16,615.19 569.16,613.44 C569.16,574.45 569.16,535.46 569.15,496.46 C569.15,489.71 569.13,489.69 562.6,489.69 C527.94,489.68 493.28,489.77 458.62,489.58 C453.98,489.56 452.67,490.94 452.72,495.51 C452.95,515.17 452.82,534.84 452.82,555 z"/>
+<path fill="none" style="display:none" d="M727.43,834.58 C710.21,797 720.44,756.57 747.26,731.61 C793.68,688.43 868.85,706.29 891.1,765.71 C909.2,814.03 881.85,868.36 832.64,881.84 C789.52,893.65 747.85,875.03 727.43,834.58 z"/>
+<path d="M26 16 A8 8 0 0 1 38 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.5"/><path d="M22 11 A13 11 0 0 1 42 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.3"/><line x1="32" y1="20" x2="22" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line x1="32" y1="20" x2="42" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line x1="22" y1="38" x2="14" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.75"/><line x1="42" y1="38" x2="50" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.75"/><line x1="22" y1="38" x2="42" y2="38" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.85"/><line x1="14" y1="54" x2="50" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/><circle cx="32" cy="20" r="4.2" fill="currentColor"/><circle cx="22" cy="38" r="3.5" fill="currentColor" opacity="0.9"/><circle cx="42" cy="38" r="3.5" fill="currentColor" opacity="0.9"/><circle cx="14" cy="54" r="2.8" fill="currentColor" opacity="0.55"/><circle cx="50" cy="54" r="2.8" fill="currentColor" opacity="0.55"/></svg>
+</div>
+<div class="brand-text"><div class="brand-name">Advertising Systems</div><div class="brand-tag">by Multisystems</div></div>
+</a>
+</div>
+<div class="prepared"><div class="label">Prepared by</div><div class="name">Advertising Systems</div><div class="meta">Channel: Expedia TravelAds</div><div class="meta">Issued: May 1, 2026</div></div>
+</div>
+
+<!-- Floating home button -->
+<style>
+.report-home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;align-items:center;gap:7px;background:rgba(10,37,71,0.92);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px 16px;border-radius:50px;text-decoration:none;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);box-shadow:0 4px 20px rgba(0,0,0,0.25);transition:all .2s;white-space:nowrap;}
+.report-home-btn:hover{background:rgba(10,37,71,1);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.3);}
+.report-home-btn svg{width:15px;height:15px;flex-shrink:0;}
+@media(max-width:480px){.report-home-btn{bottom:16px;right:16px;font-size:12px;padding:9px 13px;gap:6px;}
+.report-home-btn .btn-label{display:none;}
+.report-home-btn{padding:11px;border-radius:50%;}
+.report-home-btn svg{width:17px;height:17px;}}
+</style>
+<a href="https://www.advertisingsystems.ai" class="report-home-btn" aria-label="Back to Advertising Systems homepage">
+<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+<span class="btn-label">Advertising Systems</span>
+</a>
+
+<div class="report-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M7 14l4-4 4 4 5-5"></path></svg>Expedia TravelAds · Visual Performance Report</div>
+<h1 class="hero-title">Sponsored Listings — At a Glance</h1>
+<div class="hero-meta-row">
+<div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>Best Western Davison Inn</div>
+<span class="dot"></span><div class="item">ID: 25145</div>
+</div>
+<div class="hero-meta-row" style="margin-top:10px;"><div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>April 1 – April 30, 2026 (Last 30 Days)</div></div>
+<div class="tabs">
+<button class="tab active" onclick="goToSlide(0)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5" fill="currentColor"></circle></svg>Overview</button>
+<button class="tab" onclick="goToSlide(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>Trends</button>
+<button class="tab" onclick="goToSlide(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 9v7l-4-2v-5z"></path></svg>Booking Funnel</button>
+<button class="tab" onclick="goToSlide(3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"></path></svg>Opportunity</button>
+<button class="tab" onclick="goToSlide(4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M9 13l2 2 4-4"></path></svg>Action Plan</button>
+<button class="tab" onclick="goToSlide(5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>Your Listing</button>
+<button class="tab" onclick="goToSlide(6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.5 1 6.5-5.5-3-5.5 3 1-6.5L3 9l6-1z"></path></svg>Reputation</button>
+</div>
+</div>
+<div class="content">
+<div class="slide active" id="slide-0">
+<div class="section-title">Headline Results · Last 30 Days</div>
+<div class="kpi-row">
+<div class="kpi spend" onclick="showModal('spend')"><div class="top"><div class="label">Total Ad Spend</div><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg></div></div><div class="value">$432.95</div><div class="hint">Daily limit ~$36 · Active all 30 days</div></div>
+<div class="kpi rev" onclick="showModal('revenue')"><div class="top"><div class="label">Revenue Generated</div><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div></div><div class="value">$9,525.05</div><div class="hint">Clicked path · $11,594.18 incl. exposed</div></div>
+<div class="kpi roas" onclick="showModal('roas')"><div class="top"><div class="label">Return on Ad Spend</div><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></div></div><div class="value">22:1 <span class="pill">STRONG</span></div><div class="hint">$22 earned per $1 spent · 27:1 incl. exposed</div></div>
+</div>
+<div class="chart-row">
+<div class="card" onclick="showModal('ovBarChart')"><h3>Spend vs Revenue</h3><div class="sub">The visual story behind a 22:1 ROAS</div><div class="chart-wrap"><canvas id="ovBar"></canvas></div></div>
+<div class="card" onclick="showModal('ovDonutChart')"><h3>Where Your $432.95 Went</h3><div class="sub">Net profit vs ad spend</div><div class="chart-wrap"><canvas id="ovDonut"></canvas></div></div>
+</div>
+<div class="callout" onclick="showModal('bottomline')"><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="6" x2="12" y2="18"></line><path d="M15 9.5a2.5 2.5 0 0 0-2.5-2.5h-1A2.5 2.5 0 0 0 9 9.5v0A2.5 2.5 0 0 0 11.5 12h1a2.5 2.5 0 0 1 2.5 2.5v0a2.5 2.5 0 0 1-2.5 2.5h-1A2.5 2.5 0 0 1 9 14.5"></path></svg></div><div style="flex:1;"><div class="l">Bottom Line · Net Contribution</div><div class="v">+$9,092.10 in profit after ad spend</div></div></div>
+</div>
+<div class="slide" id="slide-1">
+<div class="section-title">Daily Pattern · Last 30 Days</div>
+<div class="card" onclick="showModal('trLineChart')" style="margin-bottom:18px;"><h3>Daily Spend vs Revenue</h3><div class="sub">Spend stays flat while revenue concentrates on peak booking days</div><div class="chart-wrap" style="height:300px;"><canvas id="trLine"></canvas></div></div>
+<div class="chart-row">
+<div class="card" onclick="showModal('trGroupChart')"><h3>Clicked vs Exposed Path</h3><div class="sub">Direct attribution + halo bookings</div><div class="chart-wrap"><canvas id="trGroup"></canvas></div></div>
+<div class="card" onclick="showModal('trRadarChart')"><h3>Engagement Mix</h3><div class="sub">Your hotel vs lodging benchmark</div><div class="chart-wrap"><canvas id="trRadar"></canvas></div></div>
+</div>
+<div class="mini-row">
+<div class="mini" onclick="showModal('ctr')"><div class="l">CTR</div><div class="v">3.60%</div><div class="s">click-through rate</div></div>
+<div class="mini" onclick="showModal('conv')"><div class="l">Conversion</div><div class="v">11.07%</div><div class="s">click → booking</div></div>
+<div class="mini" onclick="showModal('rank')"><div class="l">Avg Rank</div><div class="v">2.04</div><div class="s">sponsored position</div></div>
+<div class="mini" onclick="showModal('cpc')"><div class="l">Avg CPC</div><div class="v">$1.41</div><div class="s">avg cost per click</div></div>
+</div>
+</div>
+<div class="slide" id="slide-2">
+<div class="section-title">Conversion Path · 30-Day Funnel</div>
+<div class="funnel-card">
+<div onclick="showModal('imp')" class="funnel-row"><div class="funnel-bar" style="background:linear-gradient(135deg,#7eb6ff,#3d7fe6);"><span class="stage">Impressions</span><span class="num">8,527</span></div></div>
+<div onclick="showModal('clicks')" class="funnel-row" style="padding-left:8%;"><div class="funnel-bar" style="background:linear-gradient(135deg,#3d7fe6,#1d68b5);"><span class="stage">Clicks</span><span class="num">307</span></div></div>
+<div onclick="showModal('book')" class="funnel-row" style="padding-left:18%;"><div class="funnel-bar" style="background:linear-gradient(135deg,#1d68b5,#0d4ec0);"><span class="stage">Bookings</span><span class="num">34</span></div></div>
+<div onclick="showModal('nights')" class="funnel-row" style="padding-left:28%;"><div class="funnel-bar" style="background:linear-gradient(135deg,#0d4ec0,#15b87a);"><span class="stage">Room Nights</span><span class="num">65</span></div></div>
+<div onclick="showModal('rev')" class="funnel-row" style="padding-left:38%;"><div class="funnel-bar" style="background:linear-gradient(135deg,#15b87a,#0d8050);"><span class="stage">Revenue</span><span class="num">$9,525</span></div></div>
+</div>
+<div class="chart-row">
+<div class="card" onclick="showModal('fnConvChart')"><h3>Conversion at Each Step</h3><div class="sub">Impression → Click → Book</div><div class="chart-wrap"><canvas id="fnConv"></canvas></div></div>
+<div class="card" onclick="showModal('fnDonutChart')"><h3>Average Booking Value</h3><div class="sub">Across 34 reservations</div><div class="chart-wrap"><canvas id="fnDonut"></canvas></div></div>
+</div>
+</div>
+<div class="slide" id="slide-3">
+<div class="section-title">Demand Capture Gap</div>
+<div class="warn" onclick="showModal('warning')"><div class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div><div><h2>Daily budget exhausted on 1 day during the past 30 days</h2><p>Strong consistency. Only 1 day saw the budget cap, meaning the campaign ran nearly full pace all month.</p></div></div>
+<div class="miss-row">
+<div class="miss" onclick="showModal('missClicks')"><div class="l">Missed Clicks</div><div class="v">4</div></div>
+<div class="miss" onclick="showModal('missNights')"><div class="l">Missed Room Nights</div><div class="v">2</div></div>
+<div class="miss" onclick="showModal('missRevenue')"><div class="l">Missed Revenue</div><div class="v">$129.81</div></div>
+</div>
+<div class="card" onclick="showModal('opBarChart')"><h3>Captured vs Missed Revenue</h3><div class="sub">The upside of a small budget increase</div><div class="chart-wrap" style="height:320px;"><canvas id="opBar"></canvas></div></div>
+</div>
+<div class="slide" id="slide-4">
+<div class="section-title">Recommended Actions</div>
+<div class="recs">
+<div class="rec" onclick="showModal('rec1')"><div class="num">1</div><div><h4>Maintain or modestly raise daily budget</h4><p>Daily budget hit the cap only 1 day; missed revenue is just $129.81. The current $36 daily limit is well-sized. A modest lift to $40–$45 captures the small remaining gap without risk.</p></div></div>
+<div class="rec" onclick="showModal('rec2')"><div class="num">2</div><div><h4>Capitalize on the strong conversion engine</h4><p>Your 11.07% click-to-book conversion is roughly 2x the industry average. Adding bid enhancers for high-intent traveler segments (length-of-stay, check-in window) will multiply that strength.</p></div></div>
+<div class="rec" onclick="showModal('rec3')"><div class="num">3</div><div><h4>Keep the Automated Market Tracker bidding</h4><p>Average rank 2.04 and CPC $1.41 show the auto-bidder is winning premium placement at competitive cost. Keep it on.</p></div></div>
+<div class="rec" onclick="showModal('rec4')"><div class="num">4</div><div><h4>Push GEX score from 77 toward 85+</h4><p>Your Guest Experience Score is 77/100 — already healthy. Lifting it to 85+ improves auction quality multiplier, which compounds into lower CPC and higher rank over time.</p></div></div>
+</div>
+</div>
+<div class="slide" id="slide-5">
+<div class="section-title">Your Listing on Expedia · How It Works</div>
+
+<div class="real-numbers-tie">
+<div class="h">What you are paying for</div>
+<div class="b">Every time a traveler searches for a hotel in Goodlettsville, Expedia runs an instant auction. When you win, your listing appears at the top of search results with an <strong>"Ad" badge</strong>. Last 30 days this placement put your hotel in front of <strong>8,527 travelers</strong>, drove <strong>307 clicks</strong>, and converted <strong>34 bookings</strong> worth <strong>$9,525.05</strong> (plus 9 exposed-path bookings worth $2,069 in halo revenue).</div>
+</div>
+
+<div class="listing-grid">
+<div class="expedia-mock">
+<div class="url-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span style="margin-left:6px;">expedia.com / Hotels in Davison, MI</span></div>
+<h4 class="search-title">62 properties · Sorted by Recommended</h4>
+
+<div class="mock-listing is-yours" onclick="showModal('placeYours')">
+<span class="you-pill">YOUR HOTEL</span>
+<div class="img-box">Hotel Image</div>
+<div>
+<span class="ad-pill">Sponsored · Ad</span>
+<div class="name">Best Western Davison Inn</div>
+<div class="meta">Davison · 8.8 Excellent · 861 reviews · Free breakfast · Hot tub · Pool</div>
+</div>
+<div class="price">$144<div class="small">nightly</div></div>
+</div>
+
+<div class="mock-listing">
+<div class="img-box">Competitor</div>
+<div>
+<span class="ad-pill">Sponsored · Ad</span>
+<div class="name">Best Western Lapeer Inn</div>
+<div class="meta">Lapeer · 8.2 Very Good · 742 reviews · 9.9 mi from Davison</div>
+</div>
+<div class="price">$138<div class="small">nightly</div></div>
+</div>
+
+<div class="mock-listing">
+<div class="img-box">Organic</div>
+<div>
+<span class="organic-pill">Organic listing</span>
+<div class="name">Wyndham Flint / Holiday Inn Express…</div>
+<div class="meta">Standard placement · No ad spend</div>
+</div>
+<div class="price">$120+<div class="small">nightly</div></div>
+</div>
+
+<div style="font-size:11.5px;color:#6e6e73;margin-top:8px;line-height:1.5;">Above is the placement you pay for. Without TravelAds, your listing drops below sponsored slots into the organic results, where most travelers do not scroll.</div>
+</div>
+
+<div>
+<div class="how-card" style="margin-bottom:14px;">
+<h4>How the auction works</h4>
+<p>Each search triggers a real-time auction. Your bid + your Guest Experience score + relevance determine your rank. You only pay when a traveler clicks — never just for showing up.</p>
+</div>
+<div class="how-card" style="margin-bottom:14px;">
+<h4>You set the rules</h4>
+<p>Daily budget cap is around $36/day. Bidding strategy is <strong>Automated (Market Tracker)</strong>, which adjusts bids dynamically by demand. April auto-bidder spend ranged from $1.95 to $35.83 depending on day.</p>
+</div>
+<div class="how-card">
+<h4>What happened this month</h4>
+<p>Your campaign was active <strong>all 30 days</strong> with budget hitting the cap on just <strong>1 day</strong>. Excellent consistency — only $129.81 in projected missed revenue. The campaign is firing on all cylinders.</p>
+</div>
+</div>
+</div>
+
+<div class="how-row">
+<div class="how-card"><div class="num">$1.41</div><h4>Per click</h4><p>Your average cost per click via Automated Market Tracker bidding, optimized across the month.</p></div>
+<div class="how-card"><div class="num">2.04</div><h4>Average rank</h4><p>You consistently appeared in the top 2 sponsored slots — premium visibility for every Davison-area search.</p></div>
+<div class="how-card"><div class="num">22:1</div><h4>Return on ad spend</h4><p>Every $1 spent returned $22 in clicked-path revenue (27:1 incl. halo). Roughly 2x the industry benchmark.</p></div>
+</div>
+
+<div class="cta-row">
+<a class="cta-btn" href="https://www.expedia.com/h25145.Hotel-Information" target="_blank" rel="noopener">View your listing on Expedia →</a>
+<a class="cta-btn secondary" href="https://www.expedia.com/Hotel-Search?destination=Davison%2C+Michigan&adults=2" target="_blank" rel="noopener">See live search results →</a>
+<a class="cta-btn secondary" href="https://travelads.expedia.com/next/#accounts/133688?hotelId=25145" target="_blank" rel="noopener">Manage campaign in TravelAds →</a>
+</div>
+
+<div style="font-size:11.5px;color:#86868b;margin-top:14px;line-height:1.5;">Tip: Search results vary by traveler location, dates, device, and search history. The mockup above is a representative example for Davison, MI search results.</div>
+</div>
+<div class="slide" id="slide-6">
+<div class="section-title">Reputation · April 1 – April 30, 2026 · 17 New Reviews</div>
+
+<div class="real-numbers-tie">
+<div class="h">What guests said about you this month</div>
+<div class="b">In April, your hotel received <strong>17 new verified reviews</strong> across Booking, Expedia, Google, Tripadvisor, Yelp, and Hotels.com. Lifetime sentiment: <strong>72% positive · 17% neutral · 9% negative</strong> across 3,204 reviews. Top recurring praise this month: <strong>cleanliness, friendly staff, and breakfast</strong>. Top recurring concern: <strong>front-desk service inconsistencies and dated rooms</strong>.</div>
+</div>
+
+<div class="kpi-row">
+<div class="kpi"><div class="top"><div class="label">New Reviews · April</div><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div></div><div class="value">17</div><div class="hint">Across 5 platforms · April 1 – 30</div></div>
+<div class="kpi"><div class="top"><div class="label">Open Tickets</div><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div></div><div class="value">50 <span class="pill" style="background:#fde2e2;color:#c0392b;">8 URGENT</span></div><div class="hint">Reviews still awaiting a management reply</div></div>
+<div class="kpi"><div class="top"><div class="label">Response Rate</div><div class="icn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></div></div><div class="value">13% <span class="pill" style="background:#fff7e6;color:#a85d00;">+2% w/w</span></div><div class="hint">Target: 30%+ for SEO and trust signal</div></div>
+</div>
+
+<div class="card" style="margin-bottom:18px;">
+<h3>AI Insights · Top 3 Recurring Complaints (April)</h3>
+<div class="sub">From Reputation Systems AI · sourced from 17 April reviews</div>
+<div style="margin-top:14px;">
+<div class="how-card" style="background:#fef7f7;border-left:4px solid #e74c3c;margin-bottom:10px;">
+<h4 style="color:#c0392b;">1. Front-desk service inconsistencies</h4>
+<p>The strongest recurring concern. AI flagged it as the #1 operational risk. Multiple guests describe disrespectful or rude treatment, even on stays that were otherwise positive.</p>
+<a href="https://www.tripadvisor.com/Hotel_Review-g42128-d94931-Reviews-Best_Western_Davison_Inn-Davison_Michigan.html" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit;"><div style="font-size:13px;color:#1d1d1f;margin-top:10px;line-height:1.55;font-weight:500;font-style:italic;">"Great until the last 12 hrs...then not good at all. Most of the staff was amazing! ... The lady was very rude to my husband and called the police on him. I had discussed late check out with..."<div style="font-size:11px;color:#1d68b5;font-weight:600;font-style:normal;margin-top:4px;">— Verified guest review · April 2026 · Tripadvisor → open on Tripadvisor</div></div></a>
+<a href="https://www.yelp.com/biz/best-western-davison-inn-davison" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit;"><div style="font-size:13px;color:#1d1d1f;margin-top:10px;line-height:1.55;font-weight:500;font-style:italic;">"Unprofessional Staff and Disturbing Treatment from Front Desk Employee"<div style="font-size:11px;color:#1d68b5;font-weight:600;font-style:normal;margin-top:4px;">— Cheryl F. · Yelp → open on Yelp</div></div></a>
+</div>
+
+<div class="how-card" style="background:#fffaf3;border-left:4px solid #ff8c42;margin-bottom:10px;">
+<h4 style="color:#a85d00;">2. Hotel feels dated · maintenance gaps</h4>
+<p>Multiple guests mention the property could use an update. Specific maintenance issues noted: mattresses needing to be flipped, bathroom light timer not working, TV going out, pool out of season.</p>
+<a href="https://app.reputationsystems.ai/reviews-manager-page" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit;"><div style="font-size:13px;color:#1d1d1f;margin-top:10px;line-height:1.55;font-weight:500;font-style:italic;">"Friendly staff, rooms are a bit dated, third stay here in 6 months. Mattresses need to be flipped"<div style="font-size:11px;color:#1d68b5;font-weight:600;font-style:normal;margin-top:4px;">— Verified guest · April 2026 · Repeat customer → reply via Reputation Systems</div></div></a>
+<a href="https://www.expedia.com/Flint-Hotels-Best-Western-Davison-Inn.h25145.Hotel-Information" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit;"><div style="font-size:13px;color:#1d1d1f;margin-top:10px;line-height:1.55;font-weight:500;font-style:italic;">"Hotel is dated and could use an update, but clean and comfortable!"<div style="font-size:11px;color:#1d68b5;font-weight:600;font-style:normal;margin-top:4px;">— James · Expedia · April 19, 2026 → open on Expedia</div></div></a>
+</div>
+
+<div class="how-card" style="background:#fef7f7;border-left:4px solid #e74c3c;">
+<h4 style="color:#c0392b;">3. Pet-friendly clarity · listing misalignment</h4>
+<p>A guest drove 1h40min based on Expedia and the hotel website both indicating pet-friendly, only to discover otherwise on arrival. This is a marketing/listing fix, not a service issue.</p>
+<a href="https://www.yelp.com/biz/best-western-davison-inn-davison" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit;"><div style="font-size:13px;color:#1d1d1f;margin-top:10px;line-height:1.55;font-weight:500;font-style:italic;">"Awful customer service. Arrived after an hour and 40 minute drive from home for a holiday party in Davison. Booked through Expedia which specified hotel was pet friendly. Also on the hotel website, specifically this location said pet friendly with a dog icon..."<div style="font-size:11px;color:#1d68b5;font-weight:600;font-style:normal;margin-top:4px;">— Megan V. · Yelp → open on Yelp</div></div></a>
+</div>
+</div>
+</div>
+
+<div class="card" style="margin-bottom:18px;">
+<h3>What Guests Praised in April</h3>
+<div class="sub">Recurring positive themes from the 17 April reviews</div>
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">
+<span class="ad-pill" style="background:#15b87a;">Clean &amp; comfortable rooms (5+ mentions)</span>
+<span class="ad-pill" style="background:#15b87a;">Friendly staff (4+ mentions)</span>
+<span class="ad-pill" style="background:#15b87a;">Great breakfast (3+ mentions)</span>
+<span class="ad-pill" style="background:#15b87a;">In-room hot tub</span>
+<span class="ad-pill" style="background:#15b87a;">Good location · quiet</span>
+<span class="ad-pill" style="background:#15b87a;">Comfortable bedding</span>
+</div>
+<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+<a href="https://www.booking.com/hotel/us/best-western-davison-inn.html" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><div style="padding:14px;background:#f1f9f4;border-radius:10px;border-left:3px solid #15b87a;">
+<div style="font-size:13px;color:#1d1d1f;line-height:1.5;font-weight:500;">"Clean and comfortable, good location for visiting in area. Staff friendly and good breakfast choices. Can not think of anything"</div>
+<div style="font-size:11px;color:#1d68b5;font-weight:600;margin-top:6px;">— Deirdre · Booking.com · 4★ · April 24, 2026 → open on Booking</div>
+</div></a>
+<a href="https://www.expedia.com/Flint-Hotels-Best-Western-Davison-Inn.h25145.Hotel-Information" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><div style="padding:14px;background:#f1f9f4;border-radius:10px;border-left:3px solid #15b87a;">
+<div style="font-size:13px;color:#1d1d1f;line-height:1.5;font-weight:500;">"Friendly staff, lots of parking for a trailer, clean and very comfortable room, quiet, and very nice."</div>
+<div style="font-size:11px;color:#1d68b5;font-weight:600;margin-top:6px;">— Steve · Expedia · 5★ · April 22, 2026 → open on Expedia</div>
+</div></a>
+<a href="https://www.expedia.com/Flint-Hotels-Best-Western-Davison-Inn.h25145.Hotel-Information" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><div style="padding:14px;background:#f1f9f4;border-radius:10px;border-left:3px solid #15b87a;">
+<div style="font-size:13px;color:#1d1d1f;line-height:1.5;font-weight:500;">"Very nice staff, excellent breakfast, bed was very comfortable, very nice in room hot tub..."</div>
+<div style="font-size:11px;color:#1d68b5;font-weight:600;margin-top:6px;">— James · Expedia · 5★ · April 19, 2026 → open on Expedia</div>
+</div></a>
+<a href="https://www.expedia.com/Flint-Hotels-Best-Western-Davison-Inn.h25145.Hotel-Information" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;"><div style="padding:14px;background:#f1f9f4;border-radius:10px;border-left:3px solid #15b87a;">
+<div style="font-size:13px;color:#1d1d1f;line-height:1.5;font-weight:500;">"I stayed for one night and will continue to do so when the price is right."</div>
+<div style="font-size:11px;color:#1d68b5;font-weight:600;margin-top:6px;">— Deborah · Expedia · 4★ · April 23, 2026 → open on Expedia</div>
+</div></a>
+</div>
+</div>
+
+<div class="warn" onclick="showModal('repAction')" style="margin-top:18px;cursor:pointer;"><div class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><h2>Three concrete actions for the owner this month</h2><p><strong>1. Address front-desk service immediately</strong> — pull tape/logs from late-checkout incidents, retrain on de-escalation, and add a clear written late-checkout policy. <strong>2. Tackle the top maintenance complaints</strong> — flip mattresses on the rotation it deserves, fix the bathroom light timer, and audit TVs in all rooms. <strong>3. Lift response rate from 13% to 30%+</strong> — start with the 8 urgent open tickets in Reputation Systems. Reviews that get a management reply have measurably higher follow-up satisfaction.</p></div></div>
+
+<div class="cta-row" style="margin-top:14px;">
+<a class="cta-btn" href="https://app.reputationsystems.ai/reviews-manager-page" target="_blank" rel="noopener">Open all April reviews →</a>
+<a class="cta-btn secondary" href="https://app.reputationsystems.ai/ai-insights-page" target="_blank" rel="noopener">Ask AI another question →</a>
+<a class="cta-btn secondary" href="https://app.reputationsystems.ai/reply-generator" target="_blank" rel="noopener">Reply Generator →</a>
+</div>
+
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;font-size:11.5px;">
+<span style="color:#6e6e73;font-weight:600;">View on platform:</span>
+<a href="https://www.expedia.com/Flint-Hotels-Best-Western-Davison-Inn.h25145.Hotel-Information" target="_blank" rel="noopener" style="color:#1d68b5;text-decoration:none;font-weight:600;">Expedia (861)</a>·
+<a href="https://www.google.com/maps/place/Best+Western+Davison+Inn/data=!4m2!3m1!1s0x0:0x7af1d74ff429d231" target="_blank" rel="noopener" style="color:#1d68b5;text-decoration:none;font-weight:600;">Google (725)</a>·
+<a href="https://www.tripadvisor.com/Hotel_Review-g42128-d94931-Reviews-Best_Western_Davison_Inn-Davison_Michigan.html" target="_blank" rel="noopener" style="color:#1d68b5;text-decoration:none;font-weight:600;">Tripadvisor (443)</a>·
+<a href="https://www.booking.com/hotel/us/best-western-davison-inn.html" target="_blank" rel="noopener" style="color:#1d68b5;text-decoration:none;font-weight:600;">Booking.com (162)</a>·
+<a href="https://www.yelp.com/biz/best-western-davison-inn-davison" target="_blank" rel="noopener" style="color:#1d68b5;text-decoration:none;font-weight:600;">Yelp (19)</a>·
+<a href="https://www.hotels.com/ho25145" target="_blank" rel="noopener" style="color:#1d68b5;text-decoration:none;font-weight:600;">Hotels.com (861)</a>
+</div>
+
+<div style="font-size:11.5px;color:#86868b;margin-top:14px;line-height:1.5;">Source: Reputation Systems by Multisystems.ai · 17 reviews from April 1 – April 30, 2026 · AI insights generated May 1, 2026 · Updated weekly.</div>
+</div>
+<div class="nav-row">
+<button class="nav-btn prev-nav" id="prevBtn" onclick="navSlide(-1)">← Previous</button>
+<button class="nav-btn next-nav" id="nextBtn" onclick="navSlide(1)">Next →</button>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)hideModal()">
+<div class="modal"><div class="icon" id="m-icon"></div><h3 id="m-title"></h3><p id="m-desc"></p><div class="stat-box" id="m-stat"></div><button class="nav-btn" onclick="hideModal()">Close</button></div>
+</div>
+<script>
+(function(){
+
+var modalContent = {
+spend:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>',title:'Total Ad Spend · $432.95',description:'Your TravelAds investment over the past 30 days. Total cost of every click you paid for during the window.',stat:'Daily limit ~$35.83. Campaign ran active all 30 days. Auto-bidder adjusted spend by demand.'},
+revenue:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',title:'Revenue Generated · $9,525.05',description:'Total booking revenue attributed to TravelAds — both direct clicks and ad-exposure halo bookings.',stat:'$9,525.05 from direct clicks + $2,069.13 incremental from exposure halo (total $11,594.18).'},
+roas:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',title:'Return on Ad Spend · 22:1',description:'For every $1 spent on TravelAds you earned $22 in booking revenue (clicked path) or $27 (incl. exposed halo).',stat:'Industry benchmark for lodging TravelAds: 8:1 to 12:1. You are roughly 2x above benchmark.'},
+bottomline:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="18"/><path d="M15 9.5a2.5 2.5 0 0 0-2.5-2.5h-1A2.5 2.5 0 0 0 9 9.5v0A2.5 2.5 0 0 0 11.5 12h1a2.5 2.5 0 0 1 2.5 2.5v0a2.5 2.5 0 0 1-2.5 2.5h-1A2.5 2.5 0 0 1 9 14.5"/></svg>',title:'Net Contribution · +$9,092.10',description:'After subtracting $432.95 in ad spend from $9,525.05 in clicked-path revenue, TravelAds delivered $9,092.10 in net contribution to the property over the past 30 days.',stat:'Effective profit margin on ad spend: 2,100%.'},
+ovBarChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>',title:'Spend vs Revenue',description:'A side-by-side comparison of what you spent and what you earned back.',stat:'$432.95 spent vs $9,525.05 earned = $9,092.10 net.'},
+ovDonutChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>',title:'Where Your $432.95 Went',description:'95.45% of attributed revenue is profit after ad spend.',stat:'95.45% net profit / 4.55% ad cost.'},
+trLineChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>',title:'Daily Spend vs Revenue',description:'Spend varies by demand; revenue concentrates on peak booking days (Apr 28 led with $1,046.26).',stat:'Top 5 days (Apr 28, 1, 14, 2, 22) drove 47% of monthly revenue.'},
+trGroupChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>',title:'Clicked vs Exposed Path',description:'Most value comes from direct clicks; exposure halo adds 9 incremental bookings, 13 nights, $2,069 revenue.',stat:'Clicked: $9,525.05 · Exposed-only halo: $2,069.13 (21.7% lift).'},
+trRadarChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 18 20 6 20 2 8.5 12 2"/><polygon points="12 7 17 10 15 16 9 16 7 10 12 7"/></svg>',title:'Engagement Mix · Strong Across the Board',description:'You outperform on conversion (11.07% vs 3-5% benchmark), ROAS (22:1 vs 8-12:1), and rank (2.04). GEX 77/100 has further room.',stat:'CPC $1.41 · ROAS 22:1 · Conversion 11.07% · Rank 2.04 · GEX 77/100.'},
+ctr:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',title:'Click-Through Rate · 3.60%',description:'Out of 8,527 impressions, 307 travelers clicked. Within the typical 3-5% range for lodging.',stat:'Benchmark 2-3% · Your CTR 3.60%.'},
+conv:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',title:'Conversion Rate · 11.07%',description:'Of 307 clicks, 34 became bookings — exceptional traffic quality.',stat:'Industry average: 3-5% click-to-book. You are over 2x above benchmark.'},
+rank:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',title:'Average Rank · 2.04',description:'Your sponsored listing consistently appears in the top 3 sponsored slots.',stat:'Average position 2.04 places you in the top 2 sponsored slots — premium visibility.'},
+cpc:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',title:'Average CPC · $1.41',description:'You pay $1.41/click via Automated (Market Tracker) bidding. Auto-bidder adjusted between $0.91 and $1.36 across the month.',stat:'Auto-bidder optimized cost per click across the month.'},
+imp:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',title:'8,527 Impressions',description:'Times your sponsored listing appeared in search results. Top of the funnel.',stat:'Average rank 2.04 — top 2 sponsored slots.'},
+clicks:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/></svg>',title:'307 Clicks',description:'Travelers who clicked your listing. CTR 3.60% within the 3-5% lodging benchmark.',stat:'CTR 3.60% — within typical TravelAds benchmark.'},
+book:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>️',title:'34 Bookings',description:'Confirmed reservations attributed to TravelAds (clicked path). 43 total when including exposed-only halo.',stat:'Conversion rate 11.07% (click → booking).'},
+nights:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>️',title:'65 Room Nights',description:'Total nights booked from 34 reservations.',stat:'Avg LOS: 1.91 nights.'},
+rev:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>',title:'$9,525.05 Revenue',description:'Total clicked-path revenue. $280.15 average booking value.',stat:'Avg booking $280.15 · Avg nightly $146.54.'},
+fnConvChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>',title:'Conversion at Each Step',description:'Step-by-step funnel conversion.',stat:'Imp→Click 3.60% · Click→Book 11.07% · Overall 0.40%.'},
+fnDonutChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>',title:'Avg Booking Value · $280.15',description:'34 bookings totaling $9,525.05 = $280.15 per reservation.',stat:'Avg booking $280.15 · LOS 1.91 nights.'},
+warning:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',title:'Daily Budget Exhausted · 1 Day',description:'On 1 of 30 days the daily budget was exhausted. Excellent consistency.',stat:'Only 3.3% of the window had capped exposure.'},
+missClicks:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/></svg>',title:'Missed Clicks · 4',description:'Estimated clicks on the 1 budget-capped day, per Expedia projection.',stat:'Roughly 1.3% of your captured click volume of 307.'},
+missNights:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>️',title:'Missed Room Nights · 2',description:'Projected room nights at 11.07% conversion and 1.91-night LOS.',stat:'Roughly 3% of your 65 captured room nights.'},
+missRevenue:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>',title:'Missed Revenue · $129.81',description:'Revenue Expedia projects you could not capture due to the 1 budget-capped day.',stat:'Just 1.4% of your captured revenue — minimal gap.'},
+opBarChart:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>',title:'Captured vs Missed Revenue',description:'Captured ($9,525), Missed ($130), Total Potential ($9,655).',stat:'Total potential: $9,654.86.'},
+rec1:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>',title:'Maintain or Modestly Raise Daily Budget',description:'Daily limit $35.83 is well-sized. A small lift to $40-$45 captures the remaining $130 gap without risk.',stat:'Per Expedia: up to $129.81/month in missed revenue could be recovered.'},
+rec2:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>',title:'Activate Mobile Targeting',description:'Mobile bid modifiers will widen reach during high-intent moments.',stat:'Mobile share: ~55% industry-wide.'},
+rec3:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',title:'Maintain Market Tracker',description:'Auto-bidder is keeping rank 2.04 and CPC $1.41 — keep it on.',stat:'CPC Auto-bidder optimized cost per click across the month.'},
+rec4:{icon:'⭐',title:'Improve Guest Experience Score',description:'GEX directly affects auction quality. Lifting 61→75+ lowers effective CPC.',stat:'Current GEX: 61/100 · Target: 75+.'},
+placeYours:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',title:'This is where you appear',description:'When the campaign is active, your listing wins one of the top 2 sponsored slots in Davison, MI search results. This drove 8,527 impressions, 307 clicks, and 34 bookings worth $9,525 in April.',stat:'Premium placement converted 11.07% of clicks into bookings — over 2x the industry average.'},
+repAction:{icon:'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.5 1 6.5-5.5-3-5.5 3 1-6.5L3 9l6-1z"/></svg>',title:'Two highest-ROI reputation moves',description:'1) Front-desk training: the recurring negative theme on Yelp and TripAdvisor centers on front-desk interactions. Addressing it directly lifts the lowest-scoring platforms. 2) Lift the response rate from 13% — reviews that receive a management response have higher follow-up satisfaction per Reputation Systems data. Start with the 8 urgent open tickets.',stat:'72% positive sentiment already · close the 9% negative gap with these two actions.'}
+};
+var currentSlide = 0;
+var total = 7;
+function goToSlide(n){currentSlide=n;document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===n));document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));document.querySelectorAll('.prev-nav').forEach(b=>b.disabled=n===0);document.querySelectorAll('.next-nav').forEach(b=>b.disabled=n===total-1);initChartsForActiveTab();}
+function navSlide(d){goToSlide(Math.max(0,Math.min(total-1,currentSlide+d)));}
+function showModal(id){const c=modalContent[id];if(!c)return;document.getElementById('m-icon').innerHTML=c.icon;document.getElementById('m-title').textContent=c.title;document.getElementById('m-desc').textContent=c.description;document.getElementById('m-stat').textContent=c.stat;document.getElementById('modal').classList.add('show');}
+function hideModal(){document.getElementById('modal').classList.remove('show');}
+var charts = {};
+function whenChartReady(cb){if(typeof Chart!=='undefined'){cb();}else{setTimeout(()=>whenChartReady(cb),100);}}
+function initOverviewCharts(){whenChartReady(()=>{if(charts.ovBar)return;Chart.defaults.font.family="'DM Sans',sans-serif";Chart.defaults.font.weight='500';
+charts.ovBar=new Chart(document.getElementById('ovBar'),{type:'bar',data:{labels:['Spend','Revenue'],datasets:[{data:[432.95,9525.05],backgroundColor:['#ff8c42','#1d68b5'],borderRadius:10,barThickness:80}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v}}}}});
+charts.ovDonut=new Chart(document.getElementById('ovDonut'),{type:'doughnut',data:{labels:['Net Profit','Ad Spend'],datasets:[{data:[9092.10,432.95],backgroundColor:['#15b87a','#ff8c42'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:12,weight:'600'}}}}}});
+});}
+function initTrendCharts(){whenChartReady(()=>{if(charts.trLine)return;
+var days=['Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12','Apr 13','Apr 14','Apr 15','Apr 16','Apr 17','Apr 18','Apr 19','Apr 20','Apr 21','Apr 22','Apr 23','Apr 24','Apr 25','Apr 26','Apr 27','Apr 28','Apr 29','Apr 30'];
+var spend=[17.22,33.91,21.27,18.32,24.85,35.83,14.42,15.28,25.49,6.93,24.61,10.54,7.96,12.21,15.44,7.47,17.84,16.33,8.41,9.82,10.84,13.57,1.95,9.47,10.66,9.12,3.56,10.33,14.76,4.54];
+var revenue=[873.45,841.07,0,155.40,387.81,758.73,286.38,0,331.89,0,133.65,262.97,0,858.03,0,0,422.65,295.30,0,0,721.34,786.26,0,341.20,0,593.08,0,1046.26,429.58,0];
+charts.trLine=new Chart(document.getElementById('trLine'),{type:'line',data:{labels:days,datasets:[{label:'Spend',data:spend,borderColor:'#ff8c42',backgroundColor:'rgba(255,140,66,0.12)',yAxisID:'y',tension:.35,fill:true,borderWidth:2.5,pointRadius:0,pointHoverRadius:5},{label:'Revenue',data:revenue,borderColor:'#1d68b5',backgroundColor:'rgba(29,104,181,0.12)',yAxisID:'y1',tension:.35,fill:true,borderWidth:2.5,pointRadius:0,pointHoverRadius:5}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{padding:12,font:{weight:'600'}}},tooltip:{enabled:true,callbacks:{label:function(ctx){return ctx.dataset.label+': $'+ctx.parsed.y.toFixed(2);}}}},scales:{y:{position:'left',title:{display:true,text:'Spend ($)'}},y1:{position:'right',title:{display:true,text:'Revenue ($)'},grid:{drawOnChartArea:false}}}}});
+charts.trGroup=new Chart(document.getElementById('trGroup'),{type:'bar',data:{labels:['Revenue','Bookings','Room Nights'],datasets:[{label:'Clicked path',data:[9525,34,65],backgroundColor:'#1d68b5',borderRadius:8},{label:'Exposed halo',data:[2069,9,13],backgroundColor:'#9bc4ff',borderRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,font:{weight:'600'}}}}}});
+charts.trRadar=new Chart(document.getElementById('trRadar'),{type:'radar',data:{labels:['CTR','Conversion','Rank','CPC Edge','GEX'],datasets:[{label:'Your Hotel',data:[72,90,82,80,77],borderColor:'#1d68b5',backgroundColor:'rgba(29,104,181,0.22)',borderWidth:2.5,pointRadius:3},{label:'Benchmark',data:[60,60,60,60,60],borderColor:'#cbd2dc',backgroundColor:'rgba(203,210,220,0.22)',borderWidth:2,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{display:false}}},plugins:{legend:{position:'bottom',labels:{padding:12,font:{weight:'600'}}}}}});
+});}
+function initFunnelCharts(){whenChartReady(()=>{if(charts.fnConv)return;
+charts.fnConv=new Chart(document.getElementById('fnConv'),{type:'bar',data:{labels:['Imp → Click','Click → Book','Overall'],datasets:[{data:[3.60,11.07,0.40],backgroundColor:['#1d68b5','#15b87a','#ff8c42'],borderRadius:8}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'%'}}}}});
+charts.fnDonut=new Chart(document.getElementById('fnDonut'),{type:'doughnut',data:{labels:['Avg $280.15'],datasets:[{data:[280.15,100],backgroundColor:['#1d68b5','#eef2f8'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false}}}});
+});}
+function initOpportunityCharts(){whenChartReady(()=>{if(charts.opBar)return;
+charts.opBar=new Chart(document.getElementById('opBar'),{type:'bar',data:{labels:['Captured (Current)','Missed (Capped)','Total Potential'],datasets:[{data:[9525.05,129.81,9654.86],backgroundColor:['#15b87a','#e74c3c','#1d68b5'],borderRadius:10,barThickness:80}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'$'+v.toLocaleString()}}}}});
+});}
+function initChartsForActiveTab(){if(currentSlide===0)initOverviewCharts();else if(currentSlide===1)initTrendCharts();else if(currentSlide===2)initFunnelCharts();else if(currentSlide===3)initOpportunityCharts();}
+document.querySelectorAll('.slide').forEach(function(slide){var title=slide.querySelector('.section-title');if(!title||title.parentElement.classList.contains('slide-header'))return;var wrapper=document.createElement('div');wrapper.className='slide-header';var nav=document.createElement('div');nav.className='slide-nav';nav.innerHTML='<button class="nav-btn prev-nav" onclick="navSlide(-1)">← Previous</button><button class="nav-btn next-nav" onclick="navSlide(1)">Next →</button>';title.parentNode.insertBefore(wrapper,title);wrapper.appendChild(title);wrapper.appendChild(nav);});
+document.querySelectorAll('.prev-nav').forEach(function(b){b.disabled=true;});
+initOverviewCharts();
+
+['modalContent','charts','currentSlide','initOverviewCharts','initTrendCharts','initFunnelCharts','initOpportunityCharts','initChartsForActiveTab','goToSlide','navSlide','showModal','hideModal','whenChartReady'].forEach(function(n){
+  try { if (typeof eval(n) !== 'undefined') window[n] = eval(n); } catch(e){}
+});
+setTimeout(function(){
+  try {
+    if (window.charts) Object.keys(window.charts).forEach(function(k){ if (window.charts[k]) { try { window.charts[k].destroy(); } catch(e){} window.charts[k] = null; }});
+    if (typeof window.initChartsForActiveTab === 'function') window.initChartsForActiveTab();
+  } catch(e){ console.error('deferred', e); }
+}, 200);
+})();
+</script></body></html>
