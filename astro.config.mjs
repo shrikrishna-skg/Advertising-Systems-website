@@ -17,5 +17,22 @@ export default defineConfig({
       alias: { '@': './src' },
     },
   },
-  integrations: [sitemap(), react()],
+  integrations: [
+    sitemap({
+      customPages: [
+        'https://advertisingsystems.ai/',
+        'https://advertisingsystems.ai/pricing',
+        'https://advertisingsystems.ai/about',
+        'https://advertisingsystems.ai/blog',
+        'https://advertisingsystems.ai/book-demo',
+        'https://advertisingsystems.ai/ota-advertising',
+        'https://advertisingsystems.ai/features/campaign-management',
+        'https://advertisingsystems.ai/features/ai-optimization',
+        'https://advertisingsystems.ai/features/analytics',
+        'https://advertisingsystems.ai/features/automation',
+        'https://advertisingsystems.ai/features/budget-intelligence',
+      ],
+    }),
+    react(),
+  ],
 });
