@@ -17,7 +17,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/vercel": "^10.0.6",
     "@radix-ui/react-slot": "^1.2.4",
-    "@tailwindcss/vite": "^4.2.1",
+    "@tailwindcss/vite": "4.1.8",
     "astro": "^6.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -28,6 +28,9 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "4.1.8"
+  },
+  "overrides": {
+    "vite": "^7.3.3"
   }
 }
