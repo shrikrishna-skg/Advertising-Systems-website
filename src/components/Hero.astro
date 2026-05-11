@@ -2,12 +2,13 @@
 import { AnimatedHero } from './ui/animated-hero';
 ---
 
-<section class="relative pt-24 pb-16 sm:pt-36 sm:pb-28 md:pt-44 md:pb-36 lg:pt-48 lg:pb-40 overflow-hidden" aria-labelledby="hero-heading">
+<section class="relative pt-24 pb-16 sm:pt-40 sm:pb-28 md:pt-48 md:pb-36 lg:pt-52 lg:pb-40 overflow-hidden" aria-labelledby="hero-heading">
   <!-- Background effects -->
   <div class="mesh-gradient absolute inset-0"></div>
   <div class="dot-grid absolute inset-0"></div>
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(800px,100vw)] h-[min(600px,80vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]" aria-hidden="true"></div>
-  <div class="watermark-brand" aria-hidden="true"></div>
+
+  <div class="watermark-brand watermark-brand-hero" aria-hidden="true"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
     <div class="text-center max-w-5xl mx-auto min-w-0">
@@ -44,7 +45,7 @@ import { AnimatedHero } from './ui/animated-hero';
           titles={['Make money', 'Increase Reach', 'Scale Smarter', 'Save Time']}
           prefix="Your ads should "
           suffix=""
-          subheadline="The AI advertising engine that unifies Google, Meta & OTA campaigns into one system — then optimizes every dollar while you sleep."
+          subheadline="The AI advertising engine that unifies Google, Meta & Expedia ads into one system — then optimizes every dollar while you sleep."
         />
       </div>
 
@@ -65,6 +66,7 @@ import { AnimatedHero } from './ui/animated-hero';
 
       <!-- Trust text -->
       <p class="reveal mt-6 text-sm font-medium text-[var(--text-muted)]">No credit card required · 14-day free trial · Cancel anytime</p>
+
     </div>
 
     <!-- Hero Dashboard Mockup -->

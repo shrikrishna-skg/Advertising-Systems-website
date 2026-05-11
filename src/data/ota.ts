@@ -28,21 +28,21 @@ export interface OTAStat {
 
 export const otaPlatforms: OTAPlatform[] = [
   {
-    name: 'Booking.com',
-    logo: 'booking',
-    description: 'Sponsored Listings across Booking.com, Priceline, and Agoda through Booking Holdings. CPC second-price auction with first-page placement guarantees.',
-    adModel: 'CPC (Second-Price Auction)',
-    reach: '28M+ listings worldwide',
-    features: ['First-page placement', 'Check-in date targeting', 'Travel window bidding', 'Real-time ROAS reporting'],
-    status: 'coming-soon',
-  },
-  {
     name: 'Expedia Group',
     logo: 'expedia',
-    description: 'TravelAds sponsored listings across 200+ travel sites and apps. Pay-per-click with custom audience segments and automated bidding.',
+    description: 'TravelAds sponsored listings across 200+ Expedia Group travel sites — Expedia, Hotels.com, Vrbo, Orbitz, Travelocity, and Hotwire. Self-serve PPC with automated bidding, custom ad copy, and proven +20% visibility lift.',
     adModel: 'CPC (Pay-Per-Click)',
-    reach: '10M+ daily visitors',
-    features: ['Custom audience segments', 'Automated bidding', 'Custom ad copy & photos', 'Cross-brand reach (Vrbo, Hotels.com)'],
+    reach: '10M+ daily visitors across 200+ sites',
+    features: ['Automated bidding (AI-powered)', 'Custom ad copy & photos', 'Cross-brand reach (Vrbo, Hotels.com)', 'Real-time ROAS & occupancy reporting'],
+    status: 'live',
+  },
+  {
+    name: 'Booking.com',
+    logo: 'booking',
+    description: 'Booking Network Sponsored Ads across Booking.com, Priceline, Agoda, and Kayak through Booking Holdings. CPC second-price auction with first-page placement guarantees.',
+    adModel: 'CPC (Second-Price Auction)',
+    reach: '28M+ listings, 150M+ monthly visitors',
+    features: ['First-page placement guarantee', 'Check-in date targeting', 'Travel window bidding', 'Real-time ROAS reporting'],
     status: 'coming-soon',
   },
   {

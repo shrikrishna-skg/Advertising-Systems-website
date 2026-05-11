@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="-110 -30 732 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Edges -->
+  <line x1="256" y1="52"  x2="476" y2="206" stroke="#7A8FA6" stroke-width="36" stroke-linecap="round"/>
+  <line x1="256" y1="52"  x2="36"  y2="206" stroke="#7A8FA6" stroke-width="36" stroke-linecap="round"/>
+  <line x1="476" y1="206" x2="390" y2="450" stroke="#7A8FA6" stroke-width="36" stroke-linecap="round"/>
+  <line x1="36"  y1="206" x2="122" y2="450" stroke="#7A8FA6" stroke-width="36" stroke-linecap="round"/>
+  <line x1="122" y1="450" x2="390" y2="450" stroke="#7A8FA6" stroke-width="36" stroke-linecap="round"/>
+  <!-- Nodes -->
+  <circle cx="256" cy="52"  r="66" fill="#5B9BD5"/>
+  <circle cx="36"  cy="206" r="66" fill="#F5A623"/>
+  <circle cx="476" cy="206" r="66" fill="#2EBD8A"/>
+  <circle cx="122" cy="450" r="66" fill="#9B6DD6"/>
+  <circle cx="390" cy="450" r="66" fill="#E05E5E"/>
+</svg>

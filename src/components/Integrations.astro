@@ -1,29 +1,29 @@
 ---
 const platforms = [
-  { name: 'Google Ads', domain: 'google.com', letter: 'G', color: 'bg-blue-500/10 text-blue-600' },
-  { name: 'Meta Ads', domain: 'meta.com', letter: 'M', color: 'bg-indigo-500/10 text-indigo-600' },
-  { name: 'Booking.com', domain: 'booking.com', letter: 'B', color: 'bg-blue-500/10 text-blue-600' },
-  { name: 'Expedia', domain: 'expedia.com', letter: 'E', color: 'bg-yellow-500/10 text-yellow-600' },
-  { name: 'TripAdvisor', domain: 'tripadvisor.com', letter: 'T', color: 'bg-[var(--surface-alt)] text-[var(--text-tertiary)] border border-[var(--border)]' },
-  { name: 'Google Analytics', domain: 'google.com', letter: 'GA', color: 'bg-orange-500/10 text-orange-600' },
-  { name: 'Instagram', domain: 'instagram.com', letter: 'IG', color: 'bg-pink-500/10 text-pink-600' },
-  { name: 'Facebook', domain: 'facebook.com', letter: 'F', color: 'bg-blue-500/10 text-blue-600' },
-  { name: 'TikTok', domain: 'tiktok.com', letter: 'TT', color: 'bg-slate-500/10 text-slate-600' },
-  { name: 'LinkedIn', domain: 'linkedin.com', letter: 'Li', color: 'bg-blue-500/10 text-blue-600' },
-  { name: 'YouTube', domain: 'youtube.com', letter: 'YT', color: 'bg-red-500/10 text-red-600' },
-  { name: 'Airbnb', domain: 'airbnb.com', letter: 'A', color: 'bg-rose-500/10 text-rose-600' },
-  { name: 'Hotels.com', domain: 'hotels.com', letter: 'H', color: 'bg-red-500/10 text-red-600' },
-  { name: 'Bing Ads', domain: 'bing.com', letter: 'B', color: 'bg-teal-500/10 text-teal-600' },
-  { name: 'X', domain: 'x.com', letter: 'X', color: 'bg-slate-500/10 text-slate-600' },
-  { name: 'Pinterest', domain: 'pinterest.com', letter: 'P', color: 'bg-red-500/10 text-red-600' },
-  { name: 'Trivago', domain: 'trivago.com', letter: 'Tr', color: 'bg-blue-500/10 text-blue-600' },
-  { name: 'Kayak', domain: 'kayak.com', letter: 'K', color: 'bg-orange-500/10 text-orange-600' },
-  { name: 'Vrbo', domain: 'vrbo.com', letter: 'V', color: 'bg-blue-500/10 text-blue-600' },
-  { name: 'HubSpot', domain: 'hubspot.com', letter: 'HS', color: 'bg-orange-500/10 text-orange-600' },
-  { name: 'Shopify', domain: 'shopify.com', letter: 'S', color: 'bg-green-500/10 text-green-600' },
-  { name: 'Snapchat', domain: 'snapchat.com', letter: 'SC', color: 'bg-yellow-500/10 text-yellow-600' },
-  { name: 'Reddit Ads', domain: 'reddit.com', letter: 'R', color: 'bg-orange-500/10 text-orange-600' },
-  { name: 'Amazon Ads', domain: 'amazon.com', letter: 'A', color: 'bg-amber-500/10 text-amber-600' },
+  { name: 'Google Ads',        domain: 'google.com',       letter: 'G',  live: true  },
+  { name: 'Meta Ads',          domain: 'meta.com',          letter: 'M',  live: true  },
+  { name: 'Expedia TravelAds', domain: 'expedia.com',       letter: 'E',  live: true  },
+  { name: 'Instagram',         domain: 'instagram.com',     letter: 'IG', live: true  },
+  { name: 'Facebook',          domain: 'facebook.com',      letter: 'F',  live: true  },
+  { name: 'Google Analytics',  domain: 'analytics.google.com', letter: 'GA', live: true },
+  { name: 'Bing Ads',          domain: 'microsoft.com',     letter: 'B',  live: true  },
+  { name: 'YouTube',           domain: 'youtube.com',       letter: 'YT', live: true  },
+  { name: 'Booking.com',       domain: 'booking.com',       letter: 'B',  live: false },
+  { name: 'TripAdvisor',       domain: 'tripadvisor.com',   letter: 'T',  live: false },
+  { name: 'Trivago',           domain: 'trivago.com',       letter: 'Tr', live: false },
+  { name: 'Airbnb',            domain: 'airbnb.com',        letter: 'A',  live: false },
+  { name: 'Hotels.com',        domain: 'hotels.com',        letter: 'H',  live: false },
+  { name: 'Kayak',             domain: 'kayak.com',         letter: 'K',  live: false },
+  { name: 'Vrbo',              domain: 'vrbo.com',          letter: 'V',  live: false },
+  { name: 'TikTok',            domain: 'tiktok.com',        letter: 'TT', live: false },
+  { name: 'LinkedIn',          domain: 'linkedin.com',      letter: 'Li', live: false },
+  { name: 'X',                 domain: 'x.com',             letter: 'X',  live: false },
+  { name: 'Pinterest',         domain: 'pinterest.com',     letter: 'P',  live: false },
+  { name: 'HubSpot',           domain: 'hubspot.com',       letter: 'HS', live: false },
+  { name: 'Snapchat',          domain: 'snapchat.com',      letter: 'SC', live: false },
+  { name: 'Reddit Ads',        domain: 'reddit.com',        letter: 'R',  live: false },
+  { name: 'Amazon Ads',        domain: 'amazon.com',        letter: 'A',  live: false },
+  { name: 'Shopify',           domain: 'shopify.com',       letter: 'S',  live: false },
 ];
 ---
 
@@ -40,17 +40,18 @@ const platforms = [
 
     <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
       {platforms.map((platform) => (
-        <div class="reveal glass hover-glow flex flex-col items-center gap-2.5 p-4 rounded-xl transition-all duration-200">
-          <div class="integration-logo w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold overflow-hidden bg-white shadow-sm border border-[var(--border)]">
+        <div class={`reveal glass hover-glow flex flex-col items-center gap-2.5 p-4 rounded-xl transition-all duration-200 ${!platform.live ? 'opacity-50' : ''}`}>
+          <div class="logo-wrap w-12 h-12 rounded-xl overflow-hidden bg-white border border-[var(--border)] shadow-sm flex items-center justify-center">
             <img
-              src={`https://logo.clearbit.com/${platform.domain}`}
-              alt=""
+              src={`https://cdn.brandfetch.io/${platform.domain}/w/128/h/128?c=1idBMgJ4tRFpVJGkCUM`}
+              alt={platform.name}
               width="48"
               height="48"
-              class="integration-logo-img w-full h-full object-contain p-1.5"
               loading="lazy"
+              class="logo-img w-full h-full object-contain p-1"
+              data-fallback={platform.letter}
             />
-            <span class={`integration-logo-fallback absolute inset-0 flex items-center justify-center ${platform.color}`}>{platform.letter}</span>
+            <span class="logo-fallback hidden w-full h-full items-center justify-center text-sm font-bold text-[var(--text-tertiary)]">{platform.letter}</span>
           </div>
           <span class="text-[11px] text-[var(--text-tertiary)] font-medium text-center leading-tight">{platform.name}</span>
         </div>
@@ -60,31 +61,18 @@ const platforms = [
 </section>
 
 <style>
-  .integration-logo {
-    position: relative;
-  }
-  .integration-logo-img {
-    position: relative;
-    z-index: 1;
-    /* Keep actual color logos — no grayscale or tint */
-    filter: none;
-  }
-  .integration-logo-fallback {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-  html.dark .integration-logo {
-    background: var(--surface-raised) !important;
+  html.dark .logo-wrap {
+    background: var(--surface-raised);
     border-color: var(--border);
   }
 </style>
 
 <script>
-  document.querySelectorAll('.integration-logo-img').forEach((img) => {
-    img.addEventListener('error', function () {
-      this.style.display = 'none';
+  document.querySelectorAll('.logo-img').forEach((img) => {
+    img.addEventListener('error', function (this: HTMLImageElement) {
+      this.classList.add('hidden');
+      const fallback = this.nextElementSibling as HTMLElement | null;
+      if (fallback) fallback.classList.replace('hidden', 'flex');
     });
   });
 </script>
