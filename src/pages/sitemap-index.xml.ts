@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-const siteUrl = 'https://advertisingsystems.ai';
+const siteUrl = 'https://www.advertisingsystems.ai';
 
 export const GET: APIRoute = () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

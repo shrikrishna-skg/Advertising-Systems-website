@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://advertisingsystems.ai/sitemap.xml
+Sitemap: https://www.advertisingsystems.ai/sitemap.xml

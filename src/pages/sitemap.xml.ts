@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getAllSlugs } from '../data/blog-posts';
 
-const siteUrl = 'https://advertisingsystems.ai';
+const siteUrl = 'https://www.advertisingsystems.ai';
 
 const blogUrls = getAllSlugs().map((slug) => ({ url: `/blog/${slug}`, priority: '0.7', changefreq: 'monthly' }));
 
