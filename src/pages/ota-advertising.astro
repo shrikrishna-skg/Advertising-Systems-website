@@ -48,8 +48,8 @@ const platformLogos: Record<string, { letter: string; bg: string; text: string }
 
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center min-w-0">
         <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
-          <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse shrink-0"></span>
-          <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">Coming Soon — Join the Waitlist</span>
+          <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shrink-0"></span>
+          <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">Now Live — Expedia TravelAds</span>
         </div>
 
         <h1 id="ota-heading" class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em] break-words">
@@ -62,8 +62,8 @@ const platformLogos: Record<string, { letter: string; bg: string; text: string }
           Manage sponsored listings across Booking.com, Expedia, TripAdvisor, Google Hotel Ads, Trivago, and more — with AI that optimizes bids, budgets, and targeting across every platform simultaneously.
         </p>
         <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
-            Join the Waitlist
+          <a href="https://accounts.multisystems.ai/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg">
+            Get Started
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
@@ -134,19 +134,16 @@ const platformLogos: Record<string, { letter: string; bg: string; text: string }
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
         <div class="text-center mb-16">
           <h2 id="platforms-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Platforms we're <span class="text-[var(--text-primary)]">integrating</span>
+            Supported <span class="text-[var(--text-primary)]">platforms</span>
           </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto">All major OTAs and metasearch engines in one place. Manage sponsored listings, CPC bids, and performance across every platform.</p>
+          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto">Live OTA integrations you can activate today. More platforms being added continuously.</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {otaPlatforms.map((platform) => {
+          {otaPlatforms.filter(p => p.status === 'live').map((platform) => {
             const logo = platformLogos[platform.logo];
             return (
               <div class="reveal glass hover-glow rounded-2xl p-6 relative group">
-                {platform.status === 'coming-soon' && (
-                  <span class="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-500 px-2.5 py-1 rounded-full">Coming Soon</span>
-                )}
                 <div class="flex items-center gap-3 mb-4">
                   <div class={`w-10 h-10 rounded-lg ${logo.bg} ${logo.text} flex items-center justify-center font-bold text-sm shrink-0`}>
                     {logo.letter}
