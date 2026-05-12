@@ -119,28 +119,14 @@ const webPageSchema = {
   isPartOf: { '@type': 'WebSite', name: 'AdvertisingSystems', url: siteUrl },
   ...(breadcrumbs.length > 0 && { breadcrumb: breadcrumbSchema }),
 };
+
+const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Google Tag Manager -->
-    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-T349524D');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V2W1EBPC9R"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-V2W1EBPC9R');
-    </script>
-    <meta charset="utf-8" />
+	  <head>
+	    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
     <title>{title}</title>
@@ -196,19 +182,15 @@ const webPageSchema = {
     </script>
 
     <!-- JSON-LD Schemas (help search engines understand and index content) -->
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
-  </head>
-  <body class="bg-[var(--surface)] text-[var(--text-secondary)] transition-colors duration-300 min-w-0 pb-safe">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T349524D" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-    <!-- Dark mode toggle: sync with html.dark and localStorage (applies site-wide on every page) -->
+	    <script type="application/ld+json" set:html={serializeJsonLd(organizationSchema)} />
+	    <script type="application/ld+json" set:html={serializeJsonLd(softwareSchema)} />
+	    <script type="application/ld+json" set:html={serializeJsonLd(webPageSchema)} />
+	    <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />
+	    {breadcrumbSchema && <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />}
+	    {jsonLd && <script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />}
+	  </head>
+	  <body class="bg-[var(--surface)] text-[var(--text-secondary)] transition-colors duration-300 min-w-0 pb-safe">
+	    <!-- Dark mode toggle: sync with html.dark and localStorage (applies site-wide on every page) -->
     <input type="checkbox" id="dark-mode-toggle" class="hidden" aria-hidden="true" />
     <script is:inline>
       (function() {
@@ -229,7 +211,7 @@ const webPageSchema = {
     <slot />
 
     <!-- Fixed bottom bar: theme toggle (left, peeks out; full bar on hover) -->
-    <div class="fixed bottom-6 left-0 z-40 flex items-center gap-2 glass rounded-full pl-4 pr-3 py-2 shadow-lg transition-transform duration-300 ease-out translate-x-[calc(-100%+1.5rem)] hover:translate-x-0" aria-label="Theme switcher">
+    <div class="theme-switcher-dock fixed bottom-6 left-0 z-40 flex items-center gap-2 glass rounded-full pl-4 pr-3 py-2 shadow-lg transition-transform duration-300 ease-out translate-x-[calc(-100%+1.5rem)] hover:translate-x-0" aria-label="Theme switcher">
       <svg class="w-4 h-4 text-amber-500 theme-icon-sun" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
       </svg>
@@ -239,11 +221,95 @@ const webPageSchema = {
       </svg>
     </div>
 
-    <!-- Zoho SalesIQ chat widget (bottom right) -->
-    <script is:inline>
-      window.$zoho = window.$zoho || {};
-      window.$zoho.salesiq = window.$zoho.salesiq || { ready: function() {} };
-    </script>
-    <script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siqce0c2ba6bae40ab6f6639c9f14f8e43cea1fff6057d06bdcae51ca54ba513ddf" defer></script>
-  </body>
-</html>
+	    <div id="cookie-consent-banner" class="hidden fixed inset-x-3 sm:inset-x-4 bottom-3 sm:bottom-4 z-50 max-w-xl mx-auto rounded-xl sm:rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] shadow-2xl p-3 sm:p-4" role="dialog" aria-live="polite" aria-label="Cookie consent">
+	      <p class="text-xs sm:text-sm leading-relaxed">
+	        We use optional analytics and support tools to improve the site. You can accept them or keep browsing with only essential storage.
+	      </p>
+	      <div class="mt-3 grid grid-cols-2 sm:flex gap-2 sm:justify-end">
+	        <button type="button" id="cookie-consent-decline" class="px-4 py-2 rounded-lg border border-[var(--border)] text-xs sm:text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Decline</button>
+	        <button type="button" id="cookie-consent-accept" class="px-4 py-2 rounded-lg bg-royal-green-500 text-white text-xs sm:text-sm font-semibold hover:bg-royal-green-600 transition-colors">Accept</button>
+	      </div>
+	    </div>
+
+	    <script is:inline>
+	      (function() {
+	        var CONSENT_KEY = 'ads_cookie_consent';
+	        var GTM_ID = 'GTM-T349524D';
+	        var GA_ID = 'G-V2W1EBPC9R';
+	        var ZOHO_SRC = 'https://salesiq.zohopublic.com/widget?wc=siqce0c2ba6bae40ab6f6639c9f14f8e43cea1fff6057d06bdcae51ca54ba513ddf';
+
+	        function getConsent() {
+	          try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return 'declined'; }
+	        }
+
+	        function setConsent(value) {
+	          try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
+	        }
+
+	        function appendScript(src, options) {
+	          if (document.querySelector('script[src="' + src + '"]')) return;
+	          var script = document.createElement('script');
+	          script.src = src;
+	          script.async = options && options.async !== undefined ? options.async : true;
+	          script.defer = Boolean(options && options.defer);
+	          if (options && options.id) script.id = options.id;
+	          document.head.appendChild(script);
+	        }
+
+	        function loadMarketingTools() {
+	          if (window.__adsMarketingLoaded) return;
+	          window.__adsMarketingLoaded = true;
+
+	          window.dataLayer = window.dataLayer || [];
+	          window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+	          appendScript('https://www.googletagmanager.com/gtm.js?id=' + GTM_ID, { async: true });
+
+	          window.gtag = window.gtag || function() { window.dataLayer.push(arguments); };
+	          appendScript('https://www.googletagmanager.com/gtag/js?id=' + GA_ID, { async: true });
+	          window.gtag('js', new Date());
+	          window.gtag('config', GA_ID, { anonymize_ip: true });
+
+	          window.$zoho = window.$zoho || {};
+	          window.$zoho.salesiq = window.$zoho.salesiq || { ready: function() {} };
+	          appendScript(ZOHO_SRC, { id: 'zsiqscript', defer: true });
+	        }
+
+	        function hideBanner() {
+	          var banner = document.getElementById('cookie-consent-banner');
+	          if (banner) banner.classList.add('hidden');
+	        }
+
+	        function initConsent() {
+	          var consent = getConsent();
+	          if (consent === 'accepted') {
+	            loadMarketingTools();
+	            return;
+	          }
+	          if (consent === 'declined') return;
+
+	          var banner = document.getElementById('cookie-consent-banner');
+	          var accept = document.getElementById('cookie-consent-accept');
+	          var decline = document.getElementById('cookie-consent-decline');
+	          if (!banner || !accept || !decline) return;
+
+	          banner.classList.remove('hidden');
+	          accept.addEventListener('click', function() {
+	            setConsent('accepted');
+	            hideBanner();
+	            loadMarketingTools();
+	          });
+	          decline.addEventListener('click', function() {
+	            setConsent('declined');
+	            hideBanner();
+	          });
+	        }
+
+	        if (document.readyState === 'loading') {
+	          document.addEventListener('DOMContentLoaded', initConsent, { once: true });
+	        } else {
+	          initConsent();
+	        }
+	      })();
+	    </script>
+	  </body>
+	</html>

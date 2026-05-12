@@ -51,7 +51,7 @@ export const otaPlatforms: OTAPlatform[] = [
     description: 'Sponsored Placements and Business Advantage listings. CPC model with Standard, Direct Booking, and Enterprise tiers.',
     adModel: 'CPC / Subscription',
     reach: '463M monthly visitors',
-    features: ['Competitor page placements', 'Direct booking integration', 'Business Advantage profiles', 'Review management tools'],
+    features: ['Market comparison placements', 'Direct booking integration', 'Business Advantage profiles', 'Review management tools'],
     status: 'coming-soon',
   },
   {
@@ -146,7 +146,7 @@ export const otaCapabilities: OTACapability[] = [
   {
     icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z',
     title: 'AI-Powered Bid Optimization',
-    desc: 'ML algorithms optimize CPC bids across every OTA in real time. Automatic bid adjustments based on occupancy, seasonality, competitor pricing, and traveler intent signals.',
+    desc: 'ML algorithms optimize CPC bids across every OTA in real time. Automatic bid adjustments based on occupancy, seasonality, local rate signals, and traveler intent signals.',
   },
   {
     icon: 'M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5',

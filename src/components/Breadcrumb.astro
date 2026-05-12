@@ -22,10 +22,10 @@ if (items.length === 0) return null;
         <meta itemprop="position" content="1" />
       </li>
       {items.map((item, i) => (
-        <li class="flex items-center gap-x-2" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <li class="flex items-center gap-x-2 min-w-0" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
           <span class="text-[var(--text-faint)] font-medium" aria-hidden="true">/</span>
           {i === items.length - 1 ? (
-            <span class="font-semibold text-[var(--text-primary)]" itemprop="name">{item.name}</span>
+            <span class="font-semibold text-[var(--text-primary)] truncate max-w-[min(60vw,20rem)] sm:max-w-none" itemprop="name">{item.name}</span>
           ) : (
             <a href={item.href} class="hover:text-[var(--color-link)] transition-colors font-medium" itemprop="item">
               <span itemprop="name">{item.name}</span>

@@ -30,14 +30,14 @@ export const faqs = [
       "Yes. Native integrations with Google Ads, Meta Business Suite, Google Analytics 4, all major OTA platforms, plus the entire Multisystems ecosystem (Hotel Systems, ReputationSystems). REST API access is available on Professional and Enterprise plans for custom integrations with your CRM, PMS, or BI tools.",
   },
   {
-    question: "How is this different from Madgicx, Optmyzr, or Smartly?",
+    question: "How is this different from single-channel ad tools?",
     answer:
-      "Those platforms focus on single-channel optimization (mostly Meta or Google). AdvertisingSystems is the only platform that unifies Google, Meta, AND OTA advertising in a single AI engine — purpose-built for businesses that advertise across all three. Plus, we're part of the Multisystems ecosystem, connecting your ads directly to your reputation and revenue systems.",
+      "Most ad tools focus on one channel or one reporting workflow. AdvertisingSystems unifies Google, Meta, and OTA advertising in a single AI engine — purpose-built for businesses that need one place to understand spend, revenue, and next actions across every channel. Plus, we're part of the Multisystems ecosystem, connecting your ads directly to your reputation and revenue systems.",
   },
   {
     question: "Is my data secure?",
     answer:
-      "Bank-level AES-256 encryption at rest and in transit. SOC 2 Type II compliant infrastructure. Your ad performance data and strategies are never shared with third parties, competitors, or used to train models. We undergo annual third-party security audits.",
+      "Bank-level AES-256 encryption at rest and in transit. SOC 2 Type II compliant infrastructure. Your ad performance data and strategies are never shared with outside companies or used to train models. We undergo annual third-party security audits.",
   },
   {
     question: "What pricing plans do you offer?",

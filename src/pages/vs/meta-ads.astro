@@ -76,7 +76,7 @@ const comparisons = [
     <section class="relative pt-40 pb-20 sm:pt-48 sm:pb-28 overflow-hidden">
       <div class="mesh-gradient absolute inset-0"></div>
       <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
@@ -127,8 +127,8 @@ const comparisons = [
           </h2>
         </div>
 
-        <div class="reveal glass rounded-2xl overflow-hidden">
-          <div class="grid grid-cols-3 gap-0">
+        <div class="reveal glass rounded-2xl overflow-x-auto">
+          <div class="grid grid-cols-[minmax(150px,1fr)_minmax(120px,0.7fr)_minmax(120px,0.7fr)] gap-0 min-w-[520px]">
             <div class="p-4 border-b border-[var(--border)] font-semibold text-[var(--text-primary)]">Feature</div>
             <div class="p-4 border-b border-[var(--border)] text-center font-semibold text-[var(--text-primary)]">AdvertisingSystems</div>
             <div class="p-4 border-b border-[var(--border)] text-center font-semibold text-[var(--text-muted)]">Meta Ads</div>
@@ -205,7 +205,7 @@ const comparisons = [
     <section class="relative py-32 overflow-hidden">
       <div class="mesh-gradient absolute inset-0"></div>
       <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">

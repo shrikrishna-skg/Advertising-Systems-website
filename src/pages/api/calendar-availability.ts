@@ -1,10 +1,13 @@
 import type { APIRoute } from 'astro';
 import { google } from 'googleapis';
+import { checkRateLimit, getClientIp, jsonResponse } from '../../lib/server-security';
 
 /** Business-hour slots (30-min demo) we offer, in HH:mm format. */
 const OFFERED_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00'];
 
 const SLOT_DURATION_MS = 30 * 60 * 1000;
+const MAX_SCHEDULE_DAYS = 90;
+const cache = new Map<string, { slots: string[]; expiresAt: number }>();
 
 function getCalendarClient() {
   const clientId = import.meta.env.GOOGLE_CLIENT_ID;
@@ -22,21 +25,43 @@ function getCalendarClient() {
 
 /** Returns available time slots for the given date (YYYY-MM-DD) by querying Google Calendar freebusy. */
 export const GET: APIRoute = async ({ request }) => {
+  const ip = getClientIp(request);
+  const rateLimit = checkRateLimit(`calendar-availability:${ip}`, 60, 60 * 1000);
+  if (!rateLimit.allowed) {
+    return jsonResponse(
+      { error: 'Too many availability checks. Please try again later.' },
+      429,
+      { 'Retry-After': String(rateLimit.retryAfter) }
+    );
+  }
+
   const url = new URL(request.url);
   const dateStr = url.searchParams.get('date');
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-    return new Response(
-      JSON.stringify({ error: 'Query param "date" (YYYY-MM-DD) is required' }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return jsonResponse({ error: 'Query param "date" (YYYY-MM-DD) is required' }, 400);
+  }
+
+  const requested = new Date(`${dateStr}T12:00:00.000Z`);
+  if (Number.isNaN(requested.getTime())) {
+    return jsonResponse({ error: 'Date is invalid' }, 400);
+  }
+
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const maxDate = new Date(today);
+  maxDate.setUTCDate(maxDate.getUTCDate() + MAX_SCHEDULE_DAYS);
+  if (requested < today || requested > maxDate) {
+    return jsonResponse({ error: `Date must be within the next ${MAX_SCHEDULE_DAYS} days` }, 400);
+  }
+
+  const cached = cache.get(dateStr);
+  if (cached && cached.expiresAt > Date.now()) {
+    return jsonResponse({ slots: cached.slots });
   }
 
   const client = getCalendarClient();
   if (!client) {
-    return new Response(
-      JSON.stringify({ slots: OFFERED_SLOTS }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    return jsonResponse({ slots: OFFERED_SLOTS });
   }
 
   const { calendar, calendarId } = client;
@@ -66,15 +91,10 @@ export const GET: APIRoute = async ({ request }) => {
       if (!overlaps) available.push(slot);
     }
 
-    return new Response(JSON.stringify({ slots: available }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    cache.set(dateStr, { slots: available, expiresAt: Date.now() + 5 * 60 * 1000 });
+    return jsonResponse({ slots: available });
   } catch (err) {
     console.error('Calendar freebusy error:', err);
-    return new Response(
-      JSON.stringify({ slots: OFFERED_SLOTS }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    return jsonResponse({ slots: OFFERED_SLOTS });
   }
 };

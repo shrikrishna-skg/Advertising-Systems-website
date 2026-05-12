@@ -1,0 +1,10 @@
+---
+const retiredDecisionGuideSlugs = new Set(['madgicx', 'optmyzr']);
+const slug = Astro.params.slug ?? '';
+
+if (retiredDecisionGuideSlugs.has(slug)) {
+  return Astro.redirect('/features', 301);
+}
+
+return Astro.redirect('/404', 302);
+---

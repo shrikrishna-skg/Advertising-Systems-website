@@ -217,6 +217,28 @@ body {
   min-width: 320px;
 }
 
+/* ── Responsive resilience: keep nested UI from forcing overflow ── */
+:where(main, section, article, aside, header, footer, nav, div, form, ul, ol, li) {
+  min-width: 0;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, a, span, li, dt, dd, td, th, button, label) {
+  overflow-wrap: break-word;
+}
+
+:where(input, select, textarea, button, svg, canvas) {
+  max-width: 100%;
+}
+
+:where([class*="grid-cols-"], [class*="flex"]) > * {
+  min-width: 0;
+}
+
+:where(.overflow-x-auto) {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+}
+
 /* ── Responsive: safe container padding ───────────── */
 .container-padding {
   padding-left: max(1rem, env(safe-area-inset-left));
@@ -558,6 +580,27 @@ html.dark .link-secondary:hover {
 .watermark-brand-hero::before {
   opacity: 0.035;
   transform: translateY(15%);
+}
+
+@media (max-width: 639px) {
+  .theme-switcher-dock {
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    transform: translateX(calc(-100% + 1.25rem));
+  }
+
+  .theme-switcher-dock:hover,
+  .theme-switcher-dock:focus-within {
+    transform: translateX(0);
+  }
+
+  .watermark-brand::before {
+    opacity: 0;
+  }
+
+  .glass,
+  .glass-strong {
+    backdrop-filter: blur(10px);
+  }
 }
 
 /* ── Print styles ───────────────────────────────────── */

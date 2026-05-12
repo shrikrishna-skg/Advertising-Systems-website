@@ -1,9 +1,11 @@
 import type { APIRoute } from 'astro';
 import { getAllSlugs } from '../data/blog-posts';
+import { getAllDecisionGuideSlugs } from '../data/decision-guides';
 
 const siteUrl = 'https://www.advertisingsystems.ai';
 
 const blogUrls = getAllSlugs().map((slug) => ({ url: `/blog/${slug}`, priority: '0.7', changefreq: 'monthly' }));
+const decisionGuideUrls = getAllDecisionGuideSlugs().map((slug) => ({ url: `/decision-guides/${slug}`, priority: '0.8', changefreq: 'monthly' }));
 
 const pages = [
   // Core — highest value pages
@@ -28,12 +30,12 @@ const pages = [
   { url: '/sample-report', priority: '0.8', changefreq: 'monthly' },
   { url: '/expedia-report', priority: '0.7', changefreq: 'monthly' },
 
-  // Competitor comparisons
+  // Decision guides
+  { url: '/decision-guides', priority: '0.8', changefreq: 'monthly' },
+  ...decisionGuideUrls,
   { url: '/vs/google-ads', priority: '0.8', changefreq: 'monthly' },
   { url: '/vs/meta-ads', priority: '0.8', changefreq: 'monthly' },
   { url: '/vs/manual', priority: '0.7', changefreq: 'monthly' },
-  { url: '/vs/madgicx', priority: '0.7', changefreq: 'monthly' },
-  { url: '/vs/optmyzr', priority: '0.7', changefreq: 'monthly' },
 
   // Content & discovery
   { url: '/blog', priority: '0.8', changefreq: 'weekly' },

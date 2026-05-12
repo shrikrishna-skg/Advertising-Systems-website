@@ -1,0 +1,252 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { getDecisionGuide, getRelatedDecisionGuides } from '../../data/decision-guides';
+
+const guide = getDecisionGuide(Astro.params.slug ?? '');
+
+if (!guide) {
+  return Astro.redirect('/404');
+}
+
+const breadcrumbs = [
+  { name: 'Decision Guides', href: '/decision-guides' },
+  { name: guide.shortTitle, href: `/decision-guides/${guide.slug}` },
+];
+
+const relatedGuides = getRelatedDecisionGuides(guide.relatedSlugs);
+
+const toneClasses = {
+  blue: 'border-blue-500/30 bg-blue-500/10 text-blue-600',
+  green: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600',
+  amber: 'border-amber-500/30 bg-amber-500/10 text-amber-600',
+  rose: 'border-rose-500/30 bg-rose-500/10 text-rose-600',
+  violet: 'border-violet-500/30 bg-violet-500/10 text-violet-600',
+};
+---
+
+<Layout
+  breadcrumbs={[{ name: 'Home', href: '/' }, ...breadcrumbs]}
+  title={guide.metaTitle}
+  description={guide.metaDescription}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.excerpt,
+    url: `https://advertisingsystems.ai/decision-guides/${guide.slug}`,
+    author: {
+      '@type': 'Organization',
+      name: 'AdvertisingSystems',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'AdvertisingSystems',
+    },
+  }}
+>
+  <Navbar />
+  <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
+
+  <main>
+    <article>
+      <section class="relative pt-28 pb-16 sm:pt-40 sm:pb-20 md:pt-48 md:pb-24 overflow-hidden" aria-labelledby="guide-heading">
+        <div class="mesh-gradient absolute inset-0"></div>
+        <div class="dot-grid absolute inset-0"></div>
+
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-4xl">
+            <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
+              <span class="w-2 h-2 bg-royal-green-500 rounded-full animate-pulse shrink-0"></span>
+              <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">{guide.eyebrow}</span>
+            </div>
+
+            <h1 id="guide-heading" class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
+              {guide.title}
+            </h1>
+            <p class="reveal mt-6 text-lg sm:text-xl font-medium text-[var(--text-secondary)] max-w-3xl leading-relaxed">
+              {guide.excerpt}
+            </p>
+
+            <div class="reveal mt-10 flex flex-col sm:flex-row gap-3">
+              <a href={guide.primaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-royal-green-600 transition-colors">
+                {guide.primaryCta.label}
+              </a>
+              <a href={guide.secondaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-6 py-3 rounded-lg">
+                {guide.secondaryCta.label}
+              </a>
+            </div>
+          </div>
+
+          <div class="reveal mt-14 grid sm:grid-cols-3 gap-4">
+            {guide.heroStats.map((stat) => (
+              <div class={`rounded-2xl border p-5 ${toneClasses[stat.tone]}`}>
+                <p class="text-xs font-bold uppercase tracking-[0.14em] opacity-80">{stat.label}</p>
+                <p class="mt-3 text-2xl font-bold">{stat.value}</p>
+                <p class="mt-2 text-sm font-semibold opacity-80 leading-relaxed">{stat.caption}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div class="section-line"></div>
+
+      {guide.sections.map((section, sectionIndex) => (
+        <>
+          <section class="py-24" aria-labelledby={`section-${sectionIndex}`}>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="max-w-3xl">
+                <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">{section.eyebrow}</p>
+                <h2 id={`section-${sectionIndex}`} class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
+                  {section.title}
+                </h2>
+                <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
+                  {section.intro}
+                </p>
+              </div>
+
+              <div class="reveal mt-12 grid md:grid-cols-3 gap-5">
+                {section.cards.map((card) => (
+                  <article class="glass rounded-2xl p-6">
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{card.label}</p>
+                    <h3 class="mt-4 text-xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{card.title}</h3>
+                    <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{card.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <div class="section-line"></div>
+        </>
+      ))}
+
+      {guide.table && (
+        <>
+          <section class="py-24" aria-labelledby="guide-table-heading">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div class="max-w-3xl">
+                <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Decision table</p>
+                <h2 id="guide-table-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
+                  {guide.table.title}
+                </h2>
+                <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
+                  {guide.table.intro}
+                </p>
+              </div>
+
+              <div class="reveal mt-12 overflow-x-auto">
+                <table class="w-full min-w-[760px] border-collapse glass rounded-2xl overflow-hidden" role="table">
+                  <thead>
+                    <tr class="border-b border-[var(--border)]">
+                      {guide.table.columns.map((column) => (
+                        <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)] bg-[var(--surface-alt)]">{column}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {guide.table.rows.map((row, rowIndex) => (
+                      <tr class={`border-b border-[var(--border)] last:border-b-0 ${rowIndex % 2 === 1 ? 'bg-[var(--surface-alt)]/50' : ''}`}>
+                        {row.map((cell) => (
+                          <td class="p-4 sm:p-5 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <div class="section-line"></div>
+        </>
+      )}
+
+      <section class="py-24" aria-labelledby="reporting-heading">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
+            <div>
+              <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">AdvertisingSystems report layer</p>
+              <h2 id="reporting-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
+                The guide ends where the dashboard begins.
+              </h2>
+              <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
+                Channel education is useful, but the software has to prove whether the spend should continue, move, or stop.
+              </p>
+              <div class="reveal mt-8 flex flex-col sm:flex-row gap-3">
+                <a href="/sample-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-5 py-3 rounded-lg">
+                  Sample Report
+                </a>
+                <a href="/expedia-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-5 py-3 rounded-lg">
+                  Expedia Report
+                </a>
+              </div>
+            </div>
+
+            <div class="reveal grid sm:grid-cols-3 gap-4">
+              {guide.proofMetrics.map((metric) => (
+                <article class="glass rounded-2xl p-5">
+                  <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{metric.label}</p>
+                  <h3 class="mt-4 text-lg font-bold text-[var(--text-primary)]">{metric.title}</h3>
+                  <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{metric.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-line"></div>
+
+      <section class="py-24" aria-labelledby="sources-heading">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Research notes</p>
+          <h2 id="sources-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
+            Official sources used for this guide
+          </h2>
+
+          <div class="reveal mt-10 space-y-4">
+            {guide.sourceNotes.map((source) => (
+              <a href={source.href} target="_blank" rel="noopener noreferrer" class="glass rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover-glow">
+                <div class="min-w-0 flex-1">
+                  <h3 class="text-base font-bold text-[var(--text-primary)]">{source.label}</h3>
+                  <p class="mt-2 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{source.note}</p>
+                </div>
+                <span class="text-sm font-bold text-[var(--text-primary)] shrink-0">Open source</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </article>
+
+    {relatedGuides.length > 0 && (
+      <>
+        <div class="section-line"></div>
+
+        <section class="py-24" aria-labelledby="related-guides-heading">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="related-guides-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
+              Read next
+            </h2>
+
+            <div class="reveal mt-10 grid md:grid-cols-3 gap-5">
+              {relatedGuides.map((related) => (
+                <a href={`/decision-guides/${related.slug}`} class="glass hover-glow rounded-2xl p-6">
+                  <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{related.category}</p>
+                  <h3 class="mt-4 text-xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{related.shortTitle}</h3>
+                  <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{related.excerpt}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      </>
+    )}
+  </main>
+
+  <Footer />
+</Layout>

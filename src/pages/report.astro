@@ -4,6 +4,10 @@ import { join } from 'path';
 
 // Read the report HTML and strip the outer html/head/body tags so we can inject it cleanly
 const raw = readFileSync(join(process.cwd(), 'public/sample-report-embed.html'), 'utf-8');
+const blockedPatterns = [/navigator\.geolocation/, /chrome\.runtime/, /new Function/, /eval\(/];
+if (blockedPatterns.some((pattern) => pattern.test(raw))) {
+  throw new Error('Unsafe script pattern found in public/sample-report-embed.html');
+}
 
 // Extract everything inside <body>...</body>
 const bodyMatch = raw.match(/<body[^>]*>([\s\S]*)<\/body>/i);

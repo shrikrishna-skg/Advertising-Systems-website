@@ -54,11 +54,14 @@ Business owners, marketing directors, and hotel/hospitality operators who manage
 - Integrations: https://advertisingsystems.ai/integrations
 - Knowledge Base: https://advertisingsystems.ai/knowledge-base
 - Careers: https://advertisingsystems.ai/careers
+- Decision Guides: https://advertisingsystems.ai/decision-guides
+- Expedia TravelAds Guide: https://advertisingsystems.ai/decision-guides/expedia-travelads
+- Booking Sponsored Listings Guide: https://advertisingsystems.ai/decision-guides/booking-sponsored-listings
+- Expedia vs Booking Hotel Ads: https://advertisingsystems.ai/decision-guides/expedia-vs-booking-hotel-ads
+- OTA Low Occupancy Ads: https://advertisingsystems.ai/decision-guides/ota-ads-low-occupancy
 - vs Manual Management: https://advertisingsystems.ai/vs/manual
 - vs Google Ads Only: https://advertisingsystems.ai/vs/google-ads
 - vs Meta Ads Only: https://advertisingsystems.ai/vs/meta-ads
-- vs Madgicx: https://advertisingsystems.ai/vs/madgicx
-- vs Optmyzr: https://advertisingsystems.ai/vs/optmyzr
 - Privacy Policy: https://advertisingsystems.ai/privacy
 - Terms of Service: https://advertisingsystems.ai/terms
 - Cookie Policy: https://advertisingsystems.ai/cookies

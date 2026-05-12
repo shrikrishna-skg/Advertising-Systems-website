@@ -16,18 +16,55 @@ const breadcrumbs = [
   { name: 'Blog', href: '/blog' },
   { name: post.title, href: `/blog/${post.slug}` },
 ];
+
+const visualBlocks = post.visualBlocks ?? [];
+const hasVisualBlocks = visualBlocks.length > 0;
+const articleTitle = post.seo?.title ?? `${post.title} — Blog | AdvertisingSystems`;
+const articleDescription = post.seo?.description ?? post.excerpt;
+const parsedDate = new Date(post.date);
+const datePublished = Number.isNaN(parsedDate.valueOf()) ? post.date : parsedDate.toISOString();
+const primaryCta = post.primaryCta ?? { label: 'Book a Demo', href: '/book-demo' };
+
+const toneText = (tone = 'slate') => {
+  switch (tone) {
+    case 'green': return 'text-royal-green-600';
+    case 'blue': return 'text-royal-blue-600';
+    case 'amber': return 'text-amber-600';
+    case 'violet': return 'text-violet-600';
+    case 'rose': return 'text-rose-600';
+    default: return 'text-[var(--text-primary)]';
+  }
+};
+
+const toneBg = (tone = 'slate') => {
+  switch (tone) {
+    case 'green': return 'bg-royal-green-500/10 border-royal-green-500/20 text-royal-green-700';
+    case 'blue': return 'bg-royal-blue-500/10 border-royal-blue-500/20 text-royal-blue-700';
+    case 'amber': return 'bg-amber-500/10 border-amber-500/20 text-amber-700';
+    case 'violet': return 'bg-violet-500/10 border-violet-500/20 text-violet-700';
+    case 'rose': return 'bg-rose-500/10 border-rose-500/20 text-rose-700';
+    default: return 'bg-[var(--surface-alt)] border-[var(--border)] text-[var(--text-tertiary)]';
+  }
+};
+
+const externalAttrs = (href: string) => href.startsWith('http')
+  ? { target: '_blank', rel: 'noreferrer' }
+  : {};
 ---
 
 <Layout
-  title={`${post.title} — Blog | AdvertisingSystems`}
-  description={post.excerpt}
+  title={articleTitle}
+  description={articleDescription}
   breadcrumbs={breadcrumbs}
   jsonLd={{
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
+    description: articleDescription,
+    datePublished,
+    articleSection: post.category,
+    keywords: post.seo?.keywords,
+    mainEntityOfPage: `https://advertisingsystems.ai/blog/${post.slug}`,
     author: { '@type': 'Organization', name: post.author.name },
     publisher: { '@type': 'Organization', name: 'AdvertisingSystems' },
   }}
@@ -36,80 +73,336 @@ const breadcrumbs = [
   <Breadcrumb items={breadcrumbs} />
   <main>
     <article class="relative pt-24 pb-20 sm:pt-32 sm:pb-28" aria-labelledby="post-title">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header class="mb-12">
+      <header class="relative overflow-hidden pb-12 sm:pb-16">
+        <div class="mesh-gradient absolute inset-0"></div>
+        <div class="dot-grid absolute inset-0"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <a
             href="/blog"
-            class="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-link)] hover:underline mb-6"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-link)] hover:underline mb-8"
           >
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
             Back to Blog
           </a>
-          <p class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
-            {post.category}
-          </p>
-          <h1 id="post-title" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em] mb-6">
-            {post.title}
-          </h1>
-          <p class="text-lg text-[var(--text-tertiary)] leading-relaxed mb-6">
-            {post.excerpt}
-          </p>
-          <div class="flex flex-wrap items-center gap-3 text-sm text-[var(--text-muted)]">
-            <time datetime={new Date(post.date).toISOString().slice(0, 10)}>{post.date}</time>
-            <span aria-hidden="true">&middot;</span>
-            <span>{post.readTime}</span>
-            <span aria-hidden="true">&middot;</span>
-            <span>{post.author.name}{post.author.role ? `, ${post.author.role}` : ''}</span>
-          </div>
-        </header>
 
-        <div class="prose-blog">
-          {post.content.map((section) => (
-            <section class="mb-10">
-              {section.title && (
-                <h2 class="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-[-0.02em] mb-4">
-                  {section.title}
-                </h2>
-              )}
+          <div class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start">
+            <div>
+              <div class="flex flex-wrap items-center gap-3 mb-5">
+                <span class="inline-flex text-xs font-bold px-2.5 py-1 rounded-full border bg-[var(--surface-alt)] border-[var(--border)] text-[var(--text-tertiary)]">
+                  {post.category}
+                </span>
+                {post.learningTrack && (
+                  <span class="inline-flex text-xs font-bold px-2.5 py-1 rounded-full border bg-royal-blue-500/10 border-royal-blue-500/20 text-royal-blue-700">
+                    {post.learningTrack}
+                  </span>
+                )}
+              </div>
+
+              <h1 id="post-title" class="text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em] mb-6">
+                {post.title}
+              </h1>
+              <p class="text-lg sm:text-xl text-[var(--text-tertiary)] leading-relaxed max-w-3xl">
+                {post.excerpt}
+              </p>
+
+              <div class="mt-7 flex flex-wrap items-center gap-3 text-sm text-[var(--text-muted)]">
+                <time datetime={datePublished}>{post.date}</time>
+                <span aria-hidden="true">&middot;</span>
+                <span>{post.readTime}</span>
+                <span aria-hidden="true">&middot;</span>
+                <span>{post.author.name}{post.author.role ? `, ${post.author.role}` : ''}</span>
+              </div>
+
+              <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <a
+                  href={primaryCta.href}
+                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
+                >
+                  {primaryCta.label}
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </a>
+                <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-6 py-3.5 rounded-lg">
+                  Book a Demo
+                </a>
+              </div>
+            </div>
+
+            <aside class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6">
+              <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.14em] mb-4">Module scorecard</p>
               <div class="space-y-4">
-                {section.paragraphs.map((para) => (
-                  <p class="text-[var(--text-secondary)] leading-relaxed">
-                    {para}
-                  </p>
+                {(post.heroStats ?? [
+                  { label: 'Category', value: post.category, caption: 'Topic area', tone: 'blue' },
+                  { label: 'Read time', value: post.readTime.replace(' read', ''), caption: 'Fast scan', tone: 'green' },
+                ]).map((stat) => (
+                  <div class="flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] last:border-b-0 pb-4 last:pb-0">
+                    <div class="min-w-0">
+                      <p class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-[0.08em]">{stat.label}</p>
+                      {stat.caption && <p class="mt-1 text-sm text-[var(--text-tertiary)] leading-snug">{stat.caption}</p>}
+                    </div>
+                    <p class={`text-xl font-bold text-right shrink ${toneText(stat.tone)}`}>{stat.value}</p>
+                  </div>
                 ))}
               </div>
-            </section>
-          ))}
-        </div>
 
-        <footer class="mt-16 pt-10 border-t border-[var(--border)]">
-          <a
-            href="/blog"
-            class="inline-flex items-center gap-2 text-[var(--color-link)] font-semibold hover:underline"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            All posts
-          </a>
-          <div class="mt-10 flex flex-col sm:flex-row gap-4">
+              {post.relatedLinks && post.relatedLinks.length > 0 && (
+                <div class="mt-6 pt-5 border-t border-[var(--border)]">
+                  <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.14em] mb-3">Next links</p>
+                  <div class="flex flex-col gap-2">
+                    {post.relatedLinks.map((link) => (
+                      <a href={link.href} {...externalAttrs(link.href)} class="inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-royal-blue-600 hover:border-royal-blue-500/30 transition-colors">
+                        <span class="min-w-0">{link.label}</span>
+                        <span aria-hidden="true">-></span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </aside>
+          </div>
+        </div>
+      </header>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {hasVisualBlocks && post.content.length > 0 && (
+          <div class="max-w-3xl py-10">
+            {post.content.map((section) => (
+              <section class="mb-8 last:mb-0">
+                {section.title && (
+                  <h2 class="text-2xl font-bold text-[var(--text-primary)] tracking-[-0.02em] mb-4">
+                    {section.title}
+                  </h2>
+                )}
+                <div class="space-y-4">
+                  {section.paragraphs.map((para) => (
+                    <p class="text-lg text-[var(--text-secondary)] leading-relaxed">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+
+        {hasVisualBlocks ? (
+          <div class="space-y-0">
+            {visualBlocks.map((block) => (
+              <section class="py-10 sm:py-12 border-t border-[var(--border)]">
+                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 mb-7">
+                  <div class="max-w-3xl">
+                    {block.eyebrow && (
+                      <p class="text-sm font-bold text-royal-blue-600 uppercase tracking-[0.16em] mb-3">{block.eyebrow}</p>
+                    )}
+                    <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{block.title}</h2>
+                    {block.body && (
+                      <p class="mt-3 text-base sm:text-lg text-[var(--text-tertiary)] leading-relaxed">{block.body}</p>
+                    )}
+                  </div>
+                </div>
+
+                {block.type === 'metric-strip' && (
+                  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)]">
+                    {(block.metrics ?? []).map((metric) => (
+                      <div class="bg-[var(--surface)] p-5 sm:p-6 min-w-0">
+                        <p class={`text-3xl font-bold tracking-[-0.03em] ${toneText(metric.tone)}`}>{metric.value}</p>
+                        <p class="mt-2 text-sm font-bold text-[var(--text-primary)]">{metric.label}</p>
+                        {metric.caption && <p class="mt-1 text-sm text-[var(--text-tertiary)] leading-snug">{metric.caption}</p>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {block.type === 'step-cards' && (
+                  <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+                    {(block.steps ?? []).map((step) => (
+                      <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+                        <div class="flex items-center justify-between gap-4 mb-4">
+                          <span class="text-sm font-bold text-royal-blue-600">{step.label}</span>
+                          {step.metric && <span class="text-xs font-bold rounded-full bg-[var(--surface-alt)] border border-[var(--border)] px-2 py-1 text-[var(--text-muted)]">{step.metric}</span>}
+                        </div>
+                        <h3 class="text-lg font-bold text-[var(--text-primary)] leading-snug">{step.title}</h3>
+                        <p class="mt-3 text-sm text-[var(--text-tertiary)] leading-relaxed">{step.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {block.type === 'comparison' && (
+                  <div class="overflow-hidden rounded-2xl border border-[var(--border)]">
+                    <div class="grid sm:grid-cols-[180px_1fr_1fr] bg-[var(--surface-alt)] border-b border-[var(--border)]">
+                      <div class="hidden sm:block p-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">Signal</div>
+                      <div class="p-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">Surface read</div>
+                      <div class="p-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">Better owner read</div>
+                    </div>
+                    {(block.rows ?? []).map((row) => (
+                      <div class="grid sm:grid-cols-[180px_1fr_1fr] border-b border-[var(--border)] last:border-b-0">
+                        <div class="p-4 sm:p-5 bg-[var(--surface-alt)]">
+                          <p class="text-sm font-bold text-[var(--text-primary)]">{row.label}</p>
+                        </div>
+                        <div class="p-4 sm:p-5">
+                          <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{row.before}</p>
+                        </div>
+                        <div class="p-4 sm:p-5 border-t sm:border-t-0 sm:border-l border-[var(--border)]">
+                          <p class="text-sm font-semibold text-[var(--text-secondary)] leading-relaxed">{row.after}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {block.type === 'channel-map' && (
+                  <div class="grid lg:grid-cols-2 gap-4">
+                    {(block.channels ?? []).map((channel) => (
+                      <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+                        <div class="flex items-start justify-between gap-4">
+                          <h3 class="text-lg font-bold text-[var(--text-primary)]">{channel.name}</h3>
+                          <span class={`inline-flex text-xs font-bold px-2 py-1 rounded-full border ${toneBg(channel.tone)}`}>Channel</span>
+                        </div>
+                        <div class="mt-5 grid sm:grid-cols-3 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)]">
+                          <div class="bg-[var(--surface)] p-3">
+                            <p class="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">Job</p>
+                            <p class="mt-1 text-sm font-semibold text-[var(--text-secondary)] leading-snug">{channel.role}</p>
+                          </div>
+                          <div class="bg-[var(--surface)] p-3">
+                            <p class="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">Signal</p>
+                            <p class="mt-1 text-sm font-semibold text-[var(--text-secondary)] leading-snug">{channel.signal}</p>
+                          </div>
+                          <div class="bg-[var(--surface)] p-3">
+                            <p class="text-[10px] font-bold uppercase tracking-[0.1em] text-[var(--text-muted)]">Risk</p>
+                            <p class="mt-1 text-sm font-semibold text-[var(--text-secondary)] leading-snug">{channel.risk}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {block.type === 'report-preview' && (
+                  <div class="rounded-2xl border border-royal-blue-500/20 bg-royal-blue-500/5 p-6 sm:p-8">
+                    <div class="grid lg:grid-cols-[1fr_280px] gap-6 items-center">
+                      <div>
+                        <div class="grid sm:grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)] mb-6">
+                          {(block.metrics ?? []).map((metric) => (
+                            <div class="bg-[var(--surface)] p-4">
+                              <p class={`text-2xl font-bold ${toneText(metric.tone)}`}>{metric.value}</p>
+                              <p class="mt-1 text-sm font-bold text-[var(--text-primary)]">{metric.label}</p>
+                              {metric.caption && <p class="mt-1 text-xs text-[var(--text-tertiary)] leading-snug">{metric.caption}</p>}
+                            </div>
+                          ))}
+                        </div>
+                        {block.cta && (
+                          <a href={block.cta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors">
+                            {block.cta.label}
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
+                      <div class="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                        <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.12em]">Report preview</p>
+                        <div class="mt-4 h-28 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] p-3 flex flex-col justify-between">
+                          <div class="flex items-center justify-between gap-3">
+                            <span class="h-2.5 w-20 rounded-full bg-royal-blue-500/40"></span>
+                            <span class="h-2.5 w-12 rounded-full bg-royal-green-500/50"></span>
+                          </div>
+                          <div class="space-y-2">
+                            <span class="block h-2 rounded-full bg-amber-500/40 w-11/12"></span>
+                            <span class="block h-2 rounded-full bg-rose-500/30 w-8/12"></span>
+                            <span class="block h-2 rounded-full bg-violet-500/30 w-10/12"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {block.type === 'takeaway' && (
+                  <div class="rounded-2xl border border-royal-green-500/20 bg-royal-green-500/5 p-6 sm:p-8">
+                    <div class="grid lg:grid-cols-[280px_1fr] gap-6">
+                      <div>
+                        <p class="text-sm font-bold text-royal-green-700 uppercase tracking-[0.14em]">Owner takeaway</p>
+                        {block.body && <p class="mt-3 text-lg font-semibold text-[var(--text-primary)] leading-relaxed">{block.body}</p>}
+                      </div>
+                      <div class="grid sm:grid-cols-3 gap-3">
+                        {(block.bullets ?? []).map((bullet) => (
+                          <div class="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                            <p class="text-sm font-semibold text-[var(--text-secondary)] leading-relaxed">{bullet}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {block.type === 'source-note' && (
+                  <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface-alt)] p-5 sm:p-6">
+                    {block.links && block.links.length > 0 && (
+                      <div class="flex flex-wrap gap-2">
+                        {block.links.map((link) => (
+                          <a href={link.href} {...externalAttrs(link.href)} class="inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-royal-blue-600 hover:border-royal-blue-500/30 transition-colors">
+                            <span class="min-w-0">{link.label}</span>
+                            <span aria-hidden="true">-></span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            ))}
+          </div>
+        ) : (
+          <div class="max-w-3xl prose-blog">
+            {post.content.map((section) => (
+              <section class="mb-10">
+                {section.title && (
+                  <h2 class="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-[-0.02em] mb-4">
+                    {section.title}
+                  </h2>
+                )}
+                <div class="space-y-4">
+                  {section.paragraphs.map((para) => (
+                    <p class="text-[var(--text-secondary)] leading-relaxed">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+
+        <footer class="mt-10 pt-10 border-t border-[var(--border)]">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <a
-              href="/book-demo"
-              class="inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
+              href="/blog"
+              class="inline-flex items-center gap-2 text-[var(--color-link)] font-semibold hover:underline"
             >
-              Book a Demo
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
               </svg>
+              All modules
             </a>
-            <a
-              href="/signup"
-              class="inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg"
-            >
-              Start Free Trial
-            </a>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a
+                href={primaryCta.href}
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
+              >
+                {primaryCta.label}
+              </a>
+              <a
+                href="/book-demo"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg"
+              >
+                Book a Demo
+              </a>
+            </div>
           </div>
         </footer>
       </div>

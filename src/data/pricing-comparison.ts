@@ -1,64 +1,45 @@
 /**
- * Competitor analysis and detailed pricing data for the Pricing page.
- * Sourced from public pricing pages and positioning (Madgicx, Optmyzr, Smartly.io).
+ * Neutral pricing comparison and detailed plan data for the Pricing page.
  */
 
-export interface CompetitorRow {
+export interface PricingComparisonRow {
   name: string;
   pricingModel: string;
-  startingPrice: string;
-  platforms: string;
-  aiOptimization: string;
-  otaSupport: string;
-  crossChannel: string;
-  overagesOrExtra: string;
-  notes?: string;
+  visibility: string;
+  automation: string;
+  bestFit: string;
+  highlighted?: boolean;
 }
 
-export const competitors: CompetitorRow[] = [
+export const pricingComparisonRows: PricingComparisonRow[] = [
   {
     name: 'AdvertisingSystems',
-    pricingModel: 'Flat per ad account',
-    startingPrice: '$99/mo',
-    platforms: 'Google, Meta, OTAs, TikTok, LinkedIn, Bing, Pinterest',
-    aiOptimization: 'Unified cross-channel AI (50K+ signals)',
-    otaSupport: 'Yes — Booking.com, Expedia, TripAdvisor',
-    crossChannel: 'Single dashboard, one AI, one attribution',
-    overagesOrExtra: 'None — no per-click or % of spend',
-    notes: 'Part of Multisystems ecosystem (Hotel, Reputation)',
+    pricingModel: 'Flat monthly price by ad account count',
+    visibility: 'Google Ads, Meta Ads, OTAs, and reporting in one place',
+    automation: 'Cross-channel AI for budgets, bids, pacing, and reporting',
+    bestFit: 'Teams that need one source of truth for paid growth',
+    highlighted: true,
   },
   {
-    name: 'Madgicx',
-    pricingModel: 'Based on monthly ad spend',
-    startingPrice: 'From ~$99/mo',
-    platforms: 'Primarily Meta; limited Google',
-    aiOptimization: 'Meta-focused AI; Pro Complete plan',
-    otaSupport: 'No',
-    crossChannel: 'Within-platform only',
-    overagesOrExtra: 'Add-ons (e.g. Ad Library + AI ~$29/mo)',
-    notes: '7-day trial; good for Meta-heavy brands',
+    name: 'Manual spreadsheets',
+    pricingModel: 'Low software cost, high team time cost',
+    visibility: 'Data is copied from channel to channel after the fact',
+    automation: 'Manual checks, formulas, and delayed decisions',
+    bestFit: 'Very small accounts with limited spend and simple goals',
   },
   {
-    name: 'Optmyzr',
-    pricingModel: 'Tiered by ad spend + overages',
-    startingPrice: '$129–$649/mo',
-    platforms: 'Google, Microsoft (PPC focus)',
-    aiOptimization: 'Rules-based + some automation',
-    otaSupport: 'No',
-    crossChannel: 'PPC-focused; no Meta/OTA unification',
-    overagesOrExtra: 'Overage fees per $1K spend; $5/mo per extra account',
-    notes: 'Essential $249/mo “sweet spot”; overages can add cost',
+    name: 'Single-channel dashboards',
+    pricingModel: 'Each channel has its own workflow and reporting view',
+    visibility: 'Clear within one platform, weaker across total revenue impact',
+    automation: 'Optimizes inside one channel, not across the full mix',
+    bestFit: 'Teams focused on one primary ad platform',
   },
   {
-    name: 'Smartly.io',
-    pricingModel: '% of ad spend (enterprise)',
-    startingPrice: '~$3K+/mo (~$36K+/yr)',
-    platforms: 'Meta, TikTok, Pinterest, Snap, Google Display',
-    aiOptimization: 'Creative & scaling; managed or self-serve',
-    otaSupport: 'No',
-    crossChannel: 'Social/display; no OTA',
-    overagesOrExtra: 'Cost scales with spend; custom quotes',
-    notes: 'Enterprise-only; best for $50K+ monthly social spend',
+    name: 'Agency reporting',
+    pricingModel: 'Often bundled into retainers or service packages',
+    visibility: 'Periodic summaries instead of always-on operational control',
+    automation: 'Depends on analyst review, meetings, and reporting cadence',
+    bestFit: 'Teams that want outsourced management more than software control',
   },
 ];
 
@@ -90,15 +71,15 @@ export const planFeatureMatrix: PlanFeatureRow[] = [
 export const ourDifferentiators = [
   {
     title: 'One price, no surprises',
-    body: 'We charge by ad account count — not by ad spend, not by percentage. No overage fees, no per-click add-ons. What you see is what you pay.',
+    body: 'We charge by ad account count, not by ad spend or percentage. No overage fees, no per-click add-ons. What you see is what you pay.',
   },
   {
     title: 'Google + Meta + OTAs in one place',
-    body: 'Competitors focus on one or two channels. We unify Google Ads, Meta Ads, and OTA campaigns (Booking.com, Expedia, TripAdvisor) in a single AI and dashboard.',
+    body: 'Most teams lose time reconciling separate dashboards. We unify Google Ads, Meta Ads, and OTA campaigns (Booking.com, Expedia, TripAdvisor) in a single AI and dashboard.',
   },
   {
     title: 'True cross-channel AI',
-    body: 'Our AI optimizes across all connected accounts every 15 minutes — shifting budget and bids where they perform best, not just within a single platform.',
+    body: 'Our AI optimizes across all connected accounts every 15 minutes, shifting budget and bids where they perform best instead of staying trapped inside one platform.',
   },
   {
     title: 'Built for travel and every vertical',
@@ -108,8 +89,8 @@ export const ourDifferentiators = [
 
 export const pricingPageFaqs = [
   {
-    question: 'How is your pricing different from Madgicx or Optmyzr?',
-    answer: 'Madgicx ties price to ad spend; Optmyzr uses tiers plus overage fees and per-account add-ons. We use a flat monthly price by number of ad accounts. No percentage of spend, no overages, no hidden add-ons. Same AI and features on every plan.',
+    question: 'How is your pricing different from single-channel ad tools?',
+    answer: 'AdvertisingSystems uses a flat monthly price by ad account count. You get unified Google Ads, Meta Ads, OTA reporting, AI optimization, and cross-channel analytics without percentage-of-spend pricing, overage fees, or hidden add-ons.',
   },
   {
     question: 'What counts as an "ad account"?',
@@ -124,8 +105,8 @@ export const pricingPageFaqs = [
     answer: "Yes. You can choose annual billing for a discount. The option appears at signup or in your account settings. We don't require long-term contracts.",
   },
   {
-    question: 'What\'s included in the free trial?',
-    answer: 'Full access to the plan you choose for 14 days — all modules, AI optimization, integrations, and support. No credit card required. Connect your accounts and see results before paying.',
+    question: "What's included in the free trial?",
+    answer: 'Full access to the plan you choose for 14 days, including all modules, AI optimization, integrations, and support. No credit card required. Connect your accounts and see results before paying.',
   },
   {
     question: 'Can I switch plans later?',

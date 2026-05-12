@@ -37,6 +37,7 @@
     body { overflow: auto; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; }
+    h1, h2, h3, p, a, span, td, th, div { overflow-wrap: break-word; }
     .app { min-height: 100vh; background: var(--bg); }
     .main { width: min(1280px, 100%); margin: 0 auto; }
     .topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 30px 28px 16px; }
@@ -156,6 +157,29 @@
       table { min-width: 740px; }
       .c-booking, .c-meta { right: -6px; }
       .c-expedia, .c-google { left: -6px; }
+    }
+    @media (max-width: 480px) {
+      .topbar { gap: 14px; padding-inline: 12px; }
+      .header-left, .brand-home, .controls, .control, .primary, .seg { width: 100%; }
+      .brand-home { align-items: center; }
+      .title { display: block; font-size: 24px; letter-spacing: -0.35px; }
+      .subtitle { font-size: 12px; line-height: 1.45; }
+      .controls { align-items: stretch; }
+      .control, .primary { justify-content: center; min-height: 40px; height: auto; padding-block: 9px; text-align: center; }
+      .seg span { flex: 1; padding-inline: 8px; }
+      .content { padding-inline: 12px; }
+      .section-head, .table-head, .xpr-top { flex-direction: column; align-items: stretch; }
+      .tag { width: fit-content; max-width: 100%; min-height: 28px; height: auto; padding-block: 6px; white-space: normal; }
+      .legend { flex-wrap: wrap; gap: 10px; }
+      .platform { min-height: auto; }
+      .pie-area { min-height: 220px; }
+      .pie-wrap { width: min(220px, 76vw); }
+      .callouts { display: none; }
+      .platform-row { grid-template-columns: 1fr; }
+      .platform-metrics, .xpr-metrics { grid-template-columns: 1fr; gap: 8px; }
+      .roas { justify-self: start; }
+      .insight { grid-template-columns: 1fr; }
+      .insight-num { margin-bottom: -2px; }
     }
   </style>
 </head>
