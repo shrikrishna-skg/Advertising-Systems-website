@@ -486,14 +486,27 @@ const locationOptions = [
       delete body.preferred_time;
 
       try {
+        const sessionId = window.posthog?.get_session_id?.() || '';
+        var analyticsConsent = '';
+        try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
         const res = await fetch(form.action, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-PostHog-Session-Id': sessionId,
+            'X-Analytics-Consent': analyticsConsent,
+          },
           body: JSON.stringify(body),
         });
         const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
+          const email = body.email || '';
+          if (email) window.posthog?.identify(email, { company: body.company || undefined });
+          window.posthog?.capture('demo_form_submitted', {
+            has_preferred_datetime: Boolean(body.preferred_datetime),
+            number_of_locations: body.number_of_locations || undefined,
+          });
           messageEl.textContent = data.message || "Thanks! We'll be in touch to confirm your demo.";
           messageEl.className = 'text-sm rounded-lg p-3 bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--border)]';
           messageEl.classList.remove('hidden');
@@ -506,11 +519,14 @@ const locationOptions = [
 	          }
           renderCalendar();
         } else {
+          window.posthog?.capture('demo_form_errored', { error_message: data.error || 'unknown' });
           messageEl.textContent = data.error || 'Something went wrong. Please try again or email us.';
           messageEl.className = 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700';
           messageEl.classList.remove('hidden');
         }
-      } catch {
+      } catch (err) {
+        window.posthog?.capture('demo_form_errored', { error_message: 'network_error' });
+        window.posthog?.captureException?.(err);
         messageEl.textContent = 'Network error. Please try again.';
         messageEl.className = 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700';
         messageEl.classList.remove('hidden');

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { google } from 'googleapis';
 import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse } from '../../lib/server-security';
+import { getPostHogServer } from '../../lib/posthog-server';
 
 const OFFERED_SLOTS = new Set(['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00']);
 const DEMO_TIME_ZONE = import.meta.env.DEMO_TIME_ZONE || 'America/Chicago';
@@ -204,6 +205,33 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse({ error: errors[0] }, 400);
   }
 
+  const analyticsConsent = request.headers.get('X-Analytics-Consent') === 'accepted';
+  const sessionId = request.headers.get('X-PostHog-Session-Id') || undefined;
+  const posthog = analyticsConsent ? getPostHogServer() : null;
+  const distinctId = email.value!;
+
+  posthog?.capture({
+    distinctId,
+    event: 'demo_requested',
+    properties: {
+      $session_id: sessionId,
+      company: company.value,
+      has_phone: Boolean(phone.value),
+      has_preferred_datetime: Boolean(preferredDatetime.value),
+      number_of_locations: numberOfLocations.value,
+      source: 'api',
+    },
+  });
+
+  posthog?.identify({
+    distinctId,
+    properties: {
+      email: email.value,
+      name: name.value,
+      company: company.value,
+    },
+  });
+
   const calendarResult = await createCalendarEvent({
     name: name.value!,
     email: email.value!,
@@ -217,6 +245,15 @@ export const POST: APIRoute = async ({ request }) => {
   });
 
   if (calendarResult.success) {
+    posthog?.capture({
+      distinctId,
+      event: 'demo_calendar_booked',
+      properties: {
+        $session_id: sessionId,
+        calendar_event_id: calendarResult.eventId,
+        source: 'api',
+      },
+    });
     return jsonResponse({
       success: true,
       message: "Thanks! We've received your request and will confirm your demo time shortly.",

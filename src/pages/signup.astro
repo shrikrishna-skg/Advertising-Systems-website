@@ -157,3 +157,18 @@ const whatYouGet = [
   </main>
   <Footer />
 </Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('form[action*="app.advertisingsystems.ai/signup"]');
+    if (!form) return;
+    form.addEventListener('submit', function() {
+      var email = form.querySelector('#email')?.value?.trim();
+      var company = form.querySelector('#company')?.value?.trim();
+      if (email) window.posthog?.identify(email, { company: company || undefined });
+      window.posthog?.capture('signup_form_submitted', {
+        has_company: Boolean(company),
+      });
+    });
+  });
+</script>

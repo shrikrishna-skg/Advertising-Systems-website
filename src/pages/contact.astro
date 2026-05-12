@@ -241,3 +241,19 @@ const contactInfo = [
   </main>
   <Footer />
 </Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('form[aria-label="Contact form"]');
+    if (!form) return;
+    form.addEventListener('submit', function() {
+      var email = form.querySelector('#email')?.value?.trim();
+      var company = form.querySelector('#company')?.value?.trim();
+      if (email) window.posthog?.identify(email, { company: company || undefined });
+      window.posthog?.capture('contact_form_submitted', {
+        has_company: Boolean(company),
+        has_phone: Boolean(form.querySelector('#phone')?.value?.trim()),
+      });
+    });
+  });
+</script>

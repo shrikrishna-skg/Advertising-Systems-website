@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { faqs } from '../data/faq';
+import PostHog from '../components/posthog.astro';
 
 interface BreadcrumbItem {
   name: string;
@@ -172,6 +173,9 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet" />
 
+    <!-- PostHog analytics -->
+    <PostHog />
+
     <!-- Apply saved theme before paint to avoid flash (site-wide dark mode) -->
     <script is:inline>
       (function() {
@@ -297,6 +301,7 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
 	            setConsent('accepted');
 	            hideBanner();
 	            loadMarketingTools();
+	            window.dispatchEvent(new CustomEvent('ads-cookie-consent-accepted'));
 	          });
 	          decline.addEventListener('click', function() {
 	            setConsent('declined');

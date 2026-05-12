@@ -131,3 +131,17 @@ import { AnimatedHero } from './ui/animated-hero';
 
   <div class="section-line mt-32"></div>
 </section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var heroCtas = document.querySelectorAll('.btn-cta-primary[href="/signup"], a.link-secondary[href="/book-demo"]');
+    heroCtas.forEach(function(el) {
+      el.addEventListener('click', function() {
+        window.posthog?.capture('hero_cta_clicked', {
+          cta_text: el.textContent?.trim(),
+          cta_href: el.getAttribute('href'),
+        });
+      });
+    });
+  });
+</script>

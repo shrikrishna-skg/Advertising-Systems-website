@@ -308,3 +308,18 @@ function formatCell(value: boolean | string): string {
   </main>
   <Footer />
 </Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('#plans article a[href]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        var planName = el.closest('article')?.querySelector('h3')?.textContent?.trim();
+        window.posthog?.capture('pricing_plan_selected', {
+          plan_name: planName,
+          cta_text: el.textContent?.trim(),
+          cta_href: el.getAttribute('href'),
+        });
+      });
+    });
+  });
+</script>

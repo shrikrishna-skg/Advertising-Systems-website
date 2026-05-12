@@ -29,3 +29,18 @@
     <p class="reveal mt-6 text-sm font-medium text-[var(--text-muted)]">No credit card required · 14-day free trial · Cancel anytime</p>
   </div>
 </section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var finalCtaSection = document.querySelector('[aria-labelledby="cta-heading"]');
+    if (!finalCtaSection) return;
+    finalCtaSection.querySelectorAll('a[href]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        window.posthog?.capture('final_cta_clicked', {
+          cta_text: el.textContent?.trim(),
+          cta_href: el.getAttribute('href'),
+        });
+      });
+    });
+  });
+</script>
