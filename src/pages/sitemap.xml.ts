@@ -26,6 +26,7 @@ const pages = [
 
   // Sample report (lead gen)
   { url: '/sample-report', priority: '0.8', changefreq: 'monthly' },
+  { url: '/expedia-report', priority: '0.7', changefreq: 'monthly' },
 
   // Competitor comparisons
   { url: '/vs/google-ads', priority: '0.8', changefreq: 'monthly' },

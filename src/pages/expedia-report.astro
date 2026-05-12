@@ -1,0 +1,39 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Read the Expedia report HTML and strip the outer html/head/body tags so we can inject it cleanly.
+const raw = readFileSync(join(process.cwd(), 'public/sample-report-embed.html'), 'utf-8');
+
+const bodyMatch = raw.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+const bodyContent = bodyMatch ? bodyMatch[1] : raw;
+
+const styleMatches = [...raw.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)];
+const styles = styleMatches.map((m) => m[0]).join('\n');
+
+const chartScript = raw.includes('chart.js') ? '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>' : '';
+
+const fontLink = raw.includes('fonts.googleapis.com')
+  ? '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap" rel="stylesheet">'
+  : '';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light only" />
+  <title>Expedia Ads Report — Best Western Davison Inn · April 2026 | AdvertisingSystems</title>
+  <meta name="description" content="Real Expedia TravelAds report for Best Western Davison Inn · April 2026. $432 ad spend → $9,525 revenue → 22:1 ROAS. See the full booking funnel, daily trends, AI recommendations, and reputation insights." />
+  <Fragment set:html={fontLink} />
+  <Fragment set:html={chartScript} />
+  <Fragment set:html={styles} />
+  <style>
+    body { margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+  <Fragment set:html={bodyContent} />
+</body>
+</html>
