@@ -1,14 +1,14 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = () => {
-  const llmsTxt = `# AdvertisingSystems.ai
+  const llmsTxt = `# Advertising Systems
 > AI-Powered Advertising Management Platform by Multisystems
 
-## What is AdvertisingSystems?
-AdvertisingSystems is an AI-powered advertising management platform that unifies Google Ads, Meta Ads, and OTA (Online Travel Agency) advertising campaigns into a single intelligent dashboard. It automates campaign optimization, provides real-time analytics, and uses AI to maximize return on ad spend (ROAS).
+## What is Advertising Systems?
+Advertising Systems is an AI-powered advertising management platform that unifies Google Ads, Meta Ads, and OTA (Online Travel Agency) advertising campaigns into a single intelligent dashboard. It automates campaign optimization, provides real-time analytics, and uses AI to maximize return on ad spend (ROAS).
 
 ## Parent Company
-Multisystems (https://multisystems.ai) — builds AI operating systems for service-driven businesses. AdvertisingSystems is part of the Multisystems product ecosystem alongside Hotel Systems and ReputationSystems.
+Multisystems (https://multisystems.ai) — builds AI operating systems for service-driven businesses. Advertising Systems is part of the Multisystems product ecosystem alongside Hotel Systems and ReputationSystems.
 
 ## Core Features
 - Multi-Platform Campaign Management: Manage Google Ads, Meta Ads (Facebook/Instagram), and OTA campaigns from one dashboard

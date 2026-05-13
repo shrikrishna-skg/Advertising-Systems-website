@@ -25,6 +25,7 @@
     "googleapis": "^171.4.0",
     "html-escaper": "^3.0.3",
     "lucide-react": "^0.577.0",
+    "nodemailer": "^8.0.7",
     "posthog-node": "^5.34.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -39,5 +40,8 @@
     "minimatch@9.0.9": {
       "brace-expansion": "^2.0.3"
     }
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.0"
   }
 }

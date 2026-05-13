@@ -64,9 +64,9 @@ export const decisionGuides: DecisionGuide[] = [
     category: 'Expedia',
     excerpt:
       'A hotel-first guide to Expedia TravelAds, paid placement, automated bidding, traveler intent targeting, and the reporting needed to prove incremental room nights.',
-    metaTitle: 'Expedia TravelAds Guide for Hotels | AdvertisingSystems',
+    metaTitle: 'Expedia TravelAds Guide for Hotels | Advertising Systems',
     metaDescription:
-      'Learn when hotels should use Expedia TravelAds, how paid visibility works, what changes near the top of Expedia search, and how AdvertisingSystems reports ROAS.',
+      'Learn when hotels should use Expedia TravelAds, how paid visibility works, what changes near the top of Expedia search, and how Advertising Systems reports ROAS.',
     primaryCta: { label: 'View Expedia Report', href: '/expedia-report' },
     secondaryCta: { label: 'Book a Demo', href: '/book-demo' },
     heroStats: [
@@ -157,7 +157,7 @@ export const decisionGuides: DecisionGuide[] = [
     table: {
       title: 'When Expedia TravelAds is usually worth testing',
       intro: 'Use TravelAds when the hotel has demand to capture and a clear reason to pay for visibility.',
-      columns: ['Hotel situation', 'Why TravelAds can help', 'AdvertisingSystems guardrail'],
+      columns: ['Hotel situation', 'Why TravelAds can help', 'Advertising Systems guardrail'],
       rows: [
         ['Low occupancy dates', 'Buy visibility only where unsold rooms need demand', 'Pace budget by stay date and pickup'],
         ['Event or seasonal windows', 'Reach travelers searching around compressed demand', 'Watch CPC, revenue, and sell-through together'],
@@ -197,7 +197,7 @@ export const decisionGuides: DecisionGuide[] = [
     category: 'Booking.com',
     excerpt:
       'A practical guide to Booking Sponsored Listings, CPC auctions, Publisher Score, targeting controls, sponsored placements, and ROAS reporting.',
-    metaTitle: 'Booking Sponsored Listings Guide for Hotels | AdvertisingSystems',
+    metaTitle: 'Booking Sponsored Listings Guide for Hotels | Advertising Systems',
     metaDescription:
       'Learn how Booking Sponsored Listings work, why CPC bid and Publisher Score matter, and how hotels should report sponsored placement performance.',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -330,7 +330,7 @@ export const decisionGuides: DecisionGuide[] = [
     category: 'OTA strategy',
     excerpt:
       'A side-by-side guide for deciding when Expedia TravelAds, Booking Sponsored Listings, or both should be part of a hotel advertising mix.',
-    metaTitle: 'Expedia vs Booking Hotel Ads | AdvertisingSystems Decision Guide',
+    metaTitle: 'Expedia vs Booking Hotel Ads | Advertising Systems Decision Guide',
     metaDescription:
       'Compare Expedia TravelAds and Booking Sponsored Listings as hotel advertising channels, including visibility, targeting, bidding, reporting, and ROAS guardrails.',
     primaryCta: { label: 'View Expedia Report', href: '/expedia-report' },
@@ -415,7 +415,7 @@ export const decisionGuides: DecisionGuide[] = [
             label: 'More learning',
             title: 'The report reveals which OTA deserves the next dollar',
             body:
-              'AdvertisingSystems should compare OTA spend, revenue, room nights, ROAS, and missed opportunities in one view.',
+              'Advertising Systems should compare OTA spend, revenue, room nights, ROAS, and missed opportunities in one view.',
           },
         ],
       },
@@ -458,7 +458,7 @@ export const decisionGuides: DecisionGuide[] = [
     category: 'OTA strategy',
     excerpt:
       'A hotel advertising guide for using Expedia and Booking spend to fill the right dates without buying demand the hotel would have earned naturally.',
-    metaTitle: 'OTA Ads for Low Occupancy Hotels | AdvertisingSystems',
+    metaTitle: 'OTA Ads for Low Occupancy Hotels | Advertising Systems',
     metaDescription:
       'Learn how hotels should use Expedia and Booking advertising during low occupancy, event windows, weak weekdays, and shoulder dates.',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },

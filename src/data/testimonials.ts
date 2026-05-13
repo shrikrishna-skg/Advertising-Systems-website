@@ -1,7 +1,7 @@
 export const testimonials = [
   {
     quote:
-      "We were spending $8K/month across Google and Meta with a 1.9x ROAS. AdvertisingSystems brought us to 5.2x in 47 days. The AI found wasted spend we didn't even know existed.",
+      "We were spending $8K/month across Google and Meta with a 1.9x ROAS. Advertising Systems brought us to 5.2x in 47 days. The AI found wasted spend we didn't even know existed.",
     name: "David Kim",
     role: "Owner, Pacific Coast Hotels (3 Properties)",
     stars: 5,

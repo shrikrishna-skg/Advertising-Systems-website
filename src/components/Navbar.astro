@@ -22,7 +22,7 @@ const featureDropdownItems = [
 <header class="fixed top-0 left-0 right-0 z-50 bg-[var(--nav-bg)] backdrop-blur-2xl border-b border-[var(--nav-border)] transition-colors duration-300 min-w-0 overflow-visible" role="banner">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[76px] flex items-center justify-between gap-2 min-w-0" aria-label="Main navigation">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 sm:gap-2.5 shrink-0 min-w-0" aria-label="AdvertisingSystems home">
+    <a href="/" class="flex items-center gap-2 sm:gap-2.5 shrink-0 min-w-0" aria-label="Advertising Systems home">
       <svg class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 text-[var(--text-primary)]" viewBox="10 -1 44 58" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M26 16 A8 8 0 0 1 38 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.4"/>
         <path d="M22 11 A13 11 0 0 1 42 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.22"/>
@@ -39,7 +39,7 @@ const featureDropdownItems = [
         <circle cx="50" cy="54" r="2.8" fill="currentColor" opacity="0.5"/>
       </svg>
       <div class="flex flex-col min-w-0">
-        <span class="text-base sm:text-lg font-bold text-[var(--text-primary)] leading-tight tracking-[-0.02em] truncate">Advertising<span class="text-[var(--text-primary)]">Systems</span></span>
+        <span class="text-base sm:text-lg font-bold text-[var(--text-primary)] leading-tight tracking-[-0.02em] truncate">Advertising Systems</span>
         <span class="text-[9px] sm:text-[10px] font-medium text-[var(--text-muted)] uppercase tracking-[0.1em] leading-none hidden sm:block">by Multisystems</span>
       </div>
     </a>
@@ -164,7 +164,7 @@ const featureDropdownItems = [
     </div>
 
     <!-- Mobile menu toggle -->
-    <label for="mobile-menu-toggle" class="flex lg:hidden cursor-pointer p-2 -mr-2 touch-target shrink-0" aria-label="Toggle menu">
+    <label for="mobile-menu-toggle" class="flex items-center justify-center lg:!hidden cursor-pointer p-2 -mr-2 touch-target shrink-0" aria-label="Toggle menu">
       <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
@@ -177,14 +177,14 @@ const featureDropdownItems = [
 <div class="fixed inset-0 z-40 bg-[var(--surface)] pt-16 sm:pt-[76px] pb-safe transform translate-x-full peer-checked:translate-x-0 transition-transform duration-300 lg:hidden overflow-y-auto" role="dialog" aria-label="Mobile navigation">
   <nav class="p-4 sm:p-6 flex flex-col gap-2 container-padding" aria-label="Mobile navigation">
     {navLinks.map((link) => (
-      <a href={link.href} class="text-lg font-medium text-[var(--text-tertiary)] py-3 border-b border-[var(--border)] hover:text-royal-blue-500 transition-colors touch-target w-full">
+      <a href={link.href} class="flex items-center text-lg font-medium text-[var(--text-tertiary)] py-3 border-b border-[var(--border)] hover:text-royal-blue-500 transition-colors touch-target w-full">
         {link.text}
       </a>
     ))}
     <div class="flex flex-col gap-3 mt-6">
-      <a href="https://app.advertisingsystems.ai/login" class="text-center text-sm font-medium text-[var(--color-link)] py-3 touch-target">Sign in</a>
+      <a href="https://app.advertisingsystems.ai/login" class="flex items-center justify-center text-center text-sm font-medium text-[var(--color-link)] py-3 touch-target">Sign in</a>
       <a href="https://app.advertisingsystems.ai/signup" class="btn-cta-primary text-center text-sm font-semibold text-white bg-royal-green-500 hover:bg-royal-green-600 px-4 py-3 rounded-lg">Sign Up</a>
-      <a href="/book-demo" class="text-center text-sm font-medium text-[var(--text-secondary)] py-3 touch-target">Book a Demo</a>
+      <a href="/book-demo" class="flex items-center justify-center text-center text-sm font-medium text-[var(--text-secondary)] py-3 touch-target">Book a Demo</a>
     </div>
   </nav>
 </div>

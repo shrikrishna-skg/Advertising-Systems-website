@@ -1,4 +1,4 @@
-# AdvertisingSystems UI Plan — Inspired by ReputationSystems.ai, Royal Green Theme
+# Advertising Systems UI Plan — Inspired by ReputationSystems.ai, Royal Green Theme
 
 ## 1. Reference: ReputationSystems.ai
 
@@ -6,7 +6,7 @@
 | Section | Purpose |
 |--------|---------|
 | **Hero** | Trust badge (“Trusted by 100+…”), one clear problem headline, short value prop, dual CTA (Get Started / Book Demo), trust line (no CC, setup in minutes) |
-| **Trust bar** | 3 short trust pills (Bank-level Security, 100+ Businesses, 99.9% Uptime) |
+| **Trust bar** | Short neutral trust proof, such as businesses served or support availability |
 | **Stats** | 4 metrics in cards (e.g. 10,000+ Reviews, 95% Response Rate, +0.4★, 8hrs/wk Saved) |
 | **Pain points** | “Does this sound familiar?” — 3 cards with quote + short title (Review Overload, Sinking Ratings, Time-Consuming Responses), then “There’s a better way” |
 | **Features** | 3 main features, each: title, subtitle, 3 bullets, quote, CTA link; icons/logos for platforms |
@@ -18,14 +18,14 @@
 
 ### UX patterns
 - **Dual CTAs**: Primary (Get Started / Start Free Trial) + secondary (Book a Demo); both often repeated.
-- **Trust**: No credit card, setup in minutes, cancel anytime; security/uptime/support badges.
+- **Trust**: No credit card, setup in minutes, cancel anytime; neutral proof and support notes.
 - **Social proof**: “100+ businesses”, concrete metrics (reviews, response rate, time saved).
 - **Feature pages**: Deep-dive per feature (hero, problem bullets, “how we solve it”, feature list, related features, integrations, FAQ, CTA).
 - **Book-demo page**: Two paths — “Start Free Trial” vs “Book a Personalized Demo” with short benefit list.
 
 ---
 
-## 2. AdvertisingSystems alignment
+## 2. Advertising Systems alignment
 
 Your site already follows the same flow. Keep this order and intent; only refine content and visuals.
 
@@ -105,7 +105,7 @@ Replace current emerald/blue with a single **royal green** family. Use these as 
 
 ### Optional (from ReputationSystems)
 
-- [ ] Add 3 trust pills under or over StatsBar (e.g. “Bank-level Security”, “100+ Businesses”, “99.9% Uptime”).
+- [ ] Add neutral trust proof under or over StatsBar, avoiding unverified security or uptime claims.
 - [ ] Ensure book-demo page has two paths: “Start Free Trial” and “Book a Demo” with short bullets.
 - [ ] Feature subpages: same content pattern (hero, problem list, solution, feature list, related features, FAQ, CTA).
 

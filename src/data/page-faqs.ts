@@ -4,16 +4,16 @@
  */
 
 export const aboutFaqs = [
-  { question: 'Who is behind AdvertisingSystems?', answer: "AdvertisingSystems is built by Multisystems, the same team behind Hotel Systems and ReputationSystems. We're a distributed team of engineers, data scientists, and marketers focused on making advertising profitable and effortless for businesses of every size." },
+  { question: 'Who is behind Advertising Systems?', answer: "Advertising Systems is built by Multisystems, the same team behind Hotel Systems and ReputationSystems. We're a distributed team of engineers, data scientists, and marketers focused on making advertising profitable and effortless for businesses of every size." },
   { question: 'How long have you been in business?', answer: "We've been powering advertising and revenue systems for years. Today we manage $5.2B+ in ad spend across 2,000+ businesses in 30+ countries." },
-  { question: 'Where is AdvertisingSystems available?', answer: 'AdvertisingSystems is available globally. Our platform supports ad accounts in the regions supported by Google Ads, Meta Ads, and major OTAs. Support is offered in English with more languages coming.' },
+  { question: 'Where is Advertising Systems available?', answer: 'Advertising Systems is available globally. Our platform supports ad accounts in the regions supported by Google Ads, Meta Ads, and major OTAs. Support is offered in English with more languages coming.' },
   { question: 'What makes you different from other ad tech companies?', answer: "We unify Google, Meta, and OTA advertising in one AI engine and one dashboard. We're also part of the Multisystems ecosystem, so your ads can connect to reputation and revenue systems." },
-  { question: 'Do you work with agencies?', answer: 'Yes. Agencies use AdvertisingSystems to manage multiple client accounts, get unified reporting, and deliver better ROAS. Contact us for agency-specific pricing and workflows.' },
+  { question: 'Do you work with agencies?', answer: 'Yes. Agencies use Advertising Systems to manage multiple client accounts, get unified reporting, and deliver better ROAS. Contact us for agency-specific pricing and workflows.' },
   { question: 'What industries do you serve?', answer: 'We serve travel and hospitality, e-commerce, SaaS, and any business running paid campaigns across Google, Meta, or OTAs. Case studies span these verticals.' },
   { question: 'Is there a free trial?', answer: 'Yes. 14-day free trial with full access to your chosen plan. No credit card required. You can connect accounts and see AI recommendations before paying.' },
   { question: 'How do I get in touch with the team?', answer: 'Use the Contact page or book a demo. For support, log in to your account or email the address in your plan. Enterprise has dedicated channels.' },
   { question: 'Where is your company headquartered?', answer: 'Multisystems operates as a distributed company. Our team is spread across time zones; you can reach us via contact form, email, or demo booking.' },
-  { question: 'Do you have a partner or reseller program?', answer: "We work with select partners. If you're interested in reselling or referring AdvertisingSystems, reach out via the contact form and we'll follow up." },
+  { question: 'Do you have a partner or reseller program?', answer: "We work with select partners. If you're interested in reselling or referring Advertising Systems, reach out via the contact form and we'll follow up." },
 ];
 
 export const contactFaqs = [
@@ -62,7 +62,7 @@ export const caseStudiesFaqs = [
   { question: 'Are the numbers in case studies verified?', answer: 'Yes. Results are based on real customer data. We use anonymized or permission-based metrics and don’t exaggerate outcomes.' },
   { question: 'Can I talk to a reference customer?', answer: 'We can sometimes connect you with a reference in your industry after you’re in a serious evaluation stage. Ask your demo or sales contact.' },
   { question: 'What if my results are different?', answer: 'Results vary by industry, spend, and starting point. We provide benchmarks and a free audit so you have realistic expectations before you start.' },
-  { question: 'Do you have travel or hospitality case studies?', answer: 'Yes. We have examples from hotels, OTAs, and travel brands using AdvertisingSystems for Google, Meta, and OTA campaigns.' },
+  { question: 'Do you have travel or hospitality case studies?', answer: 'Yes. We have examples from hotels, OTAs, and travel brands using Advertising Systems for Google, Meta, and OTA campaigns.' },
   { question: 'What metrics do you typically report?', answer: 'We often report ROAS, CPA, time saved, and revenue impact. Exact metrics depend on what the customer cared about most.' },
   { question: 'Can I use a case study in my own materials?', answer: 'Contact us for permission. We often allow quotes or summaries with attribution and approval.' },
   { question: 'How do I get results like these?', answer: 'Start with a demo or free trial. Connect your accounts, follow the AI recommendations, and use the playbooks we share. Our team can help you set goals.' },
@@ -110,14 +110,14 @@ export const signupFaqs = [
 export const bookDemoFaqs = [
   { question: 'Is the demo really free?', answer: 'Yes. The demo is free and there’s no obligation. We show you the platform and discuss how it could work for your business.' },
   { question: 'How long is the demo?', answer: 'About 30 minutes. We’ll walk through the modules that matter most to you and leave time for your questions.' },
-  { question: 'What if I need to reschedule?', answer: 'Reply to the confirmation email or contact us. We’re happy to find another time that works.' },
+  { question: 'What if I need to reschedule?', answer: 'Reply to the confirmation email or calendar invite. We’re happy to find another time that works.' },
   { question: 'Who will I meet with?', answer: 'A product specialist or solutions lead who knows the platform and can answer technical and commercial questions.' },
   { question: 'Can I invite my team?', answer: 'Yes. Include their email when you book or reply to the confirmation, and we’ll send them the meeting link.' },
   { question: 'Do you do demos in my time zone?', answer: 'We schedule across time zones. When you book, you’ll see available slots; we’ll work to find a time that fits.' },
   { question: 'What do I need to prepare?', answer: 'Nothing required. If you have ad account metrics or goals in mind, that helps us tailor the walkthrough.' },
-  { question: 'Will you try to sell me something?', answer: 'We’ll show you the product and discuss fit and pricing. There’s no pressure; the goal is to help you decide if AdvertisingSystems is right for you.' },
+  { question: 'Will you try to sell me something?', answer: 'We’ll show you the product and discuss fit and pricing. There’s no pressure; the goal is to help you decide if Advertising Systems is right for you.' },
   { question: 'Can I get a recorded demo?', answer: 'We focus on live demos so we can answer your questions. We can share short product videos separately if that helps.' },
-  { question: 'What happens after the demo?', answer: 'You’ll get a follow-up email with next steps, trial link if you want to try it, and our contact info for any further questions.' },
+  { question: 'What happens after the demo?', answer: 'You’ll get a follow-up email with next steps, a trial link if you want to try it, and our contact info for any further questions.' },
 ];
 
 export const securityFaqs = [
@@ -135,7 +135,7 @@ export const securityFaqs = [
 
 export const featuresIndexFaqs = [
   { question: 'Do I need all five modules?', answer: 'You get access to all modules on your plan. Most customers use Campaign Intelligence and AI Optimization from day one, then adopt Analytics, Automation, and Budget Allocator as they scale.' },
-  { question: 'How is this different from using each platform alone?', answer: 'AdvertisingSystems unifies Google, Meta, and OTAs in one place — one AI, one dashboard, one attribution view. You avoid switching tabs and manual reporting while the AI optimizes across channels.' },
+  { question: 'How is this different from using each platform alone?', answer: 'Advertising Systems unifies Google, Meta, and OTAs in one place — one AI, one dashboard, one attribution view. You avoid switching tabs and manual reporting while the AI optimizes across channels.' },
   { question: 'Can I try before I buy?', answer: 'Yes. Start a 14-day free trial with no credit card. You can connect accounts and use all modules. Book a demo if you want a guided walkthrough.' },
   { question: 'What is Campaign Intelligence?', answer: 'It’s your single command center: create and manage campaigns across Google, Meta, and OTAs from one dashboard instead of logging into each platform.' },
   { question: 'What is the AI Optimization Engine?', answer: 'It automatically adjusts bids, budgets, and targeting across connected accounts every 15 minutes using reinforcement learning and your performance data.' },
@@ -151,11 +151,11 @@ export const featureSubpageFaqs = [
   { question: 'How do I get access to this feature?', answer: 'All plans include access to our core modules. Connect your ad accounts in the dashboard and the feature is available. Book a demo if you want a walkthrough.' },
   { question: 'Does this work with my ad platforms?', answer: 'Yes for Google Ads, Meta Ads, and major OTAs (Booking.com, Expedia, TripAdvisor). We add new integrations regularly. Check the Integrations page for the full list.' },
   { question: 'Where can I see pricing?', answer: 'See our Pricing Intelligence page or the pricing section on the homepage. Plans are based on the number of ad accounts; there are no per-click or hidden fees.' },
-  { question: 'Do I need to install anything?', answer: 'No. AdvertisingSystems is a cloud platform. You connect accounts via OAuth in the browser; no desktop install or plugin required.' },
+  { question: 'Do I need to install anything?', answer: 'No. Advertising Systems is a cloud platform. You connect accounts via OAuth in the browser; no desktop install or plugin required.' },
   { question: 'How long until I see results?', answer: 'Most customers see meaningful improvements within 30–90 days. The AI starts optimizing soon after you connect; results depend on your starting point and spend.' },
   { question: 'Can I turn off or limit the AI?', answer: 'Yes. You can set guardrails, approval workflows, or manual-only mode. You stay in control of how much the system automates.' },
   { question: 'Does this replace my existing ad accounts?', answer: 'No. We connect to your existing Google, Meta, and OTA accounts. We optimize and report; your accounts stay where they are.' },
-  { question: 'What if I use an agency or freelancer?', answer: 'You can add team members and control their access. Agencies often use AdvertisingSystems to manage multiple client accounts from one place.' },
+  { question: 'What if I use an agency or freelancer?', answer: 'You can add team members and control their access. Agencies often use Advertising Systems to manage multiple client accounts from one place.' },
   { question: 'Is there a free trial?', answer: 'Yes. 14-day free trial with no credit card. Full access to your chosen plan so you can test this feature and the rest of the platform.' },
   { question: 'Where do I get support?', answer: 'In-app help, Knowledge Base, and email support on all plans. Enterprise has dedicated support. Our team can walk you through this feature if needed.' },
 ];
@@ -163,12 +163,12 @@ export const featureSubpageFaqs = [
 /** OTA Advertising page FAQ */
 export const otaAdvertisingFaqs = [
   { question: 'What is OTA advertising?', answer: "OTA (Online Travel Agency) advertising lets hotels and properties pay for premium visibility on platforms like Booking.com, Expedia, TripAdvisor, and Google Hotel Ads. Most OTAs use cost-per-click (CPC) or cost-per-acquisition (CPA) models where you bid for higher placement in search results." },
-  { question: 'Which OTA platforms will AdvertisingSystems support?', answer: "We are building integrations for Booking.com (including Priceline and Agoda via Booking Holdings), Expedia Group (TravelAds, Hotels.com, Vrbo), TripAdvisor, Google Hotel Ads, Trivago, Kayak, Skyscanner, and more. Platforms will be added progressively — join the waitlist to get early access." },
+  { question: 'Which OTA platforms will Advertising Systems support?', answer: "We are building integrations for Booking.com (including Priceline and Agoda via Booking Holdings), Expedia Group (TravelAds, Hotels.com, Vrbo), TripAdvisor, Google Hotel Ads, Trivago, Kayak, Skyscanner, and more. Platforms will be added progressively — join the waitlist to get early access." },
   { question: 'How does OTA advertising differ from Google or Meta Ads?', answer: "OTA ads target travelers who are already searching for accommodation — the intent is much higher. Instead of broad keyword or interest targeting, you bid on placement within OTA search results based on check-in dates, travel windows, and traveler origin. The conversion path is shorter but competition for top positions is fierce." },
   { question: 'What is a Sponsored Listing on Booking.com?', answer: "Booking Holdings Sponsored Listings let your property appear in premium positions (typically #2 in search) across Booking.com, Priceline, and Agoda. It uses a second-price CPC auction — you bid, but only pay the minimum needed to win. 80% of bookings go to first-page properties, so visibility matters." },
   { question: "What is Expedia's TravelAds?", answer: "TravelAds is Expedia Group's pay-per-click platform. Your property appears as a sponsored listing across 200+ travel sites and apps reaching 10M+ daily visitors. You control CPC bids, daily budgets, and can create custom audience segments by geography, trip type, and traveler behavior." },
-  { question: 'How does AdvertisingSystems optimize OTA bids?', answer: "Our AI analyzes occupancy levels, seasonality patterns, local rate signals, and traveler intent signals to adjust CPC and CPA bids in real time across every connected OTA. It automatically pauses spend during high-occupancy periods and shifts budget to the OTA delivering the best ROAS." },
-  { question: 'Can I manage OTA ads and Google/Meta ads in one place?', answer: "Yes — that is our core value proposition. AdvertisingSystems unifies OTA advertising (Booking.com, Expedia, TripAdvisor) with search and social (Google Ads, Meta Ads) in a single dashboard. One AI optimizes across all channels so you see true cross-channel ROAS." },
+  { question: 'How does Advertising Systems optimize OTA bids?', answer: "Our AI analyzes occupancy levels, seasonality patterns, local rate signals, and traveler intent signals to adjust CPC and CPA bids in real time across every connected OTA. It automatically pauses spend during high-occupancy periods and shifts budget to the OTA delivering the best ROAS." },
+  { question: 'Can I manage OTA ads and Google/Meta ads in one place?', answer: "Yes — that is our core value proposition. Advertising Systems unifies OTA advertising (Booking.com, Expedia, TripAdvisor) with search and social (Google Ads, Meta Ads) in a single dashboard. One AI optimizes across all channels so you see true cross-channel ROAS." },
   { question: 'What is occupancy-aware ad pacing?', answer: "It means automatically reducing or pausing OTA ad spend when your property is close to full occupancy. Instead of paying CPC commissions on bookings you would receive organically, the AI holds budget for low-occupancy periods when paid visibility has the highest incremental impact." },
   { question: 'How much do OTA ads cost?', answer: "Costs vary by platform and market. Booking.com uses second-price CPC auctions (you pay just above the next-highest bid). TripAdvisor Sponsored Placements start from ~$2.69/day. Expedia TravelAds lets you set your own CPC and daily budget. Trivago moved to a 10%+ CPA model. Our platform helps you optimize spend across all of them." },
   { question: 'When will OTA advertising be available on the platform?', answer: "OTA integrations are currently in development. We are onboarding properties for early access. Sign up for the waitlist on this page or book a demo to discuss your OTA advertising needs and get notified when integrations go live." },
@@ -176,14 +176,14 @@ export const otaAdvertisingFaqs = [
 
 /** Generic FAQ for vs comparison pages */
 export const vsPageFaqs = [
-  { question: 'Can I try AdvertisingSystems before switching?', answer: 'Yes. Start a 14-day free trial with no credit card. Connect your accounts and see how the AI performs. You can keep using your current tools in parallel.' },
+  { question: 'Can I try Advertising Systems before switching?', answer: 'Yes. Start a 14-day free trial with no credit card. Connect your accounts and see how the AI performs. You can keep using your current tools in parallel.' },
   { question: 'How long does migration take?', answer: 'Most teams are live in under 15 minutes. OAuth connects your accounts; historical data syncs automatically. No need to recreate campaigns.' },
-  { question: 'What if I use both AdvertisingSystems and another tool?', answer: 'You can. Some customers run AdvertisingSystems for unified AI and reporting while keeping a legacy tool for a specific use case. We focus on being the single place for cross-channel optimization.' },
+  { question: 'What if I use both Advertising Systems and another tool?', answer: 'You can. Some customers run Advertising Systems for unified AI and reporting while keeping a legacy tool for a specific use case. We focus on being the single place for cross-channel optimization.' },
   { question: 'Will I lose my historical data?', answer: 'No. We import historical performance data when you connect. You keep your data in the original platforms too; we don’t delete anything.' },
   { question: 'Do you support the same ad platforms?', answer: 'We support Google Ads, Meta Ads, and major OTAs (Booking.com, Expedia, TripAdvisor), plus TikTok, LinkedIn, and others. See the Integrations page for the full list.' },
   { question: 'Is pricing similar?', answer: 'We use simple subscription pricing by ad account count — no per-click or percentage-of-spend fees. Compare with your current tool; many teams save while gaining cross-channel capability.' },
   { question: 'Can I import my campaigns or structure?', answer: 'We connect to your existing accounts; campaigns stay where they are. We don’t require you to recreate structure. The AI optimizes within your current setup.' },
-  { question: 'What if my team is used to the other tool?', answer: 'We have a familiar dashboard and clear reporting. Many teams adopt AdvertisingSystems quickly. We also offer onboarding and support to smooth the transition.' },
+  { question: 'What if my team is used to the other tool?', answer: 'We have a familiar dashboard and clear reporting. Many teams adopt Advertising Systems quickly. We also offer onboarding and support to smooth the transition.' },
   { question: 'Do you have a migration or switch playbook?', answer: 'Yes. We’ll walk you through connect, audit, and optimization steps. Book a demo and we can outline a migration plan for your case.' },
   { question: 'Why would I switch from a tool I already use?', answer: 'If you run Google, Meta, and OTAs (or plan to), one platform and one AI can replace multiple tools, reduce manual work, and improve cross-channel ROAS. A demo or trial shows the difference.' },
 ];

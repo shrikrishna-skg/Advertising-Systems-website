@@ -1,6 +1,6 @@
 # UI inspiration: Google Ads (business.google.com)
 
-Learnings from [Google Ads](https://business.google.com/us/google-ads/) and how to apply them to AdvertisingSystems.
+Learnings from [Google Ads](https://business.google.com/us/google-ads/) and how to apply them to Advertising Systems.
 
 ---
 
@@ -52,7 +52,7 @@ Learnings from [Google Ads](https://business.google.com/us/google-ads/) and how 
 
 ---
 
-## Recommended UI updates for AdvertisingSystems
+## Recommended UI updates for Advertising Systems
 
 ### High impact (do first)
 

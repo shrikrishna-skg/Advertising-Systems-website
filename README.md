@@ -1,6 +1,6 @@
-# AdvertisingSystems Website
+# Advertising Systems Website
 
-Marketing website for [AdvertisingSystems](https://advertisingsystems.ai) — AI-powered advertising management by Multisystems.
+Marketing website for [Advertising Systems](https://advertisingsystems.ai) — AI-powered advertising management by Multisystems.
 
 Built with **Astro 6**, **React 19**, **TailwindCSS v4**, and **TypeScript**.
 
@@ -60,10 +60,15 @@ cp .env.example .env
 | `GOOGLE_CLIENT_SECRET` | OAuth 2.0 client secret |
 | `GOOGLE_REFRESH_TOKEN` | Offline refresh token for the calendar owner account |
 | `GOOGLE_CALENDAR_ID` | Calendar ID (default: `primary`) |
+| `SPRING_MAIL_HOST` | SMTP host for demo confirmation emails |
+| `SPRING_MAIL_PORT` | SMTP port, usually `587` for Gmail STARTTLS |
+| `SPRING_MAIL_USERNAME` | SMTP username, e.g. `no-reply@multisystems.ai` |
+| `SPRING_MAIL_PASSWORD` | SMTP app password or provider password |
+| `DEMO_CONFIRMATION_EMAIL_ENABLED` | Set `false` to skip branded confirmation emails |
 
 Run `node scripts/get-google-refresh-token.js` once to obtain the refresh token.
 
-> **Never commit `.env` or expose secrets to the client.** All Google API calls run server-side only.
+> **Never commit `.env` or expose secrets to the client.** Google Calendar and SMTP calls run server-side only.
 
 ## CI/CD
 
@@ -81,6 +86,9 @@ Add these in **Settings → Secrets and variables → Actions**:
 - `GOOGLE_CLIENT_SECRET`
 - `GOOGLE_REFRESH_TOKEN`
 - `GOOGLE_CALENDAR_ID` (optional)
+- `SPRING_MAIL_USERNAME`
+- `SPRING_MAIL_PASSWORD`
+- `SPRING_MAIL_HOST` / `SPRING_MAIL_PORT` (optional if using Gmail defaults)
 
 ## Responsive Design
 

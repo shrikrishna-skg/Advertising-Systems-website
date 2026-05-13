@@ -294,9 +294,6 @@ img, video {
 .touch-target {
   min-width: 44px;
   min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 @media (pointer: coarse) {
@@ -560,7 +557,7 @@ html.dark .link-secondary:hover {
   overflow: hidden;
 }
 .watermark-brand::before {
-  content: 'AdvertisingSystems';
+  content: 'Advertising Systems';
   font-size: clamp(4rem, 18vw, 20rem);
   font-weight: 700;
   letter-spacing: -0.02em;

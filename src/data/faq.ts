@@ -1,8 +1,8 @@
 export const faqs = [
   {
-    question: "What is AdvertisingSystems?",
+    question: "What is Advertising Systems?",
     answer:
-      "AdvertisingSystems is an AI-powered advertising management platform by Multisystems. It unifies Google Ads, Meta Ads, and OTA campaigns (Booking.com, Expedia, TripAdvisor) into one intelligent dashboard. The AI autonomously optimizes bids, reallocates budgets, discovers audiences, and generates performance reports — so you get maximum ROAS with minimum effort.",
+      "Advertising Systems is an AI-powered advertising management platform by Multisystems. It unifies Google Ads, Meta Ads, and OTA campaigns (Booking.com, Expedia, TripAdvisor) into one intelligent dashboard. The AI autonomously optimizes bids, reallocates budgets, discovers audiences, and generates performance reports — so you get maximum ROAS with minimum effort.",
   },
   {
     question: "Which advertising platforms do you support?",
@@ -32,12 +32,12 @@ export const faqs = [
   {
     question: "How is this different from single-channel ad tools?",
     answer:
-      "Most ad tools focus on one channel or one reporting workflow. AdvertisingSystems unifies Google, Meta, and OTA advertising in a single AI engine — purpose-built for businesses that need one place to understand spend, revenue, and next actions across every channel. Plus, we're part of the Multisystems ecosystem, connecting your ads directly to your reputation and revenue systems.",
+      "Most ad tools focus on one channel or one reporting workflow. Advertising Systems unifies Google, Meta, and OTA advertising in a single AI engine — purpose-built for businesses that need one place to understand spend, revenue, and next actions across every channel. Plus, we're part of the Multisystems ecosystem, connecting your ads directly to your reputation and revenue systems.",
   },
   {
     question: "Is my data secure?",
     answer:
-      "Bank-level AES-256 encryption at rest and in transit. SOC 2 Type II compliant infrastructure. Your ad performance data and strategies are never shared with outside companies or used to train models. We undergo annual third-party security audits.",
+      "We use AES-256 encryption at rest and in transit, access controls, and audited infrastructure. Your ad performance data and strategies are never shared with outside companies or used to train models.",
   },
   {
     question: "What pricing plans do you offer?",

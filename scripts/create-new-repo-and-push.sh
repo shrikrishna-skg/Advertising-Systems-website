@@ -8,7 +8,7 @@
 # If not set: prints steps to create repo in browser and push manually.
 
 set -e
-REPO_NAME="${1:-AdvertisingSystems-website}"
+REPO_NAME="${1:-Advertising-Systems-website}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_ROOT"

@@ -20,7 +20,7 @@ interface Props {
 }
 
 const {
-  title = 'AdvertisingSystems — AI-Powered Advertising Management | by Multisystems',
+  title = 'Advertising Systems — AI-Powered Advertising Management | by Multisystems',
   description = 'Stop wasting ad spend. AI-powered campaign management, optimization, and analytics across Google Ads, Meta Ads, and OTAs — all in one dashboard.',
   canonical: canonicalProp,
   ogImage = '/og-image.png',
@@ -42,7 +42,7 @@ const robotsContent = noindex
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'AdvertisingSystems',
+  name: 'Advertising Systems',
   url: siteUrl,
   logo: `${siteUrl}/logo.svg`,
   description: 'AI-Powered Advertising Management Platform by Multisystems',
@@ -59,7 +59,7 @@ const organizationSchema = {
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'AdvertisingSystems',
+  name: 'Advertising Systems',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   description: description,
@@ -117,7 +117,7 @@ const webPageSchema = {
   name: title,
   description: description,
   url: canonical,
-  isPartOf: { '@type': 'WebSite', name: 'AdvertisingSystems', url: siteUrl },
+  isPartOf: { '@type': 'WebSite', name: 'Advertising Systems', url: siteUrl },
   ...(breadcrumbs.length > 0 && { breadcrumb: breadcrumbSchema }),
 };
 
@@ -151,7 +151,7 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
     <meta property="og:image" content={`${siteUrl}${ogImage}`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="AdvertisingSystems" />
+    <meta property="og:site_name" content="Advertising Systems" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->

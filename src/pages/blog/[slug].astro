@@ -19,7 +19,7 @@ const breadcrumbs = [
 
 const visualBlocks = post.visualBlocks ?? [];
 const hasVisualBlocks = visualBlocks.length > 0;
-const articleTitle = post.seo?.title ?? `${post.title} — Blog | AdvertisingSystems`;
+const articleTitle = post.seo?.title ?? `${post.title} — Blog | Advertising Systems`;
 const articleDescription = post.seo?.description ?? post.excerpt;
 const parsedDate = new Date(post.date);
 const datePublished = Number.isNaN(parsedDate.valueOf()) ? post.date : parsedDate.toISOString();
@@ -66,7 +66,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
     keywords: post.seo?.keywords,
     mainEntityOfPage: `https://advertisingsystems.ai/blog/${post.slug}`,
     author: { '@type': 'Organization', name: post.author.name },
-    publisher: { '@type': 'Organization', name: 'AdvertisingSystems' },
+    publisher: { '@type': 'Organization', name: 'Advertising Systems' },
   }}
 >
   <Navbar />

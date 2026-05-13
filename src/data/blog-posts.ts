@@ -88,7 +88,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 12, 2026',
     readTime: '6 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Hotel Growth' },
+    author: { name: 'Advertising Systems Team', role: 'Hotel Growth' },
     learningTrack: 'Hotel Advertising Foundations',
     intent: 'awareness',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -161,7 +161,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Hotel Advertising Dashboard Explained | AdvertisingSystems',
+      title: 'Hotel Advertising Dashboard Explained | Advertising Systems',
       description: 'Learn how hotel owners and revenue teams should read spend, revenue, ROAS, channel mix, and report drill-ins from one advertising dashboard.',
       keywords: ['hotel advertising dashboard', 'hotel ROAS report', 'OTA advertising analytics'],
     },
@@ -182,7 +182,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 10, 2026',
     readTime: '7 min read',
     color: 'amber',
-    author: { name: 'AdvertisingSystems Team', role: 'OTA Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'OTA Strategy' },
     learningTrack: 'OTA Advertising',
     intent: 'education',
     primaryCta: { label: 'Open Expedia Report', href: '/expedia-report' },
@@ -252,7 +252,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'OTA Advertising', href: '/ota-advertising' },
     ],
     seo: {
-      title: 'Expedia TravelAds ROAS Guide for Hotels | AdvertisingSystems',
+      title: 'Expedia TravelAds ROAS Guide for Hotels | Advertising Systems',
       description: 'Learn how hotel owners should evaluate Expedia TravelAds using spend, targeting, room nights, revenue, and ROAS.',
       keywords: ['Expedia TravelAds', 'hotel OTA advertising', 'TravelAds ROAS'],
     },
@@ -273,7 +273,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 9, 2026',
     readTime: '6 min read',
     color: 'blue',
-    author: { name: 'AdvertisingSystems Team', role: 'Search Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Search Strategy' },
     learningTrack: 'Google Hotel Ads',
     intent: 'education',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -340,7 +340,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Google Hotel Ads Direct Booking Guide | AdvertisingSystems',
+      title: 'Google Hotel Ads Direct Booking Guide | Advertising Systems',
       description: 'Understand how Google Hotel Ads work for hotels, including Search and Maps visibility, Hotel Center data, landing pages, and reporting.',
       keywords: ['Google Hotel Ads', 'direct bookings', 'hotel campaigns'],
     },
@@ -361,7 +361,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 8, 2026',
     readTime: '6 min read',
     color: 'violet',
-    author: { name: 'AdvertisingSystems Team', role: 'Hotel Growth' },
+    author: { name: 'Advertising Systems Team', role: 'Hotel Growth' },
     learningTrack: 'OTA Advertising',
     intent: 'comparison',
     primaryCta: { label: 'Compare in Sample Report', href: '/sample-report' },
@@ -422,7 +422,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'OTA Advertising', href: '/ota-advertising' },
     ],
     seo: {
-      title: 'OTA Ads vs Direct Bookings for Hotels | AdvertisingSystems',
+      title: 'OTA Ads vs Direct Bookings for Hotels | Advertising Systems',
       description: 'Compare OTA advertising and direct booking campaigns with a simple hotel owner framework for budget, ROAS, and margin clarity.',
       keywords: ['OTA advertising vs direct bookings', 'hotel advertising strategy', 'hotel direct booking ads'],
     },
@@ -443,7 +443,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 7, 2026',
     readTime: '7 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Budget Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Budget Strategy' },
     learningTrack: 'Reporting & ROAS',
     intent: 'decision',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -504,7 +504,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Sample Report', href: '/sample-report' },
     ],
     seo: {
-      title: 'Hotel Marketing Budget Allocation Guide | AdvertisingSystems',
+      title: 'Hotel Marketing Budget Allocation Guide | Advertising Systems',
       description: 'Learn how to split hotel ad budget across Google, Meta, Expedia, and Booking.com using demand gaps, ROAS, and guardrails.',
       keywords: ['hotel marketing budget', 'hotel ad budget allocation', 'hotel ROAS'],
     },
@@ -525,7 +525,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 6, 2026',
     readTime: '6 min read',
     color: 'blue',
-    author: { name: 'AdvertisingSystems Team', role: 'Analytics' },
+    author: { name: 'Advertising Systems Team', role: 'Analytics' },
     learningTrack: 'Reporting & ROAS',
     intent: 'education',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -591,7 +591,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: '7 Hotel Advertising Report Metrics | AdvertisingSystems',
+      title: '7 Hotel Advertising Report Metrics | Advertising Systems',
       description: 'A hotel advertising report checklist covering spend, clicks, bookings, revenue, ROAS, assists, and budget pacing.',
       keywords: ['hotel advertising report', 'hotel ROAS metrics', 'hotel marketing analytics'],
     },
@@ -612,7 +612,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 5, 2026',
     readTime: '6 min read',
     color: 'rose',
-    author: { name: 'AdvertisingSystems Team', role: 'Retargeting Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Retargeting Strategy' },
     learningTrack: 'Meta & Retargeting',
     intent: 'education',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -668,7 +668,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Sample Report', href: '/sample-report' },
     ],
     seo: {
-      title: 'Meta Retargeting for Hotels | AdvertisingSystems',
+      title: 'Meta Retargeting for Hotels | Advertising Systems',
       description: 'Understand why hotel travelers leave before booking, how retargeting helps, and why assisted revenue matters in hotel ad reporting.',
       keywords: ['hotel retargeting', 'Meta ads for hotels', 'hotel assisted conversions'],
     },
@@ -689,7 +689,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 4, 2026',
     readTime: '7 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Automation Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Automation Strategy' },
     learningTrack: 'Reporting & ROAS',
     intent: 'decision',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -751,7 +751,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Expedia Report', href: '/expedia-report' },
     ],
     seo: {
-      title: 'AI Budget Automation for Hotel Ads | AdvertisingSystems',
+      title: 'AI Budget Automation for Hotel Ads | Advertising Systems',
       description: 'Learn how hotel teams can use AI budget automation with floors, caps, approval triggers, ROAS thresholds, and audit logs.',
       keywords: ['AI hotel advertising automation', 'hotel ad budget automation', 'hotel ROAS guardrails'],
     },
@@ -772,7 +772,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 3, 2026',
     readTime: '6 min read',
     color: 'amber',
-    author: { name: 'AdvertisingSystems Team', role: 'Demand Planning' },
+    author: { name: 'Advertising Systems Team', role: 'Demand Planning' },
     learningTrack: 'Demand Planning',
     intent: 'education',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -830,7 +830,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Budget Allocation Guide', href: '/blog/hotel-marketing-budget-allocation' },
     ],
     seo: {
-      title: 'Hotel Demand Calendar for Ad Planning | AdvertisingSystems',
+      title: 'Hotel Demand Calendar for Ad Planning | Advertising Systems',
       description: 'Learn how hotel owners can use a demand calendar to plan ad spend around events, low-occupancy windows, lead time, and channel roles.',
       keywords: ['hotel demand calendar', 'hotel ad planning', 'hotel occupancy marketing'],
     },
@@ -851,7 +851,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 2, 2026',
     readTime: '6 min read',
     color: 'blue',
-    author: { name: 'AdvertisingSystems Team', role: 'Google Hotel Ads' },
+    author: { name: 'Advertising Systems Team', role: 'Google Hotel Ads' },
     learningTrack: 'Google Hotel Ads',
     intent: 'education',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -909,7 +909,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Hotel Price Accuracy for Google Ads | AdvertisingSystems',
+      title: 'Hotel Price Accuracy for Google Ads | Advertising Systems',
       description: 'Understand how hotel price mismatches, taxes, fees, and landing-page accuracy can affect Google Hotel Ads and booking performance.',
       keywords: ['hotel price accuracy', 'Google Hotel Ads price mismatch', 'hotel booking fees'],
     },
@@ -930,7 +930,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 1, 2026',
     readTime: '6 min read',
     color: 'rose',
-    author: { name: 'AdvertisingSystems Team', role: 'Creative Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Creative Strategy' },
     learningTrack: 'Creative & Trust',
     intent: 'education',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -987,7 +987,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Meta Retargeting Guide', href: '/blog/meta-retargeting-for-hotels' },
     ],
     seo: {
-      title: 'Hotel Photos That Convert Ad Clicks | AdvertisingSystems',
+      title: 'Hotel Photos That Convert Ad Clicks | Advertising Systems',
       description: 'Learn which hotel photos support ad conversion by showing rooms, amenities, accessibility details, and authentic property value.',
       keywords: ['hotel ad creative', 'hotel photos marketing', 'hotel booking confidence'],
     },
@@ -1008,7 +1008,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 30, 2026',
     readTime: '6 min read',
     color: 'blue',
-    author: { name: 'AdvertisingSystems Team', role: 'Search Discovery' },
+    author: { name: 'Advertising Systems Team', role: 'Search Discovery' },
     learningTrack: 'Search & AI Discovery',
     intent: 'education',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -1066,7 +1066,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Google Business Profile for Hotel Ads | AdvertisingSystems',
+      title: 'Google Business Profile for Hotel Ads | Advertising Systems',
       description: 'Learn why hotel amenities, highlights, details, prices, and booking links in Google Business Profile support paid hotel advertising.',
       keywords: ['Google Business Profile hotel', 'hotel profile ads', 'hotel booking links'],
     },
@@ -1087,7 +1087,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 29, 2026',
     readTime: '6 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Google Hotel Ads' },
+    author: { name: 'Advertising Systems Team', role: 'Google Hotel Ads' },
     learningTrack: 'Google Hotel Ads',
     intent: 'comparison',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -1145,7 +1145,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Google Hotel Ads Guide', href: '/blog/google-hotel-ads-direct-booking-guide' },
     ],
     seo: {
-      title: 'Free Booking Links vs Paid Hotel Ads | AdvertisingSystems',
+      title: 'Free Booking Links vs Paid Hotel Ads | Advertising Systems',
       description: 'Understand how free booking links and paid Google Hotel Ads work together for hotel direct bookings and reporting.',
       keywords: ['free booking links', 'paid hotel ads', 'Google Hotel Ads'],
     },
@@ -1166,7 +1166,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 28, 2026',
     readTime: '7 min read',
     color: 'violet',
-    author: { name: 'AdvertisingSystems Team', role: 'Google AI Campaigns' },
+    author: { name: 'Advertising Systems Team', role: 'Google AI Campaigns' },
     learningTrack: 'Google Hotel Ads',
     intent: 'decision',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -1224,7 +1224,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Performance Max for Travel Goals for Hotels | AdvertisingSystems',
+      title: 'Performance Max for Travel Goals for Hotels | Advertising Systems',
       description: 'Learn when hotels should use Performance Max for travel goals and how to report cross-channel spend, assets, bookings, and ROAS.',
       keywords: ['Performance Max travel goals', 'hotel PMax', 'Google travel ads'],
     },
@@ -1245,7 +1245,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 27, 2026',
     readTime: '7 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Measurement' },
+    author: { name: 'Advertising Systems Team', role: 'Measurement' },
     learningTrack: 'Conversion Tracking',
     intent: 'education',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -1303,7 +1303,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'ROAS Metrics Guide', href: '/blog/hotel-reporting-roas-metrics' },
     ],
     seo: {
-      title: 'Hotel Booking Conversion Tracking | AdvertisingSystems',
+      title: 'Hotel Booking Conversion Tracking | Advertising Systems',
       description: 'Learn why hotel ads need confirmed booking conversion tracking, transaction value, booking engine checks, and revenue reporting.',
       keywords: ['hotel conversion tracking', 'hotel booking tracking', 'hotel ROAS measurement'],
     },
@@ -1324,7 +1324,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 26, 2026',
     readTime: '6 min read',
     color: 'amber',
-    author: { name: 'AdvertisingSystems Team', role: 'Conversion Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Conversion Strategy' },
     learningTrack: 'Conversion Tracking',
     intent: 'decision',
     primaryCta: { label: 'View Sample Report', href: '/sample-report' },
@@ -1384,7 +1384,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Hotel Booking Engine Leak Checklist | AdvertisingSystems',
+      title: 'Hotel Booking Engine Leak Checklist | Advertising Systems',
       description: 'Find hotel booking engine leaks that waste paid traffic, including mobile friction, rate mismatches, fee surprises, and tracking gaps.',
       keywords: ['hotel booking engine leaks', 'hotel paid traffic conversion', 'booking engine checklist'],
     },
@@ -1405,7 +1405,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 25, 2026',
     readTime: '6 min read',
     color: 'violet',
-    author: { name: 'AdvertisingSystems Team', role: 'OTA Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'OTA Strategy' },
     learningTrack: 'Creative & Trust',
     intent: 'comparison',
     primaryCta: { label: 'Open Expedia Report', href: '/expedia-report' },
@@ -1463,7 +1463,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Book a Demo', href: '/book-demo' },
     ],
     seo: {
-      title: 'Review Score and Sponsored Listing ROAS | AdvertisingSystems',
+      title: 'Review Score and Sponsored Listing ROAS | Advertising Systems',
       description: 'Learn why hotel review score, photos, pricing, and organic listing content affect sponsored listing ROAS before the click.',
       keywords: ['hotel sponsored listings', 'review score ROAS', 'Booking sponsored listings'],
     },
@@ -1484,7 +1484,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Apr 24, 2026',
     readTime: '7 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Search Discovery' },
+    author: { name: 'Advertising Systems Team', role: 'Search Discovery' },
     learningTrack: 'Search & AI Discovery',
     intent: 'awareness',
     primaryCta: { label: 'Book a Demo', href: '/book-demo' },
@@ -1553,7 +1553,7 @@ export const blogPosts: BlogPost[] = [
       { label: 'Google Business Profile Guide', href: '/blog/google-business-profile-hotel-funnel' },
     ],
     seo: {
-      title: 'AI Search and Hotel Discovery | AdvertisingSystems',
+      title: 'AI Search and Hotel Discovery | Advertising Systems',
       description: 'Learn how hotels can prepare for changing discovery across OTAs, search engines, AI planning, direct booking paths, and measurable reports.',
       keywords: ['AI search hotel discovery', 'hotel discovery 2026', 'hotel search visibility'],
     },
@@ -1574,7 +1574,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Mar 8, 2026',
     readTime: '4 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Product' },
+    author: { name: 'Advertising Systems Team', role: 'Product' },
     content: [
       {
         title: 'Why we rebuilt the Budget Allocator',
@@ -1609,7 +1609,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Mar 1, 2026',
     readTime: '7 min read',
     color: 'blue',
-    author: { name: 'AdvertisingSystems Team', role: 'Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Strategy' },
     content: [
       {
         title: 'The mistake most teams make',
@@ -1643,7 +1643,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Feb 22, 2026',
     readTime: '6 min read',
     color: 'violet',
-    author: { name: 'AdvertisingSystems Team', role: 'Customer Success' },
+    author: { name: 'Advertising Systems Team', role: 'Customer Success' },
     content: [
       {
         title: 'The challenge',
@@ -1655,7 +1655,7 @@ export const blogPosts: BlogPost[] = [
       {
         title: 'What we did',
         paragraphs: [
-          'We connected all OTA and paid accounts to AdvertisingSystems in under a week. The team set occupancy and revenue targets per property; our AI Budget Allocator and bid rules then reallocated spend toward the best-performing campaigns and dates.',
+          'We connected all OTA and paid accounts to Advertising Systems in under a week. The team set occupancy and revenue targets per property; our AI Budget Allocator and bid rules then reallocated spend toward the best-performing campaigns and dates.',
           'They used our cross-channel dashboard to spot which properties and OTAs were driving the most revenue per euro spent, and shifted budget accordingly. Manual bid updates stopped; the system now adjusts every 15 minutes.',
         ],
       },
@@ -1681,7 +1681,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Feb 14, 2026',
     readTime: '5 min read',
     color: 'amber',
-    author: { name: 'AdvertisingSystems Team', role: 'Editorial' },
+    author: { name: 'Advertising Systems Team', role: 'Editorial' },
     content: [
       {
         title: 'The shift we’re seeing',
@@ -1720,7 +1720,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Feb 7, 2026',
     readTime: '8 min read',
     color: 'blue',
-    author: { name: 'AdvertisingSystems Team', role: 'Strategy' },
+    author: { name: 'Advertising Systems Team', role: 'Strategy' },
     content: [
       {
         title: 'The silo problem',
@@ -1737,7 +1737,7 @@ export const blogPosts: BlogPost[] = [
       {
         title: 'A playbook that works',
         paragraphs: [
-          '1. Connect both Google and Meta to a single reporting and optimization layer (e.g. AdvertisingSystems) so you see one journey.',
+          '1. Connect both Google and Meta to a single reporting and optimization layer (e.g. Advertising Systems) so you see one journey.',
           '2. Use a consistent attribution window (e.g. 7-day click, 1-day view) across both so you’re comparing apples to apples.',
           '3. Create segments of "Google converters who saw Meta" and "Meta converters who saw Google" and use them for lookalikes and remarketing.',
           '4. Set cross-channel budget rules: e.g. "If Meta’s attributed ROAS is above X, allow the AI to shift more spend from Google to Meta."',
@@ -1755,23 +1755,23 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'tiktok-ads-integration-live',
     category: 'Product Updates',
-    title: 'New Integration: TikTok Ads Now Live in AdvertisingSystems',
+    title: 'New Integration: TikTok Ads Now Live in Advertising Systems',
     excerpt: 'Manage TikTok campaigns alongside Google, Meta, and OTAs from a single dashboard. Full bidding, analytics, and AI optimization support included.',
     date: 'Jan 30, 2026',
     readTime: '3 min read',
     color: 'royal-green',
-    author: { name: 'AdvertisingSystems Team', role: 'Product' },
+    author: { name: 'Advertising Systems Team', role: 'Product' },
     content: [
       {
         title: 'What’s available',
         paragraphs: [
-          'TikTok Ads is now fully integrated into AdvertisingSystems. You can connect your TikTok Ads Manager account and get: a single dashboard for TikTok alongside Google, Meta, and OTA campaigns; real-time spend and performance; AI-driven bid and budget recommendations; and cross-channel reporting so you can see how TikTok fits into the full funnel.',
+          'TikTok Ads is now fully integrated into Advertising Systems. You can connect your TikTok Ads Manager account and get: a single dashboard for TikTok alongside Google, Meta, and OTA campaigns; real-time spend and performance; AI-driven bid and budget recommendations; and cross-channel reporting so you can see how TikTok fits into the full funnel.',
         ],
       },
       {
         title: 'How to connect',
         paragraphs: [
-          'In AdvertisingSystems, go to Settings → Integrations and select TikTok Ads. You’ll be guided through TikTok’s OAuth flow; once connected, we’ll pull in your campaigns, ad sets, and ads. Bidding and budget changes you make in AdvertisingSystems are pushed back to TikTok via their API.',
+          'In Advertising Systems, go to Settings → Integrations and select TikTok Ads. You’ll be guided through TikTok’s OAuth flow; once connected, we’ll pull in your campaigns, ad sets, and ads. Bidding and budget changes you make in Advertising Systems are pushed back to TikTok via their API.',
         ],
       },
       {

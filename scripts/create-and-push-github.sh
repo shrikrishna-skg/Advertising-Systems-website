@@ -1,9 +1,9 @@
 #!/bin/bash
-# Creates GitHub repo "AdvertisingSystems-webisite-test" and pushes this project.
+# Creates GitHub repo "Advertising-Systems-website-test" and pushes this project.
 # Run from project root. You will be prompted to log in to GitHub if not already.
 
 set -e
-REPO_NAME="AdvertisingSystems-webisite-test"
+REPO_NAME="Advertising-Systems-website-test"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_ROOT"

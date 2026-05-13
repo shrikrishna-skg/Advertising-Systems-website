@@ -1,4 +1,4 @@
-# SEO & Indexing Guide — AdvertisingSystems
+# SEO & Indexing Guide — Advertising Systems
 
 This document describes how the site is configured for search engine indexing and SEO so Google and other engines can discover and index pages correctly.
 

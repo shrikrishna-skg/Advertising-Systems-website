@@ -1,5 +1,5 @@
 /**
- * Central SEO defaults and guidelines for AdvertisingSystems.
+ * Central SEO defaults and guidelines for Advertising Systems.
  * Use these in Layout and pages for consistent indexing and rich results.
  *
  * Search engine criteria we follow:
@@ -15,7 +15,7 @@
 
 export const siteUrl = 'https://advertisingsystems.ai';
 
-export const defaultTitle = 'AdvertisingSystems — AI-Powered Advertising Management | by Multisystems';
+export const defaultTitle = 'Advertising Systems — AI-Powered Advertising Management | by Multisystems';
 
 export const defaultDescription =
   'Stop wasting ad spend. AI-powered campaign management, optimization, and analytics across Google Ads, Meta Ads, and OTAs — all in one dashboard.';

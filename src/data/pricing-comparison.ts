@@ -13,7 +13,7 @@ export interface PricingComparisonRow {
 
 export const pricingComparisonRows: PricingComparisonRow[] = [
   {
-    name: 'AdvertisingSystems',
+    name: 'Advertising Systems',
     pricingModel: 'Flat monthly price by ad account count',
     visibility: 'Google Ads, Meta Ads, OTAs, and reporting in one place',
     automation: 'Cross-channel AI for budgets, bids, pacing, and reporting',
@@ -90,7 +90,7 @@ export const ourDifferentiators = [
 export const pricingPageFaqs = [
   {
     question: 'How is your pricing different from single-channel ad tools?',
-    answer: 'AdvertisingSystems uses a flat monthly price by ad account count. You get unified Google Ads, Meta Ads, OTA reporting, AI optimization, and cross-channel analytics without percentage-of-spend pricing, overage fees, or hidden add-ons.',
+    answer: 'Advertising Systems uses a flat monthly price by ad account count. You get unified Google Ads, Meta Ads, OTA reporting, AI optimization, and cross-channel analytics without percentage-of-spend pricing, overage fees, or hidden add-ons.',
   },
   {
     question: 'What counts as an "ad account"?',

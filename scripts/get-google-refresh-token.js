@@ -39,7 +39,7 @@ if (!clientId || !clientSecret) {
   process.exit(1);
 }
 
-const redirectUri = 'http://localhost';
+const redirectUri = env.GOOGLE_REDIRECT_URI || 'http://localhost';
 const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, redirectUri);
 const scopes = [
   'https://www.googleapis.com/auth/calendar.events',
@@ -52,7 +52,8 @@ const url = oauth2Client.generateAuthUrl({
   scope: scopes,
 });
 
-console.log('Sign in with shrikrishna@multisystems.ai so demo events go to that calendar.\n');
+console.log('Sign in with the Google account whose calendar should receive demo bookings.\n');
+console.log(`Using redirect URI: ${redirectUri}\n`);
 console.log('Open this URL in your browser, sign in, then paste the full redirect URL (or the "code" query param) below:\n');
 console.log(url);
 console.log('');

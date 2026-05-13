@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 const siteUrl = 'https://advertisingsystems.ai';
 
 export const GET: APIRoute = () => {
-  const robotsTxt = `# AdvertisingSystems.ai – robots.txt
+  const robotsTxt = `# Advertising Systems – robots.txt
 # All indexable pages use meta robots "index, follow". 404 uses "noindex, follow".
 
 User-agent: *

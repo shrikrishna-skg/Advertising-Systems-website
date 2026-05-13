@@ -1,12 +1,20 @@
 import type { APIRoute } from 'astro';
-import { google } from 'googleapis';
 import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse } from '../../lib/server-security';
 import { getPostHogServer } from '../../lib/posthog-server';
+import { sendDemoConfirmationEmail } from '../../lib/demo-email';
+import {
+  DEMO_DURATION_MINUTES,
+  DEMO_TIME_ZONE,
+  type DemoSlot,
+  formatDemoDateForDescription,
+  getDemoCalendarClient,
+  getDemoSlotRange,
+  getNextBookableDemoDate,
+  parseDemoDatetime,
+  rangesOverlap,
+} from '../../lib/demo-calendar';
 
-const OFFERED_SLOTS = new Set(['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00']);
-const DEMO_TIME_ZONE = import.meta.env.DEMO_TIME_ZONE || 'America/Chicago';
 const MAX_BODY_BYTES = 16 * 1024;
-const MAX_SCHEDULE_DAYS = 90;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -32,27 +40,6 @@ function getString(body: Record<string, unknown>, key: string, limit: number) {
   return { value: trimmed, error: undefined };
 }
 
-function parsePreferredDatetime(value?: string) {
-  if (!value) return { value: undefined, error: undefined };
-
-  const match = value.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::\d{2})?$/);
-  if (!match) return { value: undefined, error: 'Preferred date and time is invalid' };
-  if (!OFFERED_SLOTS.has(match[2])) return { value: undefined, error: 'Preferred time is not available' };
-
-  const startDate = new Date(`${match[1]}T${match[2]}:00`);
-  if (Number.isNaN(startDate.getTime())) return { value: undefined, error: 'Preferred date and time is invalid' };
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const maxDate = new Date(today);
-  maxDate.setDate(maxDate.getDate() + MAX_SCHEDULE_DAYS);
-  if (startDate < today || startDate > maxDate) {
-    return { value: undefined, error: `Preferred date must be within the next ${MAX_SCHEDULE_DAYS} days` };
-  }
-
-  return { value: startDate, error: undefined };
-}
-
 /** Create a demo request event on Google Calendar if credentials are configured.
  *  Calendar used is the one owned by the account that issued GOOGLE_REFRESH_TOKEN
  *  (intended: shrikrishna@multisystems.ai). */
@@ -64,24 +51,54 @@ async function createCalendarEvent(params: {
   numberOfLocations?: string;
   companySize?: string;
   monthlyAdSpend?: string;
-  preferredDatetime?: string;
+  preferredDatetime?: { date: string; time: DemoSlot; localDateTime: string };
   message?: string;
-}): Promise<{ success: boolean; eventId?: string; error?: string }> {
-  const clientId = import.meta.env.GOOGLE_CLIENT_ID;
-  const clientSecret = import.meta.env.GOOGLE_CLIENT_SECRET;
-  const refreshToken = import.meta.env.GOOGLE_REFRESH_TOKEN;
-  const calendarId = import.meta.env.GOOGLE_CALENDAR_ID || 'primary';
-
-  if (!clientId || !clientSecret || !refreshToken) {
+}): Promise<{
+  success: boolean;
+  eventId?: string;
+  error?: string;
+  code?: string;
+  inviteSent?: boolean;
+  meetCreated?: boolean;
+  meetingLink?: string;
+  calendarEventLink?: string;
+  demoTimeText?: string;
+}> {
+  const client = getDemoCalendarClient();
+  if (!client) {
     return { success: false, error: 'Calendar not configured (missing env)' };
   }
 
   try {
-    const oauth2Client = new google.auth.OAuth2(clientId, clientSecret, undefined);
-    oauth2Client.setCredentials({ refresh_token: refreshToken });
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+    const { calendar, calendarId } = client;
+    const fallbackDate = getNextBookableDemoDate();
+    const preferredDatetime = params.preferredDatetime ?? {
+      date: fallbackDate,
+      time: '10:00' as DemoSlot,
+      localDateTime: `${fallbackDate}T10:00:00`,
+    };
+    const slotRange = getDemoSlotRange(preferredDatetime.date, preferredDatetime.time);
 
-    const title = `Demo request: ${params.company} — ${params.name}`;
+    if (!slotRange) {
+      return { success: false, error: 'Preferred date and time is invalid' };
+    }
+
+    const busy = await calendar.freebusy.query({
+      requestBody: {
+        timeMin: slotRange.start.toISOString(),
+        timeMax: slotRange.end.toISOString(),
+        timeZone: DEMO_TIME_ZONE,
+        items: [{ id: calendarId }],
+      },
+    });
+    const busyList = busy.data.calendars?.[calendarId]?.busy ?? [];
+    const slotUnavailable = busyList.some((b) => rangesOverlap(slotRange.start, slotRange.end, b.start, b.end));
+    if (slotUnavailable) {
+      return { success: false, code: 'slot_unavailable', error: 'Selected time is no longer available' };
+    }
+
+    const title = `Demo request: ${params.company} - ${params.name}`;
+    const demoTimeText = formatDemoDateForDescription(preferredDatetime.date, preferredDatetime.time);
     const desc = [
       `Name: ${params.name}`,
       `Email: ${params.email}`,
@@ -90,45 +107,64 @@ async function createCalendarEvent(params: {
       params.numberOfLocations && `Number of locations: ${params.numberOfLocations}`,
       params.companySize && `Company size: ${params.companySize}`,
       params.monthlyAdSpend && `Monthly ad spend: ${params.monthlyAdSpend}`,
+      `Preferred demo time: ${demoTimeText}`,
       params.message && `Message: ${params.message}`,
     ].filter(Boolean).join('\n');
 
-    let startDate: Date;
-    let endDate: Date;
-    if (params.preferredDatetime) {
-      startDate = new Date(params.preferredDatetime);
-      if (isNaN(startDate.getTime())) {
-        startDate = new Date();
-        startDate.setDate(startDate.getDate() + 1);
-        startDate.setHours(10, 0, 0, 0);
-      }
-      endDate = new Date(startDate);
-      endDate.setMinutes(endDate.getMinutes() + 30);
-    } else {
-      startDate = new Date();
-      startDate.setDate(startDate.getDate() + 1);
-      startDate.setHours(10, 0, 0, 0);
-      endDate = new Date(startDate);
-      endDate.setMinutes(30, 0, 0);
-    }
+    const sendCalendarInvites = import.meta.env.DEMO_SEND_CALENDAR_INVITES !== 'false';
+    const createGoogleMeet = import.meta.env.DEMO_CREATE_GOOGLE_MEET !== 'false';
+    const eventLocation = import.meta.env.DEMO_EVENT_LOCATION || undefined;
+    const requestId = `ads-demo-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
     const event = await calendar.events.insert({
       calendarId,
+      sendUpdates: sendCalendarInvites ? 'all' : 'none',
+      conferenceDataVersion: createGoogleMeet ? 1 : 0,
       requestBody: {
         summary: title,
         description: desc,
+        location: eventLocation,
+        conferenceData: createGoogleMeet
+          ? {
+              createRequest: {
+                requestId,
+                conferenceSolutionKey: { type: 'hangoutsMeet' },
+              },
+            }
+          : undefined,
         start: {
-          dateTime: startDate.toISOString(),
+          dateTime: slotRange.start.toISOString(),
           timeZone: DEMO_TIME_ZONE,
         },
         end: {
-          dateTime: endDate.toISOString(),
+          dateTime: slotRange.end.toISOString(),
           timeZone: DEMO_TIME_ZONE,
+        },
+        attendees: sendCalendarInvites ? [{ email: params.email, displayName: params.name }] : undefined,
+        source: {
+          title: 'Advertising Systems Website',
+          url: 'https://advertisingsystems.ai/book-demo',
+        },
+        extendedProperties: {
+          private: {
+            source: 'advertising-systems-website',
+            preferredLocalDateTime: preferredDatetime.localDateTime,
+            timeZone: DEMO_TIME_ZONE,
+            durationMinutes: String(DEMO_DURATION_MINUTES),
+          },
         },
       },
     });
 
-    return { success: true, eventId: event.data.id ?? undefined };
+    return {
+      success: true,
+      eventId: event.data.id ?? undefined,
+      inviteSent: sendCalendarInvites,
+      meetCreated: Boolean(createGoogleMeet && event.data.conferenceData?.entryPoints?.length),
+      meetingLink: event.data.hangoutLink || event.data.conferenceData?.entryPoints?.find((entry) => entry.uri)?.uri,
+      calendarEventLink: event.data.htmlLink ?? undefined,
+      demoTimeText,
+    };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Calendar API error';
     return { success: false, error: message };
@@ -198,7 +234,7 @@ export const POST: APIRoute = async ({ request }) => {
     errors.push('Email is invalid');
   }
 
-  const preferredDatetime = parsePreferredDatetime(preferredDatetimeRaw.value);
+  const preferredDatetime = parseDemoDatetime(preferredDatetimeRaw.value);
   if (preferredDatetime.error) errors.push(preferredDatetime.error);
 
   if (errors.length > 0) {
@@ -240,29 +276,101 @@ export const POST: APIRoute = async ({ request }) => {
     numberOfLocations: numberOfLocations.value,
     companySize: companySize.value,
     monthlyAdSpend: monthlyAdSpend.value,
-    preferredDatetime: preferredDatetime.value?.toISOString(),
+    preferredDatetime: preferredDatetime.value,
     message: message.value,
   });
 
+  if (calendarResult.code === 'slot_unavailable') {
+    posthog?.capture({
+      distinctId,
+      event: 'demo_calendar_slot_unavailable',
+      properties: {
+        $session_id: sessionId,
+        source: 'api',
+      },
+    });
+
+    return jsonResponse(
+      { error: 'That time was just booked. Please pick another available time.' },
+      409
+    );
+  }
+
   if (calendarResult.success) {
+    // Send our branded confirmation only after Google Calendar accepts the event
+    // and, by default, sends the calendar invite to the attendee.
+    const confirmationEmail = await sendDemoConfirmationEmail({
+      name: name.value!,
+      email: email.value!,
+      company: company.value!,
+      demoTimeText: calendarResult.demoTimeText || 'your selected demo time',
+      durationMinutes: DEMO_DURATION_MINUTES,
+      meetingLink: calendarResult.meetingLink,
+      calendarEventLink: calendarResult.calendarEventLink,
+    });
+
     posthog?.capture({
       distinctId,
       event: 'demo_calendar_booked',
       properties: {
         $session_id: sessionId,
         calendar_event_id: calendarResult.eventId,
+        confirmation_email_sent: confirmationEmail.success,
+        confirmation_email_skipped: confirmationEmail.skipped === true,
         source: 'api',
       },
     });
+
+    if (confirmationEmail.success) {
+      posthog?.capture({
+        distinctId,
+        event: 'demo_confirmation_email_sent',
+        properties: {
+          $session_id: sessionId,
+          source: 'api',
+        },
+      });
+    } else if (!confirmationEmail.skipped) {
+      posthog?.capture({
+        distinctId,
+        event: 'demo_confirmation_email_failed',
+        properties: {
+          $session_id: sessionId,
+          error_message: confirmationEmail.error,
+          source: 'api',
+        },
+      });
+    }
+
     return jsonResponse({
       success: true,
-      message: "Thanks! We've received your request and will confirm your demo time shortly.",
+      calendar_created: true,
+      calendar_invite_sent: calendarResult.inviteSent === true,
+      google_meet_created: calendarResult.meetCreated === true,
+      confirmation_email_sent: confirmationEmail.success,
+      confirmation_email_skipped: confirmationEmail.skipped === true,
+      message: calendarResult.inviteSent
+        ? confirmationEmail.success
+          ? "You're booked. We sent the calendar invite and a confirmation email with the Google Meet link and next steps."
+          : "You're booked. We sent a calendar invite to your email with the Google Meet link and next steps."
+        : "You're booked. Your demo is on our calendar, and we'll email the meeting details shortly.",
     });
   }
 
   // Calendar failed but we still acknowledge the request (e.g. env not set or API error)
+  posthog?.capture({
+    distinctId,
+    event: 'demo_calendar_failed',
+    properties: {
+      $session_id: sessionId,
+      error_message: calendarResult.error,
+      source: 'api',
+    },
+  });
+
   return jsonResponse({
     success: true,
+    calendar_created: false,
     message: "Thanks! We've received your request and will be in touch to schedule your demo.",
   });
 };
