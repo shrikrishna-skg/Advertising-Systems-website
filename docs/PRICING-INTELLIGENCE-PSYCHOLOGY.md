@@ -20,7 +20,7 @@ Reference for pages like `/pricing-intelligence` (inspired by clarity-focused pr
 
 ### Trust and proof
 - **Principle:** Buyers look for reasons to say yes (social proof, guarantees, concrete outcomes).
-- **Implementation:** Stats ("$5.2B+ in ad spend"), 14-day trial, no credit card, cancel anytime. Short testimonial or outcome when relevant.
+- **Implementation:** Use neutral operational proof, secure signup, guided onboarding, and cancel-anytime language. Short testimonial or outcome when relevant.
 
 ### Objection handling
 - **Principle:** Answer the questions that block the decision (contracts, upgrades, enterprise, refunds).
@@ -28,7 +28,7 @@ Reference for pages like `/pricing-intelligence` (inspired by clarity-focused pr
 
 ### Single primary CTA
 - **Principle:** One main action per section avoids choice overload and focuses the next step.
-- **Implementation:** Primary CTA = "Book a demo" or "Start free trial"; secondary link for "Compare plans" or "See features."
+- **Implementation:** Primary CTA = "Book a demo" or "Get started"; secondary link for "Compare plans" or "See features."
 
 ---
 
@@ -56,7 +56,7 @@ Reference for pages like `/pricing-intelligence` (inspired by clarity-focused pr
 - One headline = one idea. One section = one theme (e.g. "What you get," "Plans," "Guarantees").
 
 ### Trust and proof
-- Numbers (ROAS, ad spend, time saved). Names and roles for testimonials. Explicit guarantees (trial, cancel anytime).
+- Numbers (ROAS, ad spend, time saved). Names and roles for testimonials. Explicit guarantees such as guided onboarding or cancel anytime.
 
 ### Progressive disclosure
 - Simple message first (hero). Details where needed (FAQ, comparison table). Don’t front-load every detail.
@@ -70,7 +70,7 @@ Reference for pages like `/pricing-intelligence` (inspired by clarity-focused pr
 3. **What you get** — Bullet list of what’s in every plan (value clarity).
 4. **Plans** — Good / Better / Best with middle highlighted; benefit-led descriptions.
 5. **Investment & return** — One line on ROI or predictability (frame price as investment).
-6. **Trust** — Trial, no CC, cancel anytime; optional stat or proof.
+6. **Trust** — Secure signup, guided onboarding, cancel anytime; optional proof.
 7. **FAQ** — Pricing-specific: fees, plans, enterprise, contracts.
 8. **Final CTA** — Same primary action, short reminder of the main benefit.
 

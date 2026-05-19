@@ -65,7 +65,7 @@ export const planFeatureMatrix: PlanFeatureRow[] = [
   { feature: 'Custom integrations (CRM, PMS, BI)', starter: false, professional: true, enterprise: true },
   { feature: 'Dedicated customer success', starter: false, professional: false, enterprise: true },
   { feature: 'SSO, custom contracts, SLA', starter: false, professional: false, enterprise: true },
-  { feature: '14-day free trial (no credit card)', starter: true, professional: true, enterprise: true },
+  { feature: 'Guided onboarding', starter: true, professional: true, enterprise: true },
 ];
 
 export const ourDifferentiators = [
@@ -105,8 +105,8 @@ export const pricingPageFaqs = [
     answer: "Yes. You can choose annual billing for a discount. The option appears at signup or in your account settings. We don't require long-term contracts.",
   },
   {
-    question: "What's included in the free trial?",
-    answer: 'Full access to the plan you choose for 14 days, including all modules, AI optimization, integrations, and support. No credit card required. Connect your accounts and see results before paying.',
+    question: 'How can I evaluate the platform before committing?',
+    answer: 'Book a demo or create a signup request. We can review your ad account setup, plan fit, integrations, and onboarding path before you commit.',
   },
   {
     question: 'Can I switch plans later?',

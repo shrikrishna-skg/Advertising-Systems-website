@@ -5,12 +5,12 @@
 
 export const aboutFaqs = [
   { question: 'Who is behind Advertising Systems?', answer: "Advertising Systems is built by Multisystems, the same team behind Hotel Systems and ReputationSystems. We're a distributed team of engineers, data scientists, and marketers focused on making advertising profitable and effortless for businesses of every size." },
-  { question: 'How long have you been in business?', answer: "We've been powering advertising and revenue systems for years. Today we manage $5.2B+ in ad spend across 2,000+ businesses in 30+ countries." },
+  { question: 'How long have you been in business?', answer: "We've been powering advertising and revenue systems for years. Today we support teams managing advertising workflows across Google, Meta, and OTA channels in 30+ countries." },
   { question: 'Where is Advertising Systems available?', answer: 'Advertising Systems is available globally. Our platform supports ad accounts in the regions supported by Google Ads, Meta Ads, and major OTAs. Support is offered in English with more languages coming.' },
   { question: 'What makes you different from other ad tech companies?', answer: "We unify Google, Meta, and OTA advertising in one AI engine and one dashboard. We're also part of the Multisystems ecosystem, so your ads can connect to reputation and revenue systems." },
   { question: 'Do you work with agencies?', answer: 'Yes. Agencies use Advertising Systems to manage multiple client accounts, get unified reporting, and deliver better ROAS. Contact us for agency-specific pricing and workflows.' },
   { question: 'What industries do you serve?', answer: 'We serve travel and hospitality, e-commerce, SaaS, and any business running paid campaigns across Google, Meta, or OTAs. Case studies span these verticals.' },
-  { question: 'Is there a free trial?', answer: 'Yes. 14-day free trial with full access to your chosen plan. No credit card required. You can connect accounts and see AI recommendations before paying.' },
+  { question: 'Can I evaluate the platform before buying?', answer: 'Yes. Book a demo or create a signup request. We can walk through your account setup, plan fit, and onboarding path before you commit.' },
   { question: 'How do I get in touch with the team?', answer: 'Use the Contact page or book a demo. For support, log in to your account or email the address in your plan. Enterprise has dedicated channels.' },
   { question: 'Where is your company headquartered?', answer: 'Multisystems operates as a distributed company. Our team is spread across time zones; you can reach us via contact form, email, or demo booking.' },
   { question: 'Do you have a partner or reseller program?', answer: "We work with select partners. If you're interested in reselling or referring Advertising Systems, reach out via the contact form and we'll follow up." },
@@ -65,7 +65,7 @@ export const caseStudiesFaqs = [
   { question: 'Do you have travel or hospitality case studies?', answer: 'Yes. We have examples from hotels, OTAs, and travel brands using Advertising Systems for Google, Meta, and OTA campaigns.' },
   { question: 'What metrics do you typically report?', answer: 'We often report ROAS, CPA, time saved, and revenue impact. Exact metrics depend on what the customer cared about most.' },
   { question: 'Can I use a case study in my own materials?', answer: 'Contact us for permission. We often allow quotes or summaries with attribution and approval.' },
-  { question: 'How do I get results like these?', answer: 'Start with a demo or free trial. Connect your accounts, follow the AI recommendations, and use the playbooks we share. Our team can help you set goals.' },
+  { question: 'How do I get results like these?', answer: 'Start with a demo or signup request. Connect your accounts, follow the AI recommendations, and use the playbooks we share. Our team can help you set goals.' },
 ];
 
 export const integrationsFaqs = [
@@ -95,13 +95,13 @@ export const knowledgeBaseFaqs = [
 ];
 
 export const signupFaqs = [
-  { question: 'Do I need a credit card to start?', answer: "No. The 14-day free trial doesn't require a credit card. You get full access to your chosen plan. Add payment only when you decide to continue." },
-  { question: 'What happens when my trial ends?', answer: "We'll email you before the trial ends. You can subscribe to keep access, or your account will move to a limited state. No charges without your consent." },
+  { question: 'Do I need a credit card to start?', answer: 'No. The website signup request does not collect payment details. Payment details are collected only when you select a paid plan in the secure app.' },
+  { question: 'What happens after I submit the signup form?', answer: 'We record your signup intent, send a confirmation, and direct you to the secure app flow to continue account setup.' },
   { question: 'Can I change plans later?', answer: 'You can upgrade or downgrade anytime from your account. Changes apply at the start of the next billing cycle; we prorate when you upgrade.' },
-  { question: 'What do I get during the trial?', answer: 'Full access to the plan you chose: all modules, AI optimization, reporting, and support. No feature limits during the trial.' },
+  { question: 'What do I get after signup?', answer: 'You can continue account setup in the secure app, connect your ad accounts, and choose the plan that fits your team.' },
   { question: 'How many ad accounts can I connect?', answer: 'Starter: up to 2. Professional: up to 10. Enterprise: unlimited. You choose your plan at signup and can change it later.' },
   { question: 'Is there a long-term contract?', answer: 'No. All plans are month-to-month. Cancel anytime from your account. We don’t lock you into annual contracts unless you choose an annual discount.' },
-  { question: 'What payment methods do you accept?', answer: 'We accept major credit cards and, for Enterprise, invoice billing. Payment details are collected only when you subscribe after the trial.' },
+  { question: 'What payment methods do you accept?', answer: 'We accept major credit cards and, for Enterprise, invoice billing. Payment details are collected only when you choose a paid plan.' },
   { question: 'Can I use my work email?', answer: 'Yes. Use the email you use for your ad accounts so we can match your data and send important product updates.' },
   { question: 'What if I already have an account?', answer: 'Use the Log in link instead of signing up. If you forgot your password, use the password reset flow on the login page.' },
   { question: 'Do you offer annual billing?', answer: 'Yes. You can choose annual billing for a discount. The option appears when you subscribe or in your account settings.' },
@@ -117,7 +117,7 @@ export const bookDemoFaqs = [
   { question: 'What do I need to prepare?', answer: 'Nothing required. If you have ad account metrics or goals in mind, that helps us tailor the walkthrough.' },
   { question: 'Will you try to sell me something?', answer: 'We’ll show you the product and discuss fit and pricing. There’s no pressure; the goal is to help you decide if Advertising Systems is right for you.' },
   { question: 'Can I get a recorded demo?', answer: 'We focus on live demos so we can answer your questions. We can share short product videos separately if that helps.' },
-  { question: 'What happens after the demo?', answer: 'You’ll get a follow-up email with next steps, a trial link if you want to try it, and our contact info for any further questions.' },
+  { question: 'What happens after the demo?', answer: 'You’ll get a follow-up email with next steps, a signup link if you want to continue, and our contact info for any further questions.' },
 ];
 
 export const securityFaqs = [
@@ -136,13 +136,13 @@ export const securityFaqs = [
 export const featuresIndexFaqs = [
   { question: 'Do I need all five modules?', answer: 'You get access to all modules on your plan. Most customers use Campaign Intelligence and AI Optimization from day one, then adopt Analytics, Automation, and Budget Allocator as they scale.' },
   { question: 'How is this different from using each platform alone?', answer: 'Advertising Systems unifies Google, Meta, and OTAs in one place — one AI, one dashboard, one attribution view. You avoid switching tabs and manual reporting while the AI optimizes across channels.' },
-  { question: 'Can I try before I buy?', answer: 'Yes. Start a 14-day free trial with no credit card. You can connect accounts and use all modules. Book a demo if you want a guided walkthrough.' },
+  { question: 'Can I evaluate before I buy?', answer: 'Yes. Create a signup request or book a demo if you want a guided walkthrough before choosing a paid plan.' },
   { question: 'What is Campaign Intelligence?', answer: 'It’s your single command center: create and manage campaigns across Google, Meta, and OTAs from one dashboard instead of logging into each platform.' },
   { question: 'What is the AI Optimization Engine?', answer: 'It automatically adjusts bids, budgets, and targeting across connected accounts every 15 minutes using reinforcement learning and your performance data.' },
   { question: 'What is Performance Analytics?', answer: 'Real-time dashboards, cross-channel attribution, and anomaly detection. You see true ROI and can slice by channel, campaign, or time period.' },
   { question: 'What is Automation Studio?', answer: 'Rules-based automation: set conditions and actions (e.g. pause underperformers, shift budget). The system executes so you don’t have to do repetitive tasks manually.' },
   { question: 'What is Budget Allocator?', answer: 'AI-driven budget distribution across channels and campaigns. It shifts spend to top performers in real time to maximize ROAS.' },
-  { question: 'How do I get started with the platform?', answer: 'Sign up for a free trial, connect your ad accounts via OAuth, and follow the in-app checklist. Most teams are live in under 15 minutes.' },
+  { question: 'How do I get started with the platform?', answer: 'Create a signup request, connect your ad accounts via OAuth in the secure app, and follow the in-app checklist. Most teams are live in under 15 minutes.' },
   { question: 'Where can I see pricing?', answer: 'See the Pricing section on the homepage or the Pricing Intelligence page. Plans are based on ad account count; no per-click or hidden fees.' },
 ];
 
@@ -156,7 +156,7 @@ export const featureSubpageFaqs = [
   { question: 'Can I turn off or limit the AI?', answer: 'Yes. You can set guardrails, approval workflows, or manual-only mode. You stay in control of how much the system automates.' },
   { question: 'Does this replace my existing ad accounts?', answer: 'No. We connect to your existing Google, Meta, and OTA accounts. We optimize and report; your accounts stay where they are.' },
   { question: 'What if I use an agency or freelancer?', answer: 'You can add team members and control their access. Agencies often use Advertising Systems to manage multiple client accounts from one place.' },
-  { question: 'Is there a free trial?', answer: 'Yes. 14-day free trial with no credit card. Full access to your chosen plan so you can test this feature and the rest of the platform.' },
+  { question: 'Can I evaluate this feature first?', answer: 'Yes. Create a signup request or book a demo and we can walk through the feature, connected account requirements, and plan fit.' },
   { question: 'Where do I get support?', answer: 'In-app help, Knowledge Base, and email support on all plans. Enterprise has dedicated support. Our team can walk you through this feature if needed.' },
 ];
 
@@ -176,7 +176,7 @@ export const otaAdvertisingFaqs = [
 
 /** Generic FAQ for vs comparison pages */
 export const vsPageFaqs = [
-  { question: 'Can I try Advertising Systems before switching?', answer: 'Yes. Start a 14-day free trial with no credit card. Connect your accounts and see how the AI performs. You can keep using your current tools in parallel.' },
+  { question: 'Can I evaluate Advertising Systems before switching?', answer: 'Yes. Create a signup request or book a demo. You can review the workflow and keep using your current tools while you evaluate fit.' },
   { question: 'How long does migration take?', answer: 'Most teams are live in under 15 minutes. OAuth connects your accounts; historical data syncs automatically. No need to recreate campaigns.' },
   { question: 'What if I use both Advertising Systems and another tool?', answer: 'You can. Some customers run Advertising Systems for unified AI and reporting while keeping a legacy tool for a specific use case. We focus on being the single place for cross-channel optimization.' },
   { question: 'Will I lose my historical data?', answer: 'No. We import historical performance data when you connect. You keep your data in the original platforms too; we don’t delete anything.' },
@@ -185,5 +185,5 @@ export const vsPageFaqs = [
   { question: 'Can I import my campaigns or structure?', answer: 'We connect to your existing accounts; campaigns stay where they are. We don’t require you to recreate structure. The AI optimizes within your current setup.' },
   { question: 'What if my team is used to the other tool?', answer: 'We have a familiar dashboard and clear reporting. Many teams adopt Advertising Systems quickly. We also offer onboarding and support to smooth the transition.' },
   { question: 'Do you have a migration or switch playbook?', answer: 'Yes. We’ll walk you through connect, audit, and optimization steps. Book a demo and we can outline a migration plan for your case.' },
-  { question: 'Why would I switch from a tool I already use?', answer: 'If you run Google, Meta, and OTAs (or plan to), one platform and one AI can replace multiple tools, reduce manual work, and improve cross-channel ROAS. A demo or trial shows the difference.' },
+  { question: 'Why would I switch from a tool I already use?', answer: 'If you run Google, Meta, and OTAs (or plan to), one platform and one AI can replace multiple tools, reduce manual work, and improve cross-channel ROAS. A demo or guided evaluation shows the difference.' },
 ];

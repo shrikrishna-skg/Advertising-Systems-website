@@ -14,7 +14,7 @@ Learnings from [Google Ads](https://business.google.com/us/google-ads/) and how 
 
 ### 2. **Offer / incentive above the fold**
 - “New to Google Ads? Choose an offer to earn up to $X in ad credit.”
-- **Takeaway:** Lead with a concrete benefit (credit, trial, guarantee) near the hero.
+- **Takeaway:** Lead with a concrete benefit, secure signup promise, or guided onboarding guarantee near the hero.
 
 ### 3. **Product as a set of “ways to be seen”**
 - Section: “Google Ads gives you many ways to be seen” with **Performance Max, Search, Display, Shopping, Video, App**.
@@ -58,7 +58,7 @@ Learnings from [Google Ads](https://business.google.com/us/google-ads/) and how 
 
 | Area | Current | Google Ads–style change |
 |------|--------|--------------------------|
-| **Hero incentive** | “No credit card · 14-day trial · Cancel anytime” | Add one line above or beside CTAs: e.g. “Start free — no credit card. 14-day trial.” or a small “Earn $X in ad credit” style offer if you have one. |
+| **Hero incentive** | “Secure signup · Guided onboarding · Cancel anytime” | Add one line above or beside CTAs with secure signup and guided onboarding language. |
 | **Product pillars on homepage** | Features section with 3 blocks (Campaign Intelligence, AI Optimization, Analytics, etc.) | Add a **compact “Ways we help”** section: 4–6 cards (Campaign Intelligence, AI Optimization, Analytics, Automation, Budget, OTAs), each with icon + one line + “Explore” link, similar to “Performance Max, Search, Display…” |
 | **Goals / outcomes** | Pain points + features | Add one section: **“Achieve your goals in one place”** with 4–5 outcome cards: “Maximize ROAS,” “Lower CPA,” “Unify Google, Meta & OTAs,” “Save time,” “Scale without overages.” |
 | **Support block** | Contact link in nav/footer | Add a **“Let us help”** strip before footer: “Get started with a free demo. Book a call · Chat · Email” with clear Book demo + Contact links. |
@@ -76,7 +76,7 @@ Learnings from [Google Ads](https://business.google.com/us/google-ads/) and how 
 ### Copy / messaging (no layout change)
 
 - Use a **single headline that ties “AI” to “outcome”** (you already have “Your ads should Make money…” — could add a variant like “Let AI find the ad performance you’ve been missing.” for A/B or alternate sections).
-- Use **“Start now”** or **“Start free”** as primary CTA where it fits (you already have “Start Free Trial”).
+- Use **“Start now”** or **“Get started”** as primary CTA where it fits.
 - Use **“Schedule a meeting”** or **“Book a call”** next to “Book a Demo” where it fits.
 
 ---

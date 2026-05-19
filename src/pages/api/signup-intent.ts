@@ -80,7 +80,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const context = normalizeIntakeContext(body, {
     landingPage: '/signup',
-    cta: 'Start Free Trial',
+    cta: 'Start Signup',
   });
   const clientSubmissionId = getString(body, 'client_submission_id', 160);
   const idempotencyKey = clientSubmissionId

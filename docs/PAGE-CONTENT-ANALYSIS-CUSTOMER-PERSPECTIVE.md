@@ -46,7 +46,7 @@ Many pages have **few sections and little content**. This doc identifies which p
 - **Short intro block** — “Real teams, real results. See how businesses like yours improved ROAS and cut waste.”
 - **Filters or tags** — By industry (Travel, E-commerce, Tech) or outcome (ROAS, CPA, time saved) so visitors find “someone like me.”
 - **One highlighted case** — One expanded story (problem → what we did → result in numbers) so the page isn’t only cards.
-- **CTA section** — “Get results like these” with Book Demo + Start Free Trial; optional testimonial line.
+- **CTA section** — “Get results like these” with Book Demo + Get Started; optional testimonial line.
 - **Fix links** — Point “Read case study” to real URLs (e.g. `/case-studies/travelcorp`) or remove until you have detail pages.
 
 **Customer benefit:** “I see proof for my industry and a clear next step.”
@@ -62,7 +62,7 @@ Many pages have **few sections and little content**. This doc identifies which p
 - **Why one platform** — One section: “Stop switching tabs. One login, one dashboard, one AI across Google, Meta, and OTAs.” (2–3 sentences.)
 - **How connecting works** — “Connect in minutes: OAuth with Google/Meta/OTAs. No CSV imports. Data syncs every 15 minutes.” (reduces “will this be painful?”)
 - **API / power users** — One line or small block: “Professional and Enterprise plans include REST API for custom integrations (CRM, BI, internal tools).” Link to docs or contact.
-- **Bottom CTA band** — Same style as other pages: “Ready to connect your stack?” with Start Free Trial + Book Demo.
+- **Bottom CTA band** — Same style as other pages: “Ready to connect your stack?” with Get Started + Book Demo.
 
 **Customer benefit:** “I know it works with my tools and how easy it is to connect.”
 
@@ -74,8 +74,8 @@ Many pages have **few sections and little content**. This doc identifies which p
 
 **Add (above or beside the form):**
 
-- **What you get** — 3–4 bullets: “Full access to all 5 modules,” “Connect Google, Meta, OTAs,” “14-day free trial,” “No credit card required.”
-- **Trust line** — “Join 2,000+ businesses” or “$5.2B+ in ad spend managed” (reuse from homepage).
+- **What you get** — 3–4 bullets: “Full access to all 5 modules,” “Connect Google, Meta, OTAs,” “Secure signup,” “Guided onboarding.”
+- **Trust line** — Use neutral operational proof such as “Built for Google, Meta, and OTA advertising teams” instead of hard-count claims.
 - **Optional:** “Already have an account? Log in” link to login.
 
 **Customer benefit:** “I know what I’m signing up for and that it’s low-risk.”
@@ -166,8 +166,8 @@ Many pages have **few sections and little content**. This doc identifies which p
 
 ## Quick wins (same pattern across pages)
 
-- **Add a clear CTA section** at the bottom of every thin page: one headline, one line of copy, Book Demo + Start Free Trial (or Contact where it fits).
-- **Reuse trust** — “$5.2B+ ad spend,” “2,000+ businesses,” “14-day trial, no credit card” on Signup, Integrations, Case Studies.
+- **Add a clear CTA section** at the bottom of every thin page: one headline, one line of copy, Book Demo + Get Started (or Contact where it fits).
+- **Reuse trust** — Use secure signup, guided onboarding, cross-channel workflow, and Multisystems-backed language on Signup, Integrations, and Case Studies.
 - **Fix placeholder links** — Replace `#` with real routes or a “Coming soon” state so customers aren’t left on a dead end.
 - **One “Why this page?” line** — Under the hero on every secondary page: one sentence that answers “Why am I here?” (e.g. Integrations: “See every platform we support and how to connect in minutes.”)
 

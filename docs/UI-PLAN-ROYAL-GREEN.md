@@ -17,11 +17,11 @@
 | **Footer** | Links, legal, branding |
 
 ### UX patterns
-- **Dual CTAs**: Primary (Get Started / Start Free Trial) + secondary (Book a Demo); both often repeated.
+- **Dual CTAs**: Primary (Get Started) + secondary (Book a Demo); both often repeated.
 - **Trust**: No credit card, setup in minutes, cancel anytime; neutral proof and support notes.
 - **Social proof**: “100+ businesses”, concrete metrics (reviews, response rate, time saved).
 - **Feature pages**: Deep-dive per feature (hero, problem bullets, “how we solve it”, feature list, related features, integrations, FAQ, CTA).
-- **Book-demo page**: Two paths — “Start Free Trial” vs “Book a Personalized Demo” with short benefit list.
+- **Book-demo page**: Clear signup and personalized demo paths with short benefit lists.
 
 ---
 
@@ -106,7 +106,7 @@ Replace current emerald/blue with a single **royal green** family. Use these as 
 ### Optional (from ReputationSystems)
 
 - [ ] Add neutral trust proof under or over StatsBar, avoiding unverified security or uptime claims.
-- [ ] Ensure book-demo page has two paths: “Start Free Trial” and “Book a Demo” with short bullets.
+- [ ] Ensure book-demo page has clear “Get Started” and “Book a Demo” paths with short bullets.
 - [ ] Feature subpages: same content pattern (hero, problem list, solution, feature list, related features, FAQ, CTA).
 
 ---

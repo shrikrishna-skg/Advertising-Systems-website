@@ -11,14 +11,14 @@ const breadcrumbs = [{ name: 'Sign Up', href: '/signup' }];
 const whatYouGet = [
   'Full access to all 5 modules — Campaign Intelligence, AI Optimization, Analytics, Automation, Budget Allocator',
   'Connect Google Ads, Meta Ads, and OTAs in one dashboard',
-  '14-day free trial — no credit card required',
+  'Secure signup with no password sent through the website',
   'Cancel anytime. No long-term contract.',
 ];
 ---
 
 <Layout
-  title="Start Your Free Trial — Advertising Systems | No Credit Card Required"
-  description="Create your account and get full access to Advertising Systems for 14 days. Unify Google, Meta, and OTA campaigns with AI optimization — no credit card required."
+  title="Create Your Account — Advertising Systems"
+  description="Create your Advertising Systems account request. Unify Google, Meta, and OTA campaigns with AI optimization through a secure signup flow."
   breadcrumbs={breadcrumbs}
   jsonLd={{
     '@context': 'https://schema.org',
@@ -27,7 +27,7 @@ const whatYouGet = [
     url: 'https://advertisingsystems.ai/signup',
     potentialAction: {
       '@type': 'CreateAction',
-      name: 'Start Free Trial',
+      name: 'Create Account',
       target: 'https://advertisingsystems.ai/signup'
     }
   }}
@@ -40,13 +40,13 @@ const whatYouGet = [
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="text-center mb-8">
           <h1 id="signup-heading" class="reveal text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Start your <span class="text-[var(--text-primary)]">free trial</span>
+            Start your <span class="text-[var(--text-primary)]">secure signup</span>
           </h1>
           <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)]">
-            Get full access to Advertising Systems for 14 days.
+            Create your account request and continue in the secure Advertising Systems app.
           </p>
           <p class="reveal mt-2 text-sm font-medium text-[var(--text-muted)]">
-            Join 2,000+ businesses. $5.2B+ in ad spend managed on our platform.
+            Built for teams managing Google, Meta, and OTA advertising in one place.
           </p>
         </div>
 
@@ -133,7 +133,7 @@ const whatYouGet = [
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
               </svg>
             </div>
-            <p class="text-sm font-semibold text-[var(--text-secondary)]">14-day free trial</p>
+            <p class="text-sm font-semibold text-[var(--text-secondary)]">Secure signup</p>
           </div>
           <div class="text-center">
             <div class="w-10 h-10 rounded-full bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mx-auto mb-2">
@@ -209,7 +209,7 @@ const whatYouGet = [
         company: company,
         plan: params.get('plan') || undefined,
         client_submission_id: getClientSubmissionId('signup'),
-        context: getContext('Start Free Trial'),
+        context: getContext('Start Signup'),
       };
       try {
         var analyticsConsent = '';
