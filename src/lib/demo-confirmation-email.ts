@@ -4,6 +4,8 @@ export type DemoConfirmationEmailParams = {
   name: string;
   company: string;
   demoTimeText: string;
+  startTime?: string;
+  endTime?: string;
   durationMinutes: number;
   meetingLink?: string;
   calendarEventLink?: string;
@@ -35,35 +37,71 @@ function getLogoUrl(bookDemoUrl: string) {
 
 function renderButton(label: string, href: string) {
   return `
-    <a href="${safe(href)}" style="display:inline-block;background:#16b97a;color:#ffffff;border:1px solid #16b97a;border-radius:14px;padding:15px 22px;font-size:15px;font-weight:800;line-height:1;text-decoration:none;">
+    <a href="${safe(href)}" style="display:inline-block;padding:11px 18px;background:#2563eb;color:#ffffff;border-radius:8px;text-decoration:none;font-size:15px;line-height:22px;font-weight:700;">
       ${safe(label)}
     </a>
   `;
 }
 
-function renderMiniCard(label: string, value: string, accent: string) {
+function formatDemoDetails(params: DemoConfirmationEmailParams) {
+  if (!params.startTime || !params.endTime) {
+    return {
+      date: params.demoTimeText,
+      time: `${params.durationMinutes} minutes`,
+      timeZone: 'America/Chicago',
+    };
+  }
+
+  const start = new Date(params.startTime);
+  const end = new Date(params.endTime);
+  const date = start.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'America/Chicago',
+  });
+  const startTime = start.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'America/Chicago',
+  });
+  const endTime = end.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'America/Chicago',
+  });
+
+  return {
+    date,
+    time: `${startTime} - ${endTime} CT`,
+    timeZone: 'America/Chicago',
+  };
+}
+
+function renderDetailRow(label: string, value: string, shaded = false) {
   return `
-    <td width="33.33%" style="padding:0 6px 12px 0;">
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="height:100%;background:#ffffff;border:1px solid #e4eaf2;border-radius:16px;">
-        <tr>
-          <td style="padding:14px 14px 13px;">
-            <div style="width:9px;height:9px;border-radius:999px;background:${accent};margin-bottom:10px;"></div>
-            <p style="margin:0 0 4px;color:#728097;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;">${safe(label)}</p>
-            <p style="margin:0;color:#151922;font-size:14px;line-height:1.3;font-weight:800;">${safe(value)}</p>
-          </td>
-        </tr>
-      </table>
-    </td>
+    <tr${shaded ? ' style="background:#f9fafb;"' : ''}>
+      <td style="padding:10px 12px;color:#6b7280;font-weight:700;font-size:15px;line-height:22px;">${safe(label)}</td>
+      <td style="padding:10px 12px;color:#111827;font-size:16px;line-height:24px;font-weight:500;">${safe(value)}</td>
+    </tr>
   `;
 }
 
 export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) {
   const greetingName = firstName(params.name);
-  const subject = 'Your Advertising Systems demo is booked';
+  const subject = 'Demo Booking Confirmed - AdvertisingSystems';
   const preview = `Your Google Meet link and demo time for ${params.demoTimeText}.`;
   const meetingUrl = params.meetingLink || params.calendarEventLink || params.bookDemoUrl;
   const isGoogleMeet = Boolean(params.meetingLink);
   const logoUrl = getLogoUrl(params.bookDemoUrl);
+  const details = formatDemoDetails(params);
+  const coverage = 'We will review your OTA advertising goals, current campaign setup, ROAS reporting, budget pacing, and the best next steps for your team.';
+  const eventLink = params.calendarEventLink
+    ? `<p style="margin:10px 0 0;"><a href="${safe(params.calendarEventLink)}" style="color:#2563eb;text-decoration:none;font-size:16px;line-height:24px;font-weight:500;">View calendar event</a></p>`
+    : '';
 
   const html = `<!doctype html>
 <html lang="en">
@@ -72,106 +110,48 @@ export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
     <title>${safe(subject)}</title>
   </head>
-  <body style="margin:0;background:#f5f7fb;color:#151922;font-family:'DM Sans',Arial,'Helvetica Neue',Helvetica,sans-serif;">
+  <body style="margin:0;padding:24px;background:#f4f4f5;color:#111827;font-family:'Trebuchet MS','Segoe UI',Tahoma,Arial,sans-serif;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
       ${safe(preview)}
     </div>
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f5f7fb;margin:0;padding:26px 12px;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f4f5;margin:0;padding:24px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;max-width:600px;background:#ffffff;border:1px solid #dde6f1;border-radius:24px;overflow:hidden;box-shadow:0 18px 48px rgba(21,25,34,0.08);">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;">
             <tr>
-              <td style="padding:26px 28px 18px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td style="vertical-align:middle;">
-                      <table role="presentation" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td width="42" style="width:42px;vertical-align:middle;">
-                            <img src="${safe(logoUrl)}" width="40" height="40" alt="Advertising Systems logo" style="display:block;width:40px;height:40px;border:0;outline:none;text-decoration:none;">
-                          </td>
-                          <td style="padding-left:10px;vertical-align:middle;">
-                            <p style="margin:0;color:#151922;font-size:18px;line-height:1.1;font-weight:800;letter-spacing:-0.02em;">Advertising Systems</p>
-                            <p style="margin:4px 0 0;color:#8b95a7;font-size:10px;line-height:1;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">by Multisystems</p>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
+              <td style="padding:28px 32px 24px;text-align:center;border-bottom:1px solid #e5e7eb;">
+                <img src="${safe(logoUrl)}" width="44" height="44" alt="AdvertisingSystems" style="display:inline-block;width:44px;height:44px;margin-bottom:12px;border:0;outline:none;text-decoration:none;">
+                <p style="margin:0;font-size:14px;font-weight:700;line-height:20px;color:#374151;">AdvertisingSystems</p>
               </td>
             </tr>
             <tr>
-              <td style="padding:12px 28px 4px;">
-                <div style="display:inline-block;margin-bottom:16px;border:1px solid #b8f0d3;background:#ecfdf5;color:#087a55;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;">
-                  Demo booked
-                </div>
-                <h1 style="margin:0;color:#151922;font-size:32px;line-height:1.08;font-weight:800;letter-spacing:-0.035em;">
-                  ${safe(greetingName)}, your Google Meet is ready.
-                </h1>
-                <p style="margin:13px 0 0;color:#5d697d;font-size:16px;line-height:1.6;">
-                  Your Advertising Systems demo is confirmed. Use the link below when it is time to join.
+              <td style="padding:28px 32px;">
+                <h1 style="font-size:20px;line-height:28px;margin:0 0 16px;color:#111827;font-weight:800;">Your AdvertisingSystems demo is confirmed</h1>
+                <p style="margin:0 0 18px;color:#4b5563;font-size:16px;line-height:24px;">Hi ${safe(greetingName)},</p>
+                <p style="margin:0 0 22px;color:#4b5563;font-size:16px;line-height:24px;">Your AdvertisingSystems demo is booked. A Google Calendar invite has also been sent to this email address.</p>
+
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;margin-top:18px;">
+                  ${renderDetailRow('Date', details.date)}
+                  ${renderDetailRow('Time', details.time, true)}
+                  ${renderDetailRow('Timezone', details.timeZone)}
+                  ${renderDetailRow('Company', params.company || 'Not provided', true)}
+                </table>
+
+                <p style="margin:24px 0 0;">${renderButton(isGoogleMeet ? 'Join Google Meet' : 'Open Meeting Details', meetingUrl)}</p>
+                ${eventLink}
+
+                <p style="margin:20px 0 0;color:#4b5563;font-size:16px;line-height:24px;">
+                  <strong style="color:#111827;">What we will cover:</strong> ${safe(coverage)}
                 </p>
+                <p style="margin:20px 0 0;color:#6b7280;font-size:16px;line-height:24px;">Need to change the time? Reply to this email and we will help.</p>
               </td>
             </tr>
             <tr>
-              <td style="padding:22px 28px 8px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f8fbff;border:1px solid #dfe7f2;border-radius:20px;">
-                  <tr>
-                    <td style="padding:21px 22px;">
-                      <p style="margin:0 0 7px;color:#748199;font-size:12px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">Demo time</p>
-                      <p style="margin:0;color:#151922;font-size:21px;line-height:1.35;font-weight:800;">${safe(params.demoTimeText)}</p>
-                      <div style="margin-top:16px;">
-                        ${renderButton(isGoogleMeet ? 'Join Google Meet' : 'Open Meeting Details', meetingUrl)}
-                      </div>
-                      <p style="margin:15px 0 0;color:#647084;font-size:13px;line-height:1.55;word-break:break-word;">
-                        ${isGoogleMeet ? 'Google Meet link:' : 'Meeting details:'}
-                        <a href="${safe(meetingUrl)}" style="color:#2563eb;font-weight:700;text-decoration:none;">${safe(meetingUrl)}</a>
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:18px 22px 2px 28px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                  <tr>
-                    ${renderMiniCard('Length', `${params.durationMinutes} minutes`, '#16b97a')}
-                    ${renderMiniCard('Focus', 'Ad performance', '#2f7df6')}
-                    ${renderMiniCard('Output', 'Clear next step', '#8b5cf6')}
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:12px 28px 28px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#ffffff;border:1px solid #e8edf4;border-radius:18px;">
-                  <tr>
-                    <td style="padding:18px 20px;">
-                      <p style="margin:0;color:#151922;font-size:15px;font-weight:800;">Before the call</p>
-                      <p style="margin:7px 0 0;color:#667386;font-size:14px;line-height:1.62;">
-                        Bring the one thing you want to understand better: ad spend, OTA performance, reporting, or where bookings are leaking. We will keep the call practical.
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-                <p style="margin:18px 0 0;color:#7a8596;font-size:13px;line-height:1.6;">
-                  Questions or need to reschedule? Reply to this email or contact
-                  <a href="mailto:${safe(params.supportEmail)}" style="color:#2563eb;font-weight:800;text-decoration:none;">${safe(params.supportEmail)}</a>.
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td style="background:#f9fbfe;border-top:1px solid #e4eaf2;padding:18px 28px;">
-                <p style="margin:0;color:#96a1b3;font-size:12px;line-height:1.55;">
-                  Advertising Systems by Multisystems. This email was sent because a demo was booked on advertisingsystems.ai.
-                </p>
+              <td style="padding:20px 32px 28px;text-align:center;border-top:1px solid #e5e7eb;">
+                <p style="margin:0;font-size:12px;line-height:18px;color:#9ca3af;">AdvertisingSystems - advertisingsystems.ai</p>
+                <p style="margin:6px 0 0;"><a href="${safe(params.bookDemoUrl)}" style="color:#2563eb;text-decoration:none;font-size:12px;line-height:18px;">www.advertisingsystems.ai</a></p>
               </td>
             </tr>
           </table>
@@ -182,15 +162,18 @@ export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) 
 </html>`;
 
   const text = [
-    `${greetingName}, your Advertising Systems demo is booked.`,
+    `${greetingName}, your AdvertisingSystems demo is booked.`,
     '',
-    `Demo time: ${params.demoTimeText}`,
-    `Duration: ${params.durationMinutes} minutes`,
+    `Date: ${details.date}`,
+    `Time: ${details.time}`,
+    `Timezone: ${details.timeZone}`,
+    `Company: ${params.company || 'Not provided'}`,
     `${isGoogleMeet ? 'Google Meet' : 'Meeting details'}: ${meetingUrl}`,
+    params.calendarEventLink ? `Calendar event: ${params.calendarEventLink}` : '',
     '',
-    'Before the call: bring the one thing you want to understand better: ad spend, OTA performance, reporting, or where bookings are leaking.',
+    `What we will cover: ${coverage}`,
     '',
-    `Questions or rescheduling: ${params.supportEmail}`,
+    `Need to change the time? Reply to this email or contact ${params.supportEmail}.`,
   ].filter(Boolean).join('\n');
 
   return { subject, preview, html, text };

@@ -82,7 +82,7 @@ const contactInfo = [
             <h2 id="contact-form-heading" class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.03em] mb-8">
               Send us a <span class="text-[var(--text-primary)]">message</span>
             </h2>
-            <form action="#" method="POST" class="reveal space-y-6" aria-label="Contact form">
+            <form id="contact-form" action="/api/contact" method="POST" class="reveal space-y-6" aria-label="Contact form">
               <div class="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label for="name" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Name</label>
@@ -144,8 +144,14 @@ const contactInfo = [
                   class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-royal-green-500 focus:ring-1 focus:ring-royal-green-500 transition-colors resize-none"
                 ></textarea>
               </div>
+              <div class="hidden" aria-hidden="true">
+                <label for="contact-website">Website</label>
+                <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+              <div id="contact-message" class="hidden text-sm rounded-lg p-3" role="alert"></div>
               <button
                 type="submit"
+                id="contact-submit"
                 class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg shadow-royal-green-500/20 cursor-pointer"
               >
                 Send Message
@@ -244,16 +250,81 @@ const contactInfo = [
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form[aria-label="Contact form"]');
+    var form = document.getElementById('contact-form');
+    var messageEl = document.getElementById('contact-message');
+    var submitBtn = document.getElementById('contact-submit');
     if (!form) return;
-    form.addEventListener('submit', function() {
+    function getClientSubmissionId(prefix) {
+      if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
+      return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    }
+    function getContext(defaultCta) {
+      var params = new URLSearchParams(window.location.search);
+      var sourcePage = params.get('source_page');
+      return {
+        landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
+        referrer: document.referrer || undefined,
+        cta: params.get('cta') || defaultCta,
+        posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
+        utm: {
+          source: params.get('utm_source') || undefined,
+          medium: params.get('utm_medium') || undefined,
+          campaign: params.get('utm_campaign') || undefined,
+        },
+      };
+    }
+    function setMessage(text, isError) {
+      if (!messageEl) return;
+      messageEl.textContent = text;
+      messageEl.className = isError
+        ? 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700 border border-red-500/20'
+        : 'text-sm rounded-lg p-3 bg-emerald-50 text-emerald-950 border border-emerald-100';
+      messageEl.classList.remove('hidden');
+    }
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      if (submitBtn) submitBtn.disabled = true;
+      if (messageEl) messageEl.classList.add('hidden');
       var email = form.querySelector('#email')?.value?.trim();
       var company = form.querySelector('#company')?.value?.trim();
-      if (email) window.posthog?.identify(email, { company: company || undefined });
-      window.posthog?.capture('contact_form_submitted', {
-        has_company: Boolean(company),
-        has_phone: Boolean(form.querySelector('#phone')?.value?.trim()),
-      });
+      var payload = {
+        name: form.querySelector('#name')?.value?.trim(),
+        email: email,
+        company: company,
+        phone: form.querySelector('#phone')?.value?.trim(),
+        message: form.querySelector('#message')?.value?.trim(),
+        website: form.querySelector('#contact-website')?.value?.trim(),
+        client_submission_id: getClientSubmissionId('contact'),
+        context: getContext('Contact Sales'),
+      };
+      try {
+        var analyticsConsent = '';
+        try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
+        var res = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Analytics-Consent': analyticsConsent,
+          },
+          body: JSON.stringify(payload),
+        });
+        var data = await res.json().catch(function() { return {}; });
+        if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+        if (email) window.posthog?.identify(email, { company: company || undefined });
+        window.posthog?.capture('contact_form_submitted', {
+          has_company: Boolean(company),
+          has_phone: Boolean(payload.phone),
+          status: 'accepted',
+        });
+        setMessage(data.message || "Thanks. We've received your message.", false);
+        form.reset();
+      } catch (error) {
+        var message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
+        window.posthog?.capture('contact_form_errored', { error_message: message });
+        setMessage(message, true);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     });
   });
 </script>

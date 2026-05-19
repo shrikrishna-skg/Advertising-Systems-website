@@ -1,6 +1,6 @@
 # Advertising Systems Website
 
-Marketing website for [Advertising Systems](https://advertisingsystems.ai) — AI-powered advertising management by Multisystems.
+Marketing website for [AdvertisingSystems](https://www.advertisingsystems.ai) — AI-powered advertising management.
 
 Built with **Astro 6**, **React 19**, **TailwindCSS v4**, and **TypeScript**.
 
@@ -60,15 +60,20 @@ cp .env.example .env
 | `GOOGLE_CLIENT_SECRET` | OAuth 2.0 client secret |
 | `GOOGLE_REFRESH_TOKEN` | Offline refresh token for the calendar owner account |
 | `GOOGLE_CALENDAR_ID` | Calendar ID (default: `primary`) |
-| `SPRING_MAIL_HOST` | SMTP host for demo confirmation emails |
+| `SPRING_MAIL_HOST` | SMTP host for AdvertisingSystems customer confirmation emails |
 | `SPRING_MAIL_PORT` | SMTP port, usually `587` for Gmail STARTTLS |
-| `SPRING_MAIL_USERNAME` | SMTP username, e.g. `no-reply@multisystems.ai` |
+| `SPRING_MAIL_USERNAME` | SMTP username for the verified AdvertisingSystems sender mailbox |
 | `SPRING_MAIL_PASSWORD` | SMTP app password or provider password |
+| `SPRING_MAIL_FROM_NAME` | Customer-visible sender name, default `AdvertisingSystems` |
+| `ADVERTISING_SYSTEMS_EMAIL_FROM` | Customer-visible From header, e.g. `AdvertisingSystems <no-reply@advertisingsystems.ai>`; sender domain must be verified |
+| `DEMO_REPLY_TO_EMAIL` | Customer replies go here, default `contact@multisystems.ai` |
 | `DEMO_CONFIRMATION_EMAIL_ENABLED` | Set `false` to skip branded confirmation emails |
+| `MULTISYSTEMS_CENTRAL_ORIGIN` | Multisystems origin for signed central intake requests, default `https://www.multisystems.ai` |
+| `MULTISYSTEMS_LEAD_INTAKE_SECRET` | Server-only HMAC secret matching `LEAD_INTAKE_ADVERTISING_SYSTEMS_SECRET` in Multisystems |
 
 Run `node scripts/get-google-refresh-token.js` once to obtain the refresh token.
 
-> **Never commit `.env` or expose secrets to the client.** Google Calendar and SMTP calls run server-side only.
+> **Never commit `.env` or expose secrets to the client.** Google Calendar, SMTP, and Multisystems intake calls run server-side only. Public API responses intentionally avoid exposing whether SMTP or central-intake secrets are configured.
 
 ## CI/CD
 
@@ -88,7 +93,11 @@ Add these in **Settings → Secrets and variables → Actions**:
 - `GOOGLE_CALENDAR_ID` (optional)
 - `SPRING_MAIL_USERNAME`
 - `SPRING_MAIL_PASSWORD`
+- `ADVERTISING_SYSTEMS_EMAIL_FROM`
+- `DEMO_REPLY_TO_EMAIL`
 - `SPRING_MAIL_HOST` / `SPRING_MAIL_PORT` (optional if using Gmail defaults)
+- `MULTISYSTEMS_LEAD_INTAKE_SECRET`
+- `MULTISYSTEMS_CENTRAL_ORIGIN` (optional; defaults to production Multisystems)
 
 ## Responsive Design
 

@@ -68,12 +68,13 @@ const whatYouGet = [
         </div>
 
         <div class="max-w-lg mx-auto">
-        <form class="reveal glass rounded-2xl p-8 space-y-5" action="https://app.advertisingsystems.ai/signup" method="GET">
+        <form id="signup-intent-form" class="reveal glass rounded-2xl p-8 space-y-5" action="/api/signup-intent" method="POST" data-app-signup-url="https://app.advertisingsystems.ai/signup">
           <div>
             <label for="name" class="block text-sm font-semibold text-[var(--text-secondary)] mb-1.5">Full Name</label>
 	            <input
 	              type="text"
 	              id="name"
+	              name="name"
 	              required
 	              maxlength="120"
 	              placeholder="Jane Smith"
@@ -86,6 +87,7 @@ const whatYouGet = [
 	            <input
 	              type="email"
 	              id="email"
+	              name="email"
 	              required
 	              maxlength="254"
 	              placeholder="jane@company.com"
@@ -98,6 +100,7 @@ const whatYouGet = [
 	            <input
 	              type="text"
 	              id="company"
+	              name="company"
 	              required
 	              maxlength="160"
 	              placeholder="Acme Corp"
@@ -107,10 +110,12 @@ const whatYouGet = [
 
 	          <button
 	            type="submit"
+	            id="signup-intent-submit"
 	            class="w-full bg-royal-green-500 text-white font-semibold py-3 rounded-lg hover:bg-royal-green-600 transition-colors cursor-pointer"
 	          >
 	            Continue to Secure Signup
 	          </button>
+	          <div id="signup-intent-message" class="hidden text-sm rounded-lg p-3" role="alert"></div>
 
 	          <p class="text-xs text-center text-[var(--text-muted)]">
 	            Your account and password are created inside the secure app. By continuing, you agree to our <a href="/terms" class="text-[var(--color-link)] link-secondary">Terms of Service</a> and <a href="/privacy" class="text-[var(--color-link)] link-secondary">Privacy Policy</a>.
@@ -160,15 +165,81 @@ const whatYouGet = [
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form[action*="app.advertisingsystems.ai/signup"]');
+    var form = document.getElementById('signup-intent-form');
+    var submitBtn = document.getElementById('signup-intent-submit');
+    var messageEl = document.getElementById('signup-intent-message');
     if (!form) return;
-    form.addEventListener('submit', function() {
+    function getClientSubmissionId(prefix) {
+      if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
+      return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    }
+    function getContext(defaultCta) {
+      var params = new URLSearchParams(window.location.search);
+      var sourcePage = params.get('source_page');
+      return {
+        landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
+        referrer: document.referrer || undefined,
+        cta: params.get('cta') || defaultCta,
+        posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
+        utm: {
+          source: params.get('utm_source') || undefined,
+          medium: params.get('utm_medium') || undefined,
+          campaign: params.get('utm_campaign') || undefined,
+        },
+      };
+    }
+    function setMessage(text, isError) {
+      if (!messageEl) return;
+      messageEl.textContent = text;
+      messageEl.className = isError
+        ? 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700 border border-red-500/20'
+        : 'text-sm rounded-lg p-3 bg-emerald-50 text-emerald-950 border border-emerald-100';
+      messageEl.classList.remove('hidden');
+    }
+    form.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      if (submitBtn) submitBtn.disabled = true;
+      if (messageEl) messageEl.classList.add('hidden');
       var email = form.querySelector('#email')?.value?.trim();
       var company = form.querySelector('#company')?.value?.trim();
-      if (email) window.posthog?.identify(email, { company: company || undefined });
-      window.posthog?.capture('signup_form_submitted', {
-        has_company: Boolean(company),
-      });
+      var params = new URLSearchParams(window.location.search);
+      var payload = {
+        name: form.querySelector('#name')?.value?.trim(),
+        email: email,
+        company: company,
+        plan: params.get('plan') || undefined,
+        client_submission_id: getClientSubmissionId('signup'),
+        context: getContext('Start Free Trial'),
+      };
+      try {
+        var analyticsConsent = '';
+        try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
+        var res = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Analytics-Consent': analyticsConsent,
+          },
+          body: JSON.stringify(payload),
+        });
+        var data = await res.json().catch(function() { return {}; });
+        if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+        if (email) window.posthog?.identify(email, { company: company || undefined });
+        window.posthog?.capture('signup_form_submitted', {
+          has_company: Boolean(company),
+          plan: payload.plan,
+          status: 'accepted',
+        });
+        setMessage(data.message || 'Signup started. Continue in the secure app.', false);
+        window.setTimeout(function() {
+          window.location.href = form.dataset.appSignupUrl || data.redirect_url || 'https://app.advertisingsystems.ai/signup';
+        }, 900);
+      } catch (error) {
+        var message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
+        window.posthog?.capture('signup_form_errored', { error_message: message });
+        setMessage(message, true);
+        if (submitBtn) submitBtn.disabled = false;
+      }
     });
   });
 </script>

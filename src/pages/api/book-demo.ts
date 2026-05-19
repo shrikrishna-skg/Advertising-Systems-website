@@ -3,6 +3,14 @@ import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse } from '../.
 import { getPostHogServer } from '../../lib/posthog-server';
 import { sendDemoConfirmationEmail } from '../../lib/demo-email';
 import {
+  ADVERTISING_SYSTEMS_PRODUCT,
+  ADVERTISING_SYSTEMS_SOURCE,
+  buildIntakeIdempotencyKey,
+  hashIntakeIdempotencyKey,
+  normalizeIntakeContext,
+  sendCentralIntakeEvent,
+} from '../../lib/multisystems-intake';
+import {
   DEMO_DURATION_MINUTES,
   DEMO_TIME_ZONE,
   type DemoSlot,
@@ -97,9 +105,12 @@ async function createCalendarEvent(params: {
       return { success: false, code: 'slot_unavailable', error: 'Selected time is no longer available' };
     }
 
-    const title = `Demo request: ${params.company} - ${params.name}`;
+    const title = `AdvertisingSystems Demo - ${params.company} (${params.name})`;
     const demoTimeText = formatDemoDateForDescription(preferredDatetime.date, preferredDatetime.time);
     const desc = [
+      'AdvertisingSystems demo booking',
+      'Source: AdvertisingSystems Website',
+      '',
       `Name: ${params.name}`,
       `Email: ${params.email}`,
       params.phone && `Phone: ${params.phone}`,
@@ -141,9 +152,16 @@ async function createCalendarEvent(params: {
           timeZone: DEMO_TIME_ZONE,
         },
         attendees: sendCalendarInvites ? [{ email: params.email, displayName: params.name }] : undefined,
+        reminders: {
+          useDefault: false,
+          overrides: [
+            { method: 'email', minutes: 60 },
+            { method: 'popup', minutes: 15 },
+          ],
+        },
         source: {
-          title: 'Advertising Systems Website',
-          url: 'https://advertisingsystems.ai/book-demo',
+          title: 'AdvertisingSystems Website',
+          url: 'https://www.advertisingsystems.ai/book-demo',
         },
         extendedProperties: {
           private: {
@@ -156,12 +174,17 @@ async function createCalendarEvent(params: {
       },
     });
 
+    const meetingLink =
+      event.data.hangoutLink ??
+      event.data.conferenceData?.entryPoints?.find((entry) => entry.uri)?.uri ??
+      undefined;
+
     return {
       success: true,
       eventId: event.data.id ?? undefined,
       inviteSent: sendCalendarInvites,
       meetCreated: Boolean(createGoogleMeet && event.data.conferenceData?.entryPoints?.length),
-      meetingLink: event.data.hangoutLink || event.data.conferenceData?.entryPoints?.find((entry) => entry.uri)?.uri,
+      meetingLink,
       calendarEventLink: event.data.htmlLink ?? undefined,
       demoTimeText,
     };
@@ -222,6 +245,7 @@ export const POST: APIRoute = async ({ request }) => {
   const monthlyAdSpend = getString(body, 'monthly_ad_spend', FIELD_LIMITS.monthlyAdSpend);
   const preferredDatetimeRaw = getString(body, 'preferred_datetime', FIELD_LIMITS.preferredDatetime);
   const message = getString(body, 'message', FIELD_LIMITS.message);
+  const clientSubmissionId = getString(body, 'client_submission_id', 160);
 
   for (const field of [name, email, phone, company, numberOfLocations, companySize, monthlyAdSpend, preferredDatetimeRaw, message]) {
     if (field.error) errors.push(field.error);
@@ -268,6 +292,25 @@ export const POST: APIRoute = async ({ request }) => {
     },
   });
 
+  const bookedSlot = preferredDatetime.value ?? {
+    date: getNextBookableDemoDate(),
+    time: '10:00' as DemoSlot,
+    localDateTime: `${getNextBookableDemoDate()}T10:00:00`,
+  };
+  const bookedRange = getDemoSlotRange(bookedSlot.date, bookedSlot.time);
+  const context = normalizeIntakeContext(body, {
+    landingPage: '/book-demo',
+    cta: 'Book a Demo',
+  });
+  const idempotencyKey = clientSubmissionId.value
+    ? buildIntakeIdempotencyKey('demo', [clientSubmissionId.value])
+    : hashIntakeIdempotencyKey('demo', [
+        email.value,
+        company.value,
+        bookedRange?.start.toISOString(),
+        context.cta,
+      ]);
+
   const calendarResult = await createCalendarEvent({
     name: name.value!,
     email: email.value!,
@@ -304,6 +347,8 @@ export const POST: APIRoute = async ({ request }) => {
       email: email.value!,
       company: company.value!,
       demoTimeText: calendarResult.demoTimeText || 'your selected demo time',
+      startTime: bookedRange?.start.toISOString(),
+      endTime: bookedRange?.end.toISOString(),
       durationMinutes: DEMO_DURATION_MINUTES,
       meetingLink: calendarResult.meetingLink,
       calendarEventLink: calendarResult.calendarEventLink,
@@ -342,13 +387,48 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    const centralIntake = bookedRange
+      ? await sendCentralIntakeEvent({
+          eventType: 'demo_booking.created',
+          source: ADVERTISING_SYSTEMS_SOURCE,
+          idempotencyKey,
+          occurredAt: new Date().toISOString(),
+          lead: {
+            fullName: name.value!,
+            email: email.value!,
+            phone: phone.value,
+            company: company.value!,
+            numberOfLocations: numberOfLocations.value,
+            companySize: companySize.value,
+            monthlyAdSpend: monthlyAdSpend.value,
+          },
+          booking: {
+            startTime: bookedRange.start.toISOString(),
+            endTime: bookedRange.end.toISOString(),
+            calendarEventId: calendarResult.eventId,
+            calendarEventUrl: calendarResult.calendarEventLink,
+            meetingUrl: calendarResult.meetingLink,
+            calendarInviteSent: calendarResult.inviteSent === true,
+            confirmationEmailSent: confirmationEmail.success,
+            status: confirmationEmail.success ? 'booked' : 'booked_confirmation_pending',
+          },
+          contact: {
+            message: message.value,
+            productInterest: ADVERTISING_SYSTEMS_PRODUCT,
+          },
+          context,
+        })
+      : { configured: false, sent: false, skipped: true };
+    if (centralIntake.configured && !centralIntake.sent) {
+      console.warn('book-demo: central intake forwarding failed', {
+        status: centralIntake.status,
+        requestId: centralIntake.requestId,
+      });
+    }
+
     return jsonResponse({
       success: true,
-      calendar_created: true,
-      calendar_invite_sent: calendarResult.inviteSent === true,
-      google_meet_created: calendarResult.meetCreated === true,
-      confirmation_email_sent: confirmationEmail.success,
-      confirmation_email_skipped: confirmationEmail.skipped === true,
+      status: 'booked',
       message: calendarResult.inviteSent
         ? confirmationEmail.success
           ? "You're booked. We sent the calendar invite and a confirmation email with the Google Meet link and next steps."
@@ -368,9 +448,45 @@ export const POST: APIRoute = async ({ request }) => {
     },
   });
 
+  const centralIntake = bookedRange
+    ? await sendCentralIntakeEvent({
+        eventType: 'demo_booking.created',
+        source: ADVERTISING_SYSTEMS_SOURCE,
+        idempotencyKey,
+        occurredAt: new Date().toISOString(),
+        lead: {
+          fullName: name.value!,
+          email: email.value!,
+          phone: phone.value,
+          company: company.value!,
+          numberOfLocations: numberOfLocations.value,
+          companySize: companySize.value,
+          monthlyAdSpend: monthlyAdSpend.value,
+        },
+        booking: {
+          startTime: bookedRange.start.toISOString(),
+          endTime: bookedRange.end.toISOString(),
+          calendarInviteSent: false,
+          confirmationEmailSent: false,
+          status: 'requested',
+        },
+        contact: {
+          message: message.value,
+          productInterest: ADVERTISING_SYSTEMS_PRODUCT,
+        },
+        context,
+      })
+    : { configured: false, sent: false, skipped: true };
+  if (centralIntake.configured && !centralIntake.sent) {
+    console.warn('book-demo: central intake forwarding failed', {
+      status: centralIntake.status,
+      requestId: centralIntake.requestId,
+    });
+  }
+
   return jsonResponse({
     success: true,
-    calendar_created: false,
+    status: 'requested',
     message: "Thanks! We've received your request and will be in touch to schedule your demo.",
   });
 };

@@ -544,7 +544,7 @@ const locationOptions = [
     }
   </style>
 
-  <script>
+  <script is:inline>
     const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const MAX_SCHEDULE_DAYS = 90;
     const DEMO_BOOKING_TIME_ZONE = 'America/Chicago';
@@ -624,6 +624,27 @@ const locationOptions = [
         day: 'numeric',
         year: 'numeric',
       }).format(date);
+    }
+
+    function getClientSubmissionId(prefix) {
+      if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
+      return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    }
+
+    function getIntakeContext(defaultCta) {
+      const params = new URLSearchParams(window.location.search);
+      const sourcePage = params.get('source_page');
+      return {
+        landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
+        referrer: document.referrer || undefined,
+        cta: params.get('cta') || defaultCta,
+        posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
+        utm: {
+          source: params.get('utm_source') || undefined,
+          medium: params.get('utm_medium') || undefined,
+          campaign: params.get('utm_campaign') || undefined,
+        },
+      };
     }
 
     function setSelectedSlotMessage(text, tone) {
@@ -916,6 +937,8 @@ const locationOptions = [
       }
       delete body.preferred_date;
       delete body.preferred_time;
+      body.client_submission_id = getClientSubmissionId('demo');
+      body.context = getIntakeContext('Book a Demo');
 
       try {
         const sessionId = window.posthog?.get_session_id?.() || '';
@@ -938,25 +961,18 @@ const locationOptions = [
           window.posthog?.capture('demo_form_submitted', {
             has_preferred_datetime: Boolean(body.preferred_datetime),
             number_of_locations: body.number_of_locations || undefined,
+            status: 'accepted',
           });
-          const inviteSent = data.calendar_invite_sent === true;
-          const meetCreated = data.google_meet_created === true;
-          const confirmationEmailSent = data.confirmation_email_sent === true;
-          const bookedMessage = data.calendar_created && inviteSent && confirmationEmailSent
-            ? `Booked. A calendar invite and confirmation email have been sent to your email${meetCreated ? ' with the Google Meet link' : ''}. Next: check your inbox, add teammates, and bring your current ad/reporting questions.`
-            : data.calendar_created && inviteSent
-              ? `Booked. A calendar invite has been sent to your email${meetCreated ? ' with the Google Meet link' : ''}. Next: check your inbox, add teammates, and bring your current ad/reporting questions.`
-            : data.calendar_created
-              ? "Booked. You're on our calendar. We'll email the meeting details shortly."
-            : data.message || "Thanks! We'll be in touch to confirm your demo.";
+          const bookedMessage = data.message || "Thanks! We'll be in touch to confirm your demo.";
           messageEl.textContent = bookedMessage;
           messageEl.className = 'text-sm rounded-lg p-3 bg-emerald-50 text-emerald-950 border border-emerald-100';
           messageEl.classList.remove('hidden');
+          const demoBooked = data.status === 'booked';
           showSuccessCelebration({
-            calendarCreated: data.calendar_created === true,
-            inviteSent,
-            meetCreated,
-            confirmationEmailSent,
+            calendarCreated: demoBooked,
+            inviteSent: demoBooked,
+            meetCreated: demoBooked,
+            confirmationEmailSent: demoBooked,
           });
           form.reset();
           selectedDate = null;
