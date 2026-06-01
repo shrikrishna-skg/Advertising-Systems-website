@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FAQSection from '../components/FAQSection.astro';
-import { pricingPlans } from '../data/pricing';
+import PricingCards from '../components/PricingCards.astro';
 import {
   pricingComparisonRows,
   planFeatureMatrix,
@@ -144,47 +144,12 @@ function formatCell(value: boolean | string): string {
           Same powerful AI and modules on every plan. Scale by ad account count.
         </p>
 
-        <div class="reveal mt-16 grid md:grid-cols-3 gap-6 lg:gap-8 max-w-4xl mx-auto items-start">
-          {pricingPlans.map((plan) => (
-            <article class={`relative glass rounded-2xl p-8 transition-all duration-300 overflow-visible ${
-              plan.highlighted ? 'border-[var(--border)] shadow-lg' : ''
-            } ${plan.badge ? 'pt-10' : ''}`}>
-              {plan.highlighted && (
-                <span class="absolute top-0 left-0 right-0 h-1 bg-[var(--text-primary)] rounded-t-2xl" aria-hidden="true"></span>
-              )}
-              {plan.badge && (
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <span class="bg-[var(--text-primary)] text-white text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">{plan.badge}</span>
-                </div>
-              )}
-
-              <div class="text-center min-h-[4.5rem] flex flex-col justify-center">
-                <h3 class="text-lg font-bold text-[var(--text-primary)]">{plan.name}</h3>
-                <div class="mt-4 flex items-baseline justify-center gap-1 pb-0.5">
-                  <span class={`text-4xl font-bold tracking-[-0.03em] leading-tight ${'text-[var(--text-primary)]'}`}>{plan.price}</span>
-                  {plan.period && <span class="text-[var(--text-muted)] text-sm font-medium">{plan.period}</span>}
-                </div>
-                <p class="mt-2 text-sm font-medium text-[var(--text-tertiary)]">{plan.description}</p>
-              </div>
-
-              <a
-                href={plan.name === 'Enterprise'
-                  ? `/contact?source_page=pricing&cta=pricing-plan&plan=${encodeURIComponent(plan.name)}`
-                  : `/signup?source_page=pricing&cta=pricing-plan&plan=${encodeURIComponent(plan.name)}`}
-                class={`mt-8 block w-full text-center text-sm font-semibold py-3 rounded-lg transition-colors ${
-                  plan.highlighted
-                    ? 'bg-royal-green-500 text-white hover:bg-royal-green-600'
-                    : 'btn-secondary'
-                }`}
-              >
-                {plan.cta.text}
-              </a>
-            </article>
-          ))}
+        <div class="mt-16">
+          <PricingCards />
         </div>
 
         <p class="reveal text-center mt-10 text-sm font-medium text-[var(--text-muted)]">
-          All plans include unlimited campaigns, AI optimization, real-time analytics, and guided onboarding.
+          Ad spend is billed separately. All plans include AI optimization, real-time analytics, and guided onboarding.
         </p>
       </div>
     </section>
@@ -202,12 +167,13 @@ function formatCell(value: boolean | string): string {
         </p>
 
         <div class="reveal mt-16 overflow-x-auto">
-          <table class="w-full min-w-[640px] border-collapse glass rounded-2xl overflow-hidden" role="table">
+          <table class="w-full min-w-[760px] border-collapse glass rounded-2xl overflow-hidden" role="table">
             <thead>
               <tr class="border-b border-[var(--border)]">
                 <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Feature</th>
-                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Starter</th>
-                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)] bg-[var(--surface-alt)]">Professional</th>
+                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Launch</th>
+                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)] bg-[var(--surface-alt)]">Growth</th>
+                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Scale</th>
                 <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Enterprise</th>
               </tr>
             </thead>
@@ -215,10 +181,11 @@ function formatCell(value: boolean | string): string {
               {planFeatureMatrix.map((row, i) => (
                 <tr class={`border-b border-[var(--border)] last:border-b-0 ${i % 2 === 1 ? 'bg-[var(--surface-alt)]/50' : ''}`}>
                   <td class="p-4 sm:p-5 text-sm font-medium text-[var(--text-secondary)]">{row.feature}</td>
-                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.starter)}</td>
+                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.launch)}</td>
                   <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)] bg-[var(--surface-alt)]">
-                    {formatCell(row.professional)}
+                    {formatCell(row.growth)}
                   </td>
+                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.scale)}</td>
                   <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.enterprise)}</td>
                 </tr>
               ))}
@@ -237,7 +204,7 @@ function formatCell(value: boolean | string): string {
           One platform. One price. <span class="text-[var(--text-primary)]">Predictable.</span>
         </h2>
         <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          On average, customers see 4.2x ROAS improvement and 38% lower CPA in the first 90 days. Your subscription pays for itself when the AI finds the inefficiencies you've been missing.
+          Advertising Systems connects paid ads to measurable booking revenue. Hotel partners collectively manage more than $40,000 per month in paid digital advertising through the platform, with campaigns helping drive up to 30% more bookings and more than $12M in customer revenue.
         </p>
         <p class="reveal mt-4 text-sm font-medium text-[var(--text-muted)]">
           Built for teams managing Google, Meta, and OTA advertising — by Multisystems.
@@ -253,7 +220,7 @@ function formatCell(value: boolean | string): string {
             <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-            No credit card required
+            Paid ads tied to booking revenue
           </li>
           <li class="flex items-center gap-2">
             <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

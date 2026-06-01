@@ -45,27 +45,32 @@ export const pricingComparisonRows: PricingComparisonRow[] = [
 
 export interface PlanFeatureRow {
   feature: string;
-  starter: boolean | string;
-  professional: boolean | string;
+  launch: boolean | string;
+  growth: boolean | string;
+  scale: boolean | string;
   enterprise: boolean | string;
 }
 
 export const planFeatureMatrix: PlanFeatureRow[] = [
-  { feature: 'Ad accounts', starter: 'Up to 2', professional: 'Up to 10', enterprise: 'Unlimited' },
-  { feature: 'Campaign Intelligence (unified dashboard)', starter: true, professional: true, enterprise: true },
-  { feature: 'AI Optimization Engine (autonomous bids & budgets)', starter: true, professional: true, enterprise: true },
-  { feature: 'Performance Analytics & attribution', starter: true, professional: true, enterprise: true },
-  { feature: 'Automation Studio (rules-based)', starter: true, professional: true, enterprise: true },
-  { feature: 'Budget Allocator (cross-channel)', starter: true, professional: true, enterprise: true },
-  { feature: 'Google Ads, Meta Ads, OTA integrations', starter: true, professional: true, enterprise: true },
-  { feature: 'TikTok, LinkedIn, Bing, Pinterest', starter: true, professional: true, enterprise: true },
-  { feature: 'Real-time sync (every 15 min)', starter: true, professional: true, enterprise: true },
-  { feature: 'Email & chat support', starter: true, professional: true, enterprise: true },
-  { feature: 'REST API access', starter: false, professional: true, enterprise: true },
-  { feature: 'Custom integrations (CRM, PMS, BI)', starter: false, professional: true, enterprise: true },
-  { feature: 'Dedicated customer success', starter: false, professional: false, enterprise: true },
-  { feature: 'SSO, custom contracts, SLA', starter: false, professional: false, enterprise: true },
-  { feature: 'Guided onboarding', starter: true, professional: true, enterprise: true },
+  { feature: 'Monthly software price', launch: '$199', growth: '$499', scale: '$1,299', enterprise: 'Custom' },
+  { feature: 'Ad accounts', launch: '1', growth: 'Up to 5', scale: 'Up to 15', enterprise: 'Unlimited' },
+  { feature: 'Team users', launch: '1', growth: 'Up to 10', scale: 'Unlimited', enterprise: 'Unlimited' },
+  { feature: 'Report exports', launch: 'Unlimited', growth: 'Unlimited', scale: 'Unlimited', enterprise: 'Unlimited' },
+  { feature: 'Campaign Intelligence (unified dashboard)', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'AI Optimization Engine (autonomous bids & budgets)', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Performance Analytics & attribution', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Automation Studio (rules-based)', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Budget Allocator (cross-channel)', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Google Ads, Meta Ads, Expedia TravelAds, GA4', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Microsoft/Bing Ads and YouTube reporting', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Additional OTA and ad network rollout review', launch: false, growth: true, scale: true, enterprise: true },
+  { feature: 'Real-time sync (every 15 min)', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'Email & chat support', launch: true, growth: true, scale: true, enterprise: true },
+  { feature: 'REST API access', launch: false, growth: true, scale: true, enterprise: true },
+  { feature: 'Custom integrations (CRM, PMS, BI)', launch: false, growth: false, scale: true, enterprise: true },
+  { feature: 'Dedicated customer success', launch: false, growth: false, scale: true, enterprise: true },
+  { feature: 'SSO, custom contracts, SLA', launch: false, growth: false, scale: false, enterprise: true },
+  { feature: 'Guided onboarding', launch: true, growth: true, scale: true, enterprise: true },
 ];
 
 export const ourDifferentiators = [
@@ -74,8 +79,8 @@ export const ourDifferentiators = [
     body: 'We charge by ad account count, not by ad spend or percentage. No overage fees, no per-click add-ons. What you see is what you pay.',
   },
   {
-    title: 'Google + Meta + OTAs in one place',
-    body: 'Most teams lose time reconciling separate dashboards. We unify Google Ads, Meta Ads, and OTA campaigns (Booking.com, Expedia, TripAdvisor) in a single AI and dashboard.',
+    title: 'Google + Meta + travel ads in one place',
+    body: 'Most teams lose time reconciling separate dashboards. We unify Google Ads, Meta Ads, Expedia TravelAds, analytics, and booking revenue context in a single AI and dashboard.',
   },
   {
     title: 'True cross-channel AI',
@@ -83,30 +88,34 @@ export const ourDifferentiators = [
   },
   {
     title: 'Built for travel and every vertical',
-    body: 'OTA integration is built in. Part of the Multisystems ecosystem so your ads connect to hotel and reputation systems when you need it.',
+    body: 'Travel advertising is part of the product direction, with Expedia TravelAds in the current live focus and additional OTA channels reviewed during onboarding or custom rollout.',
   },
 ];
 
 export const pricingPageFaqs = [
   {
     question: 'How is your pricing different from single-channel ad tools?',
-    answer: 'Advertising Systems uses a flat monthly price by ad account count. You get unified Google Ads, Meta Ads, OTA reporting, AI optimization, and cross-channel analytics without percentage-of-spend pricing, overage fees, or hidden add-ons.',
+    answer: 'Advertising Systems uses a flat monthly price by ad account count. You get unified supported ad accounts, AI optimization, and cross-channel analytics without percentage-of-spend pricing, overage fees, or hidden add-ons.',
   },
   {
     question: 'What counts as an "ad account"?',
-    answer: 'Each connected Google Ads account, Meta Ads account, or OTA advertising account (e.g. one Booking.com, one Expedia) counts as one. Starter allows 2, Professional 10, Enterprise unlimited.',
+    answer: 'Each connected advertising account counts as one account, such as one Google Ads account, one Meta Ads account, one Microsoft/Bing Ads account, or one supported OTA advertising account. Launch includes 1, Growth includes up to 5, Scale includes up to 15, and Enterprise is unlimited.',
   },
   {
     question: 'Are there any overage or extra fees?',
-    answer: "No. If you're on Professional with 10 accounts, you pay $249/mo whether those accounts spend $1K or $500K. We don't charge per click, per campaign, or percentage of spend.",
+    answer: "No. Your software price is flat for the plan you choose. Ad spend remains separate, and we don't charge per click, per campaign, or percentage of spend.",
   },
   {
     question: 'Do you offer annual billing?',
-    answer: "Yes. You can choose annual billing for a discount. The option appears at signup or in your account settings. We don't require long-term contracts.",
+    answer: "Yes. You can choose annual billing for a discount. We confirm billing details during demo or onboarding, and you can manage billing from account settings after setup. We don't require long-term contracts.",
   },
   {
     question: 'How can I evaluate the platform before committing?',
-    answer: 'Book a demo or create a signup request. We can review your ad account setup, plan fit, integrations, and onboarding path before you commit.',
+    answer: 'Select the plan you are considering and book a demo. The demo form keeps that plan selected, so we can review your ad account setup, plan fit, integrations, and onboarding path before you commit.',
+  },
+  {
+    question: 'What happens when I select a plan?',
+    answer: 'Plan buttons send you to the book-demo page with that plan preselected. We use it as sales context, not a checkout step, so you can confirm fit before starting billing.',
   },
   {
     question: 'Can I switch plans later?',
@@ -114,6 +123,6 @@ export const pricingPageFaqs = [
   },
   {
     question: 'Why is Enterprise "Custom"?',
-    answer: 'Enterprise is for unlimited ad accounts, dedicated success, SSO, custom SLAs, and tailored contracts. We quote based on your account count and requirements. Contact sales for a proposal.',
+    answer: 'Enterprise is for unlimited ad accounts, dedicated success, SSO, custom SLAs, and tailored contracts. Book an Enterprise demo so we can quote based on your account scope, integration needs, and rollout requirements.',
   },
 ];

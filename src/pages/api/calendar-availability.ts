@@ -44,14 +44,17 @@ export const GET: APIRoute = async ({ request }) => {
     });
   }
 
-  const fallbackSlots = OFFERED_DEMO_SLOTS.filter((slot) => isSlotInFuture(dateStr, slot));
   const client = getDemoCalendarClient();
   if (!client) {
-    return jsonResponse({
-      slots: fallbackSlots,
-      timeZone: DEMO_TIME_ZONE,
-      durationMinutes: DEMO_DURATION_MINUTES,
-    });
+    return jsonResponse(
+      {
+        slots: [],
+        timeZone: DEMO_TIME_ZONE,
+        durationMinutes: DEMO_DURATION_MINUTES,
+        error: 'Calendar availability is not configured.',
+      },
+      503
+    );
   }
 
   const { calendar, calendarId } = client;
@@ -85,13 +88,18 @@ export const GET: APIRoute = async ({ request }) => {
       slots: available,
       timeZone: DEMO_TIME_ZONE,
       durationMinutes: DEMO_DURATION_MINUTES,
+      source: 'google_calendar',
     });
   } catch (err) {
     console.error('Calendar freebusy error:', err);
-    return jsonResponse({
-      slots: fallbackSlots,
-      timeZone: DEMO_TIME_ZONE,
-      durationMinutes: DEMO_DURATION_MINUTES,
-    });
+    return jsonResponse(
+      {
+        slots: [],
+        timeZone: DEMO_TIME_ZONE,
+        durationMinutes: DEMO_DURATION_MINUTES,
+        error: 'Calendar availability could not be verified.',
+      },
+      503
+    );
   }
 };

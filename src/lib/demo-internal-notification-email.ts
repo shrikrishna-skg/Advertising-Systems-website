@@ -1,34 +1,31 @@
 import { escape } from 'html-escaper';
 
-export type DemoConfirmationEmailParams = {
+export type DemoInternalNotificationEmailParams = {
   name: string;
+  email: string;
   company: string;
+  phone?: string;
+  plan?: string;
+  numberOfLocations?: string;
+  companySize?: string;
+  monthlyAdSpend?: string;
+  message?: string;
   demoTimeText: string;
   startTime?: string;
   endTime?: string;
   durationMinutes: number;
-  phone?: string;
-  plan?: string;
-  numberOfLocations?: string;
   meetingLink?: string;
   calendarEventLink?: string;
-  sampleReportUrl: string;
-  expediaReportUrl: string;
-  bookDemoUrl: string;
-  supportEmail: string;
+  siteUrl: string;
 };
-
-function firstName(name: string) {
-  return name.trim().split(/\s+/)[0] || 'there';
-}
 
 function safe(value?: string) {
   return escape(value || '');
 }
 
-function getLogoUrl(bookDemoUrl: string) {
+function getLogoUrl(siteUrl: string) {
   try {
-    const url = new URL('/logos/advertisingsystems-logo.svg', bookDemoUrl);
+    const url = new URL('/logos/advertisingsystems-logo.svg', siteUrl);
     if (url.hostname === 'advertisingsystems.ai') {
       url.hostname = 'www.advertisingsystems.ai';
     }
@@ -47,18 +44,18 @@ function renderButton(label: string, href: string) {
   `;
 }
 
-function renderMeetingActions(params: DemoConfirmationEmailParams) {
+function renderMeetingActions(params: DemoInternalNotificationEmailParams) {
   const meetButton = params.meetingLink
     ? `<p style="margin:24px 0 0;">${renderButton('Join Google Meet', params.meetingLink)}</p>`
     : '';
   const eventLink = params.calendarEventLink
-    ? `<p style="margin:${params.meetingLink ? '10px' : '24px'} 0 0;"><a href="${safe(params.calendarEventLink)}" style="color:#2563eb;text-decoration:none;font-size:16px;line-height:24px;font-weight:500;">View calendar event</a></p>`
+    ? `<p style="margin:${params.meetingLink ? '10px' : '24px'} 0 0;"><a href="${safe(params.calendarEventLink)}" style="color:#2563eb;text-decoration:none;font-size:16px;line-height:24px;font-weight:500;">Open calendar event</a></p>`
     : '';
 
   return `${meetButton}${eventLink}`;
 }
 
-function formatDemoDetails(params: DemoConfirmationEmailParams) {
+function formatDemoDetails(params: DemoInternalNotificationEmailParams) {
   if (!params.startTime || !params.endTime) {
     return {
       date: params.demoTimeText,
@@ -105,23 +102,27 @@ function renderDetailRow(label: string, value: string, shaded = false) {
   `;
 }
 
-function renderOptionalRows(params: DemoConfirmationEmailParams) {
-  return [
-    params.plan && renderDetailRow('Plan interest', params.plan),
-    params.numberOfLocations && renderDetailRow('Locations', params.numberOfLocations, true),
-  ].filter(Boolean).join('');
+function optionalRows(rows: Array<{ label: string; value?: string }>) {
+  let shaded = false;
+  return rows
+    .filter((row) => row.value)
+    .map((row) => {
+      const rowHtml = renderDetailRow(row.label, row.value!, shaded);
+      shaded = !shaded;
+      return rowHtml;
+    })
+    .join('');
 }
 
-export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) {
-  const greetingName = firstName(params.name);
-  const subject = 'Your Advertising Systems demo is confirmed';
-  const preview = `Your Google Meet link and demo time for ${params.demoTimeText}.`;
-  const logoUrl = getLogoUrl(params.bookDemoUrl);
+export function buildDemoInternalNotificationEmail(params: DemoInternalNotificationEmailParams) {
+  const subject = `New Advertising Systems demo booked - ${params.company}`;
+  const preview = `${params.name} booked a demo for ${params.company}.`;
+  const logoUrl = getLogoUrl(params.siteUrl);
   const details = formatDemoDetails(params);
-  const coverage = 'We will review your hotel advertising goals, current campaign setup, ROAS reporting, budget pacing, and the best next steps for your team.';
-  const prep = 'If helpful, have your current monthly ad spend, connected ad accounts or OTA channels, and top booking goals ready. We will keep the discussion practical and focused on what improves measurable booking revenue.';
   const meetingActions = renderMeetingActions(params);
-  const optionalRows = renderOptionalRows(params);
+  const messageBlock = params.message
+    ? `<p style="margin:18px 0 0;color:#4b5563;font-size:16px;line-height:24px;"><strong style="color:#111827;">Visitor note:</strong> ${safe(params.message)}</p>`
+    : '';
 
   const html = `<!doctype html>
 <html lang="en">
@@ -139,7 +140,7 @@ export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) 
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f4f5;margin:0;padding:24px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #f1f5f9;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;max-width:620px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #f1f5f9;">
             <tr>
               <td style="padding:28px 32px 24px;text-align:center;border-bottom:1px solid #eef2f7;">
                 <img src="${safe(logoUrl)}" width="38" height="50" alt="Advertising Systems" style="display:inline-block;width:38px;height:50px;margin-bottom:10px;border:0;outline:none;text-decoration:none;">
@@ -149,33 +150,37 @@ export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) 
             </tr>
             <tr>
               <td style="padding:28px 32px;">
-                <h1 style="font-size:20px;line-height:28px;margin:0 0 16px;color:#111827;font-weight:800;">Your Advertising Systems demo is confirmed</h1>
-                <p style="margin:0 0 18px;color:#4b5563;font-size:16px;line-height:24px;">Hi ${safe(greetingName)},</p>
-                <p style="margin:0 0 22px;color:#4b5563;font-size:16px;line-height:24px;">Your Advertising Systems demo is booked. A Google Calendar invite has also been sent to this email address.</p>
+                <h1 style="font-size:20px;line-height:28px;margin:0 0 16px;color:#111827;font-weight:800;">New demo booked</h1>
+                <p style="margin:0 0 22px;color:#4b5563;font-size:16px;line-height:24px;">A visitor booked a live Advertising Systems demo. The Google Calendar event has been created and reminders are attached to the event.</p>
 
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;margin-top:18px;">
                   ${renderDetailRow('Date', details.date)}
                   ${renderDetailRow('Time', details.time, true)}
                   ${renderDetailRow('Timezone', details.timeZone)}
-                  ${renderDetailRow('Company', params.company || 'Not provided', true)}
-                  ${optionalRows}
+                  ${renderDetailRow('Name', params.name, true)}
+                  ${renderDetailRow('Email', params.email)}
+                  ${renderDetailRow('Company', params.company, true)}
+                  ${optionalRows([
+                    { label: 'Phone', value: params.phone },
+                    { label: 'Plan interest', value: params.plan },
+                    { label: 'Locations', value: params.numberOfLocations },
+                    { label: 'Company size', value: params.companySize },
+                    { label: 'Monthly ad spend', value: params.monthlyAdSpend },
+                  ])}
                 </table>
 
                 ${meetingActions}
+                ${messageBlock}
 
                 <p style="margin:20px 0 0;color:#4b5563;font-size:16px;line-height:24px;">
-                  <strong style="color:#111827;">What we will cover:</strong> ${safe(coverage)}
+                  <strong style="color:#111827;">Prep focus:</strong> Confirm fit, current paid advertising workflow, ad spend, reporting expectations, and the best plan path before billing.
                 </p>
-                <p style="margin:16px 0 0;color:#4b5563;font-size:16px;line-height:24px;">
-                  <strong style="color:#111827;">Before the call:</strong> ${safe(prep)}
-                </p>
-                <p style="margin:20px 0 0;color:#6b7280;font-size:16px;line-height:24px;">Need to change the time? Reply to this email and we will help.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:20px 32px 28px;text-align:center;border-top:1px solid #eef2f7;">
-                <p style="margin:0;font-size:12px;line-height:18px;color:#9ca3af;">Advertising Systems - advertisingsystems.ai</p>
-                <p style="margin:6px 0 0;"><a href="${safe(params.bookDemoUrl)}" style="color:#2563eb;text-decoration:none;font-size:12px;line-height:18px;">www.advertisingsystems.ai</a></p>
+                <p style="margin:0;font-size:12px;line-height:18px;color:#9ca3af;">Automated staff notification from Advertising Systems</p>
+                <p style="margin:6px 0 0;"><a href="${safe(params.siteUrl)}" style="color:#2563eb;text-decoration:none;font-size:12px;line-height:18px;">www.advertisingsystems.ai</a></p>
               </td>
             </tr>
           </table>
@@ -185,22 +190,29 @@ export function buildDemoConfirmationEmail(params: DemoConfirmationEmailParams) 
   </body>
 </html>`;
 
+  const optionalText = [
+    params.phone ? `Phone: ${params.phone}` : '',
+    params.plan ? `Plan interest: ${params.plan}` : '',
+    params.numberOfLocations ? `Locations: ${params.numberOfLocations}` : '',
+    params.companySize ? `Company size: ${params.companySize}` : '',
+    params.monthlyAdSpend ? `Monthly ad spend: ${params.monthlyAdSpend}` : '',
+  ].filter(Boolean);
+
   const text = [
-    `${greetingName}, your Advertising Systems demo is booked.`,
+    'New Advertising Systems demo booked.',
     '',
     `Date: ${details.date}`,
     `Time: ${details.time}`,
     `Timezone: ${details.timeZone}`,
-    `Company: ${params.company || 'Not provided'}`,
-    params.plan ? `Plan interest: ${params.plan}` : '',
-    params.numberOfLocations ? `Locations: ${params.numberOfLocations}` : '',
+    `Name: ${params.name}`,
+    `Email: ${params.email}`,
+    `Company: ${params.company}`,
+    ...optionalText,
     params.meetingLink ? `Google Meet: ${params.meetingLink}` : '',
     params.calendarEventLink ? `Calendar event: ${params.calendarEventLink}` : '',
+    params.message ? `Visitor note: ${params.message}` : '',
     '',
-    `What we will cover: ${coverage}`,
-    `Before the call: ${prep}`,
-    '',
-    `Need to change the time? Reply to this email or contact ${params.supportEmail}.`,
+    'Prep focus: Confirm fit, current paid advertising workflow, ad spend, reporting expectations, and the best plan path before billing.',
   ].filter(Boolean).join('\n');
 
   return { subject, preview, html, text };

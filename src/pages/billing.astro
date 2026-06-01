@@ -1,0 +1,326 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PricingCards from '../components/PricingCards.astro';
+
+const marketRows = [
+  { name: 'Agency dashboard core', price: '$20/client', value: 18 },
+  { name: 'Starter ad platform', price: '$500/month', value: 45 },
+  { name: 'Advertising Systems Growth', price: '$499/month', value: 44, active: true },
+  { name: 'Commission model', price: '15% of stays', value: 55 },
+  { name: 'Managed service retainer', price: '$900+/month', value: 64 },
+];
+
+const pricingModelRows = [
+  { label: 'Core license', value: 'included', width: 100 },
+  { label: 'Account capacity', value: 'plan based', width: 72 },
+  { label: 'User seats', value: 'plan based', width: 76 },
+  { label: 'Reports', value: 'unlimited', width: 100 },
+  { label: 'Ad spend', value: 'pass-through', width: 62 },
+];
+
+const standCards = [
+  { title: '$99.80', body: 'Growth effective price per ad account at full use (5 accounts).' },
+  { title: '$86.60', body: 'Scale effective price per ad account at full use (15 accounts).' },
+  { title: '10 users', body: 'Growth includes larger team capacity than most starter plans.' },
+  { title: 'Unlimited reports', body: 'Report-heavy teams can scale without usage penalties.' },
+];
+
+const usageRows = [
+  { label: 'Ad accounts', value: '4 of 5', width: 80, tone: 'bg-royal-blue-500' },
+  { label: 'Team users', value: '3 of 10', width: 30, tone: 'bg-violet-500' },
+  { label: 'Reports generated', value: '2 of Unlimited', width: 18, tone: 'bg-emerald-500' },
+];
+
+const impactStats = [
+  { value: '$12M+', label: 'customer revenue generated' },
+  { value: '30%', label: 'booking lift seen by partners' },
+  { value: '$480K+', label: 'annual hotel ad spend optimized' },
+];
+---
+
+<Layout
+  title="Billing & Subscription — Advertising Systems"
+  description="Account billing page for Advertising Systems plans, usage, ad credits, payment methods, and billing history."
+>
+  <main class="min-h-screen bg-slate-50 py-10 sm:py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <header class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <p class="text-sm font-black uppercase tracking-[0.12em] text-slate-400">Account</p>
+          <h1 class="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">Billing & Subscription</h1>
+          <p class="mt-3 max-w-3xl text-lg font-medium leading-relaxed text-slate-500">
+            Platform pricing for Advertising Systems. Media spend remains pass-through, and plan fit is based on connected ad accounts, spend range, and team usage.
+          </p>
+        </div>
+
+        <div class="inline-flex w-fit rounded-full border border-slate-200 bg-white p-1 shadow-sm">
+          <a href="#plan-framework" class="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-black text-white">Plan Framework</a>
+          <a href="#account-state" class="rounded-full px-5 py-2.5 text-sm font-black text-slate-500 hover:text-slate-950">Final Sample</a>
+        </div>
+      </header>
+
+      <section class="mt-8 grid gap-5 lg:grid-cols-3" id="plan-framework" aria-label="Billing plan framework">
+        <article class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:col-span-2">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-xl font-black text-slate-950">Market Comparison (May 2026)</h2>
+            <span class="w-fit rounded-lg bg-slate-100 px-4 py-2 text-sm font-black text-slate-600 shadow-sm">Public pricing snapshot</span>
+          </div>
+
+          <div class="mt-6 space-y-5">
+            {marketRows.map((row) => (
+              <div class="grid gap-3 sm:grid-cols-[14rem_1fr_9rem] sm:items-center">
+                <div class={`text-sm font-black ${row.active ? 'text-emerald-700' : 'text-slate-600'}`}>{row.name}</div>
+                <div class="h-2 rounded-full bg-slate-100">
+                  <div class={`h-2 rounded-full ${row.active ? 'bg-emerald-500' : 'bg-slate-400'}`} style={`width: ${row.value}%`}></div>
+                </div>
+                <div class="text-sm font-black text-slate-950 sm:text-right">{row.price}</div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-10 grid gap-3 sm:grid-cols-3">
+            {impactStats.map((stat) => (
+              <div class="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                <div class="text-2xl font-black text-slate-950">{stat.value}</div>
+                <p class="mt-1 text-sm font-medium leading-snug text-slate-500">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8" data-billing-estimator>
+          <h2 class="text-xl font-black text-slate-950">Plan Estimator</h2>
+          <p class="mt-3 text-base font-medium text-slate-500">Set account count, spend range, and users to preview a plan fit.</p>
+
+          <div class="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-5">
+            <p class="text-sm font-medium text-slate-500">Recommended</p>
+            <div class="mt-2 text-3xl font-black text-slate-950" data-estimator-plan>Scale</div>
+            <div class="mt-3 text-lg font-black text-slate-700" data-estimator-price>$1,299.00/mo + media</div>
+          </div>
+
+          <div class="mt-6 space-y-6">
+            <label class="block">
+              <span class="flex items-center justify-between text-sm font-black text-slate-600">
+                <span>Ad accounts</span>
+                <span data-estimator-accounts-value>9</span>
+              </span>
+              <input class="billing-range mt-3 w-full accent-slate-700" type="range" min="1" max="20" value="9" data-estimator-accounts />
+            </label>
+
+            <label class="block">
+              <span class="flex items-center justify-between text-sm font-black text-slate-600">
+                <span>Monthly ad spend</span>
+                <span data-estimator-spend-value>$12k</span>
+              </span>
+              <input class="billing-range mt-3 w-full accent-slate-700" type="range" min="1" max="80" value="12" data-estimator-spend />
+            </label>
+
+            <label class="block">
+              <span class="flex items-center justify-between text-sm font-black text-slate-600">
+                <span>Users</span>
+                <span data-estimator-users-value>5</span>
+              </span>
+              <input class="billing-range mt-3 w-full accent-slate-700" type="range" min="1" max="30" value="5" data-estimator-users />
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-8" aria-label="Available plans">
+        <PricingCards mode="billing" currentPlan="Growth" recommendedPlan="Scale" />
+      </section>
+
+      <section class="mt-8 grid gap-5 lg:grid-cols-2" aria-label="Pricing explanation">
+        <article class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 class="text-xl font-black text-slate-950">How Pricing Works</h2>
+          <p class="mt-3 text-base font-medium text-slate-500">Platform fee model</p>
+
+          <div class="mt-6 space-y-5">
+            {pricingModelRows.map((row) => (
+              <div class="grid gap-3 sm:grid-cols-[12rem_1fr_8rem] sm:items-center">
+                <div class="text-sm font-black text-slate-600">{row.label}</div>
+                <div class="h-2 rounded-full bg-slate-100">
+                  <div class="h-2 rounded-full bg-slate-600" style={`width: ${row.width}%`}></div>
+                </div>
+                <div class="text-sm font-black text-slate-950 sm:text-right">{row.value}</div>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 class="text-xl font-black text-slate-950">Where We Stand</h2>
+          <p class="mt-3 text-base font-medium text-slate-500">Competitive + advanced</p>
+
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            {standCards.map((card) => (
+              <div class="rounded-lg border border-slate-200 bg-slate-50 p-5">
+                <div class="text-lg font-black text-slate-950">{card.title}</div>
+                <p class="mt-2 text-sm font-medium leading-relaxed text-slate-500">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+      </section>
+
+      <section id="account-state" class="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="credits-heading">
+        <div class="flex items-center gap-3">
+          <svg class="h-5 w-5 text-royal-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m12 3-1.9 5.8L4 11l6.1 2.2L12 19l1.9-5.8L20 11l-6.1-2.2L12 3Z" />
+          </svg>
+          <h2 id="credits-heading" class="text-xl font-black text-slate-950">Subscription & ad credits</h2>
+        </div>
+        <p class="mt-3 text-base font-medium text-slate-500">
+          Your paid plan includes credits each billing cycle. Creating or changing ads, budgets, bids, and copy spends credits.
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-end gap-2">
+          <span class="text-5xl font-black leading-none text-slate-950">500</span>
+          <span class="pb-1 text-xl font-medium text-slate-500">/ 500 per cycle</span>
+        </div>
+
+        <div class="mt-8 rounded-lg border border-slate-200 p-5" data-credit-topup>
+          <p class="text-sm font-black uppercase tracking-[0.12em] text-slate-500">One-time top-up</p>
+          <div class="mt-4 flex flex-wrap gap-3">
+            {[5, 10, 20, 50, 100].map((amount) => (
+              <button
+                type="button"
+                class={`h-12 min-w-20 rounded-lg border px-5 text-base font-black transition-colors ${amount === 10 ? 'border-slate-950 bg-slate-950 text-white' : 'border-slate-200 bg-white text-slate-950 hover:border-slate-400'}`}
+                data-credit-amount={amount}
+              >
+                ${amount}
+              </button>
+            ))}
+            <button type="button" class="h-12 min-w-32 rounded-lg border border-slate-200 bg-white px-5 text-base font-black text-slate-950 hover:border-slate-400" data-credit-amount="custom">Custom</button>
+          </div>
+
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-lg font-black text-slate-950"><span data-credit-count>100</span> credits <span class="font-medium text-slate-500">for ad create/change operations</span></p>
+            <button type="button" class="h-12 rounded-lg bg-royal-blue-500 px-6 text-base font-bold text-white shadow-sm hover:bg-royal-blue-600" data-credit-buy>Buy $10 credits</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-8 grid gap-5 lg:grid-cols-2" aria-label="Account billing state">
+        <article class="min-h-64 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="M3 10h18" />
+            </svg>
+            <h2 class="text-xl font-black text-slate-950">Payment methods</h2>
+          </div>
+          <p class="mt-3 text-base font-medium text-slate-500">Card, ACH, and invoice billing are managed on secure checkout.</p>
+          <p class="mt-6 text-lg italic text-slate-500">No payment methods on file. Add one through an upgrade flow.</p>
+        </article>
+
+        <article class="min-h-64 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex items-center gap-3">
+            <svg class="h-5 w-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 12h4l2-7 4 14 2-7h6" />
+            </svg>
+            <h2 class="text-xl font-black text-slate-950">Current usage</h2>
+          </div>
+          <p class="mt-3 text-base font-medium text-slate-500">Growth plan - resets at the next billing cycle.</p>
+
+          <div class="mt-6 space-y-5">
+            {usageRows.map((row) => (
+              <div>
+                <div class="flex items-center justify-between text-sm font-black text-slate-600">
+                  <span>{row.label}</span>
+                  <span class="text-slate-950">{row.value}</span>
+                </div>
+                <div class="mt-3 h-2 rounded-full bg-slate-100">
+                  <div class={`h-2 rounded-full ${row.tone}`} style={`width: ${row.width}%`}></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+      </section>
+
+      <section class="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="history-heading">
+        <div class="flex items-center gap-3">
+          <svg class="h-5 w-5 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M7 3h7l5 5v13H7z" />
+            <path d="M14 3v5h5" />
+            <path d="M10 13h6M10 17h4" />
+          </svg>
+          <h2 id="history-heading" class="text-xl font-black text-slate-950">Billing history</h2>
+        </div>
+        <p class="mt-3 text-base font-medium text-slate-500">Invoices appear here after your first billing cycle.</p>
+        <p class="mt-6 text-lg italic text-slate-500">No invoices yet.</p>
+      </section>
+
+      <aside class="mt-8 rounded-lg border border-slate-200 bg-white p-5 text-sm font-medium text-slate-500">
+        <strong class="font-black text-slate-700">Research inputs:</strong> public pricing pages, commission-based advertising models, customer spend ranges, current usage, and Advertising Systems plan limits.
+      </aside>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.querySelectorAll('[data-billing-estimator]').forEach((root) => {
+    const accounts = root.querySelector('[data-estimator-accounts]');
+    const spend = root.querySelector('[data-estimator-spend]');
+    const users = root.querySelector('[data-estimator-users]');
+    const accountsValue = root.querySelector('[data-estimator-accounts-value]');
+    const spendValue = root.querySelector('[data-estimator-spend-value]');
+    const usersValue = root.querySelector('[data-estimator-users-value]');
+    const plan = root.querySelector('[data-estimator-plan]');
+    const price = root.querySelector('[data-estimator-price]');
+
+    const plans = [
+      { name: 'Launch', price: '$199.00/mo + media', maxAccounts: 1, maxSpend: 3, maxUsers: 1 },
+      { name: 'Growth', price: '$499.00/mo + media', maxAccounts: 5, maxSpend: 20, maxUsers: 10 },
+      { name: 'Scale', price: '$1,299.00/mo + media', maxAccounts: 15, maxSpend: 50, maxUsers: Infinity },
+      { name: 'Enterprise', price: 'Custom plan + media', maxAccounts: Infinity, maxSpend: Infinity, maxUsers: Infinity },
+    ];
+
+    const update = () => {
+      const accountCount = Number(accounts?.value || 1);
+      const spendAmount = Number(spend?.value || 1);
+      const userCount = Number(users?.value || 1);
+      const match = plans.find((candidate) => (
+        accountCount <= candidate.maxAccounts &&
+        spendAmount <= candidate.maxSpend &&
+        userCount <= candidate.maxUsers
+      )) || plans[plans.length - 1];
+
+      if (accountsValue) accountsValue.textContent = String(accountCount);
+      if (spendValue) spendValue.textContent = `$${spendAmount}k`;
+      if (usersValue) usersValue.textContent = String(userCount);
+      if (plan) plan.textContent = match.name;
+      if (price) price.textContent = match.price;
+    };
+
+    [accounts, spend, users].forEach((input) => input?.addEventListener('input', update));
+    update();
+  });
+
+  document.querySelectorAll('[data-credit-topup]').forEach((root) => {
+    const buttons = Array.from(root.querySelectorAll('[data-credit-amount]'));
+    const credits = root.querySelector('[data-credit-count]');
+    const buy = root.querySelector('[data-credit-buy]');
+
+    const selectAmount = (amount) => {
+      buttons.forEach((button) => {
+        const isActive = button.getAttribute('data-credit-amount') === amount;
+        button.classList.toggle('border-slate-950', isActive);
+        button.classList.toggle('bg-slate-950', isActive);
+        button.classList.toggle('text-white', isActive);
+        button.classList.toggle('border-slate-200', !isActive);
+        button.classList.toggle('bg-white', !isActive);
+        button.classList.toggle('text-slate-950', !isActive);
+      });
+
+      const displayAmount = amount === 'custom' ? 'custom' : `$${amount}`;
+      if (credits) credits.textContent = amount === 'custom' ? 'Custom' : String(Number(amount) * 10);
+      if (buy) buy.textContent = amount === 'custom' ? 'Contact sales for credits' : `Buy ${displayAmount} credits`;
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => selectAmount(button.getAttribute('data-credit-amount') || '10'));
+    });
+  });
+</script>

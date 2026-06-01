@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { pricingPlans } from '../data/pricing';
+import PricingCards from '../components/PricingCards.astro';
 
 const breadcrumbs = [{ name: 'Pricing Intelligence', href: '/pricing-intelligence' }];
 
@@ -23,7 +23,7 @@ const whyClarity = [
 ];
 
 const includedInAll = [
-  'Unlimited campaigns across Google, Meta, and OTAs',
+  'Unlimited campaigns across supported connected accounts',
   'AI bid and budget optimization',
   'Real-time dashboards and revenue attribution',
   'Email and chat support',
@@ -40,8 +40,8 @@ const pricingFaqs = [
     answer: 'Yes. You can upgrade or downgrade anytime. Changes take effect at the start of your next billing cycle. We’ll prorate if you upgrade mid-cycle.',
   },
   {
-    question: 'What if I need more than 10 ad accounts?',
-    answer: 'Enterprise is for unlimited ad accounts and custom needs. Contact us for a tailored quote and dedicated support.',
+    question: 'What if I need more than 15 ad accounts?',
+    answer: 'Enterprise is for unlimited ad accounts and custom rollout needs. Book an Enterprise demo so we can review account scope, integrations, billing, and support requirements before quoting.',
   },
   {
     question: 'Is there a long-term contract?',
@@ -49,7 +49,7 @@ const pricingFaqs = [
   },
   {
     question: 'How can I evaluate the platform?',
-    answer: 'Book a demo or create a signup request. We can walk through your connected ad account needs, pricing fit, and onboarding path before you commit.',
+    answer: 'Choose the plan you are considering and book a demo. The demo form keeps that plan selected so we can walk through connected ad account needs, pricing fit, and onboarding path before you commit.',
   },
 ];
 ---
@@ -144,45 +144,12 @@ const pricingFaqs = [
           Start small, grow when you’re ready. No long-term contract.
         </p>
 
-        <div class="reveal mt-16 grid md:grid-cols-3 gap-6 lg:gap-8 max-w-4xl mx-auto items-start">
-          {pricingPlans.map((plan) => (
-            <article class={`relative glass rounded-2xl p-8 transition-all duration-300 overflow-visible ${
-              plan.highlighted ? 'border-[var(--border)] shadow-lg' : ''
-            } ${plan.badge ? 'pt-10' : ''}`}>
-              {plan.highlighted && (
-                <span class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--text-tertiary)] to-[var(--text-primary)] rounded-t-2xl" aria-hidden="true"></span>
-              )}
-              {plan.badge && (
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <span class="bg-[var(--text-primary)] text-white text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">{plan.badge}</span>
-                </div>
-              )}
-
-              <div class="text-center min-h-[4.5rem] flex flex-col justify-center">
-                <h3 class="text-lg font-bold text-[var(--text-primary)]">{plan.name}</h3>
-                <div class="mt-4 flex items-baseline justify-center gap-1 pb-0.5">
-                  <span class={`text-4xl font-bold tracking-[-0.03em] leading-tight ${plan.highlighted ? 'text-[var(--text-primary)]' : 'text-[var(--text-primary)]'}`}>{plan.price}</span>
-                  {plan.period && <span class="text-[var(--text-muted)] text-sm font-medium">{plan.period}</span>}
-                </div>
-                <p class="mt-2 text-sm font-medium text-[var(--text-tertiary)]">{plan.description}</p>
-              </div>
-
-              <a
-                href={plan.cta.href}
-                class={`mt-8 block w-full text-center text-sm font-semibold py-3 rounded-lg transition-colors ${
-                  plan.highlighted
-                    ? 'bg-royal-green-500 text-white hover:bg-royal-green-600'
-                    : 'btn-secondary'
-                }`}
-              >
-                {plan.cta.text}
-              </a>
-            </article>
-          ))}
+        <div class="mt-16">
+          <PricingCards />
         </div>
 
         <p class="reveal text-center mt-10 text-sm font-medium text-[var(--text-muted)]">
-          All plans include unlimited campaigns, AI optimization, and real-time analytics.
+          Ad spend is billed separately. All plans include AI optimization, real-time analytics, and reporting exports.
         </p>
       </div>
     </section>
@@ -196,10 +163,10 @@ const pricingFaqs = [
           One platform. One price. <span class="text-[var(--text-primary)]">Predictable.</span>
         </h2>
         <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          Teams running Google, Meta, and OTA ads use Advertising Systems to cut wasted spend and push budget to what converts. On average, 4.2x ROAS improvement and 38% lower CPA in the first 90 days. Your subscription pays for itself when the AI finds the inefficiencies you’ve been missing.
+          Teams running Google, Meta, and OTA ads use Advertising Systems to turn paid media into measurable booking revenue. Hotel partners collectively manage more than $40,000 per month in paid digital advertising through the platform, with campaigns helping drive up to 30% more bookings.
         </p>
         <p class="reveal mt-4 text-sm font-medium text-[var(--text-muted)]">
-          Powering $5.2B+ in ad spend across the U.S. — by Multisystems.
+          Helping hotel partners turn $480K+ in annual managed ad spend into $12M+ in customer revenue — by Multisystems.
         </p>
       </div>
     </section>

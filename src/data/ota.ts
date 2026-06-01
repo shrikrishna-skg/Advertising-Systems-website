@@ -171,10 +171,10 @@ export const otaCapabilities: OTACapability[] = [
 ];
 
 export const otaStats: OTAStat[] = [
-  { value: '$20B+', label: 'OTA Marketing Spend', detail: 'Annual spend by top OTAs on sales & marketing in 2025' },
-  { value: '80%', label: 'First-Page Bookings', detail: 'Of bookings go to properties on the first page of OTA search results' },
-  { value: '2-4hrs', label: 'Daily Time Wasted', detail: 'Hours hoteliers spend manually managing OTA extranets daily' },
-  { value: '75%', label: 'Use Metasearch', detail: 'Of travelers use metasearch platforms during their booking journey' },
+  { value: '$40K/mo', label: 'Hotel Ad Spend Managed', detail: 'Paid digital advertising managed through Advertising Systems' },
+  { value: '$480K+', label: 'Annual Spend Optimized', detail: 'Hotel partner spend optimized across managed campaigns' },
+  { value: '30%', label: 'Booking Lift', detail: 'Increase in bookings partners have seen from managed campaigns' },
+  { value: '$12M+', label: 'Customer Revenue', detail: 'Revenue generated through Advertising Systems-managed campaigns' },
 ];
 
 export const otaMarketInsights = [

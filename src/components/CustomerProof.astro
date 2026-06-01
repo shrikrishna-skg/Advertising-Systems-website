@@ -1,0 +1,32 @@
+---
+const proofStats = [
+  { value: '$40K/mo', label: 'Hotel ad spend managed' },
+  { value: '$480K+', label: 'Annual partner spend optimized' },
+  { value: '$12M+', label: 'Customer revenue generated' },
+];
+---
+
+<section class="py-20" aria-labelledby="customer-proof-heading">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+      <div class="reveal">
+        <p class="text-sm font-black uppercase tracking-[0.12em] text-[var(--text-muted)]">Customer proof</p>
+        <h2 id="customer-proof-heading" class="mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
+          Paid ads connected to real booking revenue.
+        </h2>
+        <p class="mt-5 text-lg font-medium leading-relaxed text-[var(--text-tertiary)]">
+          Hotel partners using Advertising Systems collectively manage more than $40,000 per month in paid digital advertising through the platform. These campaigns have helped drive up to 30% more bookings and more than $12M in customer revenue.
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+        {proofStats.map((stat) => (
+          <div class="reveal rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+            <div class="text-2xl sm:text-3xl font-black text-[var(--text-primary)]">{stat.value}</div>
+            <div class="mt-2 text-sm font-semibold text-[var(--text-muted)]">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 ---
-import { pricingPlans } from '../data/pricing';
+import PricingCards from './PricingCards.astro';
 ---
 
 <section id="pricing" class="py-20 sm:py-24 lg:py-32" aria-labelledby="pricing-heading">
@@ -13,48 +13,10 @@ import { pricingPlans } from '../data/pricing';
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto items-start min-w-0">
-      {pricingPlans.map((plan) => (
-        <article class={`reveal relative glass rounded-2xl p-8 transition-all duration-300 overflow-visible ${
-          plan.highlighted
-            ? 'border-[var(--border)] shadow-lg'
-            : ''
-        } ${plan.badge ? 'pt-10' : ''}`}>
-          {plan.highlighted && (
-            <span class="absolute top-0 left-0 right-0 h-1 bg-[var(--border)] rounded-t-2xl" aria-hidden="true"></span>
-          )}
-          {plan.badge && (
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <span class="bg-[var(--text-primary)] text-white text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">{plan.badge}</span>
-            </div>
-          )}
-
-          <div class="text-center min-h-[4.5rem] flex flex-col justify-center">
-            <h3 class="text-lg font-bold text-[var(--text-primary)]">{plan.name}</h3>
-            <div class="mt-4 flex items-baseline justify-center gap-1 pb-0.5">
-              <span class="text-4xl font-bold tracking-[-0.03em] leading-tight text-[var(--text-primary)]">{plan.price}</span>
-              {plan.period && <span class="text-[var(--text-muted)] text-sm">{plan.period}</span>}
-            </div>
-            <p class="mt-2 text-sm font-medium text-[var(--text-tertiary)]">{plan.description}</p>
-          </div>
-
-          <a
-            href={plan.cta.href}
-            class={`mt-8 block w-full text-center text-sm font-semibold py-3 rounded-lg transition-colors ${
-              plan.highlighted
-                ? 'btn-cta-primary bg-royal-green-500 text-white hover:bg-royal-green-600'
-                : 'btn-secondary'
-            }`}
-          >
-            {plan.highlighted && <span class="cta-accent-line rounded-lg" aria-hidden="true"></span>}
-            <span class={plan.highlighted ? 'relative' : ''}>{plan.cta.text}</span>
-          </a>
-        </article>
-      ))}
-    </div>
+    <PricingCards />
 
     <p class="reveal text-center mt-10 text-sm font-medium text-[var(--text-muted)]">
-      All plans include unlimited campaigns, AI optimization, and real-time analytics.
+      Ad spend is billed separately. All plans include AI optimization, real-time analytics, and reporting exports.
     </p>
   </div>
 </section>

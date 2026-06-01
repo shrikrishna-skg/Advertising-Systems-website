@@ -64,9 +64,10 @@ cp .env.example .env
 | `SPRING_MAIL_PORT` | SMTP port, usually `587` for Gmail STARTTLS |
 | `SPRING_MAIL_USERNAME` | SMTP username for the verified AdvertisingSystems sender mailbox |
 | `SPRING_MAIL_PASSWORD` | SMTP app password or provider password |
-| `SPRING_MAIL_FROM_NAME` | Customer-visible sender name, default `AdvertisingSystems` |
-| `ADVERTISING_SYSTEMS_EMAIL_FROM` | Customer-visible From header, e.g. `AdvertisingSystems <no-reply@advertisingsystems.ai>`; sender domain must be verified |
+| `SPRING_MAIL_FROM_NAME` | Customer-visible sender name, default `Advertising Systems` |
+| `ADVERTISING_SYSTEMS_EMAIL_FROM` | Customer-visible From header, e.g. `Advertising Systems <no-reply@advertisingsystems.ai>`; sender domain must be verified |
 | `DEMO_REPLY_TO_EMAIL` | Customer replies go here, default `contact@multisystems.ai` |
+| `DEMO_INTERNAL_NOTIFY_EMAIL` | Internal demo notification recipient, default `shrikrishna@multisystems.ai` |
 | `DEMO_CONFIRMATION_EMAIL_ENABLED` | Set `false` to skip branded confirmation emails |
 | `MULTISYSTEMS_CENTRAL_ORIGIN` | Multisystems origin for signed central intake requests, default `https://www.multisystems.ai` |
 | `MULTISYSTEMS_LEAD_INTAKE_SECRET` | Server-only HMAC secret matching `LEAD_INTAKE_ADVERTISING_SYSTEMS_SECRET` in Multisystems |

@@ -1,7 +1,11 @@
 import type { APIRoute } from 'astro';
 import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse } from '../../lib/server-security';
 import { getPostHogServer } from '../../lib/posthog-server';
-import { sendDemoConfirmationEmail } from '../../lib/demo-email';
+import {
+  getDemoInternalNotifyEmail,
+  sendDemoConfirmationEmail,
+  sendDemoInternalNotificationEmail,
+} from '../../lib/demo-email';
 import {
   ADVERTISING_SYSTEMS_PRODUCT,
   ADVERTISING_SYSTEMS_SOURCE,
@@ -17,7 +21,6 @@ import {
   formatDemoDateForDescription,
   getDemoCalendarClient,
   getDemoSlotRange,
-  getNextBookableDemoDate,
   parseDemoDatetime,
   rangesOverlap,
 } from '../../lib/demo-calendar';
@@ -31,6 +34,7 @@ const FIELD_LIMITS = {
   email: 254,
   company: 160,
   phone: 40,
+  plan: 80,
   numberOfLocations: 24,
   companySize: 80,
   monthlyAdSpend: 80,
@@ -56,9 +60,11 @@ async function createCalendarEvent(params: {
   email: string;
   company: string;
   phone?: string;
+  plan?: string;
   numberOfLocations?: string;
   companySize?: string;
   monthlyAdSpend?: string;
+  internalNotifyEmail?: string;
   preferredDatetime?: { date: string; time: DemoSlot; localDateTime: string };
   message?: string;
 }): Promise<{
@@ -74,17 +80,15 @@ async function createCalendarEvent(params: {
 }> {
   const client = getDemoCalendarClient();
   if (!client) {
-    return { success: false, error: 'Calendar not configured (missing env)' };
+    return { success: false, code: 'calendar_unavailable', error: 'Calendar not configured (missing env)' };
   }
 
   try {
     const { calendar, calendarId } = client;
-    const fallbackDate = getNextBookableDemoDate();
-    const preferredDatetime = params.preferredDatetime ?? {
-      date: fallbackDate,
-      time: '10:00' as DemoSlot,
-      localDateTime: `${fallbackDate}T10:00:00`,
-    };
+    const preferredDatetime = params.preferredDatetime;
+    if (!preferredDatetime) {
+      return { success: false, code: 'preferred_datetime_required', error: 'Preferred date and time is required' };
+    }
     const slotRange = getDemoSlotRange(preferredDatetime.date, preferredDatetime.time);
 
     if (!slotRange) {
@@ -105,16 +109,17 @@ async function createCalendarEvent(params: {
       return { success: false, code: 'slot_unavailable', error: 'Selected time is no longer available' };
     }
 
-    const title = `AdvertisingSystems Demo - ${params.company} (${params.name})`;
+    const title = `Advertising Systems Demo - ${params.company} (${params.name})`;
     const demoTimeText = formatDemoDateForDescription(preferredDatetime.date, preferredDatetime.time);
     const desc = [
-      'AdvertisingSystems demo booking',
-      'Source: AdvertisingSystems Website',
+      'Advertising Systems demo booking',
+      'Source: Advertising Systems Website',
       '',
       `Name: ${params.name}`,
       `Email: ${params.email}`,
       params.phone && `Phone: ${params.phone}`,
       `Company: ${params.company}`,
+      params.plan && `Plan interest: ${params.plan}`,
       params.numberOfLocations && `Number of locations: ${params.numberOfLocations}`,
       params.companySize && `Company size: ${params.companySize}`,
       params.monthlyAdSpend && `Monthly ad spend: ${params.monthlyAdSpend}`,
@@ -126,6 +131,20 @@ async function createCalendarEvent(params: {
     const createGoogleMeet = import.meta.env.DEMO_CREATE_GOOGLE_MEET !== 'false';
     const eventLocation = import.meta.env.DEMO_EVENT_LOCATION || undefined;
     const requestId = `ads-demo-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    const attendees = sendCalendarInvites
+      ? [{ email: params.email, displayName: params.name }]
+      : undefined;
+
+    if (
+      attendees &&
+      params.internalNotifyEmail &&
+      params.internalNotifyEmail.toLowerCase() !== params.email.toLowerCase()
+    ) {
+      attendees.push({
+        email: params.internalNotifyEmail,
+        displayName: 'Advertising Systems',
+      });
+    }
 
     const event = await calendar.events.insert({
       calendarId,
@@ -151,7 +170,7 @@ async function createCalendarEvent(params: {
           dateTime: slotRange.end.toISOString(),
           timeZone: DEMO_TIME_ZONE,
         },
-        attendees: sendCalendarInvites ? [{ email: params.email, displayName: params.name }] : undefined,
+        attendees,
         reminders: {
           useDefault: false,
           overrides: [
@@ -160,12 +179,13 @@ async function createCalendarEvent(params: {
           ],
         },
         source: {
-          title: 'AdvertisingSystems Website',
+          title: 'Advertising Systems Website',
           url: 'https://www.advertisingsystems.ai/book-demo',
         },
         extendedProperties: {
           private: {
             source: 'advertising-systems-website',
+            selectedPlan: params.plan,
             preferredLocalDateTime: preferredDatetime.localDateTime,
             timeZone: DEMO_TIME_ZONE,
             durationMinutes: String(DEMO_DURATION_MINUTES),
@@ -174,9 +194,11 @@ async function createCalendarEvent(params: {
       },
     });
 
+    // Only use the conference link returned by this newly created event.
+    // Do not reuse static locations or fallback URLs as meeting links.
     const meetingLink =
       event.data.hangoutLink ??
-      event.data.conferenceData?.entryPoints?.find((entry) => entry.uri)?.uri ??
+      event.data.conferenceData?.entryPoints?.find((entry) => entry.entryPointType === 'video' && entry.uri)?.uri ??
       undefined;
 
     return {
@@ -190,7 +212,7 @@ async function createCalendarEvent(params: {
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Calendar API error';
-    return { success: false, error: message };
+    return { success: false, code: 'calendar_unavailable', error: message };
   }
 }
 
@@ -240,6 +262,7 @@ export const POST: APIRoute = async ({ request }) => {
   const email = getString(body, 'email', FIELD_LIMITS.email);
   const phone = getString(body, 'phone', FIELD_LIMITS.phone);
   const company = getString(body, 'company', FIELD_LIMITS.company);
+  const plan = getString(body, 'plan', FIELD_LIMITS.plan);
   const numberOfLocations = getString(body, 'number_of_locations', FIELD_LIMITS.numberOfLocations);
   const companySize = getString(body, 'company_size', FIELD_LIMITS.companySize);
   const monthlyAdSpend = getString(body, 'monthly_ad_spend', FIELD_LIMITS.monthlyAdSpend);
@@ -247,7 +270,7 @@ export const POST: APIRoute = async ({ request }) => {
   const message = getString(body, 'message', FIELD_LIMITS.message);
   const clientSubmissionId = getString(body, 'client_submission_id', 160);
 
-  for (const field of [name, email, phone, company, numberOfLocations, companySize, monthlyAdSpend, preferredDatetimeRaw, message]) {
+  for (const field of [name, email, phone, company, plan, numberOfLocations, companySize, monthlyAdSpend, preferredDatetimeRaw, message]) {
     if (field.error) errors.push(field.error);
   }
 
@@ -260,6 +283,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const preferredDatetime = parseDemoDatetime(preferredDatetimeRaw.value);
   if (preferredDatetime.error) errors.push(preferredDatetime.error);
+  if (!preferredDatetime.value) errors.push('Please choose an available demo time');
 
   if (errors.length > 0) {
     return jsonResponse({ error: errors[0] }, 400);
@@ -278,6 +302,7 @@ export const POST: APIRoute = async ({ request }) => {
       company: company.value,
       has_phone: Boolean(phone.value),
       has_preferred_datetime: Boolean(preferredDatetime.value),
+      plan: plan.value,
       number_of_locations: numberOfLocations.value,
       source: 'api',
     },
@@ -292,12 +317,14 @@ export const POST: APIRoute = async ({ request }) => {
     },
   });
 
-  const bookedSlot = preferredDatetime.value ?? {
-    date: getNextBookableDemoDate(),
-    time: '10:00' as DemoSlot,
-    localDateTime: `${getNextBookableDemoDate()}T10:00:00`,
-  };
+  const bookedSlot = preferredDatetime.value;
+  if (!bookedSlot) {
+    return jsonResponse({ error: 'Please choose an available demo time' }, 400);
+  }
   const bookedRange = getDemoSlotRange(bookedSlot.date, bookedSlot.time);
+  if (!bookedRange) {
+    return jsonResponse({ error: 'Preferred date and time is invalid' }, 400);
+  }
   const context = normalizeIntakeContext(body, {
     landingPage: '/book-demo',
     cta: 'Book a Demo',
@@ -311,14 +338,17 @@ export const POST: APIRoute = async ({ request }) => {
         context.cta,
       ]);
 
+  const internalNotifyEmail = getDemoInternalNotifyEmail();
   const calendarResult = await createCalendarEvent({
     name: name.value!,
     email: email.value!,
     company: company.value!,
     phone: phone.value,
+    plan: plan.value,
     numberOfLocations: numberOfLocations.value,
     companySize: companySize.value,
     monthlyAdSpend: monthlyAdSpend.value,
+    internalNotifyEmail,
     preferredDatetime: preferredDatetime.value,
     message: message.value,
   });
@@ -350,8 +380,29 @@ export const POST: APIRoute = async ({ request }) => {
       startTime: bookedRange?.start.toISOString(),
       endTime: bookedRange?.end.toISOString(),
       durationMinutes: DEMO_DURATION_MINUTES,
+      phone: phone.value,
+      plan: plan.value,
+      numberOfLocations: numberOfLocations.value,
       meetingLink: calendarResult.meetingLink,
       calendarEventLink: calendarResult.calendarEventLink,
+    });
+    const staffNotificationEmail = await sendDemoInternalNotificationEmail({
+      name: name.value!,
+      email: email.value!,
+      company: company.value!,
+      phone: phone.value,
+      plan: plan.value,
+      numberOfLocations: numberOfLocations.value,
+      companySize: companySize.value,
+      monthlyAdSpend: monthlyAdSpend.value,
+      message: message.value,
+      demoTimeText: calendarResult.demoTimeText || 'the selected demo time',
+      startTime: bookedRange?.start.toISOString(),
+      endTime: bookedRange?.end.toISOString(),
+      durationMinutes: DEMO_DURATION_MINUTES,
+      meetingLink: calendarResult.meetingLink,
+      calendarEventLink: calendarResult.calendarEventLink,
+      internalNotifyEmail,
     });
 
     posthog?.capture({
@@ -362,6 +413,8 @@ export const POST: APIRoute = async ({ request }) => {
         calendar_event_id: calendarResult.eventId,
         confirmation_email_sent: confirmationEmail.success,
         confirmation_email_skipped: confirmationEmail.skipped === true,
+        staff_notification_email_sent: staffNotificationEmail.success,
+        staff_notification_email_skipped: staffNotificationEmail.skipped === true,
         source: 'api',
       },
     });
@@ -386,6 +439,28 @@ export const POST: APIRoute = async ({ request }) => {
         },
       });
     }
+    if (staffNotificationEmail.success) {
+      posthog?.capture({
+        distinctId,
+        event: 'demo_staff_notification_email_sent',
+        properties: {
+          $session_id: sessionId,
+          notification_email: internalNotifyEmail,
+          source: 'api',
+        },
+      });
+    } else if (!staffNotificationEmail.skipped) {
+      posthog?.capture({
+        distinctId,
+        event: 'demo_staff_notification_email_failed',
+        properties: {
+          $session_id: sessionId,
+          error_message: staffNotificationEmail.error,
+          notification_email: internalNotifyEmail,
+          source: 'api',
+        },
+      });
+    }
 
     const centralIntake = bookedRange
       ? await sendCentralIntakeEvent({
@@ -398,6 +473,7 @@ export const POST: APIRoute = async ({ request }) => {
             email: email.value!,
             phone: phone.value,
             company: company.value!,
+            plan: plan.value,
             numberOfLocations: numberOfLocations.value,
             companySize: companySize.value,
             monthlyAdSpend: monthlyAdSpend.value,
@@ -408,13 +484,18 @@ export const POST: APIRoute = async ({ request }) => {
             calendarEventId: calendarResult.eventId,
             calendarEventUrl: calendarResult.calendarEventLink,
             meetingUrl: calendarResult.meetingLink,
+            calendarAvailabilityChecked: true,
+            availabilitySource: 'google_calendar_freebusy',
             calendarInviteSent: calendarResult.inviteSent === true,
             confirmationEmailSent: confirmationEmail.success,
+            staffNotificationEmail: internalNotifyEmail,
+            staffNotificationEmailSent: staffNotificationEmail.success,
             status: confirmationEmail.success ? 'booked' : 'booked_confirmation_pending',
           },
           contact: {
             message: message.value,
             productInterest: ADVERTISING_SYSTEMS_PRODUCT,
+            planInterest: plan.value,
           },
           context,
         })
@@ -437,7 +518,8 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  // Calendar failed but we still acknowledge the request (e.g. env not set or API error)
+  // Calendar failed. Forward the attempted lead for staff visibility, but do not
+  // tell the visitor the time is booked unless Google Calendar accepted it.
   posthog?.capture({
     distinctId,
     event: 'demo_calendar_failed',
@@ -459,6 +541,7 @@ export const POST: APIRoute = async ({ request }) => {
           email: email.value!,
           phone: phone.value,
           company: company.value!,
+          plan: plan.value,
           numberOfLocations: numberOfLocations.value,
           companySize: companySize.value,
           monthlyAdSpend: monthlyAdSpend.value,
@@ -466,13 +549,17 @@ export const POST: APIRoute = async ({ request }) => {
         booking: {
           startTime: bookedRange.start.toISOString(),
           endTime: bookedRange.end.toISOString(),
+          calendarAvailabilityChecked: false,
+          availabilitySource: 'google_calendar_freebusy',
+          calendarError: calendarResult.error,
           calendarInviteSent: false,
           confirmationEmailSent: false,
-          status: 'requested',
+          status: 'calendar_unavailable',
         },
         contact: {
           message: message.value,
           productInterest: ADVERTISING_SYSTEMS_PRODUCT,
+          planInterest: plan.value,
         },
         context,
       })
@@ -484,9 +571,10 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  return jsonResponse({
-    success: true,
-    status: 'requested',
-    message: "Thanks! We've received your request and will be in touch to schedule your demo.",
-  });
+  return jsonResponse(
+    {
+      error: 'Calendar availability could not be verified. Please refresh and choose another available time.',
+    },
+    503
+  );
 };

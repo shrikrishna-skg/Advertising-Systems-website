@@ -19,18 +19,20 @@ Multisystems (https://multisystems.ai) — builds AI operating systems for servi
 - Cross-Platform Reporting: Unified reporting across all advertising channels
 
 ## Supported Platforms
-Google Ads, Meta Ads (Facebook & Instagram), Booking.com, Expedia, TripAdvisor, Google Analytics, TikTok, LinkedIn, YouTube, Airbnb, Hotels.com, Bing Ads, Pinterest, Twitter/X, Trivago, Kayak, Vrbo, HubSpot, Shopify, Snapchat, Reddit Ads, Amazon Ads
+Google Ads, Meta Ads (Facebook & Instagram), Booking.com, Expedia, TripAdvisor, Google Analytics, TikTok, LinkedIn, YouTube, Airbnb, Hotels.com, Bing Ads, Trivago, Kayak, Vrbo, Reddit Ads
 
 ## Pricing
-- Starter: $99/month (up to 2 ad accounts)
-- Professional: $249/month (up to 10 ad accounts)
+- Launch: $199/month (1 ad account)
+- Growth: $499/month (up to 5 ad accounts)
+- Scale: $1,299/month (up to 15 ad accounts)
 - Enterprise: Custom pricing (unlimited ad accounts)
-All plans include unlimited campaigns, AI optimization, and real-time analytics.
+Ad spend is separate. All plans include unlimited campaigns, AI optimization, and real-time analytics.
 
 ## Key Metrics
-- $2M+ in ad spend managed
-- 4.2x average ROAS increase
-- 38% reduction in cost per acquisition
+- $12M+ in customer revenue generated through managed campaigns
+- Up to 30% booking lift for hotel partners
+- $40K/month in hotel paid digital advertising managed through the platform
+- $480K+ in annual hotel ad spend optimized
 - 12 hours per week saved on average
 
 ## Target Audience

@@ -46,6 +46,7 @@ SPRING_MAIL_USERNAME=no-reply@multisystems.ai
 SPRING_MAIL_PASSWORD=your-smtp-app-password
 SPRING_MAIL_FROM_NAME=Advertising Systems
 DEMO_REPLY_TO_EMAIL=contact@multisystems.ai
+DEMO_INTERNAL_NOTIFY_EMAIL=shrikrishna@multisystems.ai
 ```
 
 - `GOOGLE_CALENDAR_ID` can stay `primary`, or use a shared calendar ID if demos should land on a team calendar.
@@ -55,5 +56,6 @@ DEMO_REPLY_TO_EMAIL=contact@multisystems.ai
 - `DEMO_EVENT_LOCATION` can be a Zoom link, Google Meet link, phone number, or office address.
 - `DEMO_CONFIRMATION_EMAIL_ENABLED=true` sends a branded Advertising Systems confirmation email after the Calendar event is created.
 - `SPRING_MAIL_*` configures the SMTP account used for the branded confirmation email, which is sent after Google Calendar accepts the event and invite.
+- `DEMO_INTERNAL_NOTIFY_EMAIL` receives an internal staff notification for every booked demo. The same address is also added to the calendar event attendee list so Google can send invite/reminder handling for the booked slot.
 
 After `GOOGLE_REFRESH_TOKEN` is set in `.env`, the Book Demo API will read live availability and create events on that account’s calendar.

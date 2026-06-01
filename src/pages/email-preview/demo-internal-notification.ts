@@ -1,23 +1,25 @@
 import type { APIRoute } from 'astro';
-import { buildDemoConfirmationEmail } from '../../lib/demo-confirmation-email';
+import { buildDemoInternalNotificationEmail } from '../../lib/demo-internal-notification-email';
 
 export const GET: APIRoute = ({ url }) => {
   const siteUrl = url.origin;
-  const email = buildDemoConfirmationEmail({
+  const email = buildDemoInternalNotificationEmail({
     name: 'Shrikrishna',
-    company: 'AdvertisingSystems Security Test',
+    email: 'shrikrishna.skg@gmail.com',
+    company: 'Hotel Growth Group',
+    phone: '(555) 010-1200',
+    plan: 'Scale',
+    numberOfLocations: '12',
+    companySize: '11-50',
+    monthlyAdSpend: '$40k/mo',
+    message: 'Looking to improve reporting, booking attribution, and paid ad pacing across hotel campaigns.',
     demoTimeText: 'Thursday, May 21, 2026 at 9:00 AM CDT',
     startTime: '2026-05-21T14:00:00.000Z',
     endTime: '2026-05-21T14:30:00.000Z',
     durationMinutes: 30,
-    plan: 'Scale',
-    numberOfLocations: '12',
     meetingLink: 'https://meet.google.com/abc-defg-hij',
     calendarEventLink: 'https://calendar.google.com/calendar/event?action=TEMPLATE',
-    sampleReportUrl: `${siteUrl}/sample-report`,
-    expediaReportUrl: `${siteUrl}/expedia-report`,
-    bookDemoUrl: `${siteUrl}/book-demo`,
-    supportEmail: 'contact@multisystems.ai',
+    siteUrl,
   });
 
   return new Response(email.html, {

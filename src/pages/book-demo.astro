@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { bookDemoFaqs } from '../data/page-faqs';
+import { pricingPlans } from '../data/pricing';
 
 const benefits = [
   'Personalized walk-through of all 5 modules',
@@ -32,6 +33,13 @@ const locationOptions = [
   { value: '21-100', label: '21-100' },
   { value: '100+', label: '100+' },
 ];
+
+const planOptions = pricingPlans.map((plan) => ({
+  name: plan.name,
+  priceLabel: plan.period === '/month' ? `${plan.price}/mo` : plan.price,
+  description: plan.description,
+  spend: plan.spend,
+}));
 ---
 
 <Layout
@@ -135,6 +143,38 @@ const locationOptions = [
               </span>
               <input type="text" id="demo-company" name="company" required autocomplete="organization" maxlength="160" placeholder="Acme Inc."
                 class="demo-input w-full rounded-lg border border-slate-200 bg-white pl-10 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors" />
+            </div>
+          </div>
+          <div id="demo-plan-context" class="hidden rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4 shadow-sm" data-plan-context aria-hidden="true">
+            {planOptions.map((plan) => (
+              <span
+                hidden
+                data-plan-option
+                data-name={plan.name}
+                data-price={plan.priceLabel}
+                data-description={plan.description}
+                data-spend={plan.spend}
+              ></span>
+            ))}
+            <input type="hidden" id="demo-plan" name="plan" disabled />
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-emerald-700 shadow-sm" aria-hidden="true">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="text-xs font-black uppercase tracking-[0.12em] text-emerald-700">Selected from pricing</p>
+                <div class="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span id="demo-plan-name" class="text-lg font-black leading-tight text-slate-950"></span>
+                  <span id="demo-plan-price" class="text-sm font-bold text-slate-500"></span>
+                </div>
+                <p id="demo-plan-summary" class="mt-2 text-sm font-medium leading-relaxed text-slate-600"></p>
+                <a href="/#pricing" class="mt-3 inline-flex text-sm font-bold text-emerald-700 hover:text-emerald-800">
+                  Compare plans
+                </a>
+              </div>
             </div>
           </div>
           <div>
@@ -577,6 +617,11 @@ const locationOptions = [
     const timeHint = document.getElementById('demo-time-hint');
     const timeSlotsEl = document.getElementById('demo-time-slots');
     const selectedSlotEl = document.getElementById('demo-selected-slot');
+    const planInput = document.getElementById('demo-plan');
+    const planContextEl = document.getElementById('demo-plan-context');
+    const planNameEl = document.getElementById('demo-plan-name');
+    const planPriceEl = document.getElementById('demo-plan-price');
+    const planSummaryEl = document.getElementById('demo-plan-summary');
     const form = document.getElementById('book-demo-form');
     const submitBtn = document.getElementById('demo-submit');
     const messageEl = document.getElementById('form-message');
@@ -629,6 +674,45 @@ const locationOptions = [
     function getClientSubmissionId(prefix) {
       if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
       return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    }
+
+    function clearPlanContext() {
+      if (planInput instanceof HTMLInputElement) {
+        planInput.value = '';
+        planInput.disabled = true;
+      }
+      planContextEl?.classList.add('hidden');
+      planContextEl?.setAttribute('aria-hidden', 'true');
+    }
+
+    function applyPlanFromUrl() {
+      if (!(planInput instanceof HTMLInputElement)) return;
+      const requestedPlan = new URLSearchParams(window.location.search).get('plan');
+      if (!requestedPlan) {
+        clearPlanContext();
+        return;
+      }
+
+      const match = Array.from(document.querySelectorAll('[data-plan-option]')).find((option) => (
+        option.getAttribute('data-name')?.toLowerCase() === requestedPlan.toLowerCase()
+      ));
+      if (!match) {
+        clearPlanContext();
+        return;
+      }
+
+      const planName = match.getAttribute('data-name') || requestedPlan;
+      const price = match.getAttribute('data-price') || '';
+      const description = match.getAttribute('data-description') || '';
+      const spend = match.getAttribute('data-spend') || '';
+
+      planInput.value = planName;
+      planInput.disabled = false;
+      if (planNameEl) planNameEl.textContent = planName;
+      if (planPriceEl) planPriceEl.textContent = price;
+      if (planSummaryEl) planSummaryEl.textContent = [description, spend].filter(Boolean).join(' · ');
+      planContextEl?.classList.remove('hidden');
+      planContextEl?.setAttribute('aria-hidden', 'false');
     }
 
     function getIntakeContext(defaultCta) {
@@ -887,12 +971,12 @@ const locationOptions = [
         updatePreferredDatetime();
         updateSelectedSlotSummary();
       } catch {
-        timeSelect.replaceChildren(new Option('10:00 AM', '10:00'));
-        timeSelect.disabled = false;
-        currentAvailableSlots = ['10:00'];
-        timeHint.textContent = 'Live availability could not load, but we can still request this time.';
+        timeSelect.replaceChildren(new Option('Availability unavailable', ''));
+        timeSelect.disabled = true;
+        currentAvailableSlots = [];
+        timeHint.textContent = 'Live availability could not load. Please try this date again or choose another date.';
         timeHint.classList.remove('hidden');
-        renderTimeSlots(['10:00']);
+        renderTimeSlots([], 'Calendar availability could not be verified. Please choose another date or try again shortly.');
         updatePreferredDatetime();
         updateSelectedSlotSummary();
       }
@@ -913,7 +997,7 @@ const locationOptions = [
       updateSelectedSlotSummary();
       renderTimeSlots(currentAvailableSlots);
     });
-
+    applyPlanFromUrl();
     renderCalendar();
     renderTimeSlots();
     updateSelectedSlotSummary();
@@ -933,7 +1017,14 @@ const locationOptions = [
       });
       const pref = body.preferred_datetime;
       if (!pref && selectedDate && timeSelect?.value) {
-        body.preferred_datetime = toYMD(selectedDate) + 'T' + (timeSelect.value || '10:00') + ':00';
+        body.preferred_datetime = toYMD(selectedDate) + 'T' + timeSelect.value + ':00';
+      }
+      if (!body.preferred_datetime) {
+        submitBtn.disabled = false;
+        messageEl.textContent = 'Please choose an available demo time before booking.';
+        messageEl.className = 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700';
+        messageEl.classList.remove('hidden');
+        return;
       }
       delete body.preferred_date;
       delete body.preferred_time;
@@ -961,6 +1052,7 @@ const locationOptions = [
           window.posthog?.capture('demo_form_submitted', {
             has_preferred_datetime: Boolean(body.preferred_datetime),
             number_of_locations: body.number_of_locations || undefined,
+            plan: body.plan || undefined,
             status: 'accepted',
           });
           const bookedMessage = data.message || "Thanks! We'll be in touch to confirm your demo.";
@@ -975,6 +1067,7 @@ const locationOptions = [
             confirmationEmailSent: demoBooked,
           });
           form.reset();
+          applyPlanFromUrl();
           selectedDate = null;
           if (datetimeHidden) datetimeHidden.value = '';
           if (timeSelect) {

@@ -1,0 +1,273 @@
+---
+import { pricingPlans } from '../data/pricing';
+
+interface Props {
+  mode?: 'marketing' | 'billing';
+  currentPlan?: string;
+  recommendedPlan?: string;
+}
+
+const {
+  mode = 'marketing',
+  currentPlan = '',
+  recommendedPlan = '',
+} = Astro.props;
+
+const isBillingMode = mode === 'billing';
+const sourcePage = Astro.url.pathname === '/'
+  ? 'home'
+  : Astro.url.pathname.replace(/^\/|\/$/g, '') || 'home';
+
+const getDemoHref = (planName: string) => {
+  const params = new URLSearchParams({
+    source_page: sourcePage,
+    cta: 'pricing-plan',
+    plan: planName,
+  });
+
+  return `/book-demo?${params.toString()}#book-demo-form`;
+};
+
+const toneClasses: Record<string, { wrap: string; icon: string; border: string; button: string; badge: string }> = {
+  emerald: {
+    wrap: 'bg-emerald-100 text-emerald-700',
+    icon: 'text-emerald-700',
+    border: 'border-emerald-200',
+    button: 'btn-secondary',
+    badge: 'bg-emerald-600 text-white',
+  },
+  amber: {
+    wrap: 'bg-amber-100 text-amber-700',
+    icon: 'text-amber-700',
+    border: 'border-blue-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
+    button: 'bg-amber-200 text-amber-950 hover:bg-amber-300',
+    badge: 'bg-royal-blue-600 text-white',
+  },
+  blue: {
+    wrap: 'bg-blue-100 text-blue-700',
+    icon: 'text-blue-700',
+    border: 'border-blue-100',
+    button: 'btn-secondary',
+    badge: 'bg-royal-blue-600 text-white',
+  },
+  violet: {
+    wrap: 'bg-violet-100 text-violet-700',
+    icon: 'text-violet-700',
+    border: 'border-violet-100',
+    button: 'btn-secondary',
+    badge: 'bg-violet-600 text-white',
+  },
+};
+
+const getPlanState = (planName: string) => {
+  if (isBillingMode && planName === currentPlan) {
+    return {
+      badge: 'CURRENT',
+      badgeClass: 'bg-royal-blue-600 text-white',
+      borderClass: 'border-royal-blue-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
+      isCurrent: true,
+    };
+  }
+
+  if (isBillingMode && planName === recommendedPlan) {
+    return {
+      badge: 'RECOMMENDED',
+      badgeClass: 'bg-amber-500 text-white',
+      borderClass: 'border-amber-400 shadow-[0_0_0_1px_rgba(245,158,11,0.45),0_18px_36px_rgba(245,158,11,0.10)]',
+      isCurrent: false,
+    };
+  }
+
+  return {
+    badge: '',
+    badgeClass: '',
+    borderClass: '',
+    isCurrent: false,
+  };
+};
+---
+
+<div class="reveal pricing-cards" data-pricing-cards>
+  <div class="mb-10 flex flex-wrap items-center gap-3" role="group" aria-label="Billing frequency">
+    <button
+      type="button"
+      class="pricing-billing-button rounded-lg px-5 py-3 text-sm sm:text-base font-bold transition-colors bg-slate-950 text-white"
+      data-billing-option="monthly"
+      aria-pressed="true"
+    >
+      Monthly
+    </button>
+    <button
+      type="button"
+      class="pricing-billing-button rounded-lg px-5 py-3 text-sm sm:text-base font-bold text-slate-600 hover:bg-slate-100"
+      data-billing-option="annual"
+      aria-pressed="false"
+    >
+      Annual
+    </button>
+    <span class="rounded-lg bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700 shadow-sm">Save 20%</span>
+  </div>
+
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+    {pricingPlans.map((plan) => {
+      const tone = toneClasses[plan.tone] ?? toneClasses.blue;
+      const state = getPlanState(plan.name);
+      const badge = state.badge || (!isBillingMode ? plan.badge : '');
+      const badgeClass = state.badgeClass || tone.badge;
+      const borderClass = state.borderClass || (plan.highlighted && !isBillingMode ? tone.border : 'border-[var(--border)]');
+      const ctaText = state.isCurrent ? 'Current plan' : plan.cta.text;
+      const ctaClass = state.isCurrent
+        ? 'border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] cursor-default'
+        : (isBillingMode && plan.name === recommendedPlan
+          ? 'bg-amber-500 text-white hover:bg-amber-600 shadow-[0_8px_18px_rgba(245,158,11,0.18)]'
+          : tone.button);
+
+      return (
+        <article class={`relative flex min-h-full flex-col rounded-lg border bg-[var(--surface)] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_10px_30px_rgba(0,0,0,0.04)] ${borderClass}`}>
+          {badge && (
+            <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+              <span class={`rounded-full px-4 py-1.5 text-xs font-black tracking-[0.08em] ${badgeClass}`}>{badge}</span>
+            </div>
+          )}
+
+          <div class="flex items-center gap-3">
+            <div class={`flex h-11 w-11 items-center justify-center rounded-full ${tone.wrap}`}>
+              {plan.icon === 'building' && (
+                <svg class={`h-5 w-5 ${tone.icon}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" />
+                  <path d="M16 8h2a2 2 0 0 1 2 2v11" />
+                  <path d="M8 7h4M8 11h4M8 15h4" />
+                </svg>
+              )}
+              {plan.icon === 'trend' && (
+                <svg class={`h-5 w-5 ${tone.icon}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="m3 17 6-6 4 4 8-8" />
+                  <path d="M14 7h7v7" />
+                </svg>
+              )}
+              {plan.icon === 'chart' && (
+                <svg class={`h-5 w-5 ${tone.icon}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M4 19V5" />
+                  <path d="M4 19h16" />
+                  <path d="M8 16v-5" />
+                  <path d="M12 16V8" />
+                  <path d="M16 16v-7" />
+                </svg>
+              )}
+              {plan.icon === 'crown' && (
+                <svg class={`h-5 w-5 ${tone.icon}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="m3 8 4 4 5-7 5 7 4-4-2 11H5L3 8Z" />
+                  <path d="M5 19h14" />
+                </svg>
+              )}
+            </div>
+            <h3 class="text-xl font-black text-[var(--text-primary)]">{plan.name}</h3>
+          </div>
+
+          <p class="mt-4 min-h-10 text-sm font-medium leading-relaxed text-[var(--text-tertiary)]">{plan.description}</p>
+
+          <div class="mt-5 flex flex-wrap items-end gap-x-2 gap-y-1">
+            <span
+              class="whitespace-nowrap text-[2rem] font-black leading-none text-slate-950"
+              data-plan-price
+              data-monthly-price={plan.price}
+              data-annual-price={plan.annualPrice}
+            >
+              {plan.price}
+            </span>
+            <span class="mb-0.5 whitespace-nowrap text-base font-medium text-slate-500">{plan.period}</span>
+          </div>
+
+          <p class="mt-3 text-sm font-bold text-slate-600">{plan.spend}</p>
+
+          <div class="mt-5 grid grid-cols-3 gap-1.5">
+            {plan.quotas.map((quota) => (
+              <div class="min-w-0 rounded-md border border-blue-100 bg-slate-50 px-1.5 py-3 text-center">
+                <div class={`mx-auto min-h-5 max-w-full leading-none text-slate-950 ${quota.value === 'Unlimited' ? 'text-[13px] font-black' : 'text-base font-black'}`}>
+                  {quota.value}
+                </div>
+                <div class="mx-auto mt-1 max-w-full text-[9px] font-bold uppercase leading-tight tracking-[0.02em] text-slate-500">
+                  {quota.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {state.isCurrent ? (
+            <button
+              type="button"
+              class={`mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg text-base font-bold transition-colors ${ctaClass}`}
+              disabled
+            >
+              {ctaText}
+            </button>
+          ) : (
+            <a
+              href={getDemoHref(plan.name)}
+              class={`mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg text-base font-bold transition-colors ${ctaClass}`}
+              data-plan-cta
+            >
+              {ctaText}
+              {plan.name === 'Enterprise' && (
+                <svg class="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M7 17 17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              )}
+            </a>
+          )}
+
+          <ul class="mt-6 space-y-3" role="list">
+            {plan.features.map((feature) => (
+              <li class="flex gap-3 text-sm font-medium leading-relaxed text-slate-700">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-auto pt-7 space-y-3">
+            {plan.capabilities.map((capability) => (
+              <div class="grid grid-cols-[6.5rem_1fr_2.25rem] items-center gap-3">
+                <span class="text-sm font-medium text-slate-500">{capability.label}</span>
+                <span class="h-2 rounded-full bg-slate-100">
+                  <span class="block h-2 rounded-full bg-slate-500" style={`width: ${capability.value}%`}></span>
+                </span>
+                <span class="text-right text-sm font-black text-slate-700">{capability.value}</span>
+              </div>
+            ))}
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-pricing-cards]').forEach((pricingRoot) => {
+    const buttons = Array.from(pricingRoot.querySelectorAll('[data-billing-option]'));
+    const prices = Array.from(pricingRoot.querySelectorAll('[data-plan-price]'));
+
+    const setBilling = (billing) => {
+      buttons.forEach((button) => {
+        const isActive = button.getAttribute('data-billing-option') === billing;
+        button.setAttribute('aria-pressed', String(isActive));
+        button.classList.toggle('bg-slate-950', isActive);
+        button.classList.toggle('text-white', isActive);
+        button.classList.toggle('text-slate-600', !isActive);
+        button.classList.toggle('hover:bg-slate-100', !isActive);
+      });
+
+      prices.forEach((price) => {
+        const nextValue = price.getAttribute(billing === 'annual' ? 'data-annual-price' : 'data-monthly-price');
+        if (nextValue) price.textContent = nextValue;
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => setBilling(button.getAttribute('data-billing-option') || 'monthly'));
+    });
+  });
+</script>
