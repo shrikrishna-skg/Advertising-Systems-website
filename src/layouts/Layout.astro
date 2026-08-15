@@ -29,7 +29,8 @@ const {
   noindex = false,
 } = Astro.props;
 
-const siteUrl = 'https://advertisingsystems.ai';
+// www is canonical: the apex 307-redirects to www in production.
+const siteUrl = 'https://www.advertisingsystems.ai';
 
 // Build canonical URL for search engines: always absolute, no trailing slash (matches sitemap).
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -42,14 +43,16 @@ const robotsContent = noindex
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
   name: 'Advertising Systems',
   url: siteUrl,
   logo: `${siteUrl}/logo.svg`,
   description: 'AI-Powered Advertising Management Platform by Multisystems',
   parentOrganization: {
     '@type': 'Organization',
+    '@id': 'https://www.multisystems.ai/#organization',
     name: 'Multisystems',
-    url: 'https://multisystems.ai',
+    url: 'https://www.multisystems.ai',
   },
   sameAs: [
     'https://www.linkedin.com/company/multisystems-ai',

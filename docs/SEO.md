@@ -6,8 +6,8 @@ This document describes how the site is configured for search engine indexing an
 
 - **Every indexable page** uses `robots: index, follow` and allows `max-image-preview:large`, `max-snippet:-1`, `max-video-preview:-1`.
 - **404 page** uses `noindex, follow` so error pages are not indexed.
-- **Canonical URLs** are absolute (e.g. `https://advertisingsystems.ai/about`), no trailing slash, and match the sitemap.
-- **Sitemap** lists all indexable URLs (404 is excluded) at `https://advertisingsystems.ai/sitemap.xml`.
+- **Canonical URLs** are absolute (e.g. `https://www.advertisingsystems.ai/about`), no trailing slash, and match the sitemap.
+- **Sitemap** lists all indexable URLs (404 is excluded) at `https://www.advertisingsystems.ai/sitemap.xml`.
 - **robots.txt** allows crawlers and points to the sitemap.
 
 ## Per-page SEO (Layout + pages)
@@ -40,7 +40,7 @@ This document describes how the site is configured for search engine indexing an
 
 - `User-agent: *` → `Allow: /`
 - Explicit `Allow: /` for Googlebot, Bingbot, Slurp, and optional LLM bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended).
-- `Sitemap: https://advertisingsystems.ai/sitemap.xml`
+- `Sitemap: https://www.advertisingsystems.ai/sitemap.xml`
 - Served with `Cache-Control: public, max-age=86400`.
 
 ## Central SEO helpers (`src/data/seo.ts`)
