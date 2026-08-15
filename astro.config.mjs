@@ -6,7 +6,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://advertisingsystems.ai',
+  site: 'https://www.advertisingsystems.ai',
   output: 'server',
   adapter: vercel(),
   devToolbar: { enabled: false },

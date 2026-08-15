@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-const siteUrl = 'https://advertisingsystems.ai';
+const siteUrl = 'https://www.advertisingsystems.ai';
 
 export const GET: APIRoute = () => {
   const robotsTxt = `# Advertising Systems – robots.txt
