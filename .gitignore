@@ -23,3 +23,18 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Design mockups and their notes — EXCLUDED DELIBERATELY, do not un-ignore.
+# mockups/README.md records the verified case study's real property name and its
+# Expedia property ID. This repo is PUBLIC, and the numeric ID de-anonymises the
+# property as completely as the name does (it resolves directly to the listing).
+# Naming the property requires written consent from the property.
+# The served component (src/components/VerifiedCase.astro) is already clean —
+# it carries the numbers without the identity. Keep it that way.
+mockups/
+
+# Internal build/planning notes — excluded for the same reason as mockups/.
+# reports/2026-08-15-phase2-implementation-plan.md names the property's location
+# and records, in its own decision log, that consent to name either property was
+# "Withheld on both". Publishing it to a public repo would contradict that.
+reports/

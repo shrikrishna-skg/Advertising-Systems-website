@@ -26,23 +26,27 @@ const standCards = [
 ];
 
 const usageRows = [
-  { label: 'Ad accounts', value: '4 of 5', width: 80, tone: 'bg-royal-blue-500' },
+  { label: 'Ad accounts', value: '4 of 5', width: 80, tone: 'bg-ink-500' },
   { label: 'Team users', value: '3 of 10', width: 30, tone: 'bg-violet-500' },
-  { label: 'Reports generated', value: '2 of Unlimited', width: 18, tone: 'bg-emerald-500' },
+  { label: 'Reports generated', value: '2 of Unlimited', width: 18, tone: 'bg-[var(--pos)]' },
 ];
 
+/* The fabricated impact stats ($12M+/30%/$480K+) are gone — this preview now
+   points at the verified case instead of inventing aggregates. */
 const impactStats = [
-  { value: '$12M+', label: 'customer revenue generated' },
-  { value: '30%', label: 'booking lift seen by partners' },
-  { value: '$480K+', label: 'annual hotel ad spend optimized' },
+  { value: '27.3:1', label: 'verified-case ROAS (30-day Expedia export)' },
+  { value: '$16,175', label: 'verified-case booking revenue' },
+  { value: 'Line-by-line', label: 'how we reconcile every published number' },
 ];
 ---
 
 <Layout
-  title="Billing & Subscription — Advertising Systems"
-  description="Account billing page for Advertising Systems plans, usage, ad credits, payment methods, and billing history."
+  title="Billing & Subscription Preview — Advertising Systems"
+  description="An illustrative preview of the Advertising Systems billing screen: plans, usage, ad credits, payment methods, and billing history."
+  noindex={true}
 >
-  <main class="min-h-screen bg-slate-50 py-10 sm:py-12">
+  <main class="min-h-screen bg-[var(--surface-alt)] py-10 sm:py-12">
+    <div class="mx-auto mb-6 w-fit rounded-[3px] border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--text-tertiary)]">Illustrative preview — example account, not live data</div>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <header class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div>
@@ -69,9 +73,9 @@ const impactStats = [
           <div class="mt-6 space-y-5">
             {marketRows.map((row) => (
               <div class="grid gap-3 sm:grid-cols-[14rem_1fr_9rem] sm:items-center">
-                <div class={`text-sm font-black ${row.active ? 'text-emerald-700' : 'text-slate-600'}`}>{row.name}</div>
+                <div class={`text-sm font-black ${row.active ? 'text-[var(--pos)]' : 'text-slate-600'}`}>{row.name}</div>
                 <div class="h-2 rounded-full bg-slate-100">
-                  <div class={`h-2 rounded-full ${row.active ? 'bg-emerald-500' : 'bg-slate-400'}`} style={`width: ${row.value}%`}></div>
+                  <div class={`h-2 rounded-full ${row.active ? 'bg-[var(--pos)]' : 'bg-slate-400'}`} style={`width: ${row.value}%`}></div>
                 </div>
                 <div class="text-sm font-black text-slate-950 sm:text-right">{row.price}</div>
               </div>
@@ -165,7 +169,7 @@ const impactStats = [
 
       <section id="account-state" class="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="credits-heading">
         <div class="flex items-center gap-3">
-          <svg class="h-5 w-5 text-royal-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <svg class="h-5 w-5 text-ink-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="m12 3-1.9 5.8L4 11l6.1 2.2L12 19l1.9-5.8L20 11l-6.1-2.2L12 3Z" />
           </svg>
           <h2 id="credits-heading" class="text-xl font-black text-slate-950">Subscription & ad credits</h2>
@@ -196,7 +200,7 @@ const impactStats = [
 
           <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p class="text-lg font-black text-slate-950"><span data-credit-count>100</span> credits <span class="font-medium text-slate-500">for ad create/change operations</span></p>
-            <button type="button" class="h-12 rounded-lg bg-royal-blue-500 px-6 text-base font-bold text-white shadow-sm hover:bg-royal-blue-600" data-credit-buy>Buy $10 credits</button>
+            <button type="button" class="h-12 rounded-lg bg-ink-500 px-6 text-base font-bold text-white shadow-sm hover:bg-ink-600" data-credit-buy>Buy $10 credits</button>
           </div>
         </div>
       </section>
@@ -216,7 +220,7 @@ const impactStats = [
 
         <article class="min-h-64 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div class="flex items-center gap-3">
-            <svg class="h-5 w-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="h-5 w-5 text-[var(--pos)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M3 12h4l2-7 4 14 2-7h6" />
             </svg>
             <h2 class="text-xl font-black text-slate-950">Current usage</h2>
@@ -261,9 +265,10 @@ const impactStats = [
 
 <script>
   document.querySelectorAll('[data-billing-estimator]').forEach((root) => {
-    const accounts = root.querySelector('[data-estimator-accounts]');
-    const spend = root.querySelector('[data-estimator-spend]');
-    const users = root.querySelector('[data-estimator-users]');
+    // Typed as inputs, not bare Elements — these three are read via .value below.
+    const accounts = root.querySelector<HTMLInputElement>('[data-estimator-accounts]');
+    const spend = root.querySelector<HTMLInputElement>('[data-estimator-spend]');
+    const users = root.querySelector<HTMLInputElement>('[data-estimator-users]');
     const accountsValue = root.querySelector('[data-estimator-accounts-value]');
     const spendValue = root.querySelector('[data-estimator-spend-value]');
     const usersValue = root.querySelector('[data-estimator-users-value]');
@@ -303,7 +308,7 @@ const impactStats = [
     const credits = root.querySelector('[data-credit-count]');
     const buy = root.querySelector('[data-credit-buy]');
 
-    const selectAmount = (amount) => {
+    const selectAmount = (amount: string) => {
       buttons.forEach((button) => {
         const isActive = button.getAttribute('data-credit-amount') === amount;
         button.classList.toggle('border-slate-950', isActive);
@@ -324,3 +329,12 @@ const impactStats = [
     });
   });
 </script>
+
+<style>
+  /* This page never got the Terminal conversion — its cards are still hardcoded
+     bg-white with slate-* text, so they stay light even when the site is in dark
+     theme. Pin the status tokens to their LIGHT values here so var(--pos) is
+     safe to use on those white cards: the dark --pos is the neon #00E97B, which
+     measures 1.7:1 on white. Delete this block when the page is converted. */
+  main { --pos: #08753F; --pos-tint: #E6F7EC; --pos-line: #A7E4C1; }
+</style>

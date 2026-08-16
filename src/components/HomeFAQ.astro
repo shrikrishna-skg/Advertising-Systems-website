@@ -1,0 +1,64 @@
+---
+/**
+ * Section 07 — FAQ as <details>, answers always in the DOM so crawlers and
+ * LLMs read them without running JS (playbook rule 4).
+ * Copy comes from `src/data/faq.ts`; no answers are authored here.
+ */
+import { faqs } from '../data/faq';
+
+const shown = faqs.slice(0, 6);
+
+// FAQPage JSON-LD scoped to the six questions actually rendered here.
+const faqSchemaJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: shown.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+}).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" set:html={faqSchemaJson} />
+<section class="sec soft" id="faq" aria-labelledby="faq-heading">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="no" aria-hidden="true">07</span>
+      <div><h2 id="faq-heading">Questions buyers ask first.</h2></div>
+    </div>
+
+    <div class="faq">
+      {shown.map((item, i) => (
+        <details open={i === 0}>
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    <p class="fine"><a href="/faq">Read the full FAQ →</a></p>
+  </div>
+</section>
+
+<style>
+  .faq details { border-bottom: 1px solid var(--border); }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 18px 0;
+    font-size: 16.5px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--acc); font-weight: 700; font-size: 20px; line-height: 1; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { padding: 0 0 20px; font-size: 15px; color: var(--text-secondary); max-width: 60em; text-wrap: pretty; }
+  .fine a { color: var(--acc); font-weight: 600; }
+</style>

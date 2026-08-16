@@ -1,0 +1,86 @@
+---
+/**
+ * Section 03 — the decision log. The differentiating section: it is the only
+ * place on any competitor site that shows automated decisions with their reason
+ * AND their amount. Illustrative, and chipped as such in the panel header.
+ */
+const entries = [
+  { t: '01:48', src: 'EXPEDIA', body: 'Raised property bid on weekend inventory — pacing at 71% with 4 days left.', amt: '−$310', dir: 'dn' },
+  { t: '02:14', src: 'GOOGLE ADS', body: 'Keyword <b>"downtown hotel parking"</b> — 340 clicks, 0 conversions in 14 days. Paused.', amt: '+$800/wk', dir: 'up' },
+  { t: '03:40', src: 'META', body: 'Creative fatigue on <b>Summer Suites 04</b> — frequency 4.8. Rotated to variant B.', amt: '+0.6× ROAS', dir: 'up' },
+  { t: '04:02', src: 'PORTFOLIO', body: 'Shifted budget from Microsoft Ads to Expedia TravelAds on 7-day trailing ROAS.', amt: '$2,400', dir: '' },
+  { t: '05:31', src: 'BOOKING.COM', body: 'Sponsored placement held at tier 2 — incremental cost per booking above target.', amt: 'Hold', dir: '' },
+  { t: '06:55', src: 'ANALYTICS', body: 'Anomaly: branded search CPC up 41% overnight. Flagged for review, no action taken.', amt: 'Review', dir: '' },
+];
+---
+
+<section class="sec" id="log" aria-labelledby="log-heading">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="no" aria-hidden="true">03</span>
+      <div>
+        <h2 id="log-heading">What the engine did while you were asleep.</h2>
+        <p class="sub">
+          Every automated decision is logged with its reason and its amount. Nothing happens to
+          your budget that you cannot read back the next morning.
+        </p>
+      </div>
+    </div>
+
+    <div class="log">
+      <div class="log-hd">
+        <h3>Decision log — overnight</h3>
+        <span class="illus">Illustrative</span>
+      </div>
+      {entries.map(({ t, src, body, amt, dir }) => (
+        <div class="log-row">
+          <span class="t num">{t}</span>
+          <span class="src">{src}</span>
+          <p set:html={body}></p>
+          <span class={dir ? `amt ${dir} num` : 'amt num'}>{amt}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .log {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--surface-raised);
+  }
+  .log-hd {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 16px;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  .log-hd h3 {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-secondary);
+  }
+  .log-row {
+    display: grid;
+    grid-template-columns: 66px 128px 1fr auto;
+    gap: 16px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    align-items: center;
+  }
+  .log-row:last-child { border-bottom: 0; }
+  .log-row .t { font-size: 11.5px; color: var(--text-tertiary); }
+  .log-row .src { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: var(--text-secondary); }
+  .log-row p { color: var(--text-secondary); line-height: 1.5; }
+  .log-row p :global(b) { color: var(--text-primary); font-weight: 700; }
+  .log-row .amt { font-weight: 700; white-space: nowrap; color: var(--text-primary); }
+  .log-row .amt.up { color: var(--pos); }
+  .log-row .amt.dn { color: var(--neg); }
+
+  @media (max-width: 640px) {
+    .log-row { grid-template-columns: 1fr auto; gap: 6px; }
+    .log-row .t, .log-row .src { grid-column: 1 / -1; }
+  }
+</style>

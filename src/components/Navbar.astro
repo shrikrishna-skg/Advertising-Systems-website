@@ -1,200 +1,505 @@
 ---
-const navLinks = [
-  { text: 'Home', href: '/' },
-  { text: 'Features', href: '#features', hasDropdown: true },
-  { text: 'OTA Advertising', href: '/ota-advertising' },
-  { text: 'Pricing', href: '/pricing' },
-  { text: 'Decision Guides', href: '/decision-guides' },
-  { text: 'Blog', href: '/blog' },
-  { text: 'About', href: '/about' },
+/**
+ * Terminal header — Wave 1.1 of the approved direction A.
+ * Ported from mockups/a-the-terminal.html, which itself ports the
+ * RevenueSystems Nav.tsx pattern so the family reads as one company.
+ *
+ * DEVIATION from RevenueSystems, deliberate: RS centres the nav with
+ * position:absolute;left:50%, which overlaps the right-hand cluster the moment
+ * logo + nav + CTAs exceed the bar. A 1fr/auto/1fr grid puts the nav on the
+ * exact same midline — the side tracks are equal — but it is real layout, so
+ * the columns push each other instead of stacking. Same look, cannot collide.
+ */
+const LOGIN_URL = 'https://app.advertisingsystems.ai/login';
+
+const platformLinks = [
+  {
+    title: 'Campaign Intelligence',
+    desc: 'One command centre for every channel',
+    href: '/features/campaign-management',
+    icon: 'grid',
+  },
+  {
+    title: 'AI Optimisation Engine',
+    desc: 'Bids and budgets, worked every 15 minutes',
+    href: '/features/ai-optimization',
+    icon: 'spark',
+  },
+  {
+    title: 'Performance Analytics',
+    desc: 'Attribution back to booking revenue',
+    href: '/features/analytics',
+    icon: 'bars',
+  },
+  {
+    title: 'Automation Studio',
+    desc: 'Rules that act without a human in the loop',
+    href: '/features/automation',
+    icon: 'gear',
+  },
+  {
+    title: 'Budget Allocator',
+    desc: 'Cross-channel distribution, not per-platform guessing',
+    href: '/features/budget-intelligence',
+    icon: 'wallet',
+  },
+  {
+    title: 'OTA Advertising',
+    desc: 'Expedia TravelAds live · Booking.com coming',
+    href: '/ota-advertising',
+    icon: 'globe',
+    badge: 'New',
+  },
 ];
 
-const featureDropdownItems = [
-  { title: 'Campaign Intelligence', desc: 'Unified command center for every ad platform', href: '/features/campaign-management', icon: 'dashboard', iconBg: 'bg-royal-blue-500/15', iconColor: 'text-royal-blue-600', subLinks: [{ text: 'Overview', href: '/features/campaign-management' }, { text: 'Pricing', href: '/#pricing' }] },
-  { title: 'AI Optimization Engine', desc: 'Autonomous bid & budget optimization', href: '/features/ai-optimization', icon: 'sparkles', iconBg: 'bg-royal-blue-500/15', iconColor: 'text-royal-blue-600', subLinks: [{ text: 'Overview', href: '/features/ai-optimization' }, { text: 'Pricing', href: '/#pricing' }] },
-  { title: 'Performance Analytics', desc: 'Real-time dashboards & revenue attribution', href: '/features/analytics', icon: 'chart', iconBg: 'bg-royal-blue-500/15', iconColor: 'text-royal-blue-600', subLinks: [{ text: 'Overview', href: '/features/analytics' }, { text: 'Pricing', href: '/#pricing' }] },
-  { title: 'Automation Studio', desc: 'Rules-based campaign automation', href: '/features/automation', icon: 'automation', iconBg: 'bg-royal-blue-500/15', iconColor: 'text-royal-blue-600', subLinks: [{ text: 'Overview', href: '/features/automation' }, { text: 'Pricing', href: '/#pricing' }] },
-  { title: 'Budget Allocator', desc: 'AI-driven cross-channel budget distribution', href: '/features/budget-intelligence', icon: 'budget', iconBg: 'bg-royal-blue-500/15', iconColor: 'text-royal-blue-600', subLinks: [{ text: 'Overview', href: '/features/budget-intelligence' }, { text: 'Pricing', href: '/#pricing' }] },
-  { title: 'OTA Advertising', desc: 'Expedia TravelAds live · Booking.com & more coming soon', href: '/ota-advertising', icon: 'ota', iconBg: 'bg-amber-500/15', iconColor: 'text-amber-600', badge: 'New', subLinks: [{ text: 'All OTA Platforms', href: '/ota-advertising' }, { text: 'Join Waitlist', href: '/book-demo' }] },
+/* Two columns, not one list of ten: a 10-row dropdown is taller than the
+   viewport on a laptop, and the two groups answer different questions —
+   "teach me" vs "prove it / how do you compare". */
+const resourceCols = [
+  {
+    heading: 'Learn',
+    links: [
+      { title: 'Knowledge Base', desc: 'Setup and how-to for every module', href: '/knowledge-base', icon: 'book' },
+      { title: 'Decision Guides', desc: 'How to choose a plan and a channel mix', href: '/decision-guides', icon: 'up' },
+      { title: 'Blog', desc: 'What we are learning about ad spend', href: '/blog', icon: 'lines' },
+      { title: 'FAQ', desc: 'Short answers to the usual questions', href: '/faq', icon: 'help' },
+      { title: 'About & Contact', desc: 'Who we are and how to reach us', href: '/about', icon: 'pin' },
+    ],
+  },
+  {
+    heading: 'Proof & comparisons',
+    links: [
+      { title: 'Case Studies', desc: 'What the platform exports actually show', href: '/case-studies', icon: 'doc' },
+      { title: 'Pricing Intelligence', desc: 'What competitors charge, and why', href: '/pricing-intelligence', icon: 'tag' },
+      { title: 'vs Google Ads Only', desc: 'Single-channel against a portfolio', href: '/vs/google-ads', icon: 'split' },
+      { title: 'vs Meta Ads Only', desc: 'Where social stops paying back', href: '/vs/meta-ads', icon: 'split' },
+      { title: 'vs Manual', desc: 'Spreadsheets against a live allocator', href: '/vs/manual', icon: 'split' },
+    ],
+  },
+];
+
+/* The right rail. Restored from the pre-Terminal header, where it was the ONLY
+   chrome linking /sample-report and /expedia-report — dropping it orphaned both
+   proof assets from the nav AND the footer. */
+const promoCards = [
+  { title: 'Compare plans', desc: 'Pricing by accounts under management', href: '/pricing' },
+  { title: 'Sample Report', desc: 'A real cross-channel report view', href: '/sample-report', badge: 'Live' },
+  { title: 'Expedia Report', desc: 'The TravelAds drill-in', href: '/expedia-report', badge: 'XPR' },
+];
+
+const sheetLinks = [
+  { text: 'Platform', href: '/features' },
+  { text: 'OTA Advertising', href: '/ota-advertising' },
+  { text: 'Channels', href: '/integrations' },
+  { text: 'Pricing', href: '/pricing' },
+  { text: 'Sample report', href: '/sample-report' },
+  { text: 'Expedia report', href: '/expedia-report' },
+  { text: 'Case studies', href: '/case-studies' },
+  { text: 'Knowledge base', href: '/knowledge-base' },
+  { text: 'Decision guides', href: '/decision-guides' },
+  { text: 'Blog', href: '/blog' },
+  { text: 'FAQ', href: '/faq' },
+  { text: 'About', href: '/about' },
+  { text: 'Contact', href: '/contact' },
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-[var(--nav-bg)] backdrop-blur-2xl border-b border-[var(--nav-border)] transition-colors duration-300 min-w-0 overflow-visible" role="banner">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[76px] flex items-center justify-between gap-2 min-w-0" aria-label="Main navigation">
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-2 sm:gap-2.5 shrink-0 min-w-0" aria-label="Advertising Systems home">
-      <svg class="w-9 h-9 sm:w-10 sm:h-10 shrink-0 text-[var(--text-primary)]" viewBox="10 -1 44 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M26 16 A8 8 0 0 1 38 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.4"/>
-        <path d="M22 11 A13 11 0 0 1 42 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.22"/>
-        <line x1="32" y1="20" x2="22" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        <line x1="32" y1="20" x2="42" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        <line x1="22" y1="38" x2="14" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.7"/>
-        <line x1="42" y1="38" x2="50" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.7"/>
-        <line x1="22" y1="38" x2="42" y2="38" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.8"/>
-        <line x1="14" y1="54" x2="50" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.15"/>
-        <circle cx="32" cy="20" r="4.2" fill="currentColor"/>
-        <circle cx="22" cy="38" r="3.5" fill="currentColor" opacity="0.85"/>
-        <circle cx="42" cy="38" r="3.5" fill="currentColor" opacity="0.85"/>
-        <circle cx="14" cy="54" r="2.8" fill="currentColor" opacity="0.5"/>
-        <circle cx="50" cy="54" r="2.8" fill="currentColor" opacity="0.5"/>
+<header class="t-header" role="banner">
+  <nav class="t-nav" aria-label="Main navigation">
+
+    <a class="t-logo" href="/" aria-label="Advertising Systems home">
+      <!-- RS logo treatment (user-directed 2026-08-16): mark on a rounded
+           accent tile, white glyph — mirrors the RevenueSystems header. -->
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="13" style="fill: var(--acc-btn, #E11D48)" />
+        <svg x="12" y="4" width="40" height="56" viewBox="10 -1 44 58" fill="none">
+          <path d="M26 16 A8 8 0 0 1 38 16" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".45"/>
+          <path d="M22 11 A13 11 0 0 1 42 11" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+          <line x1="32" y1="20" x2="22" y2="38" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          <line x1="32" y1="20" x2="42" y2="38" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          <line x1="22" y1="38" x2="14" y2="54" stroke="#fff" stroke-width="2.8" stroke-linecap="round" opacity=".7"/>
+          <line x1="42" y1="38" x2="50" y2="54" stroke="#fff" stroke-width="2.8" stroke-linecap="round" opacity=".7"/>
+          <line x1="22" y1="38" x2="42" y2="38" stroke="#fff" stroke-width="2.8" stroke-linecap="round" opacity=".8"/>
+          <circle cx="32" cy="20" r="4.2" fill="#fff"/>
+          <circle cx="22" cy="38" r="3.5" fill="#fff" opacity=".85"/>
+          <circle cx="42" cy="38" r="3.5" fill="#fff" opacity=".85"/>
+          <circle cx="14" cy="54" r="2.8" fill="#fff" opacity=".5"/>
+          <circle cx="50" cy="54" r="2.8" fill="#fff" opacity=".5"/>
+        </svg>
       </svg>
-      <div class="flex flex-col min-w-0">
-        <span class="text-base sm:text-lg font-bold text-[var(--text-primary)] leading-tight tracking-[-0.02em] truncate">Advertising Systems</span>
-        <span class="text-[9px] sm:text-[10px] font-medium text-[var(--text-muted)] uppercase tracking-[0.1em] leading-none hidden sm:block">by Multisystems</span>
-      </div>
+      <span class="t-word">
+        <b>Advertising <span>Systems</span></b>
+        <em>by Multisystems</em>
+      </span>
     </a>
 
-    <!-- Desktop Nav -->
-    <div class="hidden lg:flex items-center gap-0.5">
-      {navLinks.map((link) => (
-        <div class="relative group">
-          <a
-            href={link.href}
-            class="px-2.5 py-2 text-[13px] font-medium text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors rounded-lg inline-flex items-center gap-1"
-          >
-            {link.text}
-            {link.hasDropdown && (
-              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            )}
-          </a>
-          {link.hasDropdown && (
-            <div class="absolute top-full left-0 pt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200">
-              <div class="bg-[var(--surface-overlay)] backdrop-blur-2xl rounded-2xl border border-[var(--border)] shadow-2xl overflow-hidden w-[min(680px,calc(100vw-2rem))] max-h-[min(80vh,600px)] overflow-y-auto">
-                <div class="flex">
-                  <!-- Left: Feature list -->
-                  <div class="flex-1 p-6 pr-4 min-w-0">
-                    {featureDropdownItems.map((item) => (
-                      <div class="flex gap-4 py-4 first:pt-0 last:pb-0 border-b border-[var(--border-subtle)] last:border-b-0 hover:bg-royal-blue-500/5 -mx-2 px-2 rounded-lg transition-colors group/item">
-                        <div class={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${item.iconBg} ${item.iconColor}`}>
-                          {item.icon === 'dashboard' && (
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z" /></svg>
-                          )}
-                          {item.icon === 'sparkles' && (
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
-                          )}
-                          {item.icon === 'chart' && (
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
-                          )}
-                          {item.icon === 'automation' && (
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                          )}
-                          {item.icon === 'budget' && (
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>
-                          )}
-                          {item.icon === 'ota' && (
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
-                          )}
-                        </div>
-                        <div class="min-w-0">
-                          <div class="flex items-center gap-2">
-                            <a href={item.href} class="text-sm font-bold text-[var(--text-primary)] group-hover/item:text-royal-blue-600 transition-colors">{item.title}</a>
-                            {'badge' in item && item.badge && (
-                              <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-600 leading-none">{item.badge}</span>
-                            )}
-                          </div>
-                          <p class="text-xs font-medium text-[var(--text-muted)] mt-0.5 leading-snug">{item.desc}</p>
-                          <div class="flex flex-wrap gap-x-3 gap-y-0.5 mt-2">
-                            {item.subLinks.map((s) => (
-                              <a href={s.href} class="text-xs font-medium text-[var(--text-muted)] hover:text-royal-blue-600 transition-colors">{s.text}</a>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                    <a href="/features" class="flex items-center gap-2 py-3 mt-2 text-sm font-semibold link-secondary">
-                      See all features
-                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                    </a>
-                  </div>
-                  <!-- Right: CTA cards -->
-                  <div class="w-[220px] shrink-0 p-4 flex flex-col gap-3">
-                    <!-- Book a Demo: dark card with gradient top line (color-shift on hover) -->
-                    <a href="/book-demo" class="block rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group/card">
-                      <span class="block h-1.5 w-full bg-gradient-to-r from-royal-green-300 via-royal-green-500 to-royal-green-700 group-hover/card:from-royal-green-200 group-hover/card:via-royal-green-400 group-hover/card:to-royal-green-600 transition-all duration-300 rounded-t-xl" aria-hidden="true"></span>
-                      <div class="bg-royal-green-900 p-4 text-white">
-                        <svg class="w-5 h-5 text-royal-green-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
-                        <span class="font-bold text-sm">Book a Demo</span>
-                        <p class="text-xs text-white/80 mt-0.5">30-min walkthrough of the platform</p>
-                        <span class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-royal-green-300 group-hover/card:gap-2 transition-all">Schedule now →</span>
-                      </div>
-                    </a>
-                    <!-- Compare Plans -->
-                    <a href="/#pricing" class="block rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 hover:border-royal-blue-500/30 hover:bg-royal-blue-500/5 transition-all group/card2">
-                      <span class="font-bold text-sm text-[var(--text-primary)]">Compare Plans</span>
-                      <p class="text-xs font-medium text-[var(--text-muted)] mt-0.5">See pricing for every plan</p>
-                      <span class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-royal-blue-600 group-hover/card2:gap-2 transition-all">View pricing →</span>
-                    </a>
-                    <!-- Sample Report -->
-                    <a href="/sample-report" class="block rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 hover:border-amber-400/40 hover:bg-amber-50/40 transition-all group/card3">
-                      <div class="flex items-center gap-1.5 mb-1">
-                        <span class="font-bold text-sm text-[var(--text-primary)]">Sample Report</span>
-                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">Live</span>
-                      </div>
-                      <p class="text-xs font-medium text-[var(--text-muted)] mt-0.5">See a real client's 22:1 ROAS report</p>
-                      <span class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-amber-600 group-hover/card3:gap-2 transition-all">View report →</span>
-                    </a>
-                    <!-- Expedia Report -->
-                    <a href="/expedia-report" class="block rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 hover:border-royal-blue-500/30 hover:bg-royal-blue-500/5 transition-all group/card4">
-                      <div class="flex items-center gap-1.5 mb-1">
-                        <span class="font-bold text-sm text-[var(--text-primary)]">Expedia Report</span>
-                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-royal-blue-500/10 text-royal-blue-600">XPR</span>
-                      </div>
-                      <p class="text-xs font-medium text-[var(--text-muted)] mt-0.5">Open the full Expedia TravelAds drill-in</p>
-                      <span class="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-royal-blue-600 group-hover/card4:gap-2 transition-all">Open Expedia report →</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
+    <div class="t-navmid">
+      <div class="t-menu">
+        <button class="t-trigger" type="button" aria-expanded="false" aria-haspopup="true">Platform <i aria-hidden="true">▼</i></button>
+        <div class="t-panel">
+          <div class="t-panel-in t-panel-wide">
+            <div class="t-panel-col">
+              {platformLinks.map((item) => (
+                <a class="t-row" href={item.href}>
+                  <span class="t-tile" aria-hidden="true">
+                    {item.icon === 'grid' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>}
+                    {item.icon === 'spark' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" stroke-linejoin="round"/><path d="M18.5 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z" stroke-linejoin="round"/></svg>}
+                    {item.icon === 'bars' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18M6 21V10M11 21V4M16 21v-7M21 21v-11" stroke-linecap="round"/></svg>}
+                    {item.icon === 'gear' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke-linecap="round"/></svg>}
+                    {item.icon === 'wallet' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.4"/><path d="M2.5 10h3M18.5 14h3" stroke-linecap="round"/></svg>}
+                    {item.icon === 'globe' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></svg>}
+                  </span>
+                  <span class="t-txt">
+                    <b>{item.title}{item.badge && <i class="t-chip">{item.badge}</i>}</b>
+                    <span>{item.desc}</span>
+                  </span>
+                </a>
+              ))}
+              <a class="t-row-all" href="/features">See all features →</a>
             </div>
-          )}
+            <div class="t-promo">
+              <a class="t-promo-dark" href="/book-demo">
+                <b>Book a demo</b>
+                <span>30 minutes on your live ad accounts</span>
+                <em>Schedule now →</em>
+              </a>
+              {promoCards.map((card) => (
+                <a class="t-promo-lite" href={card.href}>
+                  <b>{card.title}{card.badge && <i class="t-chip">{card.badge}</i>}</b>
+                  <span>{card.desc}</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-      ))}
+      </div>
+
+      <a href="/integrations">Channels</a>
+
+      <div class="t-menu">
+        <button class="t-trigger" type="button" aria-expanded="false" aria-haspopup="true">Resources <i aria-hidden="true">▼</i></button>
+        <div class="t-panel">
+          <div class="t-panel-in t-panel-res">
+            {resourceCols.map((col) => (
+              <div class="t-panel-col">
+                <p class="t-colhd">{col.heading}</p>
+                {col.links.map((item) => (
+                  <a class="t-row" href={item.href}>
+                    <span class="t-tile" aria-hidden="true">
+                      {item.icon === 'doc' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>}
+                      {item.icon === 'book' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h7v16H4zM13 4h7v16h-7z"/></svg>}
+                      {item.icon === 'up' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v18M5 8l7-5 7 5" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+                      {item.icon === 'lines' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>}
+                      {item.icon === 'pin' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21s-7-4.7-7-10a7 7 0 0 1 14 0c0 5.3-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg>}
+                      {item.icon === 'help' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.2 2.4c-.7.2-1.2.9-1.2 1.6v.3" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg>}
+                      {item.icon === 'tag' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 11V4h7l10 10-7 7L3 11z" stroke-linejoin="round"/><circle cx="7.5" cy="7.5" r="1.4"/></svg>}
+                      {item.icon === 'split' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+                    </span>
+                    <span class="t-txt"><b>{item.title}</b><span>{item.desc}</span></span>
+                  </a>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <a href="/pricing">Pricing</a>
     </div>
 
-    <!-- Right side CTAs -->
-    <div class="hidden lg:flex items-center gap-2">
-      <a href="https://app.advertisingsystems.ai/login" class="text-sm font-medium text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors px-2 py-2 whitespace-nowrap">Sign in</a>
-      <a href="/signup?source_page=nav&cta=header-sign-up" class="btn-cta-primary text-sm font-semibold text-white bg-royal-green-500 hover:bg-royal-green-600 px-4 py-2 rounded-xl transition-colors inline-flex items-center gap-1.5 whitespace-nowrap">
-        <span class="cta-accent-line rounded-xl" aria-hidden="true"></span>
-        <span class="relative">Sign Up</span>
-      </a>
-      <a href="/book-demo" class="text-sm font-medium text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors px-2 py-2 whitespace-nowrap">Book a Demo</a>
-    </div>
+    <div class="t-navr">
+      <div class="t-desk">
+        <a class="t-login" href={LOGIN_URL}>Log in</a>
+        <a class="t-btn t-btn-g" href="/pricing">Get Started</a>
+      </div>
+      <!-- Outside .t-desk on purpose: the primary CTA survives to tablet. -->
+      <a class="t-btn t-btn-p t-demo-cta" href="/book-demo">Book a demo</a>
 
-    <!-- Mobile menu toggle -->
-    <label for="mobile-menu-toggle" class="flex items-center justify-center lg:!hidden cursor-pointer p-2 -mr-2 touch-target shrink-0" aria-label="Toggle menu">
-      <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      </svg>
-    </label>
+      <!-- Theme stays in the header at every width, by owner request. The
+           accent control lives in the bottom-left <SiteControls /> dock. -->
+      <button class="t-iconbtn" type="button" id="t-theme" aria-label="Switch theme" title="Theme">
+        <svg class="t-ti t-ti-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="t-ti t-ti-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5z"/></svg>
+        <svg class="t-ti t-ti-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>
+      </button>
+
+      <button class="t-iconbtn t-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="t-sheet" id="t-burger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+      </button>
+    </div>
   </nav>
+
+  <div class="t-sheet" id="t-sheet">
+    {sheetLinks.map((link) => <a href={link.href}>{link.text}</a>)}
+    <a href={LOGIN_URL}>Log in</a>
+    <a class="t-btn t-btn-g" href="/pricing">Get Started</a>
+    <a class="t-btn t-btn-p" href="/book-demo">Book a demo</a>
+  </div>
 </header>
 
-<!-- Mobile menu (CSS-only, no JS) -->
-<input type="checkbox" id="mobile-menu-toggle" class="hidden peer" aria-hidden="true" />
-<div class="fixed inset-0 z-40 bg-[var(--surface)] pt-16 sm:pt-[76px] pb-safe transform translate-x-full peer-checked:translate-x-0 transition-transform duration-300 lg:hidden overflow-y-auto" role="dialog" aria-label="Mobile navigation">
-  <nav class="p-4 sm:p-6 flex flex-col gap-2 container-padding" aria-label="Mobile navigation">
-    {navLinks.map((link) => (
-      <a href={link.href} class="flex items-center text-lg font-medium text-[var(--text-tertiary)] py-3 border-b border-[var(--border)] hover:text-royal-blue-500 transition-colors touch-target w-full">
-        {link.text}
-      </a>
-    ))}
-    <div class="flex flex-col gap-3 mt-6">
-      <a href="https://app.advertisingsystems.ai/login" class="flex items-center justify-center text-center text-sm font-medium text-[var(--color-link)] py-3 touch-target">Sign in</a>
-      <a href="/signup?source_page=nav&cta=mobile-sign-up" class="btn-cta-primary text-center text-sm font-semibold text-white bg-royal-green-500 hover:bg-royal-green-600 px-4 py-3 rounded-lg">Sign Up</a>
-      <a href="/book-demo" class="flex items-center justify-center text-center text-sm font-medium text-[var(--text-secondary)] py-3 touch-target">Book a Demo</a>
-    </div>
-  </nav>
-</div>
+<style>
+  /* FIXED, not sticky as in the mockup. 17 files already reserve space for a
+     fixed header with their own top padding; switching to sticky would add the
+     header's height as dead space on every one of them. The bar is given an
+     exact height so `--t-header-h` (global.css) stays true and the converted
+     pages can offset by it precisely. */
+  .t-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--nav-border);
+  }
+  .t-nav {
+    max-width: 1240px;
+    height: 62px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+    padding: 0 28px;
+  }
 
-<script>
-  // Close mobile menu when any nav link is clicked
-  document.querySelectorAll('[aria-label="Mobile navigation"] a').forEach((link) => {
-    link.addEventListener('click', () => {
-      const toggle = document.getElementById('mobile-menu-toggle') as HTMLInputElement | null;
-      if (toggle) toggle.checked = false;
-    });
-  });
+  .t-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+  .t-logo > svg { width: 30px; height: 30px; flex-shrink: 0; color: var(--text-primary); }
+  /* Glyph follows the accent's label token (near-black on neon green). */
+  .t-logo > svg line, .t-logo > svg path { stroke: var(--acc-btn-fg, #fff); }
+  .t-logo > svg circle { fill: var(--acc-btn-fg, #fff); }
+  /* Glyph rides the accent tile, so it tracks --acc-btn-fg — white on the
+     dark+green neon tile is 1.62:1. See the matching rule in Footer.astro. */
+  .t-logo > svg [stroke] { stroke: var(--acc-btn-fg, #fff); }
+  .t-logo > svg circle[fill] { fill: var(--acc-btn-fg, #fff); }
+  .t-word { display: flex; flex-direction: column; line-height: 1; }
+  .t-word b {
+    font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1.15; color: var(--text-primary);
+  }
+  .t-word b span { color: var(--acc); }
+  .t-word em {
+    margin-top: 4px; font-style: normal; font-size: 9.5px; font-weight: 400;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-tertiary);
+  }
+
+  .t-navmid { display: flex; align-items: center; gap: 22px; justify-self: center; }
+  .t-navmid > a, .t-trigger {
+    text-decoration: none; color: var(--text-secondary);
+    font-size: 14.5px; font-weight: 600; padding: 8px 0; white-space: nowrap;
+  }
+  .t-navmid > a:hover { color: var(--text-primary); }
+  .t-menu { position: relative; }
+  .t-trigger {
+    display: flex; align-items: center; gap: 5px;
+    cursor: pointer; background: none; border: 0; font-family: inherit;
+  }
+  .t-trigger i { font-style: normal; font-size: 0.6em; color: var(--text-tertiary); transition: transform 0.15s; }
+  .t-menu:hover .t-trigger, .t-menu:focus-within .t-trigger { color: var(--text-primary); }
+  .t-menu:hover .t-trigger i, .t-menu:focus-within .t-trigger i { transform: rotate(180deg); }
+
+  .t-panel {
+    position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
+    padding-top: 8px; z-index: 70;
+    visibility: hidden; opacity: 0; transition: opacity 0.15s;
+  }
+  .t-menu:hover .t-panel, .t-menu:focus-within .t-panel { visibility: visible; opacity: 1; }
+  /* The dropdown is the ONE shadowed surface in the family. */
+  .t-panel-in {
+    border: 1px solid var(--border);
+    background: var(--surface-raised);
+    border-radius: 4px;
+    box-shadow: var(--shadow-frame);
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+  }
+  .t-panel-wide { width: 660px; }
+  .t-panel-res { width: 600px; }
+  .t-panel-col { flex: 1; min-width: 0; padding: 4px 0; }
+  .t-colhd {
+    padding: 2px 12px 8px;
+    font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-tertiary);
+  }
+  /* Splits the two resource columns without a full-height rule, which would
+     fight the hairline rows inside them. */
+  .t-panel-res .t-panel-col + .t-panel-col {
+    border-left: 1px solid var(--border-subtle); padding-left: 6px;
+  }
+
+  /* Status chip on a menu row or promo card — same shape as the homepage
+     .illus chip so "New" / "Live" read identically wherever they appear. */
+  .t-chip {
+    display: inline-block; margin-left: 7px; vertical-align: 1.5px;
+    font-style: normal; font-size: 9px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid currentColor; border-radius: 2px; padding: 1px 5px;
+    color: var(--pos);
+  }
+
+  .t-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 12px; border-radius: 3px; text-decoration: none;
+  }
+  .t-row:hover { background: var(--surface-alt); }
+  .t-tile {
+    margin-top: 2px; width: 32px; height: 32px; flex-shrink: 0;
+    display: grid; place-items: center; border-radius: 3px;
+    background: var(--acc-tint); color: var(--acc);
+  }
+  .t-tile svg { width: 16px; height: 16px; }
+  .t-txt { min-width: 0; }
+  .t-txt b { display: block; font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .t-txt span {
+    display: block; font-size: 12.5px; color: var(--text-secondary);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .t-row-all {
+    display: block; margin-top: 4px; padding: 10px 12px; border-radius: 3px;
+    font-size: 14px; font-weight: 600; color: var(--acc); text-decoration: none;
+  }
+  .t-row-all:hover { background: var(--surface-alt); }
+
+  /* Four cards now, not two — padding and gap tighten so the rail still ends
+     level with the six-row link column instead of overhanging it. */
+  .t-promo { width: 224px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+  .t-promo a { display: block; border-radius: 3px; padding: 13px 14px; text-decoration: none; }
+  .t-promo-dark { background: var(--footer-bg); padding: 16px 14px; }
+  .t-promo-dark b { display: block; font-size: 14px; font-weight: 700; color: #fff; }
+  .t-promo-dark span { display: block; margin-top: 4px; font-size: 12px; color: var(--footer-text-muted); line-height: 1.45; }
+  /* --color-acc-400, not a literal: this card's ground is --footer-bg, which is
+     dark in BOTH themes, so it needs the accent's light step at all times.
+     Was hardcoded #FB7185 and stayed rose even in green accent mode. */
+  .t-promo-dark em {
+    display: block; margin-top: 12px; font-style: normal;
+    font-size: 12.5px; font-weight: 600; color: var(--color-acc-400, #FB7185);
+  }
+  .t-promo-lite { border: 1px solid var(--border); background: var(--surface-alt); }
+  .t-promo-lite b { display: block; font-size: 13.5px; font-weight: 700; color: var(--text-primary); }
+  .t-promo-lite span { display: block; margin-top: 3px; font-size: 12px; color: var(--text-tertiary); line-height: 1.4; }
+  .t-promo-lite:hover { border-color: var(--surface-glass-border-hover); }
+
+  .t-navr { justify-self: end; display: flex; align-items: center; gap: 10px; }
+  .t-desk { display: flex; align-items: center; gap: 10px; }
+  .t-login {
+    text-decoration: none; font-size: 14.5px; font-weight: 600;
+    color: var(--text-secondary); white-space: nowrap; padding: 0 4px;
+  }
+  .t-login:hover { color: var(--text-primary); }
+
+  /* Header buttons are declared locally rather than reusing .terminal .btn:
+     the header renders on every route, including the 37 not yet converted,
+     so it cannot depend on a `.terminal` ancestor existing. */
+  .t-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    text-decoration: none; font-weight: 700; font-size: 14px;
+    height: 36px; padding: 0 15px;
+    border-radius: 3px; border: 1.5px solid transparent;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+    transition: background 0.16s, border-color 0.16s, color 0.16s;
+  }
+  .t-btn-p { background: var(--acc-btn); color: var(--acc-btn-fg, #fff); }
+  .t-btn-p:hover { background: var(--acc-btn-h); color: var(--acc-btn-fg, #fff); }
+  .t-btn-g { background: transparent; color: var(--text-primary); border-color: var(--text-primary); }
+  .t-btn-g:hover { background: var(--text-primary); color: var(--surface); }
+
+  .t-iconbtn {
+    width: 36px; height: 36px; display: grid; place-items: center;
+    border: 1px solid var(--border); background: none; border-radius: 3px;
+    cursor: pointer; color: var(--text-secondary); flex-shrink: 0;
+  }
+  .t-iconbtn:hover { color: var(--text-primary); }
+  .t-iconbtn:active { background: var(--surface-alt); }
+  .t-iconbtn svg { width: 17px; height: 17px; }
+  .t-burger { display: none; }
+
+  /* Which theme icon shows is pure CSS off [data-theme-pref] — never a JS
+     render, so it cannot flash or disagree with the attribute. It reports the
+     PREFERENCE, which is the only way "auto" is expressible at all. */
+  .t-ti { display: none; }
+  :global([data-theme-pref="light"]) .t-ti-light,
+  :global([data-theme-pref="dark"]) .t-ti-dark,
+  :global([data-theme-pref="auto"]) .t-ti-auto { display: block; }
+
+  .t-sheet {
+    display: none;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 10px 28px 20px;
+  }
+  .t-sheet.open { display: block; }
+  .t-sheet a {
+    display: block; text-decoration: none; font-size: 15.5px; font-weight: 600;
+    color: var(--text-secondary); padding: 11px 0; border-bottom: 1px solid var(--border);
+  }
+  .t-sheet .t-btn { width: 100%; margin-top: 12px; height: 46px; font-size: 15px; }
+
+  @media (max-width: 1140px) {
+    .t-navmid { display: none; }
+    .t-burger { display: grid; }
+  }
+  @media (max-width: 900px) {
+    .t-desk { display: none; }
+  }
+  /* Below this the bar is logo + two controls; the demo button goes into the
+     sheet rather than squeezing the logo. */
+  @media (max-width: 560px) {
+    .t-demo-cta { display: none; }
+    .t-nav { padding-inline: 18px; }
+    .t-sheet { padding-inline: 18px; }
+    .t-word em { display: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+
+    var burger = document.getElementById('t-burger');
+    var sheet = document.getElementById('t-sheet');
+    if (burger && sheet) {
+      burger.addEventListener('click', function () {
+        var open = sheet.classList.toggle('open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
+    /* Theme: light → dark → auto. The attribute is the source of truth. */
+    var themeBtn = document.getElementById('t-theme');
+    if (themeBtn) {
+      var ORDER = ['light', 'dark', 'auto'];
+      var systemDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+      var resolve = function (pref) {
+        if (pref !== 'auto') return pref;
+        return systemDark && systemDark.matches ? 'dark' : 'light';
+      };
+      var applyTheme = function (pref) {
+        root.setAttribute('data-theme-pref', pref);
+        root.setAttribute('data-theme', resolve(pref));
+        themeBtn.title = 'Theme: ' + pref;
+        themeBtn.setAttribute('aria-label', 'Theme: ' + pref + '. Click to change.');
+        try { localStorage.setItem('as-theme', pref); } catch (e) {}
+      };
+
+      themeBtn.addEventListener('click', function () {
+        var current = root.getAttribute('data-theme-pref') || 'dark';
+        applyTheme(ORDER[(ORDER.indexOf(current) + 1) % ORDER.length]);
+      });
+
+      // Only "auto" tracks the OS; an explicit choice must never be overridden.
+      if (systemDark) {
+        systemDark.addEventListener('change', function () {
+          if (root.getAttribute('data-theme-pref') === 'auto') {
+            root.setAttribute('data-theme', resolve('auto'));
+          }
+        });
+      }
+
+      themeBtn.title = 'Theme: ' + (root.getAttribute('data-theme-pref') || 'dark');
+    }
+
+  })();
 </script>

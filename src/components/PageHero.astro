@@ -1,0 +1,64 @@
+---
+/**
+ * Terminal interior-page hero — the shared opener for every converted page
+ * (Waves 3–6). Same ruled-grid ground and badge-line as the homepage hero,
+ * without the blotter column. Slot for anything extra below the CTA row.
+ */
+interface Cta {
+  text: string;
+  href: string;
+}
+interface Props {
+  badge?: string;
+  title: string;
+  /** Optional accent-coloured tail of the H1 (mirrors the homepage rotator slot). */
+  titleAccent?: string;
+  lead?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+  fine?: string;
+}
+const { badge, title, titleAccent, lead, primaryCta, secondaryCta, fine } = Astro.props;
+---
+
+<section class="p-hero" aria-labelledby="page-heading">
+  <div class="wrap">
+    {badge && <span class="badge-line"><i aria-hidden="true"></i> {badge}</span>}
+    <h1 id="page-heading">
+      {title}
+      {titleAccent && <span class="p-hero-accent">{titleAccent}</span>}
+    </h1>
+    {lead && <p class="lead">{lead}</p>}
+    {(primaryCta || secondaryCta) && (
+      <div class="cta-row">
+        {primaryCta && (
+          <a class="btn btn-p" href={primaryCta.href}>
+            {primaryCta.text}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13.5 4.5L21 12l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        )}
+        {secondaryCta && <a class="btn btn-l" href={secondaryCta.href}>{secondaryCta.text}</a>}
+      </div>
+    )}
+    {fine && <p class="fine">{fine}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .p-hero {
+    padding: 56px 0 52px;
+    background:
+      linear-gradient(var(--dot-grid-color) 1px, transparent 1px) 0 0 / 100% 34px,
+      linear-gradient(90deg, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 34px 100%,
+      var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  /* Display accent follows --acc-display (global.css): the button fill
+     wherever that fill is text-legible on the page ground, the deep text
+     accent where it isn't (green + light). Same rule as the homepage rotator. */
+  .p-hero-accent { color: var(--acc-display, var(--acc-btn)); }
+  @media (max-width: 640px) {
+    .p-hero { padding: 40px 0 40px; }
+  }
+</style>

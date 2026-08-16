@@ -2,170 +2,170 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { integrationsFaqs } from '../data/page-faqs';
 
+/**
+ * Integrations — Wave 4, Terminal conversion.
+ *
+ * HONESTY PASS: the old grid presented TikTok, Airbnb, TripAdvisor, Adobe
+ * Analytics and Salesforce as flat peers of Google Ads — no status anywhere.
+ * Live vs early access vs planned now comes from the same source of truth as
+ * the rest of the site (src/data/faq.ts): live = Google Ads, Meta, Expedia
+ * TravelAds, Microsoft/Bing, YouTube, Google Analytics; early access =
+ * Booking.com, Reddit; everything else = planned, reviewed during onboarding.
+ */
 const breadcrumbs = [{ name: 'Integrations', href: '/integrations' }];
 
-const integrationGroups = [
+type Status = 'live' | 'early' | 'planned';
+const STATUS_LABEL: Record<Status, string> = {
+  live: 'Live',
+  early: 'Early access',
+  planned: 'Planned',
+};
+
+const integrationGroups: { category: string; items: { name: string; letter: string; status: Status }[] }[] = [
   {
     category: 'Ad Platforms',
     items: [
-      { name: 'Google Ads', letter: 'G', color: 'text-blue-500' },
-      { name: 'Meta Ads', letter: 'M', color: 'text-blue-600' },
-      { name: 'Microsoft Ads', letter: 'B', color: 'text-cyan-500' },
-      { name: 'TikTok Ads', letter: 'T', color: 'text-pink-500' },
+      { name: 'Google Ads', letter: 'G', status: 'live' },
+      { name: 'Meta Ads', letter: 'M', status: 'live' },
+      { name: 'Microsoft / Bing Ads', letter: 'B', status: 'live' },
+      { name: 'YouTube', letter: 'Y', status: 'live' },
+      { name: 'Reddit Ads', letter: 'R', status: 'early' },
+      { name: 'TikTok Ads', letter: 'T', status: 'planned' },
     ],
   },
   {
     category: 'Online Travel Agencies',
     items: [
-      { name: 'Booking.com', letter: 'B', color: 'text-blue-700' },
-      { name: 'Expedia', letter: 'E', color: 'text-yellow-500' },
-      { name: 'Airbnb', letter: 'A', color: 'text-rose-500' },
-      { name: 'TripAdvisor', letter: 'T', color: 'text-green-600' },
+      { name: 'Expedia TravelAds', letter: 'E', status: 'live' },
+      { name: 'Booking.com', letter: 'B', status: 'early' },
+      { name: 'Airbnb', letter: 'A', status: 'planned' },
+      { name: 'TripAdvisor', letter: 'T', status: 'planned' },
     ],
   },
   {
-    category: 'Analytics',
+    category: 'Analytics & CRM',
     items: [
-      { name: 'Google Analytics', letter: 'GA', color: 'text-orange-500' },
-      { name: 'Adobe Analytics', letter: 'AA', color: 'text-red-600' },
-    ],
-  },
-  {
-    category: 'CRM',
-    items: [
-      { name: 'Salesforce', letter: 'SF', color: 'text-sky-500' },
+      { name: 'Google Analytics', letter: 'GA', status: 'live' },
+      { name: 'Adobe Analytics', letter: 'AA', status: 'planned' },
+      { name: 'Salesforce', letter: 'SF', status: 'planned' },
     ],
   },
 ];
 ---
 
 <Layout
-  title="Integrations — Advertising Systems | Connect Your Ad Platforms & Tools"
-  description="Connect Google Ads, Meta, OTAs, analytics, and CRMs in one place. See which platforms we support and how to connect your stack."
+  title="Integrations — Connect Your Ad Platforms | Advertising Systems"
+  description="Connect Google Ads, Meta, Expedia TravelAds, Microsoft, YouTube and Google Analytics today — Booking.com and Reddit in early access. See what is live or planned."
   breadcrumbs={breadcrumbs}
 >
   <Navbar />
-  <Breadcrumb items={breadcrumbs} />
-  <main>
-    <!-- Hero -->
-    <section class="pt-36 pb-20 relative overflow-hidden" aria-labelledby="integrations-heading">
-      <div class="absolute inset-0 mesh-gradient opacity-30"></div>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center">
-          <h1 id="integrations-heading" class="reveal text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            <span class="text-[var(--text-primary)]">Powerful Integrations</span>
-          </h1>
-          <p class="reveal mt-5 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-            Connect your entire advertising stack. Advertising Systems works with the platforms you already use.
-          </p>
-        </div>
-      </div>
-    </section>
+  <main class="terminal">
+    <PageHero
+      badge="Every connection, honestly labelled"
+      title="Connect your"
+      titleAccent="stack."
+      lead="One dashboard for the platforms you already use. Every integration below states what it is: live today, early access, or planned — nothing is presented as more than it is."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'Request an integration', href: '/contact' }}
+      fine="OAuth connection for supported platforms · Data syncs every 15 minutes · No CSV imports"
+    />
 
-    <div class="section-line"></div>
-
-    <!-- Why one platform -->
-    <section class="py-20" aria-labelledby="why-one-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="why-one-heading" class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">
-          One login. <span class="text-[var(--text-primary)]">One dashboard.</span>
-        </h2>
-        <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          Stop switching tabs. Connect Google Ads, Meta, and OTAs in one place — one AI optimizes across all of them, and you see unified reporting and attribution instead of scattered spreadsheets.
-        </p>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- How connecting works -->
-    <section class="py-20" aria-labelledby="how-connect-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="how-connect-heading" class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">
-          Connect in <span class="text-[var(--text-primary)]">minutes.</span>
-        </h2>
-        <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          OAuth with Google, Meta, and OTAs — no CSV imports. Your data syncs every 15 minutes. No IT ticket, no custom dev work. Most teams are live in under 15 minutes.
-        </p>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Integration Groups -->
-    <section class="pb-28">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {integrationGroups.map((group) => (
+    <!-- 01 · Integration groups -->
+    <section class="sec" aria-labelledby="groups-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
           <div>
-            <h2 class="reveal text-xl font-bold text-[var(--text-primary)] mb-6">{group.category}</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <h2 id="groups-heading">What connects, and what it's called.</h2>
+            <p class="sub">
+              <b>Live</b> works on accounts today. <b>Early access</b> is enabled per account during
+              onboarding. <b>Planned</b> is reviewed during onboarding and stays labelled planned
+              until it is live on your account.
+            </p>
+          </div>
+        </div>
+
+        {integrationGroups.map((group) => (
+          <div class="ig-group">
+            <h3 class="ig-cat">{group.category}</h3>
+            <div class="cardgrid ig-grid">
               {group.items.map((item) => (
-                <div class="reveal glass rounded-2xl p-6 text-center hover:border-[var(--border)] transition-all duration-300 hover-glow">
-                  <div class="w-14 h-14 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mx-auto mb-4">
-                    <span class={`text-lg font-bold ${item.color}`}>{item.letter}</span>
+                <div class="ig-card">
+                  <span class="ig-letter" aria-hidden="true">{item.letter}</span>
+                  <div class="ig-txt">
+                    <p class="ig-name">{item.name}</p>
+                    <span class={`ig-st ig-st-${item.status}`}><i aria-hidden="true"></i>{STATUS_LABEL[item.status]}</span>
                   </div>
-                  <p class="text-sm font-semibold text-[var(--text-primary)]">{item.name}</p>
                 </div>
               ))}
             </div>
           </div>
         ))}
-      </div>
 
-      <!-- Don't see your platform? + API -->
-      <div class="reveal max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-        <div class="glass rounded-2xl p-10 text-center">
-          <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-3">Don't see your platform?</h2>
-          <p class="text-[var(--text-tertiary)] font-medium mb-4 max-w-lg mx-auto">
-            We're always adding new integrations. Growth, Scale, and Enterprise plans include REST API access for custom connections (CRM, BI, internal tools).
-          </p>
-          <p class="text-sm text-[var(--text-muted)] font-medium mb-6 max-w-lg mx-auto">
-            Need something specific? Tell us what you use — we'll prioritize it or help you build a custom connection.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-royal-green-600 transition-colors">
-              Get Started
-            </a>
-            <a href="/contact" class="inline-flex items-center justify-center gap-2 text-[var(--text-tertiary)] border border-[var(--border)] font-semibold px-6 py-3 rounded-lg hover:border-[var(--color-link)] hover:text-[var(--color-link)] transition-colors">
-              Request Integration
-            </a>
+        <p class="fine">
+          Growth, Scale and Enterprise plans include REST API access for custom connections (CRM,
+          BI, internal tools). Using something not listed? <a href="/contact">Tell us what you use</a> —
+          we'll review it during onboarding.
+        </p>
+      </div>
+    </section>
+
+    <!-- 02 · How connecting works -->
+    <section class="sec soft" aria-labelledby="how-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="how-heading">Connect in minutes.</h2>
+            <p class="sub">OAuth with supported platforms — no CSV imports, no IT ticket, no custom dev work. Data syncs every 15 minutes, and you can see the last sync time in the dashboard.</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <FAQSection title="Common questions" faqs={integrationsFaqs} name="integrations-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- Bottom CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="integrations-cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="integrations-cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Ready to <span class="text-[var(--text-primary)]">connect your stack?</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          One platform for Google, Meta, and OTAs. Create a signup request or book a demo to see it in action.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
-            Get started
-          </a>
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[var(--text-secondary)] font-semibold text-base px-8 py-3.5 rounded-lg border border-[var(--border)] hover:border-[var(--color-link)] hover:text-[var(--color-link)] transition-colors">
-            Book a demo
-          </a>
+        <div class="cardgrid">
+          <div><div class="cn">01</div><h3>Authorize</h3><p>Sign in to the ad platform through OAuth. Your password never passes through Advertising Systems.</p></div>
+          <div><div class="cn">02</div><h3>Select accounts</h3><p>Choose which ad accounts report into the workspace. Plans scale by accounts under management.</p></div>
+          <div><div class="cn">03</div><h3>One ledger</h3><p>Connected accounts report into a single ledger with one set of rules — no reconciling six definitions of "conversion".</p></div>
         </div>
       </div>
     </section>
+
+    <FAQSection title="Common questions" faqs={integrationsFaqs} name="integrations-faq" />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .ig-group { margin-bottom: 34px; }
+    .ig-group:last-of-type { margin-bottom: 0; }
+    .ig-cat {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+    .ig-card { display: flex; align-items: center; gap: 14px; }
+    .ig-letter {
+      width: 40px; height: 40px; flex-shrink: 0;
+      display: grid; place-items: center;
+      border: 1px solid var(--border); border-radius: 3px;
+      background: var(--surface-alt);
+      font-size: 14px; font-weight: 800; color: var(--text-primary);
+    }
+    .ig-txt { min-width: 0; }
+    .ig-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+    .ig-st {
+      margin-top: 4px;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .ig-st i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; font-style: normal; }
+    .ig-st-live { color: var(--pos); }
+    .ig-st-early { color: var(--warn); }
+    .ig-st-planned { color: var(--text-tertiary); }
+    .fine a { color: var(--acc); font-weight: 600; }
+  </style>
 </Layout>

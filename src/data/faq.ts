@@ -17,7 +17,7 @@ export const faqs = [
   {
     question: "What results should I expect?",
     answer:
-      "Hotel partners using Advertising Systems have seen up to 30% more bookings, with more than $12M in customer revenue generated through managed campaigns. Results depend on your starting point, industry, tracking quality, and ad spend volume. We provide a free audit before onboarding so you know exactly what to expect.",
+      "Results depend on your starting point, market, tracking quality, and ad spend volume, so we don't promise a number up front. What we can show you is real platform data: a verified 30-day Expedia TravelAds export for a managed property is published on our homepage, reconciled line by line. We also provide a free audit before onboarding so you know exactly what to expect for your own accounts.",
   },
   {
     question: "How fast is the setup?",

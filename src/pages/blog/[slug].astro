@@ -27,8 +27,8 @@ const primaryCta = post.primaryCta ?? { label: 'Book a Demo', href: '/book-demo'
 
 const toneText = (tone = 'slate') => {
   switch (tone) {
-    case 'green': return 'text-royal-green-600';
-    case 'blue': return 'text-royal-blue-600';
+    case 'green': return 'text-acc-700';
+    case 'blue': return 'text-ink-600';
     case 'amber': return 'text-amber-600';
     case 'violet': return 'text-violet-600';
     case 'rose': return 'text-rose-600';
@@ -38,8 +38,8 @@ const toneText = (tone = 'slate') => {
 
 const toneBg = (tone = 'slate') => {
   switch (tone) {
-    case 'green': return 'bg-royal-green-500/10 border-royal-green-500/20 text-royal-green-700';
-    case 'blue': return 'bg-royal-blue-500/10 border-royal-blue-500/20 text-royal-blue-700';
+    case 'green': return 'bg-acc-500/10 border-acc-500/20 text-acc-700';
+    case 'blue': return 'bg-ink-500/10 border-ink-500/20 text-ink-700';
     case 'amber': return 'bg-amber-500/10 border-amber-500/20 text-amber-700';
     case 'violet': return 'bg-violet-500/10 border-violet-500/20 text-violet-700';
     case 'rose': return 'bg-rose-500/10 border-rose-500/20 text-rose-700';
@@ -70,9 +70,10 @@ const externalAttrs = (href: string) => href.startsWith('http')
   }}
 >
   <Navbar />
-  <Breadcrumb items={breadcrumbs} />
-  <main>
-    <article class="relative pt-24 pb-20 sm:pt-32 sm:pb-28" aria-labelledby="post-title">
+  <main class="terminal">
+    <Breadcrumb items={breadcrumbs} />
+    <!-- See decision-guides.astro — same pre-.terminal double offset. -->
+    <article class="relative pt-14 pb-20 sm:pt-16 sm:pb-28" aria-labelledby="post-title">
       <header class="relative overflow-hidden pb-12 sm:pb-16">
         <div class="mesh-gradient absolute inset-0"></div>
         <div class="dot-grid absolute inset-0"></div>
@@ -95,7 +96,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                   {post.category}
                 </span>
                 {post.learningTrack && (
-                  <span class="inline-flex text-xs font-bold px-2.5 py-1 rounded-full border bg-royal-blue-500/10 border-royal-blue-500/20 text-royal-blue-700">
+                  <span class="inline-flex text-xs font-bold px-2.5 py-1 rounded-full border bg-ink-500/10 border-ink-500/20 text-ink-700">
                     {post.learningTrack}
                   </span>
                 )}
@@ -119,7 +120,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
               <div class="mt-8 flex flex-col sm:flex-row gap-3">
                 <a
                   href={primaryCta.href}
-                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
+                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-acc-600 transition-colors"
                 >
                   {primaryCta.label}
                   <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -154,7 +155,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                   <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.14em] mb-3">Next links</p>
                   <div class="flex flex-col gap-2">
                     {post.relatedLinks.map((link) => (
-                      <a href={link.href} {...externalAttrs(link.href)} class="inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-royal-blue-600 hover:border-royal-blue-500/30 transition-colors">
+                      <a href={link.href} {...externalAttrs(link.href)} class="inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-ink-600 hover:border-ink-500/30 transition-colors">
                         <span class="min-w-0">{link.label}</span>
                         <span aria-hidden="true">-></span>
                       </a>
@@ -196,7 +197,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                 <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 mb-7">
                   <div class="max-w-3xl">
                     {block.eyebrow && (
-                      <p class="text-sm font-bold text-royal-blue-600 uppercase tracking-[0.16em] mb-3">{block.eyebrow}</p>
+                      <p class="text-sm font-bold text-ink-600 uppercase tracking-[0.16em] mb-3">{block.eyebrow}</p>
                     )}
                     <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{block.title}</h2>
                     {block.body && (
@@ -222,7 +223,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                     {(block.steps ?? []).map((step) => (
                       <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
                         <div class="flex items-center justify-between gap-4 mb-4">
-                          <span class="text-sm font-bold text-royal-blue-600">{step.label}</span>
+                          <span class="text-sm font-bold text-ink-600">{step.label}</span>
                           {step.metric && <span class="text-xs font-bold rounded-full bg-[var(--surface-alt)] border border-[var(--border)] px-2 py-1 text-[var(--text-muted)]">{step.metric}</span>}
                         </div>
                         <h3 class="text-lg font-bold text-[var(--text-primary)] leading-snug">{step.title}</h3>
@@ -283,7 +284,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                 )}
 
                 {block.type === 'report-preview' && (
-                  <div class="rounded-2xl border border-royal-blue-500/20 bg-royal-blue-500/5 p-6 sm:p-8">
+                  <div class="rounded-2xl border border-ink-500/20 bg-ink-500/5 p-6 sm:p-8">
                     <div class="grid lg:grid-cols-[1fr_280px] gap-6 items-center">
                       <div>
                         <div class="grid sm:grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)] mb-6">
@@ -296,7 +297,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                           ))}
                         </div>
                         {block.cta && (
-                          <a href={block.cta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors">
+                          <a href={block.cta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-acc-600 transition-colors">
                             {block.cta.label}
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -308,8 +309,8 @@ const externalAttrs = (href: string) => href.startsWith('http')
                         <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.12em]">Report preview</p>
                         <div class="mt-4 h-28 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] p-3 flex flex-col justify-between">
                           <div class="flex items-center justify-between gap-3">
-                            <span class="h-2.5 w-20 rounded-full bg-royal-blue-500/40"></span>
-                            <span class="h-2.5 w-12 rounded-full bg-royal-green-500/50"></span>
+                            <span class="h-2.5 w-20 rounded-full bg-ink-500/40"></span>
+                            <span class="h-2.5 w-12 rounded-full bg-acc-500/50"></span>
                           </div>
                           <div class="space-y-2">
                             <span class="block h-2 rounded-full bg-amber-500/40 w-11/12"></span>
@@ -323,10 +324,10 @@ const externalAttrs = (href: string) => href.startsWith('http')
                 )}
 
                 {block.type === 'takeaway' && (
-                  <div class="rounded-2xl border border-royal-green-500/20 bg-royal-green-500/5 p-6 sm:p-8">
+                  <div class="rounded-2xl border border-acc-500/20 bg-acc-500/5 p-6 sm:p-8">
                     <div class="grid lg:grid-cols-[280px_1fr] gap-6">
                       <div>
-                        <p class="text-sm font-bold text-royal-green-700 uppercase tracking-[0.14em]">Owner takeaway</p>
+                        <p class="text-sm font-bold text-acc-700 uppercase tracking-[0.14em]">Owner takeaway</p>
                         {block.body && <p class="mt-3 text-lg font-semibold text-[var(--text-primary)] leading-relaxed">{block.body}</p>}
                       </div>
                       <div class="grid sm:grid-cols-3 gap-3">
@@ -345,7 +346,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                     {block.links && block.links.length > 0 && (
                       <div class="flex flex-wrap gap-2">
                         {block.links.map((link) => (
-                          <a href={link.href} {...externalAttrs(link.href)} class="inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-royal-blue-600 hover:border-royal-blue-500/30 transition-colors">
+                          <a href={link.href} {...externalAttrs(link.href)} class="inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-ink-600 hover:border-ink-500/30 transition-colors">
                             <span class="min-w-0">{link.label}</span>
                             <span aria-hidden="true">-></span>
                           </a>
@@ -392,7 +393,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
             <div class="flex flex-col sm:flex-row gap-3">
               <a
                 href={primaryCta.href}
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors"
               >
                 {primaryCta.label}
               </a>

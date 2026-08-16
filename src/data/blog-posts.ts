@@ -67,7 +67,7 @@ export interface BlogPost {
   excerpt: string;
   date: string;
   readTime: string;
-  color: 'royal-green' | 'blue' | 'violet' | 'amber' | 'rose';
+  color: 'accent' | 'blue' | 'violet' | 'amber' | 'rose';
   author: { name: string; role?: string };
   learningTrack?: string;
   intent?: 'awareness' | 'education' | 'comparison' | 'decision';
@@ -87,7 +87,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A visual walkthrough of the hotel advertising dashboard: spend, revenue, ROAS, channel mix, and the report paths that show what is working.',
     date: 'May 12, 2026',
     readTime: '6 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Hotel Growth' },
     learningTrack: 'Hotel Advertising Foundations',
     intent: 'awareness',
@@ -442,7 +442,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A hotel advertising budget framework that starts with occupancy needs, then maps spend across direct search, OTA visibility, and retargeting.',
     date: 'May 7, 2026',
     readTime: '7 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Budget Strategy' },
     learningTrack: 'Reporting & ROAS',
     intent: 'decision',
@@ -688,7 +688,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A practical hotel owner guide to automation guardrails: when to let AI move budget, when to require approval, and what the report should log.',
     date: 'May 4, 2026',
     readTime: '7 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Automation Strategy' },
     learningTrack: 'Reporting & ROAS',
     intent: 'decision',
@@ -1086,7 +1086,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A simple comparison of free booking links and paid hotel ads on Google, with a report-first way to decide how each should support direct bookings.',
     date: 'Apr 29, 2026',
     readTime: '6 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Google Hotel Ads' },
     learningTrack: 'Google Hotel Ads',
     intent: 'comparison',
@@ -1244,7 +1244,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A hotel conversion tracking module for owners: confirmed bookings, purchase conversion category, transaction value, booking engine gaps, and revenue reporting.',
     date: 'Apr 27, 2026',
     readTime: '7 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Measurement' },
     learningTrack: 'Conversion Tracking',
     intent: 'education',
@@ -1483,7 +1483,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A forward-looking hotel owner guide to AI discovery, OTA starting points, search shifts, traveler confidence, clean property data, and measurable demand.',
     date: 'Apr 24, 2026',
     readTime: '7 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Search Discovery' },
     learningTrack: 'Search & AI Discovery',
     intent: 'awareness',
@@ -1573,7 +1573,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Our latest release brings real-time budget reallocation across Google, Meta, and OTA campaigns — driven by reinforcement learning that adapts every 15 minutes.',
     date: 'Mar 8, 2026',
     readTime: '4 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Product' },
     content: [
       {
@@ -1759,7 +1759,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Manage TikTok campaigns alongside Google, Meta, and OTAs from a single dashboard. Full bidding, analytics, and AI optimization support included.',
     date: 'Jan 30, 2026',
     readTime: '3 min read',
-    color: 'royal-green',
+    color: 'accent',
     author: { name: 'Advertising Systems Team', role: 'Product' },
     content: [
       {

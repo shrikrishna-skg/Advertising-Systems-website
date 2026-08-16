@@ -185,7 +185,12 @@ async function createCalendarEvent(params: {
         extendedProperties: {
           private: {
             source: 'advertising-systems-website',
-            selectedPlan: params.plan,
+            // extendedProperties.private is Record<string, string>, and plan is
+            // optional — an undefined here failed the events.insert overload,
+            // which then made every event.data.* below unresolvable (6 of the
+            // 12 CI type errors came from this one line). '' matches the
+            // previous wire behaviour: JSON.stringify drops undefined values.
+            selectedPlan: params.plan ?? '',
             preferredLocalDateTime: preferredDatetime.localDateTime,
             timeZone: DEMO_TIME_ZONE,
             durationMinutes: String(DEMO_DURATION_MINUTES),

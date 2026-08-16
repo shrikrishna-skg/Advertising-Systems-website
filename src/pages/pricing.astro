@@ -2,9 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import FAQSection from '../components/FAQSection.astro';
-import PricingCards from '../components/PricingCards.astro';
+import PageHero from '../components/PageHero.astro';
+import RateRows from '../components/RateRows.astro';
+import CTABand from '../components/CTABand.astro';
+import { pricingPlans } from '../data/pricing';
 import {
   pricingComparisonRows,
   planFeatureMatrix,
@@ -12,6 +13,16 @@ import {
   pricingPageFaqs,
 } from '../data/pricing-comparison';
 
+/**
+ * Pricing — Wave 3, Terminal conversion.
+ *
+ * HONESTY PASS: the old ROI section claimed "$40,000/month managed spend, up to
+ * 30% more bookings, $12M+ customer revenue". Those aggregates appear in 10+
+ * files with no provenance anywhere in the repo (see the plan report). Removed
+ * here, replaced with plan facts and a pointer to the verified export on the
+ * homepage. Also removed: the old PricingCards "capability meters"
+ * (Optimization 72, Insights 36 …) — invented precision with no unit.
+ */
 const breadcrumbs = [{ name: 'Pricing', href: '/pricing' }];
 
 function formatCell(value: boolean | string): string {
@@ -26,167 +37,140 @@ function formatCell(value: boolean | string): string {
   description="Transparent pricing by ad account. Compare Advertising Systems against manual spreadsheets, single-channel dashboards, and agency reporting."
 >
   <Navbar />
-  <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
-  <main>
-    <!-- Hero -->
-    <section class="relative pt-28 pb-16 sm:pt-40 sm:pb-20 md:pt-48 md:pb-28 overflow-hidden" aria-labelledby="pricing-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]" aria-hidden="true"></div>
+  <main class="terminal">
+    <PageHero
+      badge="Plans & decision guide"
+      title="Simple pricing."
+      titleAccent="No games."
+      lead="One price per plan, set by ad accounts under management. No percentage of ad spend, no overages — the platforms bill your media directly."
+      primaryCta={{ text: 'View plans', href: '#plans' }}
+      secondaryCta={{ text: 'Compare options', href: '#compare' }}
+      fine="Secure signup · Guided onboarding · Cancel anytime"
+    />
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center min-w-0">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse shrink-0"></span>
-          <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">Plans & decision guide</span>
+    <!-- 01 · Plans -->
+    <section class="sec" id="plans" aria-labelledby="plans-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="plans-heading">Priced by accounts under management.</h2>
+            <p class="sub">Same AI and modules on every plan. Scale by ad account count; ad spend is billed by the platforms, separately and directly.</p>
+          </div>
         </div>
 
-        <h1 id="pricing-heading" class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em] break-words">
-          Simple pricing. <span class="text-[var(--text-primary)]">No games.</span>
-        </h1>
-        <p class="reveal mt-6 text-xl sm:text-2xl font-medium text-[var(--text-secondary)] max-w-2xl mx-auto">
-          One price per plan. No % of ad spend, no overages. See when one unified ad operating system beats spreadsheets, single-channel dashboards, and agency screenshots.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#plans" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
-            View plans
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
-          <a href="#compare" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Compare options
-          </a>
+        <div class="rates-embed"><RateRows /></div>
+
+        <div class="cardgrid cols-2 plan-detail" id="plan-detail">
+          {pricingPlans.map((plan) => (
+            <article aria-label={`${plan.name} plan details`}>
+              <div class="cn">{plan.name}{plan.badge && <span class="pd-pop">{plan.badge}</span>}</div>
+              <div class="pd-price num">
+                {plan.price.replace(/\.00$/, '')}
+                {plan.period === '/month' && <em>/mo · {plan.annualPrice.replace(/\.00$/, '')}/mo annual</em>}
+              </div>
+              <ul class="pd-quotas">
+                {plan.quotas.map((q) => (
+                  <li><b class="num">{q.value}</b> {q.label}</li>
+                ))}
+              </ul>
+              <ul class="pd-features">
+                {plan.features.map((f) => <li>{f}</li>)}
+              </ul>
+            </article>
+          ))}
         </div>
+        <p class="fine">Annual billing is 20% lower. Choosing a plan carries it into the demo booking so the call starts with the right account scope.</p>
       </div>
     </section>
 
-    <div class="section-line"></div>
+    <!-- 02 · Operating-model comparison -->
+    <section class="sec soft" id="compare" aria-labelledby="compare-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="compare-heading">Choose the operating model before the plan.</h2>
+            <p class="sub">The question is not just price. It is how clearly your team can see spend, revenue and the next action across every channel.</p>
+          </div>
+        </div>
 
-    <!-- Neutral decision comparison -->
-    <section id="compare" class="py-28" aria-labelledby="compare-heading">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="compare-heading" class="reveal text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Choose the right <span class="text-[var(--text-primary)]">operating model</span>
-        </h2>
-        <p class="reveal mt-4 text-center text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          The question is not just price. It is how clearly your team can see spend, revenue, and next actions across every channel.
-        </p>
-
-        <div class="reveal mt-16 overflow-x-auto">
-          <table class="w-full min-w-[820px] border-collapse glass rounded-2xl overflow-hidden" role="table">
+        <div class="panel-box scroll-x">
+          <table class="bench" role="table">
             <thead>
-              <tr class="border-b border-[var(--border)]">
-                <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)] bg-[var(--surface-alt)]">Option</th>
-                <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Pricing model</th>
-                <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Visibility</th>
-                <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Automation</th>
-                <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Best fit</th>
+              <tr>
+                <th>Option</th><th>Pricing model</th><th>Visibility</th><th>Automation</th><th>Best fit</th>
               </tr>
             </thead>
             <tbody>
               {pricingComparisonRows.map((row) => (
-                <tr class={`border-b border-[var(--border)] last:border-b-0 ${row.highlighted ? 'bg-[var(--surface-alt)]' : ''}`}>
-                  <td class="p-4 sm:p-5 font-semibold text-[var(--text-primary)] max-w-[180px]">
-                    {row.highlighted ? (
-                      <span class="text-[var(--text-primary)]">Advertising Systems</span>
-                    ) : (
-                      row.name
-                    )}
-                  </td>
-                  <td class="p-4 sm:p-5 text-sm text-[var(--text-secondary)] max-w-[180px]">{row.pricingModel}</td>
-                  <td class="p-4 sm:p-5 text-sm text-[var(--text-tertiary)] max-w-[220px]">{row.visibility}</td>
-                  <td class="p-4 sm:p-5 text-sm text-[var(--text-tertiary)] max-w-[220px]">{row.automation}</td>
-                  <td class="p-4 sm:p-5 text-sm text-[var(--text-tertiary)] max-w-[220px]">{row.bestFit}</td>
+                <tr class={row.highlighted ? 'is-hl' : ''}>
+                  <td class="m">{row.highlighted ? 'Advertising Systems' : row.name}</td>
+                  <td>{row.pricingModel}</td>
+                  <td>{row.visibility}</td>
+                  <td>{row.automation}</td>
+                  <td>{row.bestFit}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
-        <p class="reveal mt-6 text-center text-sm font-medium text-[var(--text-muted)]">
-          Use this guide to choose the right control model before you choose a plan.
-        </p>
+        <p class="fine">Use this guide to choose the right control model before you choose a plan.</p>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Why we're different -->
-    <section class="py-28" aria-labelledby="different-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="different-heading" class="reveal text-center text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Why our <span class="text-[var(--text-primary)]">pricing</span> is different
-        </h2>
-        <p class="reveal mt-4 text-center text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          No percentage of spend. No overages. One platform for Google, Meta, and OTAs.
-        </p>
-
-        <div class="reveal mt-16 grid md:grid-cols-2 gap-6 lg:gap-8">
-          {ourDifferentiators.map((item) => (
-            <div class="glass rounded-2xl p-8 border-t-4 border-[var(--border)]">
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
-              <p class="text-[var(--text-tertiary)] font-medium leading-relaxed">{item.body}</p>
+    <!-- 03 · How the pricing is different -->
+    <section class="sec" aria-labelledby="different-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="different-heading">Why this pricing is different.</h2>
+            <p class="sub">No percentage of spend. No overages. One platform for Google, Meta and the OTAs.</p>
+          </div>
+        </div>
+        <div class="cardgrid cols-2">
+          {ourDifferentiators.map((item, i) => (
+            <div>
+              <div class="cn">{String(i + 1).padStart(2, '0')}</div>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Plan cards -->
-    <section id="plans" class="py-28" aria-labelledby="plans-heading">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="plans-heading" class="reveal text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Choose your <span class="text-[var(--text-primary)]">plan</span>
-        </h2>
-        <p class="reveal mt-4 text-center text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          Same powerful AI and modules on every plan. Scale by ad account count.
-        </p>
-
-        <div class="mt-16">
-          <PricingCards />
+    <!-- 04 · Feature matrix -->
+    <section class="sec soft" aria-labelledby="features-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="features-heading">What's in each plan.</h2>
+            <p class="sub">Full feature breakdown. No hidden paywalls inside your tier.</p>
+          </div>
         </div>
 
-        <p class="reveal text-center mt-10 text-sm font-medium text-[var(--text-muted)]">
-          Ad spend is billed separately. All plans include AI optimization, real-time analytics, and guided onboarding.
-        </p>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Feature matrix -->
-    <section class="py-28" aria-labelledby="features-heading">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="features-heading" class="reveal text-center text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          What's in each <span class="text-[var(--text-primary)]">plan</span>
-        </h2>
-        <p class="reveal mt-4 text-center text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          Full feature breakdown. No hidden paywalls inside your tier.
-        </p>
-
-        <div class="reveal mt-16 overflow-x-auto">
-          <table class="w-full min-w-[760px] border-collapse glass rounded-2xl overflow-hidden" role="table">
+        <div class="panel-box scroll-x">
+          <table class="bench" role="table">
             <thead>
-              <tr class="border-b border-[var(--border)]">
-                <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Feature</th>
-                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Launch</th>
-                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)] bg-[var(--surface-alt)]">Growth</th>
-                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Scale</th>
-                <th class="text-center p-4 sm:p-5 font-semibold text-[var(--text-primary)]">Enterprise</th>
+              <tr>
+                <th>Feature</th>
+                <th class="c">Launch</th>
+                <th class="c is-hl-col">Growth</th>
+                <th class="c">Scale</th>
+                <th class="c">Enterprise</th>
               </tr>
             </thead>
             <tbody>
-              {planFeatureMatrix.map((row, i) => (
-                <tr class={`border-b border-[var(--border)] last:border-b-0 ${i % 2 === 1 ? 'bg-[var(--surface-alt)]/50' : ''}`}>
-                  <td class="p-4 sm:p-5 text-sm font-medium text-[var(--text-secondary)]">{row.feature}</td>
-                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.launch)}</td>
-                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)] bg-[var(--surface-alt)]">
-                    {formatCell(row.growth)}
-                  </td>
-                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.scale)}</td>
-                  <td class="p-4 sm:p-5 text-center text-sm text-[var(--text-tertiary)]">{formatCell(row.enterprise)}</td>
+              {planFeatureMatrix.map((row) => (
+                <tr>
+                  <td class="m">{row.feature}</td>
+                  <td class="c">{formatCell(row.launch)}</td>
+                  <td class="c is-hl-col">{formatCell(row.growth)}</td>
+                  <td class="c">{formatCell(row.scale)}</td>
+                  <td class="c">{formatCell(row.enterprise)}</td>
                 </tr>
               ))}
             </tbody>
@@ -195,100 +179,124 @@ function formatCell(value: boolean | string): string {
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- ROI / trust -->
-    <section class="py-28" aria-labelledby="roi-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="roi-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          One platform. One price. <span class="text-[var(--text-primary)]">Predictable.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          Advertising Systems connects paid ads to measurable booking revenue. Hotel partners collectively manage more than $40,000 per month in paid digital advertising through the platform, with campaigns helping drive up to 30% more bookings and more than $12M in customer revenue.
-        </p>
-        <p class="reveal mt-4 text-sm font-medium text-[var(--text-muted)]">
-          Built for teams managing Google, Meta, and OTA advertising — by Multisystems.
-        </p>
-        <ul class="reveal mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-[var(--text-secondary)] font-medium" role="list">
-          <li class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Guided onboarding
-          </li>
-          <li class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Paid ads tied to booking revenue
-          </li>
-          <li class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Cancel anytime
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- FAQ -->
-    <section class="py-28" aria-labelledby="faq-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <FAQSection
-          title="Pricing questions"
-          faqs={pricingPageFaqs}
-          name="pricing-page-faq"
-          showContactLink={true}
-        />
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Final CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="final-cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="final-cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Ready for <span class="text-[var(--text-primary)]">predictable pricing?</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          Create your signup request or book a demo. No hidden fees — ever.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/signup?source_page=pricing&cta=pricing-final-start" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
-            Get started
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/book-demo?source_page=pricing&cta=pricing-final-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Book a demo
-          </a>
+    <!-- 05 · What the money buys, verifiably -->
+    <section class="sec" aria-labelledby="value-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">05</span>
+          <div>
+            <h2 id="value-heading">One platform. One price. Predictable.</h2>
+            <p class="sub">
+              You pay for the system, never a percentage of your media. For what the platform
+              does on a real account, read the verified 30-day Expedia TravelAds export on the
+              homepage — real spend, real bookings, reconciled line by line.
+            </p>
+          </div>
         </div>
+        <ul class="value-points" role="list">
+          <li>Guided onboarding on every plan</li>
+          <li>Paid ads tied to booking revenue</li>
+          <li>Every automated decision logged and readable</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <p class="fine"><a href="/#case">See the verified case →</a></p>
       </div>
     </section>
+
+    <!-- 06 · FAQ -->
+    <section class="sec soft" aria-labelledby="pricing-faq-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">06</span>
+          <div><h2 id="pricing-faq-heading">Pricing questions.</h2></div>
+        </div>
+        <div class="faq">
+          {pricingPageFaqs.map((item, i) => (
+            <details open={i === 0}>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+        <p class="fine"><a href="/faq">Full FAQ</a> · <a href="/contact">Contact us</a></p>
+      </div>
+    </section>
+
+    <CTABand />
   </main>
   <Footer />
-</Layout>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('#plans article a[href]').forEach(function(el) {
-      el.addEventListener('click', function() {
-        var planName = el.closest('article')?.querySelector('h3')?.textContent?.trim();
-        window.posthog?.capture('pricing_plan_selected', {
-          plan_name: planName,
-          cta_text: el.textContent?.trim(),
-          cta_href: el.getAttribute('href'),
+  <style>
+    /* RateRows renders its own section chrome; embedded here we only want the
+       rows, so collapse its outer spacing and hide its duplicate heading. */
+    .rates-embed :global(section.sec) { padding: 0; }
+    .rates-embed :global(.sec-hd), .rates-embed :global(.fine) { display: none; }
+    .rates-embed { margin-bottom: 18px; }
+
+    .plan-detail article { position: relative; }
+    .pd-pop {
+      margin-left: 8px;
+      font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em;
+      color: var(--acc-btn-fg, #fff); background: var(--acc-btn); border-radius: 2px; padding: 2px 6px;
+    }
+    .pd-price {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+    .pd-price em { font-style: normal; font-size: 12px; font-weight: 600; color: var(--text-tertiary); }
+    .pd-quotas {
+      display: flex; flex-wrap: wrap; gap: 6px 16px;
+      margin-top: 10px; padding: 0; list-style: none;
+      font-size: 12.5px; color: var(--text-tertiary);
+    }
+    .pd-quotas b { color: var(--text-primary); font-weight: 700; }
+    .pd-features { margin-top: 12px; padding: 0; list-style: none; }
+    .pd-features li {
+      position: relative; padding: 4px 0 4px 16px;
+      font-size: 13.5px; color: var(--text-secondary); line-height: 1.5;
+    }
+    .pd-features li::before {
+      content: ""; position: absolute; left: 0; top: 0.85em;
+      width: 6px; height: 2px; background: var(--acc);
+    }
+
+    .terminal table.bench tr.is-hl td { background: var(--acc-tint); }
+    .terminal table.bench .is-hl-col { background: var(--surface-alt); }
+
+    .value-points {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+      padding: 0; list-style: none;
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .value-points li {
+      padding: 16px 18px;
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--surface-raised);
+      font-size: 14px; font-weight: 600; color: var(--text-secondary);
+      position: relative; padding-left: 38px;
+    }
+    .value-points li::before {
+      content: ""; position: absolute; left: 18px; top: 22px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--pos);
+    }
+    .fine a { color: var(--acc); font-weight: 600; }
+
+    @media (max-width: 640px) {
+      .value-points { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('#plans a[href]').forEach(function(el) {
+        el.addEventListener('click', function() {
+          window.posthog?.capture('pricing_plan_selected', {
+            cta_text: el.textContent?.trim(),
+            cta_href: el.getAttribute('href'),
+          });
         });
       });
     });
-  });
-</script>
+  </script>
+</Layout>

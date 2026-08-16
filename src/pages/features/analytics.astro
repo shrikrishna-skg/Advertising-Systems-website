@@ -48,23 +48,23 @@ const capabilities = [
 ];
 
 const relatedFeatures = [
-  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: '14 campaigns in 20min' },
-  { title: 'AI Optimization Engine', href: '/features/ai-optimization', stat: '40% lower CPA' },
-  { title: 'Automation Studio', href: '/features/automation', stat: '12hrs saved/week' },
-  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: '5.2x ROAS' },
+  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: 'One dashboard, every channel' },
+  { title: 'AI Optimization Engine', href: '/features/ai-optimization', stat: 'Adjusts every 15 minutes' },
+  { title: 'Automation Studio', href: '/features/automation', stat: 'Rules run around the clock' },
+  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: 'Cross-channel reallocation' },
 ];
 ---
 
 <Layout
   breadcrumbs={[{ name: 'Features', href: '/features' }, { name: 'Performance Analytics', href: '/features/analytics' }]}
-  title="Performance Analytics — Advertising Systems | Cross-Channel Reporting & Attribution"
+  title="Performance Analytics & Attribution | Advertising Systems"
   description="From data to decisions in seconds. Real-time dashboards, cross-channel attribution, and anomaly alerts across every advertising platform."
 >
   <Navbar />
-  <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'Performance Analytics', href: '/features/analytics' }]} />
-  <main>
+  <main class="terminal">
+    <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'Performance Analytics', href: '/features/analytics' }]} />
     <!-- Hero -->
-    <section class="relative pt-40 pb-20 sm:pt-48 sm:pb-28 overflow-hidden" aria-labelledby="analytics-heading">
+    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="analytics-heading">
       <div class="mesh-gradient absolute inset-0"></div>
       <div class="dot-grid absolute inset-0"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
@@ -72,7 +72,7 @@ const relatedFeatures = [
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
           <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">$180K attributed revenue in one report</span>
+          <span class="text-sm font-medium text-[var(--text-tertiary)]">Attribution back to booking revenue</span>
         </div>
 
         <h1 id="analytics-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
@@ -85,7 +85,7 @@ const relatedFeatures = [
           Real-time dashboards, cross-channel attribution, and anomaly alerts. See the full picture of your advertising performance without touching a spreadsheet.
         </p>
         <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
+          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
             See It In Action
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -144,6 +144,7 @@ const relatedFeatures = [
             <div class="flex-1 ml-3">
               <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/analytics</div>
             </div>
+            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
           </div>
           <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
             <!-- KPI Cards -->
@@ -277,27 +278,6 @@ const relatedFeatures = [
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Testimonial -->
-    <section class="py-28" aria-labelledby="testimonial-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal glass rounded-2xl p-10 sm:p-14">
-          <svg class="w-10 h-10 text-[var(--text-primary)]/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11h4v10H0z" />
-          </svg>
-          <blockquote>
-            <p id="testimonial-heading" class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] leading-relaxed">
-              "Our weekly reporting used to take a full day. Now I pull a cross-channel attribution report in 30 seconds that shows $180K in attributed revenue."
-            </p>
-          </blockquote>
-          <div class="mt-8">
-            <div class="font-semibold text-[var(--text-primary)]">James Okoro</div>
-            <div class="text-sm text-[var(--text-muted)]">Director of Analytics, Pacific Coast Hotels</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <div class="section-line"></div>
 
@@ -346,7 +326,7 @@ const relatedFeatures = [
           Get a demo of Performance Analytics and see cross-channel attribution, live dashboards, and anomaly detection in action.
         </p>
         <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
+          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
             Book Your Demo
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />

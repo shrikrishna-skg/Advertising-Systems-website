@@ -6,6 +6,14 @@ import FAQSection from '../components/FAQSection.astro';
 import { bookDemoFaqs } from '../data/page-faqs';
 import { pricingPlans } from '../data/pricing';
 
+/**
+ * Book a demo — Wave 3, Terminal conversion.
+ * Cal.com embed (shared Multisystems scheduler) inside a Terminal panel;
+ * ?plan= context chip preserved for the pricing CTAs.
+ */
+const CAL_BOOKING_URL = 'https://cal.com/multisystems';
+const CAL_EMBED_URL = `${CAL_BOOKING_URL}?embed=1`;
+
 const benefits = [
   'Personalized walk-through of all 5 modules',
   'See real data for your industry',
@@ -14,37 +22,32 @@ const benefits = [
   'Clear next steps after the demo',
 ];
 
-const trustStats = [
-  { value: '30 min', label: 'Personalized Demo' },
+const coverage = [
+  'Google, Meta, and OTA campaigns in one dashboard',
+  'How the AI engine allocates and paces your budget',
+  'Reporting your team and your owners actually read',
+  'Pricing, account count, and the right starting plan',
 ];
 
 const pathStats = [
-  { value: '30 min', label: 'Demo Walkthrough' },
-  { value: '5 modules', label: 'Covered Live' },
-  { value: '<5 min', label: 'Setup Time' },
-  { value: 'Secure', label: 'Intake Flow' },
-];
-
-const locationOptions = [
-  { value: '', label: 'Select...' },
-  { value: '1', label: '1' },
-  { value: '2-5', label: '2-5' },
-  { value: '6-20', label: '6-20' },
-  { value: '21-100', label: '21-100' },
-  { value: '100+', label: '100+' },
+  { value: '30 min', label: 'Demo walkthrough' },
+  { value: '5 modules', label: 'Covered live' },
+  { value: 'Instant', label: 'Calendar confirmation' },
+  { value: 'Local', label: 'Slots in your timezone' },
 ];
 
 const planOptions = pricingPlans.map((plan) => ({
   name: plan.name,
-  priceLabel: plan.period === '/month' ? `${plan.price}/mo` : plan.price,
+  priceLabel: plan.period === '/month' ? `${plan.price.replace(/\.00$/, '')}/mo` : plan.price,
   description: plan.description,
-  spend: plan.spend,
+  spend: plan.spend.replace(/•/g, '·'),
 }));
 ---
 
 <Layout
   title="Book a Demo — Advertising Systems | See It in Action"
   description="Schedule a personalized demo of Advertising Systems. See how AI-powered advertising management can transform your campaigns in just 30 minutes."
+  breadcrumbs={[{ name: 'Book a Demo', href: '/book-demo' }]}
   jsonLd={{
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -53,99 +56,36 @@ const planOptions = pricingPlans.map((plan) => ({
     potentialAction: {
       '@type': 'ReserveAction',
       name: 'Book a Demo',
-      target: 'https://www.advertisingsystems.ai/book-demo'
+      target: CAL_BOOKING_URL
     }
   }}
 >
   <Navbar />
+  <main class="terminal">
+    <section class="bd-hero" aria-labelledby="demo-hero-heading">
+      <div class="wrap bd-grid">
 
-  <!-- Hero: two columns — left content, right form -->
-  <section class="book-demo-hero relative" aria-labelledby="demo-hero-heading">
-    <div class="book-demo-hero-bg absolute inset-0"></div>
+        <!-- Left: what the 30 minutes buys -->
+        <div class="bd-left">
+          <span class="badge-line"><i aria-hidden="true"></i> Get started in minutes</span>
+          <h1 id="demo-hero-heading">Book your <span class="bd-accent">personalized demo.</span></h1>
+          <p class="lead">We'll walk you through every module, show you real data for your industry, and answer all your questions.</p>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 pt-28 pb-16 lg:pt-36 lg:pb-20 grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(440px,1.1fr)] gap-12 lg:gap-16 items-start">
+          <ul class="bd-benefits" aria-label="Benefits">
+            {benefits.map((text) => <li>{text}</li>)}
+          </ul>
 
-    <!-- Left column: info -->
-    <div class="flex flex-col justify-center lg:py-8">
-      <div class="max-w-lg">
-        <span class="inline-block rounded-full bg-white/10 backdrop-blur-sm text-white text-sm font-medium px-4 py-2 mb-6">
-          Get Started in Minutes
-        </span>
-        <h1 id="demo-hero-heading" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-[-0.03em]">
-          Book Your Personalized Demo
-        </h1>
-        <p class="mt-5 text-lg text-white/90 leading-relaxed">
-          We'll walk you through every module, show you real data for your industry, and answer all your questions.
-        </p>
-        <ul class="mt-8 space-y-4" aria-label="Benefits">
-          {benefits.map((text) => (
-            <li class="flex items-start gap-3 text-white">
-              <svg class="w-5 h-5 text-[var(--text-tertiary)] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-              </svg>
-              <span>{text}</span>
-            </li>
-          ))}
-        </ul>
-        <div class="mt-10 flex flex-wrap gap-8 text-white/90">
-          {trustStats.map(({ value, label }) => (
-            <div>
-              <span class="font-semibold">{value}</span>
-              <span class="text-sm ml-1">{label}</span>
-            </div>
-          ))}
+          <div class="panel-box bd-cover">
+            <div class="panel-hd"><h2>What we'll cover</h2></div>
+            <ul class="bd-cover-list">
+              {coverage.map((text) => <li>{text}</li>)}
+            </ul>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Right column: form card -->
-    <div class="flex items-start justify-center lg:py-8">
-      <div class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10">
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Book Your Demo</h2>
-        <p class="mt-2 text-sm text-slate-500 leading-relaxed">Tell us about your business and pick a time that works for you.</p>
-
-        <form id="book-demo-form" action="/api/book-demo" method="POST" class="mt-8 space-y-6" aria-label="Demo request form">
-          <div>
-            <label for="demo-name" class="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
-            <div class="demo-input-wrap">
-              <span class="demo-input-icon" aria-hidden="true">
-                <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-              </span>
-              <input type="text" id="demo-name" name="name" required autocomplete="name" maxlength="120" placeholder="John Smith"
-                class="demo-input w-full rounded-lg border border-slate-200 bg-white pl-10 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors" />
-            </div>
-          </div>
-          <div>
-            <label for="demo-email" class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
-            <div class="demo-input-wrap">
-              <span class="demo-input-icon" aria-hidden="true">
-                <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
-              </span>
-              <input type="email" id="demo-email" name="email" required autocomplete="email" maxlength="254" placeholder="john@company.com"
-                class="demo-input w-full rounded-lg border border-slate-200 bg-white pl-10 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors" />
-            </div>
-          </div>
-          <div>
-            <label for="demo-phone" class="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
-            <div class="demo-input-wrap">
-              <span class="demo-input-icon" aria-hidden="true">
-                <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
-              </span>
-              <input type="tel" id="demo-phone" name="phone" autocomplete="tel" maxlength="40" placeholder="(555) 000-0000"
-                class="demo-input w-full rounded-lg border border-slate-200 bg-white pl-10 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors" />
-            </div>
-          </div>
-          <div>
-            <label for="demo-company" class="block text-sm font-semibold text-slate-700 mb-2">Business Name</label>
-            <div class="demo-input-wrap">
-              <span class="demo-input-icon" aria-hidden="true">
-                <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21m6-18v18m-18-7v18" /></svg>
-              </span>
-              <input type="text" id="demo-company" name="company" required autocomplete="organization" maxlength="160" placeholder="Acme Inc."
-                class="demo-input w-full rounded-lg border border-slate-200 bg-white pl-10 pr-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors" />
-            </div>
-          </div>
-          <div id="demo-plan-context" class="hidden rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4 shadow-sm" data-plan-context aria-hidden="true">
+        <!-- Right: scheduler -->
+        <div class="bd-right" id="book-demo-form">
+          <div id="demo-plan-context" class="panel-box bd-plan" data-plan-context hidden>
             {planOptions.map((plan) => (
               <span
                 hidden
@@ -156,946 +96,167 @@ const planOptions = pricingPlans.map((plan) => ({
                 data-spend={plan.spend}
               ></span>
             ))}
-            <input type="hidden" id="demo-plan" name="plan" disabled />
-            <div class="flex items-start gap-3">
-              <span class="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-emerald-700 shadow-sm" aria-hidden="true">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75" />
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-              </span>
-              <div class="min-w-0 flex-1">
-                <p class="text-xs font-black uppercase tracking-[0.12em] text-emerald-700">Selected from pricing</p>
-                <div class="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span id="demo-plan-name" class="text-lg font-black leading-tight text-slate-950"></span>
-                  <span id="demo-plan-price" class="text-sm font-bold text-slate-500"></span>
-                </div>
-                <p id="demo-plan-summary" class="mt-2 text-sm font-medium leading-relaxed text-slate-600"></p>
-                <a href="/#pricing" class="mt-3 inline-flex text-sm font-bold text-emerald-700 hover:text-emerald-800">
-                  Compare plans
-                </a>
-              </div>
-            </div>
-          </div>
-          <div>
-            <label for="demo-locations" class="block text-sm font-semibold text-slate-700 mb-2">Number of Locations</label>
-            <div class="demo-input-wrap demo-select-wrap">
-              <select id="demo-locations" name="number_of_locations"
-                class="demo-input w-full rounded-lg border border-slate-200 bg-white pl-4 pr-10 py-3.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors appearance-none cursor-pointer">
-                {locationOptions.map((opt) => (
-                  <option value={opt.value} disabled={!opt.value}>{opt.label}</option>
-                ))}
-              </select>
-              <span class="demo-select-chevron" aria-hidden="true">
-                <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
-              </span>
+            <div class="panel-hd"><h2>Selected from pricing</h2><span class="illus ok">Carried over</span></div>
+            <div class="bd-plan-bd">
+              <p class="bd-plan-name"><b id="demo-plan-name"></b> <span id="demo-plan-price" class="num"></span></p>
+              <p id="demo-plan-summary" class="bd-plan-sum"></p>
+              <p class="bd-plan-note">Mention this plan when you book — we'll tailor the walkthrough to it. <a href="/pricing">Compare plans</a></p>
             </div>
           </div>
 
-          <!-- Preferred Date & Time: calendar widget -->
-          <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Preferred Date & Time</label>
-            <div class="demo-calendar rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
-              <div class="flex items-center justify-between gap-3 mb-5">
-                <button type="button" id="calendar-prev" class="calendar-nav-button text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors" aria-label="Previous month">
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <div class="text-center">
-                  <span id="calendar-month-year" class="block text-base font-semibold text-slate-900">March 2026</span>
-                  <span class="block text-xs text-slate-500 mt-0.5">Mon-Sat, 9:00 AM-5:00 PM Central Time</span>
-                </div>
-                <button type="button" id="calendar-next" class="calendar-nav-button text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors" aria-label="Next month">
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                </button>
-              </div>
-              <div class="grid grid-cols-7 gap-1.5 mb-2">
-                {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((d) => (
-                  <span class="text-center text-[11px] uppercase tracking-wide font-semibold text-slate-400 py-2">{d}</span>
-                ))}
-              </div>
-              <div id="calendar-grid" class="grid grid-cols-7 gap-1.5 text-sm"></div>
-              <div class="mt-5 pt-5 border-t border-slate-100">
-                <label for="demo-time" class="sr-only">Time</label>
-                <select id="demo-time" name="preferred_time"
-                  class="sr-only">
-                  <option value="">Select a date first</option>
-                </select>
-                <p id="demo-time-hint" class="mt-2 text-xs text-slate-500 hidden">Loading available times...</p>
-                <div id="demo-time-slots" class="demo-time-slots" role="radiogroup" aria-label="Available demo times in Central Time"></div>
-                <p id="demo-selected-slot" class="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-600">Pick a date to see available times.</p>
-              </div>
+          <div class="panel-box">
+            <div class="panel-hd">
+              <h2>Pick a time</h2>
+              <a class="bd-newtab" href={CAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">Open in a new tab →</a>
             </div>
-            <input type="hidden" id="demo-preferred-datetime" name="preferred_datetime" />
+            <iframe
+              src={CAL_EMBED_URL}
+              title="Book an Advertising Systems demo"
+              loading="lazy"
+              class="bd-frame"
+            ></iframe>
           </div>
 
-          <div class="hidden" aria-hidden="true">
-            <label for="demo-website">Website</label>
-            <input type="text" id="demo-website" name="website" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <div>
-            <label for="demo-message" class="block text-sm font-semibold text-slate-700 mb-2">Anything else we should know?</label>
-            <textarea id="demo-message" name="message" rows="3" maxlength="1200" placeholder="Tell us about your advertising goals..."
-              class="demo-input w-full rounded-lg border border-slate-200 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-link)] focus:border-[var(--color-link)] transition-colors resize-none"></textarea>
-          </div>
-
-          <div id="form-message" class="hidden text-sm rounded-lg p-3" role="alert"></div>
-
-          <button type="submit" id="demo-submit"
-            class="w-full inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
-            Book My Demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </button>
-
-          <p class="text-center">
-            <a href="/#pricing" class="text-sm text-slate-500 hover:text-slate-600">← Back to options</a>
+          <p class="fine">
+            Times shown in your own timezone. If the calendar does not load,
+            <a href={CAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">book directly on Cal.com</a>.
           </p>
-        </form>
+        </div>
       </div>
-    </div>
 
-    </div><!-- end grid -->
-  </section>
-
-  <div id="demo-success-celebration" class="demo-success-celebration" aria-hidden="true">
-    <div id="demo-confetti-field" class="demo-confetti-field" aria-hidden="true"></div>
-    <div class="demo-success-card" role="status" aria-live="polite">
-      <span class="demo-success-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      </span>
-      <span id="demo-success-title" class="demo-success-title">Demo booked</span>
-      <span id="demo-success-copy" class="demo-success-copy">Your calendar invite and confirmation email have been sent with the Google Meet link.</span>
-      <ul id="demo-success-steps" class="demo-success-steps">
-        <li>Check your inbox for the invite and meeting details.</li>
-        <li>Invite teammates who should join the walkthrough.</li>
-        <li>Bring your current ad channels, reports, or goals to the call.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Trust band: white background -->
-  <section class="bg-white py-12 sm:py-16 border-y border-slate-100" aria-label="Trust indicators">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-        {pathStats.map(({ value, label }) => (
-          <div>
-            <div class="text-2xl sm:text-3xl font-bold text-slate-900">{value}</div>
-            <div class="text-sm text-slate-500 mt-0.5">{label}</div>
-          </div>
-        ))}
+      <div class="wrap">
+        <div class="bd-stats">
+          {pathStats.map(({ value, label }) => (
+            <div class="bd-stat">
+              <div class="v num">{value}</div>
+              <div class="l">{label}</div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA banner -->
-  <section class="bg-slate-900 py-16 sm:py-20" aria-label="Call to action">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">Ready to Master Your Advertising?</h2>
-      <p class="mt-4 text-lg text-white/80">Book a personalized demo and see Advertising Systems in action.</p>
-      <a href="#book-demo-form" class="mt-8 inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-8 py-3.5 rounded-lg transition-colors">
-        Book Your Demo
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-        </svg>
-      </a>
-    </div>
-  </section>
-
-  <FAQSection title="Common questions" faqs={bookDemoFaqs} name="book-demo-faq" />
+    <FAQSection title="Common questions" faqs={bookDemoFaqs} name="book-demo-faq" />
+  </main>
   <Footer />
 
   <style>
-    .book-demo-hero-bg {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    .bd-hero {
+      padding: 56px 0 0;
+      background:
+        linear-gradient(var(--dot-grid-color) 1px, transparent 1px) 0 0 / 100% 34px,
+        linear-gradient(90deg, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 34px 100%,
+        var(--surface-alt);
+      border-bottom: 1px solid var(--border);
     }
-    html.dark .book-demo-hero-bg {
-      background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
-    }
-    .demo-input::placeholder {
-      color: #94a3b8;
-    }
-    .demo-input-wrap {
-      position: relative;
-    }
-    .demo-input-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .demo-select-wrap {
-      position: relative;
-    }
-    .demo-select-chevron {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .calendar-nav-button {
-      width: 40px;
-      height: 40px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-    }
-    .calendar-nav-button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-    :global(.calendar-day) {
-      position: relative;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      background: #f8fafc;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
-    }
-    @media (min-width: 640px) {
-      :global(.calendar-day) {
-        min-height: 48px;
-      }
-    }
-    :global(.calendar-day:hover:not(.calendar-day-empty):not(.calendar-day-past):not(.calendar-day-closed)) {
-      background: #ecfdf5;
-      border-color: #a7f3d0;
-      color: #065f46;
-      transform: translateY(-1px);
-    }
-    :global(.calendar-day-empty) {
-      background: transparent;
-      cursor: default;
-      visibility: hidden;
-    }
-    :global(.calendar-day-past) {
-      background: #f8fafc;
-      color: #cbd5e1;
-      cursor: not-allowed;
-      font-weight: 400;
-    }
-    :global(.calendar-day-closed) {
-      background: #f8fafc;
-      color: #cbd5e1;
-      cursor: not-allowed;
-      font-weight: 400;
-    }
-    :global(.calendar-day-selected) {
-      background: #10B981;
-      border-color: #10B981;
-      color: #ffffff;
-      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.22);
-    }
-    :global(.calendar-day-today) {
-      font-weight: 600;
-      color: #0f172a;
-      border-color: #cbd5e1;
-    }
-    .demo-success-celebration {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      pointer-events: none;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s ease, visibility 0.2s ease;
-    }
-    .demo-time-slots {
+    .bd-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 12px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(440px, 1.1fr);
+      gap: 48px;
+      align-items: start;
+      padding-bottom: 46px;
     }
-    @media (min-width: 520px) {
-      .demo-time-slots {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-    :global(.demo-time-slot) {
-      min-height: 44px;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      background: #ffffff;
-      color: #334155;
-      font-size: 0.9rem;
-      font-weight: 700;
-      transition: background 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s;
-    }
-    :global(.demo-time-slot:hover) {
-      border-color: #86efac;
-      background: #f0fdf4;
-      color: #166534;
-      transform: translateY(-1px);
-    }
-    :global(.demo-time-slot[aria-pressed='true']) {
-      border-color: #10B981;
-      background: #10B981;
-      color: #ffffff;
-      box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
-    }
-    :global(.demo-time-slot-empty) {
-      grid-column: 1 / -1;
-      margin: 0;
-      border: 1px dashed #cbd5e1;
-      border-radius: 12px;
-      background: #f8fafc;
-      color: #64748b;
-      font-size: 0.9rem;
-      font-weight: 600;
-      line-height: 1.45;
-      padding: 14px;
-      text-align: center;
-    }
-    .demo-success-celebration.is-active {
-      visibility: visible;
-      opacity: 1;
-    }
-    .demo-confetti-field {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-    :global(.demo-confetti-piece) {
-      position: fixed;
-      top: -24px;
-      left: var(--x);
-      width: var(--w);
-      height: var(--h);
-      border-radius: 999px;
-      background: var(--c);
-      opacity: 0.95;
-      animation: demo-confetti-fall var(--d) cubic-bezier(0.22, 0.7, 0.28, 1) forwards;
-      transform: translate3d(0, -24px, 0) rotate(var(--r));
-    }
-    .demo-success-card {
-      position: absolute;
-      left: 50%;
-      top: min(30vh, 260px);
-      display: grid;
-      place-items: center;
-      width: min(380px, calc(100vw - 40px));
-      padding: 24px 22px;
-      border: 1px solid rgba(16, 185, 129, 0.22);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.22);
-      transform: translate(-50%, 16px) scale(0.94);
-      opacity: 0;
-      transition: opacity 0.28s ease, transform 0.28s ease;
-    }
-    .demo-success-celebration.is-active .demo-success-card {
-      transform: translate(-50%, 0) scale(1);
-      opacity: 1;
-    }
-    .demo-success-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 72px;
-      height: 72px;
-      border-radius: 999px;
-      color: #ffffff;
-      background: #10B981;
-      box-shadow: 0 16px 32px rgba(16, 185, 129, 0.34);
-    }
-    .demo-success-icon svg {
-      width: 36px;
-      height: 36px;
-    }
-    .demo-success-title {
-      margin-top: 14px;
-      color: #0f172a;
-      font-size: 1.125rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-    .demo-success-copy {
-      margin-top: 4px;
-      color: #64748b;
-      font-size: 0.9rem;
-      font-weight: 500;
-      line-height: 1.45;
-      text-align: center;
-    }
-    .demo-success-steps {
-      display: grid;
-      gap: 8px;
-      width: 100%;
-      margin: 16px 0 0;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: #f8fafc;
-      color: #475569;
-      font-size: 0.82rem;
-      font-weight: 600;
-      line-height: 1.35;
-      text-align: left;
-      list-style: none;
-    }
-    .demo-success-steps li {
+    /* Display-text exception — same rule as the homepage rotator. */
+    .bd-accent { color: var(--acc-display, var(--acc-btn)); }
+
+    .bd-benefits { margin: 26px 0 0; padding: 0; list-style: none; }
+    .bd-benefits li {
       position: relative;
-      padding-left: 16px;
+      padding: 7px 0 7px 26px;
+      font-size: 14.5px; color: var(--text-secondary); line-height: 1.5;
     }
-    .demo-success-steps li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.55em;
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #10B981;
+    .bd-benefits li::before {
+      content: ""; position: absolute; left: 0; top: 14px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--pos);
     }
-    @keyframes demo-confetti-fall {
-      0% {
-        transform: translate3d(0, -24px, 0) rotate(var(--r));
-      }
-      100% {
-        transform: translate3d(var(--drift), 112vh, 0) rotate(var(--end-r));
-      }
+
+    .bd-cover { margin-top: 26px; }
+    .bd-cover-list { margin: 0; padding: 6px 0; list-style: none; }
+    .bd-cover-list li {
+      position: relative;
+      padding: 8px 16px 8px 34px;
+      font-size: 13.5px; color: var(--text-secondary); line-height: 1.5;
+      border-bottom: 1px solid var(--border);
     }
-    @media (prefers-reduced-motion: reduce) {
-      .demo-success-celebration,
-      .demo-success-card,
-      :global(.demo-confetti-piece) {
-        transition: none;
-        animation: none;
-      }
-      :global(.demo-confetti-piece) {
-        display: none;
-      }
+    .bd-cover-list li:last-child { border-bottom: 0; }
+    .bd-cover-list li::before {
+      content: ""; position: absolute; left: 16px; top: 15px;
+      width: 6px; height: 2px; background: var(--acc);
+    }
+
+    .bd-plan { margin-bottom: 18px; }
+    .bd-plan-bd { padding: 12px 16px 14px; }
+    .bd-plan-name { font-size: 16px; color: var(--text-primary); }
+    .bd-plan-name b { font-weight: 800; }
+    .bd-plan-name span { font-size: 13px; font-weight: 700; color: var(--text-tertiary); margin-left: 6px; }
+    .bd-plan-sum { margin-top: 4px; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .bd-plan-note { margin-top: 8px; font-size: 12px; color: var(--text-tertiary); }
+    .bd-plan-note a { color: var(--acc); font-weight: 600; }
+
+    .bd-newtab { font-size: 12.5px; font-weight: 700; color: var(--acc); text-decoration: none; white-space: nowrap; }
+    .bd-newtab:hover { text-decoration: underline; }
+    .bd-frame { display: block; width: 100%; height: 760px; border: 0; background: var(--surface-raised); }
+    @media (min-width: 640px) { .bd-frame { height: 720px; } }
+    .fine a { color: var(--acc); font-weight: 600; }
+
+    .bd-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .bd-stat { padding: 20px 0 24px; border-right: 1px solid var(--border); }
+    .bd-stat:last-child { border-right: 0; }
+    .bd-stat:not(:first-child) { padding-left: 22px; }
+    .bd-stat .v {
+      font-size: clamp(22px, 2.4vw, 30px); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1; color: var(--text-primary);
+    }
+    .bd-stat .l {
+      margin-top: 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+    }
+
+    #book-demo-form { scroll-margin-top: calc(var(--t-header-h) + 12px); }
+
+    @media (max-width: 1000px) {
+      .bd-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 640px) {
+      .bd-stats { grid-template-columns: repeat(2, 1fr); }
+      .bd-stat { border-bottom: 1px solid var(--border); padding-left: 0 !important; padding-inline: 14px; }
+      .bd-stat:nth-child(2n) { border-right: 0; }
     }
   </style>
 
   <script is:inline>
-    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const MAX_SCHEDULE_DAYS = 90;
-    const DEMO_BOOKING_TIME_ZONE = 'America/Chicago';
+    /* Carry ?plan= from the pricing CTAs into the scheduler card so the visitor
+       still sees which plan they clicked. Cal.com collects the booking itself. */
+    (function () {
+      var planContextEl = document.getElementById('demo-plan-context');
+      var planNameEl = document.getElementById('demo-plan-name');
+      var planPriceEl = document.getElementById('demo-plan-price');
+      var planSummaryEl = document.getElementById('demo-plan-summary');
+      if (!planContextEl) return;
 
-    function getDateInBookingTimeZone(date = new Date()) {
-      const parts = Object.fromEntries(
-        new Intl.DateTimeFormat('en-US', {
-          timeZone: DEMO_BOOKING_TIME_ZONE,
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }).formatToParts(date)
-          .filter((part) => part.type !== 'literal')
-          .map((part) => [part.type, Number(part.value)])
-      );
+      var requestedPlan = new URLSearchParams(window.location.search).get('plan');
+      if (!requestedPlan) return;
 
-      return new Date(parts.year, parts.month - 1, parts.day, 12, 0, 0);
-    }
-
-    let calendarDate = getDateInBookingTimeZone();
-    let selectedDate = null;
-    let currentAvailableSlots = [];
-
-    const gridEl = document.getElementById('calendar-grid');
-    const monthYearEl = document.getElementById('calendar-month-year');
-    const prevBtn = document.getElementById('calendar-prev');
-    const nextBtn = document.getElementById('calendar-next');
-    const datetimeHidden = document.getElementById('demo-preferred-datetime');
-    const timeSelect = document.getElementById('demo-time');
-    const timeHint = document.getElementById('demo-time-hint');
-    const timeSlotsEl = document.getElementById('demo-time-slots');
-    const selectedSlotEl = document.getElementById('demo-selected-slot');
-    const planInput = document.getElementById('demo-plan');
-    const planContextEl = document.getElementById('demo-plan-context');
-    const planNameEl = document.getElementById('demo-plan-name');
-    const planPriceEl = document.getElementById('demo-plan-price');
-    const planSummaryEl = document.getElementById('demo-plan-summary');
-    const form = document.getElementById('book-demo-form');
-    const submitBtn = document.getElementById('demo-submit');
-    const messageEl = document.getElementById('form-message');
-    const celebrationEl = document.getElementById('demo-success-celebration');
-    const confettiFieldEl = document.getElementById('demo-confetti-field');
-    const successTitleEl = document.getElementById('demo-success-title');
-    const successCopyEl = document.getElementById('demo-success-copy');
-    let celebrationTimer;
-
-    function slotToLabel(slot) {
-      const [h, m] = slot.split(':').map(Number);
-      if (h === 12) return `12:${m ? String(m).padStart(2, '0') : '00'} PM`;
-      if (h > 12) return `${h - 12}:${m ? String(m).padStart(2, '0') : '00'} PM`;
-      return `${h}:${m ? String(m).padStart(2, '0') : '00'} AM`;
-    }
-
-    function pad(n) { return n < 10 ? '0' + n : String(n); }
-    function toYMD(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-    function isSameDay(a, b) { return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
-    function getBookingToday() {
-      const today = getDateInBookingTimeZone();
-      today.setHours(0, 0, 0, 0);
-      return today;
-    }
-
-    function isPast(d) {
-      return d < getBookingToday();
-    }
-
-    function isTooFar(d) {
-      const t = getBookingToday();
-      t.setDate(t.getDate() + MAX_SCHEDULE_DAYS);
-      return d > t;
-    }
-
-    function isClosedDay(d) {
-      return d.getDay() === 0;
-    }
-
-    function formatSelectedDate(date) {
-      if (!date) return '';
-      return new Intl.DateTimeFormat('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      }).format(date);
-    }
-
-    function getClientSubmissionId(prefix) {
-      if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
-      return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-    }
-
-    function clearPlanContext() {
-      if (planInput instanceof HTMLInputElement) {
-        planInput.value = '';
-        planInput.disabled = true;
-      }
-      planContextEl?.classList.add('hidden');
-      planContextEl?.setAttribute('aria-hidden', 'true');
-    }
-
-    function applyPlanFromUrl() {
-      if (!(planInput instanceof HTMLInputElement)) return;
-      const requestedPlan = new URLSearchParams(window.location.search).get('plan');
-      if (!requestedPlan) {
-        clearPlanContext();
-        return;
-      }
-
-      const match = Array.from(document.querySelectorAll('[data-plan-option]')).find((option) => (
-        option.getAttribute('data-name')?.toLowerCase() === requestedPlan.toLowerCase()
-      ));
-      if (!match) {
-        clearPlanContext();
-        return;
-      }
-
-      const planName = match.getAttribute('data-name') || requestedPlan;
-      const price = match.getAttribute('data-price') || '';
-      const description = match.getAttribute('data-description') || '';
-      const spend = match.getAttribute('data-spend') || '';
-
-      planInput.value = planName;
-      planInput.disabled = false;
-      if (planNameEl) planNameEl.textContent = planName;
-      if (planPriceEl) planPriceEl.textContent = price;
-      if (planSummaryEl) planSummaryEl.textContent = [description, spend].filter(Boolean).join(' · ');
-      planContextEl?.classList.remove('hidden');
-      planContextEl?.setAttribute('aria-hidden', 'false');
-    }
-
-    function getIntakeContext(defaultCta) {
-      const params = new URLSearchParams(window.location.search);
-      const sourcePage = params.get('source_page');
-      return {
-        landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
-        referrer: document.referrer || undefined,
-        cta: params.get('cta') || defaultCta,
-        posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
-        utm: {
-          source: params.get('utm_source') || undefined,
-          medium: params.get('utm_medium') || undefined,
-          campaign: params.get('utm_campaign') || undefined,
-        },
-      };
-    }
-
-    function setSelectedSlotMessage(text, tone) {
-      if (!selectedSlotEl) return;
-      const tones = {
-        neutral: 'border-slate-200 bg-slate-50 text-slate-600',
-        loading: 'border-blue-100 bg-blue-50 text-blue-700',
-        ready: 'border-emerald-100 bg-emerald-50 text-emerald-900',
-        empty: 'border-amber-100 bg-amber-50 text-amber-800',
-      };
-      selectedSlotEl.textContent = text;
-      selectedSlotEl.className = `mt-3 rounded-xl border px-3 py-2 text-sm font-medium ${tones[tone] || tones.neutral}`;
-    }
-
-    function updateSelectedSlotSummary(state) {
-      if (!selectedDate) {
-        setSelectedSlotMessage('Pick a date to see available times.', 'neutral');
-        return;
-      }
-
-      if (state === 'loading') {
-        setSelectedSlotMessage(`Checking availability for ${formatSelectedDate(selectedDate)}...`, 'loading');
-        return;
-      }
-
-      if (!timeSelect || timeSelect.disabled || !timeSelect.value) {
-        setSelectedSlotMessage(`No live slots are currently shown for ${formatSelectedDate(selectedDate)}.`, 'empty');
-        return;
-      }
-
-      setSelectedSlotMessage(`${formatSelectedDate(selectedDate)} at ${slotToLabel(timeSelect.value)} Central Time`, 'ready');
-    }
-
-    function renderTimeSlots(slots = [], emptyMessage = 'Select a date to see available times.') {
-      if (!timeSlotsEl) return;
-      timeSlotsEl.replaceChildren();
-
-      if (!slots.length) {
-        const empty = document.createElement('p');
-        empty.className = 'demo-time-slot-empty';
-        empty.textContent = emptyMessage;
-        timeSlotsEl.appendChild(empty);
-        return;
-      }
-
-      slots.forEach((slot) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'demo-time-slot';
-        button.textContent = slotToLabel(slot);
-        button.dataset.slot = slot;
-        button.setAttribute('role', 'radio');
-        button.setAttribute('aria-label', `${slotToLabel(slot)} Central Time`);
-        button.setAttribute('aria-pressed', timeSelect?.value === slot ? 'true' : 'false');
-        button.setAttribute('aria-checked', timeSelect?.value === slot ? 'true' : 'false');
-        button.addEventListener('click', () => {
-          if (!timeSelect) return;
-          timeSelect.value = slot;
-          updatePreferredDatetime();
-          updateSelectedSlotSummary();
-          renderTimeSlots(slots);
-        });
-        timeSlotsEl.appendChild(button);
+      var match = Array.from(document.querySelectorAll('[data-plan-option]')).find(function (option) {
+        return (option.getAttribute('data-name') || '').toLowerCase() === requestedPlan.toLowerCase();
       });
-    }
+      if (!match) return;
 
-	    function updateCalendarNavState() {
-	      if (!prevBtn || !nextBtn) return;
-	      const today = getBookingToday();
-	      const max = new Date(today);
-	      max.setDate(max.getDate() + MAX_SCHEDULE_DAYS);
-
-      const visibleMonth = new Date(calendarDate.getFullYear(), calendarDate.getMonth(), 1);
-      const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-      const nextMonth = new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1);
-      const maxMonth = new Date(max.getFullYear(), max.getMonth(), 1);
-
-      prevBtn.disabled = visibleMonth <= currentMonth;
-      nextBtn.disabled = nextMonth > maxMonth;
-    }
-
-    function renderCalendar() {
-      if (!gridEl || !monthYearEl) return;
-      const year = calendarDate.getFullYear();
-      const month = calendarDate.getMonth();
-      monthYearEl.textContent = `${MONTHS[month]} ${year}`;
-      updateCalendarNavState();
-
-      const first = new Date(year, month, 1);
-      const last = new Date(year, month + 1, 0);
-      const startPad = first.getDay();
-      const daysInMonth = last.getDate();
-	      const today = getBookingToday();
-
-      gridEl.textContent = '';
-      for (let i = 0; i < startPad; i++) {
-        const empty = document.createElement('span');
-        empty.className = 'calendar-day calendar-day-empty';
-        empty.textContent = '';
-        empty.setAttribute('aria-hidden', 'true');
-        gridEl.appendChild(empty);
+      if (planNameEl) planNameEl.textContent = match.getAttribute('data-name') || requestedPlan;
+      if (planPriceEl) planPriceEl.textContent = match.getAttribute('data-price') || '';
+      if (planSummaryEl) {
+        planSummaryEl.textContent = [
+          match.getAttribute('data-description') || '',
+          match.getAttribute('data-spend') || '',
+        ].filter(Boolean).join(' · ');
       }
-      for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(year, month, d);
-        const isPastDay = isPast(date);
-        const isUnavailableFuture = isTooFar(date);
-        const isClosed = isClosedDay(date);
-        const isSelected = selectedDate && isSameDay(date, selectedDate);
-        const isToday = isSameDay(date, today);
-        let cls = 'calendar-day';
-        if (isPastDay || isUnavailableFuture) cls += ' calendar-day-past';
-        if (isClosed) cls += ' calendar-day-closed';
-        if (isSelected) cls += ' calendar-day-selected';
-        if (isToday && !isSelected) cls += ' calendar-day-today';
-        const dateStr = toYMD(date);
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = cls;
-        button.dataset.date = dateStr;
-        button.textContent = String(d);
-        button.setAttribute(
-          'aria-label',
-          isClosed
-            ? `${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} is closed`
-            : `Select ${date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`
-        );
-        button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-        if (isPastDay || isUnavailableFuture || isClosed) button.disabled = true;
-        button.addEventListener('click', () => {
-          selectedDate = new Date(dateStr + 'T12:00:00');
-          renderCalendar();
-          fetchAvailability(selectedDate);
-        });
-        gridEl.appendChild(button);
-      }
-    }
+      planContextEl.hidden = false;
 
-    function updatePreferredDatetime() {
-      if (!datetimeHidden || !timeSelect) return;
-      if (selectedDate && timeSelect.value) {
-        datetimeHidden.value = toYMD(selectedDate) + 'T' + timeSelect.value + ':00';
-      } else {
-        datetimeHidden.value = '';
-      }
-    }
-
-    function showSuccessCelebration(options = {}) {
-      if (!celebrationEl || !confettiFieldEl) return;
-
-      const calendarCreated = options.calendarCreated === true;
-      if (successTitleEl) {
-        successTitleEl.textContent = calendarCreated ? 'Demo booked' : 'Demo request sent';
-      }
-      if (successCopyEl) {
-        const inviteSent = options.inviteSent === true;
-        const meetCreated = options.meetCreated === true;
-        const confirmationEmailSent = options.confirmationEmailSent === true;
-        successCopyEl.textContent = calendarCreated && inviteSent && confirmationEmailSent
-          ? `Your calendar invite and confirmation email have been sent${meetCreated ? ' with the Google Meet link' : ''}.`
-          : calendarCreated && inviteSent
-            ? `Your calendar invite has been sent to your email${meetCreated ? ' with the Google Meet link' : ''}.`
-          : calendarCreated
-            ? "You're on our calendar. We'll email the meeting details shortly."
-          : "We'll email you shortly to confirm your demo time.";
-      }
-
-      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-      const colors = ['#10B981', '#2563EB', '#F59E0B', '#EC4899', '#8B5CF6', '#14B8A6'];
-      confettiFieldEl.replaceChildren();
-
-      if (!reduceMotion) {
-        for (let i = 0; i < 90; i += 1) {
-          const piece = document.createElement('span');
-          piece.className = 'demo-confetti-piece';
-          piece.style.setProperty('--x', `${Math.random() * 100}vw`);
-          piece.style.setProperty('--w', `${6 + Math.random() * 8}px`);
-          piece.style.setProperty('--h', `${8 + Math.random() * 16}px`);
-          piece.style.setProperty('--c', colors[i % colors.length]);
-          piece.style.setProperty('--d', `${1.7 + Math.random() * 1.4}s`);
-          piece.style.setProperty('--r', `${Math.random() * 360}deg`);
-          piece.style.setProperty('--end-r', `${540 + Math.random() * 720}deg`);
-          piece.style.setProperty('--drift', `${-90 + Math.random() * 180}px`);
-          piece.style.animationDelay = `${Math.random() * 0.45}s`;
-          confettiFieldEl.appendChild(piece);
-        }
-      }
-
-      window.clearTimeout(celebrationTimer);
-      celebrationEl.setAttribute('aria-hidden', 'false');
-      celebrationEl.classList.add('is-active');
-      celebrationTimer = window.setTimeout(() => {
-        celebrationEl.classList.remove('is-active');
-        celebrationEl.setAttribute('aria-hidden', 'true');
-        window.setTimeout(() => confettiFieldEl.replaceChildren(), 250);
-      }, reduceMotion ? 1600 : 3400);
-    }
-
-    async function fetchAvailability(date) {
-      if (!timeSelect || !timeHint) return;
-      const dateStr = toYMD(date);
-      timeHint.classList.remove('hidden');
-      timeHint.textContent = 'Loading available times...';
-      timeSelect.replaceChildren(new Option('Loading...', ''));
-      timeSelect.disabled = true;
-      currentAvailableSlots = [];
-      renderTimeSlots([], 'Checking your available times...');
-      updatePreferredDatetime();
-      updateSelectedSlotSummary('loading');
-
-      try {
-        const res = await fetch(`/api/calendar-availability?date=${encodeURIComponent(dateStr)}`);
-        const data = await res.json().catch(() => ({}));
-        const slots = Array.isArray(data.slots) ? data.slots : [];
-
-        if (!res.ok) {
-          throw new Error(data.error || 'Availability check failed');
-        }
-
-        if (slots.length === 0) {
-          currentAvailableSlots = [];
-          timeSelect.replaceChildren(new Option('No slots available this day', ''));
-          timeSelect.disabled = true;
-          const emptyMessage = data.closedReason || 'No available slots for this date. Please choose another Monday-Saturday date.';
-          timeHint.textContent = emptyMessage;
-          timeHint.classList.remove('hidden');
-          renderTimeSlots([], emptyMessage);
-        } else {
-          currentAvailableSlots = slots;
-          timeSelect.replaceChildren();
-          slots.forEach((slot, i) => {
-            const opt = new Option(slotToLabel(slot), slot);
-            if (i === 0) opt.selected = true;
-            timeSelect.appendChild(opt);
-          });
-          timeSelect.disabled = false;
-          timeHint.classList.add('hidden');
-          renderTimeSlots(slots);
-        }
-
-        updatePreferredDatetime();
-        updateSelectedSlotSummary();
-      } catch {
-        timeSelect.replaceChildren(new Option('Availability unavailable', ''));
-        timeSelect.disabled = true;
-        currentAvailableSlots = [];
-        timeHint.textContent = 'Live availability could not load. Please try this date again or choose another date.';
-        timeHint.classList.remove('hidden');
-        renderTimeSlots([], 'Calendar availability could not be verified. Please choose another date or try again shortly.');
-        updatePreferredDatetime();
-        updateSelectedSlotSummary();
-      }
-    }
-
-    prevBtn?.addEventListener('click', () => {
-      if (prevBtn.disabled) return;
-      calendarDate.setMonth(calendarDate.getMonth() - 1);
-      renderCalendar();
-    });
-    nextBtn?.addEventListener('click', () => {
-      if (nextBtn.disabled) return;
-      calendarDate.setMonth(calendarDate.getMonth() + 1);
-      renderCalendar();
-    });
-    timeSelect?.addEventListener('change', () => {
-      updatePreferredDatetime();
-      updateSelectedSlotSummary();
-      renderTimeSlots(currentAvailableSlots);
-    });
-    applyPlanFromUrl();
-    renderCalendar();
-    renderTimeSlots();
-    updateSelectedSlotSummary();
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      updatePreferredDatetime();
-      if (!submitBtn || !messageEl) return;
-      submitBtn.disabled = true;
-      messageEl.classList.add('hidden');
-      messageEl.textContent = '';
-
-      const formData = new FormData(form);
-      const body = {};
-      formData.forEach((value, key) => {
-        if (typeof value === 'string' && value.trim()) body[key] = value.trim();
-      });
-      const pref = body.preferred_datetime;
-      if (!pref && selectedDate && timeSelect?.value) {
-        body.preferred_datetime = toYMD(selectedDate) + 'T' + timeSelect.value + ':00';
-      }
-      if (!body.preferred_datetime) {
-        submitBtn.disabled = false;
-        messageEl.textContent = 'Please choose an available demo time before booking.';
-        messageEl.className = 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700';
-        messageEl.classList.remove('hidden');
-        return;
-      }
-      delete body.preferred_date;
-      delete body.preferred_time;
-      body.client_submission_id = getClientSubmissionId('demo');
-      body.context = getIntakeContext('Book a Demo');
-
-      try {
-        const sessionId = window.posthog?.get_session_id?.() || '';
-        var analyticsConsent = '';
-        try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-PostHog-Session-Id': sessionId,
-            'X-Analytics-Consent': analyticsConsent,
-          },
-          body: JSON.stringify(body),
-        });
-        const data = await res.json().catch(() => ({}));
-
-        if (res.ok) {
-          const email = body.email || '';
-          if (email) window.posthog?.identify(email, { company: body.company || undefined });
-          window.posthog?.capture('demo_form_submitted', {
-            has_preferred_datetime: Boolean(body.preferred_datetime),
-            number_of_locations: body.number_of_locations || undefined,
-            plan: body.plan || undefined,
-            status: 'accepted',
-          });
-          const bookedMessage = data.message || "Thanks! We'll be in touch to confirm your demo.";
-          messageEl.textContent = bookedMessage;
-          messageEl.className = 'text-sm rounded-lg p-3 bg-emerald-50 text-emerald-950 border border-emerald-100';
-          messageEl.classList.remove('hidden');
-          const demoBooked = data.status === 'booked';
-          showSuccessCelebration({
-            calendarCreated: demoBooked,
-            inviteSent: demoBooked,
-            meetCreated: demoBooked,
-            confirmationEmailSent: demoBooked,
-          });
-          form.reset();
-          applyPlanFromUrl();
-          selectedDate = null;
-          if (datetimeHidden) datetimeHidden.value = '';
-          if (timeSelect) {
-            timeSelect.replaceChildren(new Option('Select a date first', ''));
-            timeSelect.value = '';
-            timeSelect.disabled = false;
-          }
-          currentAvailableSlots = [];
-          renderTimeSlots();
-          timeHint?.classList.add('hidden');
-          renderCalendar();
-          updateSelectedSlotSummary();
-        } else {
-          window.posthog?.capture('demo_form_errored', { error_message: data.error || 'unknown' });
-          messageEl.textContent = data.error || 'Something went wrong. Please try again or email us.';
-          messageEl.className = 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700';
-          messageEl.classList.remove('hidden');
-          if (res.status === 409 && selectedDate) fetchAvailability(selectedDate);
-        }
-      } catch (err) {
-        window.posthog?.capture('demo_form_errored', { error_message: 'network_error' });
-        window.posthog?.captureException?.(err);
-        messageEl.textContent = 'Network error. Please try again.';
-        messageEl.className = 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700';
-        messageEl.classList.remove('hidden');
-      } finally {
-        submitBtn.disabled = false;
-      }
-    });
+      window.posthog?.capture('demo_plan_context_shown', { plan: match.getAttribute('data-name') || requestedPlan });
+    })();
   </script>
 </Layout>

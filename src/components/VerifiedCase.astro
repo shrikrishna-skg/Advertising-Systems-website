@@ -1,0 +1,325 @@
+---
+/**
+ * Section 04 — the ONLY section on the homepage carrying real platform data.
+ * Every headline figure reconciles to the source export's own 30-day daily
+ * series (spend sums to $592.93, revenue to $16,175.23 — recomputed, not copied
+ * from the export's summary panel, which contains seven internal errors).
+ *
+ * THE PROPERTY IS NOT IDENTIFIED HERE, AND MUST NOT BE.
+ * Name, property ID and source filename live in mockups/README.md, which is
+ * repo-only. They are deliberately absent from this file: Astro strips `---`
+ * frontmatter comments, but HTML comments in the template are served to the
+ * browser, so a name parked in one is published — just quietly. Do not
+ * reintroduce either without written consent from the property. Note the
+ * numeric Expedia property ID is a public lookup key and resolves straight back
+ * to the hotel, so it de-anonymises exactly as much as the name does.
+ */
+interface Props {
+  /** Section number chip; the homepage uses '04', /case-studies uses '01'. */
+  number?: string;
+}
+const { number = '04' } = Astro.props;
+
+/* Daily booking revenue (bars) — 26 days with revenue out of the 30-day window. */
+const bars = [
+  [8.0, 98.5, 81.5], [37.2, 139.0, 41.0], [66.4, 149.7, 30.3], [124.8, 154.2, 25.8],
+  [154.0, 151.6, 28.4], [183.2, 165.8, 14.2], [212.4, 69.7, 110.3], [241.6, 68.0, 112.0],
+  [270.8, 163.1, 16.9], [300.0, 137.2, 42.8], [329.2, 165.9, 14.1], [358.4, 165.1, 14.9],
+  [446.0, 138.2, 41.8], [475.2, 126.4, 53.6], [533.6, 165.9, 14.1], [562.8, 160.5, 19.5],
+  [592.0, 65.6, 114.4], [621.2, 70.8, 109.2], [650.4, 131.2, 48.8], [679.6, 147.9, 32.1],
+  [708.8, 130.6, 49.4], [738.0, 27.9, 152.1], [767.2, 114.3, 65.7], [796.4, 37.0, 143.0],
+  [825.6, 144.3, 35.7], [854.8, 153.9, 26.1],
+];
+
+const spendLine = '18.5,132.0 47.7,132.0 76.9,132.0 106.1,132.0 135.3,132.0 164.5,132.0 193.7,126.4 222.9,70.1 252.1,102.7 281.3,79.3 310.5,137.2 339.7,159.6 368.9,167.2 398.1,167.0 427.3,173.2 456.5,137.2 485.7,163.3 514.9,158.3 544.1,132.8 573.3,156.6 602.5,122.5 631.7,101.6 660.9,100.8 690.1,101.4 719.3,22.9 748.5,38.9 777.7,61.0 806.9,91.2 836.1,74.9 865.3,64.6';
+
+const caseKpis = [
+  { l: 'Ad spend', v: '$592.93', s: '30 days active · auto-bid, $2.11–$49.08/day', pos: false },
+  { l: 'Booking revenue', v: '$16,175.23', s: '86 reservations · 192 room nights', pos: false },
+  { l: 'Return on ad spend', v: '27.3:1', s: 'Platform cites an 8:1–12:1 lodging benchmark', pos: true },
+  { l: 'Net contribution', v: '+$15,582.30', s: 'Revenue less ad spend, clicked path only', pos: true },
+];
+
+const benchmarks = [
+  { m: 'Return on ad spend', mine: '27.3:1', bench: '8:1 – 12:1', read: 'Well above', tone: 'up' },
+  { m: 'Click-through rate', mine: '6.03%', bench: '2% – 3%', read: 'Well above', tone: 'up' },
+  { m: 'Click-to-book', mine: '15.52%', bench: 'not published', read: 'Strong', tone: 'up' },
+  { m: 'Average sponsored rank', mine: '2.80', bench: 'not published', read: 'Top-3 placement', tone: 'up' },
+  { m: 'Average cost per click', mine: '$1.07', bench: 'not published', read: '—', tone: 'flat' },
+  { m: 'Guest Experience Score', mine: '66 / 100', bench: '85+ target', read: 'Below — the live lever', tone: 'flat' },
+];
+
+const findings = [
+  { t: 'Halo', src: 'EXPOSED PATH', body: 'Travellers who saw the listing without clicking added <b>30 bookings, 68 room nights and $5,626.55</b> — a 34.8% lift on clicked-path revenue.', amt: '37:1 all-in', dir: 'up' },
+  { t: 'Pacing', src: 'DAILY BUDGET', body: 'The cap was reached on <b>4 of 30 days</b>. Projected missed revenue on those days: none material.', amt: '$0.00', dir: '' },
+  { t: 'Lever', src: 'AUCTION QUALITY', body: 'Guest Experience Score sits at <b>66/100</b>. Lifting it toward 85 improves the auction quality multiplier — lower effective CPC at the same rank.', amt: 'Open', dir: '' },
+  { t: 'Risk', src: 'CONCENTRATION', body: 'Five of thirty days produced <b>44% of revenue</b>. The month is healthy; it is not evenly earned.', amt: 'Watch', dir: '' },
+];
+---
+
+<section class="sec" id="case" aria-labelledby="case-heading">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="no" aria-hidden="true">{number}</span>
+      <div>
+        <h2 id="case-heading">One property. Thirty days. Every number straight from the platform.</h2>
+        <p class="sub">
+          The blotter above is illustrative. This is not. Everything below is the raw Expedia
+          TravelAds export for a single managed property, reconciled against its own daily series.
+        </p>
+      </div>
+    </div>
+
+    <div class="srcline">
+      <b>Source</b>
+      <span>Expedia TravelAds export</span>
+      <span aria-hidden="true">·</span>
+      <span>Select-service hotel, US metro market — <em>property withheld</em></span>
+      <span aria-hidden="true">·</span>
+      <span class="num">16 Jul – 14 Aug 2026 (30 days)</span>
+      <span aria-hidden="true">·</span>
+      <span>Clicked-path attribution</span>
+    </div>
+
+    <div class="case-kpis">
+      {caseKpis.map(({ l, v, s, pos }) => (
+        <div class="ck">
+          <div class="l">{l}</div>
+          <div class={pos ? 'v num pos' : 'v num'}>{v}</div>
+          <div class="s">{s}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="case-duo">
+      <div class="panel-box chart">
+        <div class="ph">
+          <h3>Daily spend vs. booking revenue</h3>
+          <div class="key"><i>Revenue</i><i class="sp">Spend</i></div>
+        </div>
+        <div class="bd">
+          <svg viewBox="0 0 884 192" role="img" aria-label="Daily booking revenue as bars against daily ad spend as a line, 16 July to 14 August 2026. Revenue concentrates on five peak days; spend stays comparatively flat.">
+            <line x1="0" y1="180" x2="884" y2="180" class="cbase"/>
+            {bars.map(([x, y, h]) => <rect x={x} y={y} width="21" height={h} rx="1.5" class="cb"/>)}
+            <polyline class="cl" points={spendLine}/>
+          </svg>
+          <div class="chart-x"><span>16 Jul</span><span>31 Jul</span><span>14 Aug</span></div>
+          <p class="fine">
+            Four days returned no booking revenue. Five days — 10 and 12 Aug, 5 Aug, 23 and 24 Jul
+            — carried 44% of the month. Spend never chased them; the engine did.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel-box">
+        <div class="ph"><h3>Conversion path</h3><span class="illus ok">Verified</span></div>
+        <div class="bd fnl">
+          <div class="fs"><span class="lbl">Impressions</span><b class="num">9,191</b></div>
+          <div class="fstep">at average sponsored rank <em class="num">2.80</em></div>
+          <div class="fs"><span class="lbl">Clicks</span><b class="num">554</b></div>
+          <div class="fstep"><em class="num">6.03%</em> clicked · <em class="num">$1.07</em> average CPC</div>
+          <div class="fs"><span class="lbl">Bookings</span><b class="num">86</b></div>
+          <div class="fstep"><em class="num">15.52%</em> of clicks booked · <em class="num">0.94%</em> end to end</div>
+          <div class="fs"><span class="lbl">Room nights</span><b class="num">192</b></div>
+          <div class="fstep"><em class="num">2.23</em> nights average stay</div>
+          <div class="ftot"><span class="lbl">Booking revenue</span><b class="num">$16,175.23</b></div>
+          <div class="fstep flat"><em class="num">$188.08</em> average booking value</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-box bench-box">
+      <div class="ph"><h3>Measured against the platform's own lodging benchmarks</h3></div>
+      <table class="bench">
+        <thead>
+          <tr><th>Metric</th><th class="r">This property</th><th class="r">Benchmark</th><th class="r">Read</th></tr>
+        </thead>
+        <tbody>
+          {benchmarks.map(({ m, mine, bench, read, tone }) => (
+            <tr>
+              <td class="m">{m}</td>
+              <td class="r">{mine}</td>
+              <td class={bench === 'not published' ? 'r flat' : 'r'}>{bench}</td>
+              <td class={`r ${tone}`}>{read}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="log">
+      <div class="log-hd">
+        <h3>What the export shows beyond the headline</h3>
+        <span class="illus ok">Verified</span>
+      </div>
+      {findings.map(({ t, src, body, amt, dir }) => (
+        <div class="log-row">
+          <span class="t">{t}</span>
+          <span class="src">{src}</span>
+          <p set:html={body}></p>
+          <span class={dir ? `amt ${dir} num` : 'amt num'}>{amt}</span>
+        </div>
+      ))}
+    </div>
+
+    <p class="fine">
+      Single property, single channel, one 30-day window. Expedia TravelAds ROAS counts the full
+      booking value against sponsored-listing spend, so it is not directly comparable with a
+      Google or Meta ROAS on the same axis. Results depend on market, rate position, tracking
+      quality and spend volume.
+    </p>
+  </div>
+</section>
+
+<style>
+  .srcline {
+    display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center;
+    margin-bottom: 26px; padding: 11px 14px;
+    border: 1px solid var(--border); background: var(--surface-alt);
+    border-radius: 3px; font-size: 12.5px; color: var(--text-secondary);
+  }
+  .srcline b {
+    color: var(--acc); font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; font-size: 10.5px;
+  }
+  .srcline em { font-style: normal; font-weight: 600; color: var(--text-tertiary); }
+
+  .case-kpis {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface-raised); overflow: hidden; margin-bottom: 18px;
+  }
+  .ck { padding: 20px 22px; border-right: 1px solid var(--border); }
+  .ck:last-child { border-right: 0; }
+  .ck .l {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--text-tertiary);
+  }
+  .ck .v {
+    margin-top: 8px; font-size: clamp(24px, 2.8vw, 34px); font-weight: 800;
+    letter-spacing: -0.035em; line-height: 1; color: var(--text-primary);
+  }
+  .ck .v.pos { color: var(--pos); }
+  .ck .s { margin-top: 7px; font-size: 12px; color: var(--text-tertiary); line-height: 1.45; }
+
+  .case-duo {
+    display: grid; grid-template-columns: 1.55fr 1fr;
+    gap: 18px; margin-bottom: 18px; align-items: start;
+  }
+  /* Benchmark table: scroll inside the panel, never widen the page. */
+  .panel-box { overflow-x: auto; }
+  .panel-box table.bench { min-width: 520px; }
+  .panel-box {
+    border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface-raised); overflow: hidden;
+  }
+  .bench-box { margin-bottom: 18px; }
+  .panel-box .ph {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 14px; background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-box .ph h3 {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-secondary);
+  }
+  .panel-box .ph .key { display: flex; gap: 14px; font-size: 10.5px; font-weight: 600; color: var(--text-tertiary); }
+  .panel-box .ph .key i { font-style: normal; display: inline-flex; align-items: center; gap: 5px; }
+  .panel-box .ph .key i::before { content: ""; width: 9px; height: 3px; border-radius: 2px; background: var(--acc); }
+  .panel-box .ph .key i.sp::before { background: var(--text-tertiary); }
+  .panel-box .bd { padding: 16px 14px 12px; }
+
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart .cb { fill: var(--acc); opacity: 0.55; }
+  .chart .cl { fill: none; stroke: var(--text-tertiary); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+  .chart .cbase { stroke: var(--border); stroke-width: 1; }
+  .chart-x {
+    display: flex; justify-content: space-between; margin-top: 8px;
+    font-size: 10px; font-weight: 600; color: var(--text-tertiary);
+  }
+
+  /* Funnel as a numeric ladder, not proportional bars. Bars were actively
+     misleading here: 554 clicks carry through at 6.03% and 86 bookings at
+     15.52%, so a width-encoded bar drew the bookings step WIDER than the clicks
+     step above it. Steps are values; the rate between them is the edge. */
+  .fnl { padding: 2px 0; }
+  .fs { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 11px 0; }
+  .fs .lbl {
+    color: var(--text-tertiary); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.11em; text-transform: uppercase;
+  }
+  .fs b { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; color: var(--text-primary); }
+  .fstep {
+    display: flex; align-items: center; gap: 9px;
+    border-left: 2px solid var(--border); margin-left: 1px;
+    font-size: 11.5px; color: var(--text-tertiary);
+    min-height: 26px; padding-left: 12px;
+  }
+  .fstep em { font-style: normal; color: var(--acc); font-weight: 700; }
+  .fstep.flat { border-left: 0; padding-left: 0; margin-top: 4px; }
+  .ftot {
+    margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  }
+  .ftot .lbl {
+    color: var(--text-tertiary); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.11em; text-transform: uppercase;
+  }
+  .ftot b { font-weight: 800; font-size: 21px; letter-spacing: -0.03em; color: var(--pos); }
+
+  table.bench { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  table.bench th {
+    text-align: left; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    padding: 9px 14px; border-bottom: 1px solid var(--border);
+  }
+  table.bench th.r, table.bench td.r { text-align: right; }
+  table.bench td {
+    padding: 11px 14px; border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums; color: var(--text-secondary);
+  }
+  table.bench tr:last-child td { border-bottom: 0; }
+  table.bench .m { font-weight: 700; color: var(--text-primary); }
+  table.bench .up { color: var(--pos); font-weight: 700; }
+  table.bench .flat { color: var(--text-tertiary); }
+
+  .log {
+    border: 1px solid var(--border); border-radius: 4px;
+    overflow: hidden; background: var(--surface-raised);
+  }
+  .log-hd {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 16px; background: var(--surface-alt); border-bottom: 1px solid var(--border);
+  }
+  .log-hd h3 {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-secondary);
+  }
+  .log-row {
+    display: grid; grid-template-columns: 66px 128px 1fr auto; gap: 16px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    font-size: 13px; align-items: center;
+  }
+  .log-row:last-child { border-bottom: 0; }
+  .log-row .t { font-size: 11.5px; color: var(--text-tertiary); }
+  .log-row .src { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: var(--text-secondary); }
+  .log-row p { color: var(--text-secondary); line-height: 1.5; }
+  .log-row p :global(b) { color: var(--text-primary); font-weight: 700; }
+  .log-row .amt { font-weight: 700; white-space: nowrap; color: var(--text-primary); }
+  .log-row .amt.up { color: var(--pos); }
+
+  @media (max-width: 1000px) {
+    .case-duo { grid-template-columns: 1fr; }
+    .case-kpis { grid-template-columns: repeat(2, 1fr); }
+    .ck:nth-child(2n) { border-right: 0; }
+    .ck:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
+  }
+  @media (max-width: 640px) {
+    .case-kpis { grid-template-columns: 1fr; }
+    .ck { border-right: 0; border-bottom: 1px solid var(--border); }
+    .ck:last-child { border-bottom: 0; }
+    table.bench th:nth-child(3), table.bench td:nth-child(3) { display: none; }
+    .log-row { grid-template-columns: 1fr auto; gap: 6px; }
+    .log-row .t, .log-row .src { grid-column: 1 / -1; }
+  }
+</style>

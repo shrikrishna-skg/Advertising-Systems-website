@@ -2,42 +2,59 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import ProductPillars from '../components/ProductPillars.astro';
-import GoalsSection from '../components/GoalsSection.astro';
-import StatsBar from '../components/StatsBar.astro';
-import CustomerProof from '../components/CustomerProof.astro';
-import PainPoints from '../components/PainPoints.astro';
-import Features from '../components/Features.astro';
-import ThreePillars from '../components/ThreePillars.astro';
-import Integrations from '../components/Integrations.astro';
-import Testimonials from '../components/Testimonials.astro';
-import Pricing from '../components/Pricing.astro';
-import LetUsHelp from '../components/LetUsHelp.astro';
-import FAQ from '../components/FAQ.astro';
-import FinalCTA from '../components/FinalCTA.astro';
+import ChannelGrid from '../components/ChannelGrid.astro';
+import EngineCapabilities from '../components/EngineCapabilities.astro';
+import DecisionLog from '../components/DecisionLog.astro';
+import VerifiedCase from '../components/VerifiedCase.astro';
+import RateRows from '../components/RateRows.astro';
+import HomeFAQ from '../components/HomeFAQ.astro';
+import CTABand from '../components/CTABand.astro';
 import Footer from '../components/Footer.astro';
+
+/**
+ * Homepage — direction A, "The Terminal" (Wave 2).
+ * mockups/a-the-terminal.html · reports/2026-08-15-phase2-implementation-plan.md
+ *
+ * `.terminal` on <main> is what scopes the direction's element-level CSS in
+ * global.css. Until Waves 3–6 convert the rest, no other route carries it.
+ *
+ * SECTION 05 ("Operators who moved their spend here") is deliberately ABSENT.
+ * The mockup carries three named testimonials with specific performance claims
+ * that exist in src/data/testimonials.ts with no provenance anywhere in the
+ * repo — no consent record, no source for any figure. Shipping named people
+ * making unverifiable revenue claims is exactly what the honesty pass is for.
+ * <VerifiedCase /> is the proof on this page because it is the proof we can
+ * actually stand behind. Restore the section by importing Testimonials once
+ * each quote has a written consent record and a source for its numbers.
+ */
 ---
 
 <Layout
-  title="Advertising Systems — AI-Powered Advertising Management | Unify Google, Meta & OTAs"
-  description="Stop wasting ad spend. One platform for Google Ads, Meta Ads, and OTAs. AI optimization, real-time analytics, and cross-channel budget control. Start free or book a demo."
+  title="Advertising Systems — One screen for Expedia, Google, Meta & OTAs"
+  description="Your ad spend is a portfolio. Advertising Systems unifies Expedia TravelAds, Google Ads, Meta and Microsoft on one screen, then works the budget every 15 minutes."
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Advertising Systems — AI advertising management',
+    url: 'https://www.advertisingsystems.ai/',
+    primaryImageOfPage: undefined,
+    significantLink: [
+      'https://www.advertisingsystems.ai/pricing',
+      'https://www.advertisingsystems.ai/book-demo',
+      'https://www.advertisingsystems.ai/integrations',
+    ],
+  }}
 >
   <Navbar />
-  <main>
+  <main class="terminal">
     <Hero />
-    <ProductPillars />
-    <GoalsSection />
-    <StatsBar />
-    <CustomerProof />
-    <PainPoints />
-    <Features />
-    <ThreePillars />
-    <Integrations />
-    <Testimonials />
-    <Pricing />
-    <LetUsHelp />
-    <FAQ />
-    <FinalCTA />
+    <ChannelGrid />
+    <EngineCapabilities />
+    <DecisionLog />
+    <VerifiedCase />
+    <RateRows />
+    <HomeFAQ />
+    <CTABand />
   </main>
   <Footer />
 </Layout>

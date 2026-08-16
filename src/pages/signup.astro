@@ -2,10 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { signupFaqs } from '../data/page-faqs';
 
+/**
+ * Signup — Wave 3, Terminal conversion. Single-purpose funnel page: one narrow
+ * column, the intake form in a panel, no competing sections. All submit/PostHog
+ * behaviour unchanged.
+ */
 const breadcrumbs = [{ name: 'Sign Up', href: '/signup' }];
 
 const whatYouGet = [
@@ -33,213 +37,194 @@ const whatYouGet = [
   }}
 >
   <Navbar />
-  <Breadcrumb items={breadcrumbs} />
-  <main>
-    <section class="pt-36 pb-28 relative overflow-hidden" aria-labelledby="signup-heading">
-      <div class="absolute inset-0 mesh-gradient opacity-30"></div>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center mb-8">
-          <h1 id="signup-heading" class="reveal text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Start your <span class="text-[var(--text-primary)]">secure signup</span>
-          </h1>
-          <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)]">
-            Create your account request and continue in the secure Advertising Systems app.
-          </p>
-          <p class="reveal mt-2 text-sm font-medium text-[var(--text-muted)]">
-            Built for teams managing Google, Meta, and OTA advertising in one place.
-          </p>
-        </div>
+  <main class="terminal">
+    <section class="s-hero" aria-labelledby="signup-heading">
+      <div class="wrap s-col">
+        <span class="badge-line"><i aria-hidden="true"></i> Secure signup — account created in the app</span>
+        <h1 id="signup-heading">Start your <span class="s-accent">secure signup.</span></h1>
+        <p class="lead">Create your account request here, then continue in the secure Advertising Systems app. Your password never touches this website.</p>
 
-        <!-- What you get -->
-        <div class="reveal max-w-lg mx-auto mb-10">
-          <h2 class="sr-only">What you get</h2>
-          <ul class="glass rounded-2xl p-6 space-y-3" role="list">
-            {whatYouGet.map((item) => (
-              <li class="flex items-start gap-3 text-sm font-medium text-[var(--text-secondary)]">
-                <span class="mt-0.5 w-5 h-5 rounded-full bg-[var(--surface-alt)] flex items-center justify-center shrink-0" aria-hidden="true">
-                  <svg class="w-3 h-3 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </span>
-                {item}
-              </li>
-            ))}
+        <div class="panel-box s-panel">
+          <div class="panel-hd"><h2>What you get</h2></div>
+          <ul class="s-list" role="list">
+            {whatYouGet.map((item) => <li>{item}</li>)}
           </ul>
         </div>
 
-        <div class="max-w-lg mx-auto">
-        <form id="signup-intent-form" class="reveal glass rounded-2xl p-8 space-y-5" action="/api/signup-intent" method="POST" data-app-signup-url="https://app.advertisingsystems.ai/signup">
-          <div>
-            <label for="name" class="block text-sm font-semibold text-[var(--text-secondary)] mb-1.5">Full Name</label>
-	            <input
-	              type="text"
-	              id="name"
-	              name="name"
-	              required
-	              maxlength="120"
-	              placeholder="Jane Smith"
-              class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--color-link)] focus:ring-1 focus:ring-[var(--color-link)] transition-colors"
-            />
-          </div>
-
-          <div>
-            <label for="email" class="block text-sm font-semibold text-[var(--text-secondary)] mb-1.5">Work Email</label>
-	            <input
-	              type="email"
-	              id="email"
-	              name="email"
-	              required
-	              maxlength="254"
-	              placeholder="jane@company.com"
-              class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--color-link)] focus:ring-1 focus:ring-[var(--color-link)] transition-colors"
-            />
-          </div>
-
-	          <div>
-	            <label for="company" class="block text-sm font-semibold text-[var(--text-secondary)] mb-1.5">Company</label>
-	            <input
-	              type="text"
-	              id="company"
-	              name="company"
-	              required
-	              maxlength="160"
-	              placeholder="Acme Corp"
-              class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--color-link)] focus:ring-1 focus:ring-[var(--color-link)] transition-colors"
-            />
-          </div>
-
-	          <button
-	            type="submit"
-	            id="signup-intent-submit"
-	            class="w-full bg-royal-green-500 text-white font-semibold py-3 rounded-lg hover:bg-royal-green-600 transition-colors cursor-pointer"
-	          >
-	            Continue to Secure Signup
-	          </button>
-	          <div id="signup-intent-message" class="hidden text-sm rounded-lg p-3" role="alert"></div>
-
-	          <p class="text-xs text-center text-[var(--text-muted)]">
-	            Your account and password are created inside the secure app. By continuing, you agree to our <a href="/terms" class="text-[var(--color-link)] link-secondary">Terms of Service</a> and <a href="/privacy" class="text-[var(--color-link)] link-secondary">Privacy Policy</a>.
-	          </p>
-	          <p class="text-sm text-center text-[var(--text-tertiary)] font-medium pt-2">
-	            Already have an account? <a href="https://app.advertisingsystems.ai/login" class="text-[var(--color-link)] link-secondary font-semibold">Log in</a>
-	          </p>
-        </form>
-
-        <!-- Trust indicators -->
-        <div class="reveal grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
-          <div class="text-center">
-            <div class="w-10 h-10 rounded-full bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mx-auto mb-2">
-              <svg class="w-5 h-5 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-              </svg>
+        <div class="panel-box s-panel">
+          <div class="panel-hd"><h2>Account request</h2></div>
+          <form id="signup-intent-form" class="s-form" action="/api/signup-intent" method="POST" data-app-signup-url="https://app.advertisingsystems.ai/signup">
+            <div>
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required maxlength="120" placeholder="Jane Smith" autocomplete="name" />
             </div>
-            <p class="text-sm font-semibold text-[var(--text-secondary)]">Secure signup</p>
-          </div>
-          <div class="text-center">
-            <div class="w-10 h-10 rounded-full bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mx-auto mb-2">
-              <svg class="w-5 h-5 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-              </svg>
+            <div>
+              <label for="email">Work Email</label>
+              <input type="email" id="email" name="email" required maxlength="254" placeholder="jane@company.com" autocomplete="email" />
             </div>
-            <p class="text-sm font-semibold text-[var(--text-secondary)]">No credit card required</p>
-          </div>
-          <div class="text-center">
-            <div class="w-10 h-10 rounded-full bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mx-auto mb-2">
-              <svg class="w-5 h-5 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+            <div>
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" required maxlength="160" placeholder="Acme Corp" autocomplete="organization" />
             </div>
-            <p class="text-sm font-semibold text-[var(--text-secondary)]">Cancel anytime</p>
-          </div>
+            <button type="submit" id="signup-intent-submit" class="btn btn-p s-submit">Continue to Secure Signup</button>
+            <div id="signup-intent-message" class="s-alert" role="alert" hidden></div>
+            <p class="s-fine">
+              Your account and password are created inside the secure app. By continuing, you agree to our
+              <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.
+            </p>
+            <p class="s-login">Already have an account? <a href="https://app.advertisingsystems.ai/login">Log in</a></p>
+          </form>
         </div>
-        </div>
+
+        <p class="fine s-trust">Secure signup · No credit card required · Cancel anytime</p>
       </div>
     </section>
-
-    <div class="section-line"></div>
 
     <FAQSection title="Common questions" faqs={signupFaqs} name="signup-faq" />
   </main>
   <Footer />
-</Layout>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('signup-intent-form');
-    var submitBtn = document.getElementById('signup-intent-submit');
-    var messageEl = document.getElementById('signup-intent-message');
-    if (!form) return;
-    function getClientSubmissionId(prefix) {
-      if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
-      return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  <style>
+    .s-hero {
+      padding: 56px 0 64px;
+      background:
+        linear-gradient(var(--dot-grid-color) 1px, transparent 1px) 0 0 / 100% 34px,
+        linear-gradient(90deg, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 34px 100%,
+        var(--surface-alt);
+      border-bottom: 1px solid var(--border);
     }
-    function getContext(defaultCta) {
-      var params = new URLSearchParams(window.location.search);
-      var sourcePage = params.get('source_page');
-      return {
-        landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
-        referrer: document.referrer || undefined,
-        cta: params.get('cta') || defaultCta,
-        posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
-        utm: {
-          source: params.get('utm_source') || undefined,
-          medium: params.get('utm_medium') || undefined,
-          campaign: params.get('utm_campaign') || undefined,
-        },
-      };
+    .s-col { max-width: 560px; }
+    /* Display-text exception — same rule as the homepage rotator. */
+    .s-accent { color: var(--acc-display, var(--acc-btn)); }
+
+    .s-panel { margin-top: 22px; }
+    .s-list { margin: 0; padding: 6px 0; list-style: none; }
+    .s-list li {
+      position: relative;
+      padding: 9px 16px 9px 38px;
+      font-size: 13.5px; color: var(--text-secondary); line-height: 1.5;
+      border-bottom: 1px solid var(--border);
     }
-    function setMessage(text, isError) {
-      if (!messageEl) return;
-      messageEl.textContent = text;
-      messageEl.className = isError
-        ? 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700 border border-red-500/20'
-        : 'text-sm rounded-lg p-3 bg-emerald-50 text-emerald-950 border border-emerald-100';
-      messageEl.classList.remove('hidden');
+    .s-list li:last-child { border-bottom: 0; }
+    .s-list li::before {
+      content: ""; position: absolute; left: 16px; top: 16px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--pos);
     }
-    form.addEventListener('submit', async function(event) {
-      event.preventDefault();
-      if (submitBtn) submitBtn.disabled = true;
-      if (messageEl) messageEl.classList.add('hidden');
-      var email = form.querySelector('#email')?.value?.trim();
-      var company = form.querySelector('#company')?.value?.trim();
-      var params = new URLSearchParams(window.location.search);
-      var payload = {
-        name: form.querySelector('#name')?.value?.trim(),
-        email: email,
-        company: company,
-        plan: params.get('plan') || undefined,
-        client_submission_id: getClientSubmissionId('signup'),
-        context: getContext('Start Signup'),
-      };
-      try {
-        var analyticsConsent = '';
-        try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
-        var res = await fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Analytics-Consent': analyticsConsent,
-          },
-          body: JSON.stringify(payload),
-        });
-        var data = await res.json().catch(function() { return {}; });
-        if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
-        if (email) window.posthog?.identify(email, { company: company || undefined });
-        window.posthog?.capture('signup_form_submitted', {
-          has_company: Boolean(company),
-          plan: payload.plan,
-          status: 'accepted',
-        });
-        setMessage(data.message || 'Signup started. Continue in the secure app.', false);
-        window.setTimeout(function() {
-          window.location.href = form.dataset.appSignupUrl || data.redirect_url || 'https://app.advertisingsystems.ai/signup';
-        }, 900);
-      } catch (error) {
-        var message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-        window.posthog?.capture('signup_form_errored', { error_message: message });
-        setMessage(message, true);
-        if (submitBtn) submitBtn.disabled = false;
+
+    .s-form { padding: 18px 16px; display: grid; gap: 14px; }
+    .s-form label {
+      display: block;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+    .s-form input {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--surface);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14.5px;
+      transition: border-color 0.15s;
+    }
+    .s-form input::placeholder { color: var(--text-faint); }
+    .s-form input:focus { outline: none; border-color: var(--acc); }
+    .s-submit { width: 100%; }
+
+    .s-alert {
+      font-size: 13.5px; font-weight: 600;
+      border: 1px solid var(--border); border-radius: 3px;
+      padding: 10px 12px;
+    }
+    .s-alert.ok { color: var(--pos); border-color: var(--pos); background: var(--pos-tint); }
+    .s-alert.err { color: var(--neg); border-color: var(--neg); background: var(--neg-tint); }
+
+    .s-fine { font-size: 12px; color: var(--text-tertiary); text-align: center; line-height: 1.55; }
+    .s-fine a, .s-login a { color: var(--acc); font-weight: 600; text-decoration: none; }
+    .s-fine a:hover, .s-login a:hover { text-decoration: underline; }
+    .s-login { font-size: 13.5px; font-weight: 600; color: var(--text-secondary); text-align: center; }
+    .s-trust { text-align: center; }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('signup-intent-form');
+      var submitBtn = document.getElementById('signup-intent-submit');
+      var messageEl = document.getElementById('signup-intent-message');
+      if (!form) return;
+      function getClientSubmissionId(prefix) {
+        if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
+        return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
       }
+      function getContext(defaultCta) {
+        var params = new URLSearchParams(window.location.search);
+        var sourcePage = params.get('source_page');
+        return {
+          landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
+          referrer: document.referrer || undefined,
+          cta: params.get('cta') || defaultCta,
+          posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
+          utm: {
+            source: params.get('utm_source') || undefined,
+            medium: params.get('utm_medium') || undefined,
+            campaign: params.get('utm_campaign') || undefined,
+          },
+        };
+      }
+      function setMessage(text, isError) {
+        if (!messageEl) return;
+        messageEl.textContent = text;
+        messageEl.className = isError ? 's-alert err' : 's-alert ok';
+        messageEl.hidden = false;
+      }
+      form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        if (submitBtn) submitBtn.disabled = true;
+        if (messageEl) messageEl.hidden = true;
+        var email = form.querySelector('#email')?.value?.trim();
+        var company = form.querySelector('#company')?.value?.trim();
+        var params = new URLSearchParams(window.location.search);
+        var payload = {
+          name: form.querySelector('#name')?.value?.trim(),
+          email: email,
+          company: company,
+          plan: params.get('plan') || undefined,
+          client_submission_id: getClientSubmissionId('signup'),
+          context: getContext('Start Signup'),
+        };
+        try {
+          var analyticsConsent = '';
+          try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
+          var res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Analytics-Consent': analyticsConsent,
+            },
+            body: JSON.stringify(payload),
+          });
+          var data = await res.json().catch(function() { return {}; });
+          if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+          if (email) window.posthog?.identify(email, { company: company || undefined });
+          window.posthog?.capture('signup_form_submitted', {
+            has_company: Boolean(company),
+            plan: payload.plan,
+            status: 'accepted',
+          });
+          setMessage(data.message || 'Signup started. Continue in the secure app.', false);
+          window.setTimeout(function() {
+            window.location.href = form.dataset.appSignupUrl || data.redirect_url || 'https://app.advertisingsystems.ai/signup';
+          }, 900);
+        } catch (error) {
+          var message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
+          window.posthog?.capture('signup_form_errored', { error_message: message });
+          setMessage(message, true);
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
     });
-  });
-</script>
+  </script>
+</Layout>

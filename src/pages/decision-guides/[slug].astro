@@ -20,7 +20,9 @@ const relatedGuides = getRelatedDecisionGuides(guide.relatedSlugs);
 
 const toneClasses = {
   blue: 'border-blue-500/30 bg-blue-500/10 text-blue-600',
-  green: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600',
+  // Token, not the raw emerald ramp: its 600 step over a 10% wash on the dark
+  // ground measured ~3:1 and was the dimmest chip in the set.
+  green: 'border-[var(--pos-line)] bg-[var(--pos-tint)] text-[var(--pos)]',
   amber: 'border-amber-500/30 bg-amber-500/10 text-amber-600',
   rose: 'border-rose-500/30 bg-rose-500/10 text-rose-600',
   violet: 'border-violet-500/30 bg-violet-500/10 text-violet-600',
@@ -48,18 +50,19 @@ const toneClasses = {
   }}
 >
   <Navbar />
-  <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
 
-  <main>
+  <main class="terminal">
+    <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
     <article>
-      <section class="relative pt-28 pb-16 sm:pt-40 sm:pb-20 md:pt-48 md:pb-24 overflow-hidden" aria-labelledby="guide-heading">
+      <!-- See decision-guides.astro — same pre-.terminal double offset. -->
+      <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 md:pb-24 overflow-hidden" aria-labelledby="guide-heading">
         <div class="mesh-gradient absolute inset-0"></div>
         <div class="dot-grid absolute inset-0"></div>
 
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-4xl">
             <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
-              <span class="w-2 h-2 bg-royal-green-500 rounded-full animate-pulse shrink-0"></span>
+              <span class="w-2 h-2 bg-acc-500 rounded-full animate-pulse shrink-0"></span>
               <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">{guide.eyebrow}</span>
             </div>
 
@@ -71,7 +74,7 @@ const toneClasses = {
             </p>
 
             <div class="reveal mt-10 flex flex-col sm:flex-row gap-3">
-              <a href={guide.primaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-royal-green-600 transition-colors">
+              <a href={guide.primaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-acc-600 transition-colors">
                 {guide.primaryCta.label}
               </a>
               <a href={guide.secondaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-6 py-3 rounded-lg">

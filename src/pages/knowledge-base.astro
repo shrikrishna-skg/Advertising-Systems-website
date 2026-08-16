@@ -54,10 +54,10 @@ const categories = [
   breadcrumbs={breadcrumbs}
 >
   <Navbar />
-  <Breadcrumb items={breadcrumbs} />
-  <main>
+  <main class="terminal">
+    <Breadcrumb items={breadcrumbs} />
     <!-- Hero -->
-    <section class="pt-36 pb-20 relative overflow-hidden">
+    <section class="pt-14 pb-16 relative overflow-hidden">
       <div class="absolute inset-0 mesh-gradient opacity-30"></div>
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="text-center">
@@ -170,7 +170,7 @@ const categories = [
             Check our FAQ for quick answers to common questions, or contact support and we'll get back to you within 24 hours.
           </p>
           <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="/faq" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-royal-green-600 transition-colors">
+            <a href="/faq" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-acc-600 transition-colors">
               View FAQ
             </a>
             <a href="/contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-6 py-3 rounded-lg">

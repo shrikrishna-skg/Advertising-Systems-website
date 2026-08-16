@@ -1,14 +1,10 @@
 ---
-// Redirect: old implementation plan URL → main OTA advertising page (marketing site)
-import Layout from '../../layouts/Layout.astro';
+// Old implementation-plan URL → the main OTA advertising page.
+//
+// Was a client-side meta-refresh that ALSO emitted two <link rel="canonical">
+// tags — one via the Layout prop, one hand-written — which is a self-conflicting
+// signal to crawlers. A server 301 is the correct instrument: it passes link
+// equity, needs no HTML body, and cannot contradict itself. Matches the
+// report.astro → /expedia-report redirect so the site has one redirect idiom.
+return Astro.redirect('/ota-advertising', 301);
 ---
-<Layout title="Redirecting…" noindex={true} canonical="https://www.advertisingsystems.ai/ota-advertising">
-  <meta http-equiv="refresh" content="0;url=/ota-advertising" />
-  <link rel="canonical" href="https://www.advertisingsystems.ai/ota-advertising" />
-  <main class="min-h-[40vh] flex items-center justify-center px-4">
-    <div class="text-center">
-      <p class="text-[var(--text-secondary)] font-medium">Redirecting to OTA Advertising…</p>
-      <a href="/ota-advertising" class="mt-4 inline-block link-secondary font-semibold hover:underline">Go to OTA Advertising →</a>
-    </div>
-  </main>
-</Layout>

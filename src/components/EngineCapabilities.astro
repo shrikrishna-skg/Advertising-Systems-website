@@ -1,0 +1,138 @@
+---
+/**
+ * Section 02 — the three systems.
+ *
+ * The side panels are illustrative account readouts, chipped as such. The
+ * claims in the prose ("every 15 minutes", "50,000+ signals per account") are
+ * existing site copy from `src/data/faq.ts`, not new assertions invented here.
+ */
+const capabilities = [
+  {
+    n: '01',
+    title: 'Campaign Intelligence',
+    copy: 'One command centre for every channel: launch, pause and pace campaigns without opening a single ad platform.',
+    tags: ['Cross-channel sync', 'Bulk launcher', 'Real-time status'],
+    href: '/features/campaign-management',
+    viz: [
+      { k: 'Active campaigns', v: '45', up: false },
+      { k: 'Channels connected', v: '6', up: false },
+      { k: 'Launch time, 14 campaigns', v: '20 min', up: true },
+      { k: 'Dashboards to check', v: '1', up: false },
+    ],
+  },
+  {
+    n: '02',
+    title: 'AI Optimisation Engine',
+    copy: 'Bids, budgets, targeting and placements adjust every fifteen minutes inside guardrails you set — with an approval workflow when you want the final word.',
+    tags: ['Autonomous bidding', 'Budget reallocation', 'Audience discovery'],
+    href: '/features/ai-optimization',
+    viz: [
+      { k: 'Decision interval', v: '15 min', up: false },
+      { k: 'Signals per account', v: '50,000+', up: false },
+      { k: 'Budget moved overnight', v: '$2,400', up: true },
+      { k: 'Guardrail breaches', v: '0', up: false },
+    ],
+  },
+  {
+    n: '03',
+    title: 'Performance Analytics',
+    copy: 'Cross-channel attribution back to booking revenue, with anomaly alerts that name the campaign, the amount and the fix.',
+    tags: ['Revenue attribution', 'Live dashboards', 'Anomaly alerts'],
+    href: '/features/analytics',
+    viz: [
+      { k: 'Attributed revenue, 30d', v: '$269,500', up: false },
+      { k: 'Anomalies flagged', v: '6', up: false },
+      { k: 'Spend recovered', v: '$3,180', up: true },
+      { k: 'Report build time', v: '5 min', up: true },
+    ],
+  },
+];
+---
+
+<section class="sec soft" id="engine" aria-labelledby="engine-heading">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="no" aria-hidden="true">02</span>
+      <div>
+        <h2 id="engine-heading">Three systems, running continuously.</h2>
+        <p class="sub">Intelligence to see it, an engine to act on it, analytics to prove it happened.</p>
+      </div>
+    </div>
+
+    {capabilities.map(({ n, title, copy, tags, href, viz }) => (
+      <div class="cap">
+        <span class="n" aria-hidden="true">{n}</span>
+        <div>
+          <h3><a href={href}>{title}</a></h3>
+          <p class="t">{copy}</p>
+          <div class="tags">
+            {tags.map((tag) => <span class="tag">{tag}</span>)}
+          </div>
+        </div>
+        <div class="capviz">
+          <div class="capviz-hd">
+            <span>Example account</span>
+            <span class="illus">Illustrative</span>
+          </div>
+          {viz.map(({ k, v, up }) => (
+            <div class="ln">
+              <span class="k">{k}</span>
+              <span class={up ? 'v up num' : 'v num'}>{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .cap {
+    display: grid;
+    grid-template-columns: 52px 1fr 1.15fr;
+    gap: 26px;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .cap:first-of-type { border-top: 1px solid var(--border); }
+  .cap .n { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; color: var(--acc); padding-top: 5px; }
+  .cap h3 { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
+  .cap h3 a { color: var(--text-primary); text-decoration: none; }
+  .cap h3 a:hover { color: var(--acc); }
+  .cap .t { margin-top: 8px; font-size: 14.5px; color: var(--text-secondary); max-width: 30em; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+  .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    color: var(--text-secondary); border: 1px solid var(--border);
+    border-radius: 3px; padding: 4px 9px;
+  }
+
+  .capviz {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface-raised);
+    padding: 14px;
+    font-size: 12px;
+  }
+  .capviz-hd {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding-bottom: 10px; margin-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--text-tertiary);
+  }
+  .ln {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+  }
+  .ln:last-child { border-bottom: 0; }
+  .k { color: var(--text-tertiary); font-size: 11.5px; }
+  .v { font-weight: 700; color: var(--text-primary); }
+  .v.up { color: var(--pos); }
+
+  @media (max-width: 1000px) {
+    .cap { grid-template-columns: 34px 1fr; gap: 16px; }
+    .capviz { grid-column: 1 / -1; margin-top: 6px; }
+  }
+</style>

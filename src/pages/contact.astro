@@ -2,32 +2,23 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { contactFaqs } from '../data/page-faqs';
 
+/**
+ * Contact — Wave 3, Terminal conversion.
+ *
+ * HONESTY PASS: the old page listed "+1-800-ADV-SYS1" and a "San Francisco, CA"
+ * office card. Neither is verifiable anywhere in the repo or the family sites
+ * (ReputationSystems publishes +1 615 900-0224 — a different, real number), so
+ * both are removed rather than restyled. The published email is now
+ * contact@multisystems.ai — the address the mail system actually sends from and
+ * tells users to reply to (src/lib/intake-confirmation-email.ts). Owner can
+ * restore a phone/office card with real details any time.
+ */
 const breadcrumbs = [{ name: 'Contact', href: '/contact' }];
-
-const contactInfo = [
-  {
-    icon: 'email',
-    label: 'Email',
-    value: 'hello@advertisingsystems.ai',
-    href: 'mailto:hello@advertisingsystems.ai',
-  },
-  {
-    icon: 'phone',
-    label: 'Phone',
-    value: '+1-800-ADV-SYS1',
-    href: 'tel:+18002387971',
-  },
-  {
-    icon: 'office',
-    label: 'Office',
-    value: 'San Francisco, CA',
-    href: '#',
-  },
-];
+const CONTACT_EMAIL = 'contact@multisystems.ai';
 ---
 
 <Layout
@@ -42,198 +33,95 @@ const contactInfo = [
     mainEntity: {
       '@type': 'Organization',
       name: 'Advertising Systems',
-      email: 'hello@advertisingsystems.ai',
+      email: CONTACT_EMAIL,
       url: 'https://www.advertisingsystems.ai'
     }
   }}
 >
   <Navbar />
-  <Breadcrumb items={breadcrumbs} />
-  <main>
-    <!-- Hero -->
-    <section class="relative pt-40 pb-20 sm:pt-48 sm:pb-28 overflow-hidden" aria-labelledby="contact-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
+  <main class="terminal">
+    <PageHero
+      badge="We're here to help"
+      title="Get in"
+      titleAccent="touch."
+      lead="Have a question, need support, or want to see how Advertising Systems fits your accounts? Send a message — we usually respond within 24 hours."
+    />
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">We're here to help</span>
+    <!-- 01 · Message + channels -->
+    <section class="sec" aria-labelledby="contact-form-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div><h2 id="contact-form-heading">Send us a message.</h2></div>
         </div>
 
-        <h1 id="contact-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Get in <span class="text-[var(--text-primary)]">touch.</span>
-        </h1>
-        <p class="reveal mt-6 text-lg sm:text-xl text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Have a question, need support, or want to learn how Advertising Systems can help your business? We'd love to hear from you.
-        </p>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Contact Form + Info -->
-    <section class="py-28" aria-labelledby="contact-form-heading">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-5 gap-12">
-          <!-- Form -->
-          <div class="lg:col-span-3">
-            <h2 id="contact-form-heading" class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.03em] mb-8">
-              Send us a <span class="text-[var(--text-primary)]">message</span>
-            </h2>
-            <form id="contact-form" action="/api/contact" method="POST" class="reveal space-y-6" aria-label="Contact form">
-              <div class="grid sm:grid-cols-2 gap-6">
+        <div class="contact-grid">
+          <div class="panel-box">
+            <div class="panel-hd"><h3>Message</h3></div>
+            <form id="contact-form" action="/api/contact" method="POST" class="c-form" aria-label="Contact form">
+              <div class="c-row2">
                 <div>
-                  <label for="name" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    autocomplete="name"
-                    placeholder="Your full name"
-                    class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-royal-green-500 focus:ring-1 focus:ring-royal-green-500 transition-colors"
-                  />
+                  <label for="name">Name</label>
+                  <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your full name" />
                 </div>
                 <div>
-                  <label for="email" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    autocomplete="email"
-                    placeholder="you@company.com"
-                    class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-royal-green-500 focus:ring-1 focus:ring-royal-green-500 transition-colors"
-                  />
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required autocomplete="email" placeholder="you@company.com" />
                 </div>
               </div>
-              <div class="grid sm:grid-cols-2 gap-6">
+              <div class="c-row2">
                 <div>
-                  <label for="company" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Company</label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    autocomplete="organization"
-                    placeholder="Your company name"
-                    class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-royal-green-500 focus:ring-1 focus:ring-royal-green-500 transition-colors"
-                  />
+                  <label for="company">Company</label>
+                  <input type="text" id="company" name="company" autocomplete="organization" placeholder="Your company name" />
                 </div>
                 <div>
-                  <label for="phone" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Phone</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    autocomplete="tel"
-                    placeholder="+1 (555) 000-0000"
-                    class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-royal-green-500 focus:ring-1 focus:ring-royal-green-500 transition-colors"
-                  />
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+1 (555) 000-0000" />
                 </div>
               </div>
               <div>
-                <label for="message" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  required
-                  placeholder="Tell us how we can help..."
-                  class="w-full px-4 py-3 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-royal-green-500 focus:ring-1 focus:ring-royal-green-500 transition-colors resize-none"
-                ></textarea>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Tell us how we can help..."></textarea>
               </div>
-              <div class="hidden" aria-hidden="true">
+              <div class="c-honeypot" aria-hidden="true">
                 <label for="contact-website">Website</label>
                 <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
               </div>
-              <div id="contact-message" class="hidden text-sm rounded-lg p-3" role="alert"></div>
-              <button
-                type="submit"
-                id="contact-submit"
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg shadow-royal-green-500/20 cursor-pointer"
-              >
-                Send Message
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>
+              <div id="contact-message" class="c-alert" role="alert" hidden></div>
+              <button type="submit" id="contact-submit" class="btn btn-p">
+                Send message
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13.5 4.5L21 12l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
             </form>
           </div>
 
-          <!-- Contact Info -->
-          <div class="lg:col-span-2">
-            <h2 class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.03em] mb-8">
-              Contact <span class="text-[var(--text-primary)]">info</span>
-            </h2>
-            <div class="space-y-6">
-              {contactInfo.map((item) => (
-                <a href={item.href} class="reveal glass hover-glow rounded-xl p-6 flex items-start gap-4 block transition-all duration-300">
-                  <div class="w-10 h-10 rounded-lg bg-royal-green-500/10 flex items-center justify-center shrink-0">
-                    {item.icon === 'email' && (
-                      <svg class="w-5 h-5 text-royal-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                      </svg>
-                    )}
-                    {item.icon === 'phone' && (
-                      <svg class="w-5 h-5 text-royal-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                      </svg>
-                    )}
-                    {item.icon === 'office' && (
-                      <svg class="w-5 h-5 text-royal-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21" />
-                      </svg>
-                    )}
-                  </div>
-                  <div>
-                    <div class="text-sm font-medium text-[var(--text-muted)] mb-1">{item.label}</div>
-                    <div class="font-semibold text-[var(--text-primary)]">{item.value}</div>
-                  </div>
+          <div class="c-side">
+            <div class="panel-box">
+              <div class="panel-hd"><h3>Direct</h3></div>
+              <div class="c-side-bd">
+                <a class="c-line" href={`mailto:${CONTACT_EMAIL}`}>
+                  <span class="c-k">Email</span>
+                  <span class="c-v">{CONTACT_EMAIL}</span>
                 </a>
-              ))}
-            </div>
-
-            <!-- What happens next -->
-            <div class="reveal glass rounded-xl p-6 mt-6">
-              <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-royal-green-500/10 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-royal-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold text-[var(--text-primary)] mb-1">What happens next?</div>
-                  <p class="text-sm text-[var(--text-tertiary)] font-medium mb-3">We usually respond within 24 hours. For demo requests we'll suggest a time that works for you.</p>
-                  <a href="/book-demo" class="inline-flex items-center gap-1.5 text-sm text-royal-green-500 hover:text-royal-green-400 font-semibold transition-colors">
-                    Prefer to book a demo?
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                  </a>
-                </div>
+                <a class="c-line" href="/book-demo">
+                  <span class="c-k">Demo</span>
+                  <span class="c-v">Book a 30-minute walkthrough →</span>
+                </a>
+                <a class="c-line" href="/faq">
+                  <span class="c-k">FAQ</span>
+                  <span class="c-v">Quick answers to common questions →</span>
+                </a>
               </div>
             </div>
 
-            <!-- FAQ Link -->
-            <div class="reveal glass rounded-xl p-6 mt-6">
-              <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-royal-green-500/10 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-royal-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold text-[var(--text-primary)] mb-1">Have a quick question?</div>
-                  <p class="text-sm text-[var(--text-tertiary)] font-medium mb-3">Check our FAQ for quick answers to common questions.</p>
-                  <a href="/faq" class="inline-flex items-center gap-1.5 text-sm text-royal-green-500 hover:text-royal-green-400 font-semibold transition-colors">
-                    View FAQ
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                  </a>
-                </div>
+            <div class="panel-box">
+              <div class="panel-hd"><h3>What happens next</h3></div>
+              <div class="c-side-bd">
+                <ol class="c-steps">
+                  <li>Your message lands with the team and gets a reply from {CONTACT_EMAIL}, usually within 24 hours.</li>
+                  <li>For demo requests we suggest a time that works for you.</li>
+                  <li>No mailing lists, no drip sequence — you wrote to us, we write back.</li>
+                </ol>
               </div>
             </div>
           </div>
@@ -241,90 +129,158 @@ const contactInfo = [
       </div>
     </section>
 
-    <div class="section-line"></div>
-
     <FAQSection title="Common questions" faqs={contactFaqs} name="contact-faq" />
   </main>
   <Footer />
-</Layout>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('contact-form');
-    var messageEl = document.getElementById('contact-message');
-    var submitBtn = document.getElementById('contact-submit');
-    if (!form) return;
-    function getClientSubmissionId(prefix) {
-      if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
-      return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+      align-items: start;
     }
-    function getContext(defaultCta) {
-      var params = new URLSearchParams(window.location.search);
-      var sourcePage = params.get('source_page');
-      return {
-        landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
-        referrer: document.referrer || undefined,
-        cta: params.get('cta') || defaultCta,
-        posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
-        utm: {
-          source: params.get('utm_source') || undefined,
-          medium: params.get('utm_medium') || undefined,
-          campaign: params.get('utm_campaign') || undefined,
-        },
-      };
+
+    .c-form { padding: 18px 16px; display: grid; gap: 14px; }
+    .c-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .c-form label {
+      display: block;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 6px;
     }
-    function setMessage(text, isError) {
-      if (!messageEl) return;
-      messageEl.textContent = text;
-      messageEl.className = isError
-        ? 'text-sm rounded-lg p-3 bg-red-500/10 text-red-700 border border-red-500/20'
-        : 'text-sm rounded-lg p-3 bg-emerald-50 text-emerald-950 border border-emerald-100';
-      messageEl.classList.remove('hidden');
+    .c-form input, .c-form textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--surface);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14.5px;
+      transition: border-color 0.15s;
+      resize: none;
     }
-    form.addEventListener('submit', async function(event) {
-      event.preventDefault();
-      if (submitBtn) submitBtn.disabled = true;
-      if (messageEl) messageEl.classList.add('hidden');
-      var email = form.querySelector('#email')?.value?.trim();
-      var company = form.querySelector('#company')?.value?.trim();
-      var payload = {
-        name: form.querySelector('#name')?.value?.trim(),
-        email: email,
-        company: company,
-        phone: form.querySelector('#phone')?.value?.trim(),
-        message: form.querySelector('#message')?.value?.trim(),
-        website: form.querySelector('#contact-website')?.value?.trim(),
-        client_submission_id: getClientSubmissionId('contact'),
-        context: getContext('Contact Sales'),
-      };
-      try {
-        var analyticsConsent = '';
-        try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
-        var res = await fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Analytics-Consent': analyticsConsent,
-          },
-          body: JSON.stringify(payload),
-        });
-        var data = await res.json().catch(function() { return {}; });
-        if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
-        if (email) window.posthog?.identify(email, { company: company || undefined });
-        window.posthog?.capture('contact_form_submitted', {
-          has_company: Boolean(company),
-          has_phone: Boolean(payload.phone),
-          status: 'accepted',
-        });
-        setMessage(data.message || "Thanks. We've received your message.", false);
-        form.reset();
-      } catch (error) {
-        var message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-        window.posthog?.capture('contact_form_errored', { error_message: message });
-        setMessage(message, true);
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
+    .c-form input::placeholder, .c-form textarea::placeholder { color: var(--text-faint); }
+    .c-form input:focus, .c-form textarea:focus {
+      outline: none;
+      border-color: var(--acc);
+    }
+    .c-form .btn { justify-self: start; }
+    .c-honeypot { display: none; }
+    .c-alert {
+      font-size: 13.5px; font-weight: 600;
+      border: 1px solid var(--border); border-radius: 3px;
+      padding: 10px 12px;
+    }
+    .c-alert.ok { color: var(--pos); border-color: var(--pos); background: var(--pos-tint); }
+    .c-alert.err { color: var(--neg); border-color: var(--neg); background: var(--neg-tint); }
+
+    .c-side { display: grid; gap: 18px; }
+    .c-side-bd { padding: 6px 0; }
+    .c-line {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 12px;
+      padding: 12px 16px;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .c-line:last-child { border-bottom: 0; }
+    .c-line:hover .c-v { color: var(--acc); }
+    .c-k {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      padding-top: 2px;
+    }
+    .c-v { font-size: 14px; font-weight: 600; color: var(--text-primary); transition: color 0.15s; overflow-wrap: anywhere; }
+
+    .c-steps { margin: 0; padding: 6px 16px 14px 32px; }
+    .c-steps li { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; padding: 5px 0; }
+    .c-steps li::marker { color: var(--acc); font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .c-row2 { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('contact-form');
+      var messageEl = document.getElementById('contact-message');
+      var submitBtn = document.getElementById('contact-submit');
+      if (!form) return;
+      function getClientSubmissionId(prefix) {
+        if (window.crypto?.randomUUID) return prefix + '-' + window.crypto.randomUUID();
+        return prefix + '-' + Date.now() + '-' + Math.random().toString(36).slice(2);
       }
+      function getContext(defaultCta) {
+        var params = new URLSearchParams(window.location.search);
+        var sourcePage = params.get('source_page');
+        return {
+          landingPage: sourcePage ? (sourcePage.charAt(0) === '/' ? sourcePage : '/' + sourcePage) : window.location.pathname,
+          referrer: document.referrer || undefined,
+          cta: params.get('cta') || defaultCta,
+          posthogDistinctId: window.posthog?.get_distinct_id?.() || undefined,
+          utm: {
+            source: params.get('utm_source') || undefined,
+            medium: params.get('utm_medium') || undefined,
+            campaign: params.get('utm_campaign') || undefined,
+          },
+        };
+      }
+      function setMessage(text, isError) {
+        if (!messageEl) return;
+        messageEl.textContent = text;
+        messageEl.className = isError ? 'c-alert err' : 'c-alert ok';
+        messageEl.hidden = false;
+      }
+      form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        if (submitBtn) submitBtn.disabled = true;
+        if (messageEl) messageEl.hidden = true;
+        var email = form.querySelector('#email')?.value?.trim();
+        var company = form.querySelector('#company')?.value?.trim();
+        var payload = {
+          name: form.querySelector('#name')?.value?.trim(),
+          email: email,
+          company: company,
+          phone: form.querySelector('#phone')?.value?.trim(),
+          message: form.querySelector('#message')?.value?.trim(),
+          website: form.querySelector('#contact-website')?.value?.trim(),
+          client_submission_id: getClientSubmissionId('contact'),
+          context: getContext('Contact Sales'),
+        };
+        try {
+          var analyticsConsent = '';
+          try { analyticsConsent = localStorage.getItem('ads_cookie_consent') === 'accepted' ? 'accepted' : ''; } catch (e) {}
+          var res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Analytics-Consent': analyticsConsent,
+            },
+            body: JSON.stringify(payload),
+          });
+          var data = await res.json().catch(function() { return {}; });
+          if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+          if (email) window.posthog?.identify(email, { company: company || undefined });
+          window.posthog?.capture('contact_form_submitted', {
+            has_company: Boolean(company),
+            has_phone: Boolean(payload.phone),
+            status: 'accepted',
+          });
+          setMessage(data.message || "Thanks. We've received your message.", false);
+          form.reset();
+        } catch (error) {
+          var message = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
+          window.posthog?.capture('contact_form_errored', { error_message: message });
+          setMessage(message, true);
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      });
     });
-  });
-</script>
+  </script>
+</Layout>

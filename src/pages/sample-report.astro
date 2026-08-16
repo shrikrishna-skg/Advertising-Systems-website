@@ -9,28 +9,60 @@
   <meta name="color-scheme" content="light only" />
   <title>Sample Performance Report — Advertising Systems</title>
   <meta name="description" content="A sample Advertising Systems report with Expedia TravelAds XPR performance, cross-channel KPIs, platform performance, campaign trends, and AI action items." />
+  <link rel="canonical" href="https://www.advertisingsystems.ai/sample-report" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.advertisingsystems.ai/sample-report" />
+  <meta property="og:title" content="Sample Performance Report — Advertising Systems" />
+  <meta property="og:description" content="A sample Advertising Systems report with Expedia TravelAds XPR performance, cross-channel KPIs, platform performance, campaign trends, and AI action items." />
+  <meta property="og:image" content="https://www.advertisingsystems.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Advertising Systems" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sample Performance Report — Advertising Systems" />
+  <meta name="twitter:image" content="https://www.advertisingsystems.ai/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
   <style>
+    /* Terminal chrome, categorical data palette.
+       This page is a client-report specimen, not marketing chrome, so it gets
+       the family surfaces/ink/radius but keeps a MULTI-HUE series palette: the
+       pie and trend lines encode one colour per channel, which is data, not
+       brand. Flattening six channels to one rose would destroy the encoding.
+       What did change: chrome (bg/panel/line/text/muted) now matches the site,
+       --blue (the primary button + active states) becomes the rose accent, and
+       --green/--red are pinned to the site's --pos/--neg so "up" and "down"
+       read identically here and on the marketing pages.
+       Light-only is deliberate and kept: a report is a document you print or
+       send to an owner, and it should look the same for everyone. */
     :root {
       color-scheme: light only;
-      --bg: #f6f7fb;
+      --bg: #F6F8FB;
       --panel: #ffffff;
-      --line: #e6eaf0;
-      --line-soft: #f0f3f7;
-      --text: #172033;
-      --muted: #6c7688;
-      --faint: #9aa4b5;
-      --blue: #2563eb;
-      --blue-dark: #1d4ed8;
-      --green: #16b981;
-      --red: #f05252;
-      --amber: #f59e0b;
-      --purple: #8757e8;
-      --pink: #ec4899;
-      --teal: #14b8a6;
-      --radius: 8px;
+      --line: #E3E8F0;
+      --line-soft: #EEF2F7;
+      --text: #0A1B3D;
+      --muted: #3D4E70;
+      --faint: #68779A;
+      /* accent — was Google blue, now the family rose */
+      --blue: #E11D48;
+      --blue-dark: #be123c;
+      /* status — matched to the site's --pos / --neg. Pinned to their LIGHT
+         values, not var(--pos)/var(--neg): this page is a self-contained
+         light-only mockup with its own --bg #F6F8FB, so a theme-switching token
+         would turn the report neon in dark mode. Both were stale — #0E9F6E and
+         #D64545 are the pre-fix pair that measured 3.39:1 and 4.38:1 on white
+         and are called out as failing in global.css. */
+      --green: #08753F;
+      --red: #C03434;
+      --amber: #B45309;
+      /* categorical series — kept distinct on purpose (see note above) */
+      --purple: #6D5BD0;
+      --pink: #C2410C;
+      --teal: #0E7490;
+      --radius: 4px;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-width: 320px; background: var(--bg); color: var(--text); font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -48,12 +80,12 @@
     .brand-name { display: block; font-size: 15px; font-weight: 900; letter-spacing: -0.25px; line-height: 1.1; }
     .brand-home-hint { display: block; color: var(--muted); font-size: 11px; font-weight: 800; margin-top: 3px; transition: color 0.15s ease; }
     .eyebrow { color: var(--blue); font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
-    .title { font-size: 30px; line-height: 1.08; font-weight: 800; letter-spacing: -0.75px; display: flex; align-items: center; gap: 8px; }
+    .title { font-size: 30px; line-height: 1.08; font-weight: 800; letter-spacing: -0.75px; display: flex; align-items: center; gap: 8px; margin: 0; }
     .subtitle { color: var(--muted); font-size: 13px; margin-top: 7px; }
     .controls { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
-    .control { height: 36px; display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: #fff; border-radius: var(--radius); padding: 0 12px; color: #465369; font-size: 12px; font-weight: 800; }
+    .control { height: 36px; display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: #fff; border-radius: var(--radius); padding: 0 12px; color: var(--muted); font-size: 12px; font-weight: 800; }
     .seg { height: 36px; display: inline-flex; align-items: center; border: 1px solid var(--line); background: #fff; border-radius: var(--radius); overflow: hidden; }
-    .seg span { height: 100%; display: grid; place-items: center; padding: 0 12px; color: #59677c; font-size: 12px; font-weight: 800; border-right: 1px solid var(--line-soft); }
+    .seg span { height: 100%; display: grid; place-items: center; padding: 0 12px; color: var(--muted); font-size: 12px; font-weight: 800; border-right: 1px solid var(--line-soft); }
     .seg span:last-child { border-right: 0; }
     .seg .active { background: var(--blue); color: #fff; }
     .primary { height: 36px; display: inline-flex; align-items: center; gap: 7px; border: 0; background: var(--blue); color: #fff; border-radius: var(--radius); padding: 0 14px; font-size: 12px; font-weight: 800; cursor: pointer; }
@@ -61,7 +93,7 @@
     .content { padding: 0 28px 34px; }
     .report-intel { display: grid; grid-template-columns: 1.2fr repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
     .intel-card { padding: 16px; min-height: 118px; }
-    .intel-card.lead { background: linear-gradient(135deg, #101f49, #1d4ed8); color: #fff; border-color: #1d4ed8; }
+    .intel-card.lead { background: linear-gradient(135deg, var(--text), var(--blue-dark)); color: #fff; border-color: var(--blue-dark); }
     .intel-label { color: var(--blue); font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
     .lead .intel-label { color: rgba(255,255,255,0.72); }
     .intel-title { font-size: 16px; font-weight: 900; letter-spacing: -0.2px; line-height: 1.2; }
@@ -71,62 +103,62 @@
     .kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); }
     .kpi { min-height: 112px; padding: 18px 19px; }
-    .kpi.featured { color: #fff; background: linear-gradient(135deg, #2563eb, #1d4ed8); border-color: #1d4ed8; }
+    .kpi.featured { color: #fff; background: linear-gradient(135deg, var(--blue), var(--blue-dark)); border-color: var(--blue-dark); }
     .kpi-label { color: var(--faint); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .featured .kpi-label { color: rgba(255,255,255,0.65); }
     .kpi-value { font-size: 30px; font-weight: 800; letter-spacing: -1px; margin-top: 9px; }
     .kpi-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 12px; font-weight: 700; }
     .featured .kpi-meta { color: rgba(255,255,255,0.72); }
     .trend { color: var(--green); font-size: 12px; font-weight: 800; }
-    .featured .trend { color: #a7f3d0; }
+    .featured .trend { color: var(--line-soft); }
     .section { padding: 18px; margin-bottom: 16px; }
     .section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
     .section-title { font-size: 15px; font-weight: 800; letter-spacing: -0.2px; }
     .section-sub { color: var(--faint); font-size: 12px; font-weight: 700; margin-top: 4px; }
-    .tag { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid #bfdbfe; background: #eff6ff; color: #1d4ed8; border-radius: 7px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border: 1px solid var(--line); background: var(--line-soft); color: var(--blue-dark); border-radius: 7px; font-size: 11px; font-weight: 800; white-space: nowrap; }
     .line-chart { width: 100%; height: 230px; display: block; overflow: visible; }
-    .axis { stroke: #e9edf3; stroke-width: 1; }
-    .grid-text { fill: #9aa4b5; font-size: 10px; font-weight: 700; }
+    .axis { stroke: var(--line); stroke-width: 1; }
+    .grid-text { fill: var(--faint); font-size: 10px; font-weight: 700; }
     .legend { display: flex; align-items: center; justify-content: center; gap: 18px; color: var(--muted); font-size: 11px; font-weight: 800; margin-top: 5px; }
     .legend span { display: inline-flex; align-items: center; gap: 6px; }
     .dot { width: 7px; height: 7px; border-radius: 999px; display: inline-block; }
     .platform { display: grid; grid-template-columns: 1.05fr 1fr; gap: 18px; align-items: center; min-height: 330px; }
     .pie-area { min-height: 260px; display: grid; place-items: center; }
     .pie-wrap { position: relative; width: min(260px, 100%); aspect-ratio: 1; display: grid; place-items: center; }
-    .pie { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(#3b82f6 0 20%, #10b981 20% 33%, #f59e0b 33% 43%, #ec4899 43% 57%, #8757e8 57% 100%); }
+    .pie { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(var(--blue) 0 20%, var(--green) 20% 33%, var(--amber) 33% 43%, var(--pink) 43% 57%, var(--purple) 57% 100%); }
     .pie-hole { position: absolute; width: 46%; height: 46%; border-radius: 50%; background: #fff; border: 1px solid var(--line-soft); display: grid; place-items: center; text-align: center; }
     .pie-hole strong { font-size: 24px; line-height: 1; }
     .pie-hole span { display: block; color: var(--faint); font-size: 10px; font-weight: 800; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.07em; }
-    .callouts { position: absolute; inset: 0; pointer-events: none; color: #657185; font-size: 11px; font-weight: 800; }
+    .callouts { position: absolute; inset: 0; pointer-events: none; color: var(--faint); font-size: 11px; font-weight: 800; }
     .callouts div { position: absolute; white-space: nowrap; }
-    .c-booking { right: -28px; top: 55px; color: #3b82f6; }
-    .c-meta { right: -18px; bottom: 75px; color: #10b981; }
-    .c-expedia { left: -22px; bottom: 60px; color: #ec4899; }
-    .c-google { left: -26px; top: 66px; color: #8757e8; }
+    .c-booking { right: -28px; top: 55px; color: var(--blue); }
+    .c-meta { right: -18px; bottom: 75px; color: var(--green); }
+    .c-expedia { left: -22px; bottom: 60px; color: var(--pink); }
+    .c-google { left: -26px; top: 66px; color: var(--purple); }
     .platform-list { display: grid; gap: 10px; }
     .platform-row { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; background: #fff; display: grid; grid-template-columns: 1fr auto; gap: 10px; }
     .platform-name { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; }
     .platform-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 9px; }
     .metric-label { color: var(--faint); font-size: 10px; font-weight: 800; }
-    .metric-value { color: #334155; font-size: 12px; font-weight: 800; margin-top: 2px; }
+    .metric-value { color: var(--text); font-size: 12px; font-weight: 800; margin-top: 2px; }
     .revenue { color: var(--green); }
     .roas { color: var(--amber); font-size: 12px; font-weight: 900; }
     .lower { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 16px; }
     .table-card { overflow: hidden; }
     .table-head { padding: 16px 18px; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
     .switch-row { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; font-weight: 800; white-space: nowrap; }
-    .switch { width: 34px; height: 19px; border-radius: 999px; background: #d8dee8; position: relative; }
+    .switch { width: 34px; height: 19px; border-radius: 999px; background: var(--line); position: relative; }
     .switch::after { content: ""; position: absolute; width: 15px; height: 15px; top: 2px; left: 2px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
     table { width: 100%; border-collapse: collapse; }
-    th { text-align: left; color: var(--faint); font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: #fafbfc; border-bottom: 1px solid var(--line-soft); padding: 10px 14px; }
-    td { padding: 13px 14px; border-bottom: 1px solid var(--line-soft); color: #405064; font-size: 12px; font-weight: 700; vertical-align: middle; }
+    th { text-align: left; color: var(--faint); font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bg); border-bottom: 1px solid var(--line-soft); padding: 10px 14px; }
+    td { padding: 13px 14px; border-bottom: 1px solid var(--line-soft); color: var(--muted); font-size: 12px; font-weight: 700; vertical-align: middle; }
     tr:last-child td { border-bottom: 0; }
     .campaign-title { color: var(--text); font-size: 13px; font-weight: 900; }
     .campaign-sub { color: var(--faint); font-size: 11px; margin-top: 2px; }
-    .status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 999px; background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 900; }
-    .xpr-card { padding: 18px; background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%); }
+    .status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 999px; background: var(--line-soft); color: var(--green); font-size: 11px; font-weight: 900; }
+    .xpr-card { padding: 18px; background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%); }
     .xpr-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .xpr-badge { width: 42px; height: 42px; border-radius: var(--radius); display: grid; place-items: center; background: #eff6ff; color: var(--blue); border: 1px solid #dbeafe; }
+    .xpr-badge { width: 42px; height: 42px; border-radius: var(--radius); display: grid; place-items: center; background: var(--line-soft); color: var(--blue); border: 1px solid var(--line); }
     .xpr-title { font-size: 15px; font-weight: 900; margin-top: 14px; }
     .xpr-copy { color: var(--muted); font-size: 12px; line-height: 1.55; font-weight: 700; margin: 7px 0 14px; }
     .xpr-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 14px; }
@@ -134,8 +166,8 @@
     .xpr-metric span { display: block; color: var(--faint); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.07em; }
     .xpr-metric strong { display: block; color: var(--text); font-size: 17px; margin-top: 4px; }
     .insights { display: grid; gap: 9px; margin-top: 14px; }
-    .insight { display: grid; grid-template-columns: 24px 1fr; gap: 9px; align-items: start; color: #465369; font-size: 12px; line-height: 1.4; font-weight: 700; }
-    .insight-num { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: #edf2ff; color: var(--blue); font-size: 11px; font-weight: 900; }
+    .insight { display: grid; grid-template-columns: 24px 1fr; gap: 9px; align-items: start; color: var(--muted); font-size: 12px; line-height: 1.4; font-weight: 700; }
+    .insight-num { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: var(--line-soft); color: var(--blue); font-size: 11px; font-weight: 900; }
     .wide-btn { width: 100%; height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border-radius: var(--radius); background: var(--blue); color: #fff; font-size: 12px; font-weight: 900; }
     .wide-btn:hover { background: var(--blue-dark); }
     .footnote { color: var(--faint); text-align: center; font-size: 11px; font-weight: 700; margin-top: 12px; }
@@ -182,6 +214,23 @@
       .insight-num { margin-bottom: -2px; }
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://www.advertisingsystems.ai/sample-report#article",
+    "headline": "Sample Performance Report — Advertising Systems",
+    "description": "A sample Advertising Systems report: Expedia TravelAds performance, cross-channel KPIs, platform performance, campaign trends and AI action items.",
+    "image": "https://www.advertisingsystems.ai/og-image.png",
+    "datePublished": "2026-05-01",
+    "dateModified": "2026-08-15",
+    "inLanguage": "en",
+    "isPartOf": { "@id": "https://www.advertisingsystems.ai/#website" },
+    "author": { "@id": "https://www.advertisingsystems.ai/#organization" },
+    "publisher": { "@id": "https://www.advertisingsystems.ai/#organization" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.advertisingsystems.ai/sample-report" }
+  }
+  </script>
 </head>
 <body>
   <div class="app">
@@ -197,8 +246,8 @@
           </a>
           <div>
             <div class="eyebrow">Sample Report</div>
-            <div class="title">Sample Performance Report</div>
-            <div class="subtitle">Best Western Davison Inn · Expedia TravelAds XPR · April 2026</div>
+            <h1 class="title">Sample Performance Report</h1>
+            <div class="subtitle">Select-service hotel · Expedia TravelAds XPR · April 2026 · property withheld</div>
           </div>
         </div>
         <div class="controls">
@@ -253,7 +302,7 @@
           <div class="section-head">
             <div>
               <div class="section-title">Revenue & Spend Over Time</div>
-              <div class="section-sub">Daily XPR report trend for Best Western Davison Inn.</div>
+              <div class="section-sub">Daily XPR report trend for the managed property.</div>
             </div>
             <span class="tag"><span class="dot" style="background:var(--green)"></span>Profit gap visible</span>
           </div>
@@ -261,10 +310,10 @@
             <line class="axis" x1="48" y1="18" x2="948" y2="18"/><line class="axis" x1="48" y1="66" x2="948" y2="66"/><line class="axis" x1="48" y1="114" x2="948" y2="114"/><line class="axis" x1="48" y1="162" x2="948" y2="162"/><line class="axis" x1="48" y1="210" x2="948" y2="210"/>
             <text class="grid-text" x="0" y="22">$900</text><text class="grid-text" x="0" y="70">$675</text><text class="grid-text" x="0" y="118">$450</text><text class="grid-text" x="0" y="166">$225</text><text class="grid-text" x="14" y="214">$0</text>
             <text class="grid-text" x="48" y="228">Apr 1</text><text class="grid-text" x="176" y="228">Apr 5</text><text class="grid-text" x="304" y="228">Apr 9</text><text class="grid-text" x="432" y="228">Apr 13</text><text class="grid-text" x="560" y="228">Apr 17</text><text class="grid-text" x="688" y="228">Apr 21</text><text class="grid-text" x="816" y="228">Apr 25</text><text class="grid-text" x="920" y="228">Apr 30</text>
-            <path d="M48 48 C88 62 118 96 158 112 S232 144 280 102 S352 40 408 74 S506 138 560 95 S640 35 704 58 S790 150 840 96 S908 42 948 32" fill="none" stroke="#16b981" stroke-width="3.5" stroke-linecap="round"/>
-            <path d="M48 203 C112 204 154 206 212 203 S314 188 368 190 S470 194 538 192 S674 193 742 191 S866 184 948 164" fill="none" stroke="#f05252" stroke-width="3" stroke-linecap="round"/>
-            <g fill="#16b981" stroke="#fff" stroke-width="3"><circle cx="48" cy="48" r="5"/><circle cx="280" cy="102" r="5"/><circle cx="408" cy="74" r="5"/><circle cx="560" cy="95" r="5"/><circle cx="704" cy="58" r="5"/><circle cx="840" cy="96" r="5"/><circle cx="948" cy="32" r="5"/></g>
-            <g fill="#f05252" stroke="#fff" stroke-width="3"><circle cx="48" cy="203" r="4"/><circle cx="280" cy="203" r="4"/><circle cx="408" cy="190" r="4"/><circle cx="560" cy="192" r="4"/><circle cx="704" cy="193" r="4"/><circle cx="840" cy="191" r="4"/><circle cx="948" cy="164" r="4"/></g>
+            <path d="M48 48 C88 62 118 96 158 112 S232 144 280 102 S352 40 408 74 S506 138 560 95 S640 35 704 58 S790 150 840 96 S908 42 948 32" fill="none" stroke="var(--green)" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M48 203 C112 204 154 206 212 203 S314 188 368 190 S470 194 538 192 S674 193 742 191 S866 184 948 164" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"/>
+            <g fill="var(--green)" stroke="#fff" stroke-width="3"><circle cx="48" cy="48" r="5"/><circle cx="280" cy="102" r="5"/><circle cx="408" cy="74" r="5"/><circle cx="560" cy="95" r="5"/><circle cx="704" cy="58" r="5"/><circle cx="840" cy="96" r="5"/><circle cx="948" cy="32" r="5"/></g>
+            <g fill="var(--red)" stroke="#fff" stroke-width="3"><circle cx="48" cy="203" r="4"/><circle cx="280" cy="203" r="4"/><circle cx="408" cy="190" r="4"/><circle cx="560" cy="192" r="4"/><circle cx="704" cy="193" r="4"/><circle cx="840" cy="191" r="4"/><circle cx="948" cy="164" r="4"/></g>
           </svg>
           <div class="legend"><span><i class="dot" style="background:var(--green)"></i>Revenue</span><span><i class="dot" style="background:var(--red)"></i>Spend</span></div>
         </section>
@@ -293,28 +342,28 @@
             <div class="platform-list">
               <div class="platform-row">
                 <div>
-                  <div class="platform-name"><span class="dot" style="background:#3b82f6"></span>Booking.com</div>
+                  <div class="platform-name"><span class="dot" style="background:var(--blue)"></span>Booking.com</div>
                   <div class="platform-metrics"><div><div class="metric-label">Spend</div><div class="metric-value">$50,614</div></div><div><div class="metric-label">Revenue</div><div class="metric-value revenue">$285,816</div></div></div>
                 </div>
                 <div class="roas">5.6x</div>
               </div>
               <div class="platform-row">
                 <div>
-                  <div class="platform-name"><span class="dot" style="background:#8757e8"></span>Google Hotel Ads</div>
+                  <div class="platform-name"><span class="dot" style="background:var(--purple)"></span>Google Hotel Ads</div>
                   <div class="platform-metrics"><div><div class="metric-label">Spend</div><div class="metric-value">$109,577</div></div><div><div class="metric-label">Revenue</div><div class="metric-value revenue">$406,190</div></div></div>
                 </div>
                 <div class="roas">3.7x</div>
               </div>
               <div class="platform-row">
                 <div>
-                  <div class="platform-name"><span class="dot" style="background:#ec4899"></span>Expedia TravelAds</div>
+                  <div class="platform-name"><span class="dot" style="background:var(--pink)"></span>Expedia TravelAds</div>
                   <div class="platform-metrics"><div><div class="metric-label">XPR Spend</div><div class="metric-value">$432.95</div></div><div><div class="metric-label">XPR Revenue</div><div class="metric-value revenue">$9,525</div></div></div>
                 </div>
                 <div class="roas">22.0x</div>
               </div>
               <div class="platform-row">
                 <div>
-                  <div class="platform-name"><span class="dot" style="background:#f59e0b"></span>Agoda</div>
+                  <div class="platform-name"><span class="dot" style="background:var(--amber)"></span>Agoda</div>
                   <div class="platform-metrics"><div><div class="metric-label">Spend</div><div class="metric-value">$25,384</div></div><div><div class="metric-label">Revenue</div><div class="metric-value revenue">$141,377</div></div></div>
                 </div>
                 <div class="roas">5.6x</div>
@@ -338,16 +387,16 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><div class="campaign-title">Best Western Davison Inn</div><div class="campaign-sub">XPR April 2026 · Automated Market Tracker</div></td>
-                  <td>Expedia</td><td><span class="status"><span class="dot" style="background:#15803d"></span>Active</span></td><td>$432.95</td><td class="revenue">$9,525</td><td class="roas">22.0x</td><td><a href="/expedia-report">Open report</a></td>
+                  <td><div class="campaign-title">Select-service hotel (withheld)</div><div class="campaign-sub">XPR April 2026 · Automated Market Tracker</div></td>
+                  <td>Expedia</td><td><span class="status"><span class="dot" style="background:var(--green)"></span>Active</span></td><td>$432.95</td><td class="revenue">$9,525</td><td class="roas">22.0x</td><td><a href="/expedia-report">Open report</a></td>
                 </tr>
                 <tr>
                   <td><div class="campaign-title">Spring Weekend Demand</div><div class="campaign-sub">Modeled dashboard campaign</div></td>
-                  <td>Booking.com</td><td><span class="status"><span class="dot" style="background:#15803d"></span>Active</span></td><td>$1,840</td><td class="revenue">$10,304</td><td class="roas">5.6x</td><td>Scale budget</td>
+                  <td>Booking.com</td><td><span class="status"><span class="dot" style="background:var(--green)"></span>Active</span></td><td>$1,840</td><td class="revenue">$10,304</td><td class="roas">5.6x</td><td>Scale budget</td>
                 </tr>
                 <tr>
                   <td><div class="campaign-title">Local Intent Search</div><div class="campaign-sub">Modeled dashboard campaign</div></td>
-                  <td>Google Hotel Ads</td><td><span class="status"><span class="dot" style="background:#15803d"></span>Active</span></td><td>$2,290</td><td class="revenue">$8,473</td><td class="roas">3.7x</td><td>Monitor CPC</td>
+                  <td>Google Hotel Ads</td><td><span class="status"><span class="dot" style="background:var(--green)"></span>Active</span></td><td>$2,290</td><td class="revenue">$8,473</td><td class="roas">3.7x</td><td>Monitor CPC</td>
                 </tr>
               </tbody>
             </table>

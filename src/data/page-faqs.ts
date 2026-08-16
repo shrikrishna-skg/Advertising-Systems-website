@@ -56,14 +56,14 @@ export const careersFaqs = [
 ];
 
 export const caseStudiesFaqs = [
-  { question: 'Can I get a case study for my industry?', answer: "We have examples across travel, e-commerce, and technology. If you'd like to see results for a similar business, book a demo and we'll share relevant benchmarks and stories." },
-  { question: 'How long does it take to see results?', answer: "Most customers see measurable improvements in the first 30–90 days. Exact timelines depend on your starting point, ad spend, and how quickly you connect accounts and adopt recommendations." },
-  { question: 'Do you work with small businesses?', answer: 'Yes. Our Launch plan is built for smaller teams. Case studies often feature larger accounts, but the same AI and workflows apply at every scale.' },
-  { question: 'Are the numbers in case studies verified?', answer: 'Yes. Results are based on real customer data. We use anonymized or permission-based metrics and don’t exaggerate outcomes.' },
-  { question: 'Can I talk to a reference customer?', answer: 'We can sometimes connect you with a reference in your industry after you’re in a serious evaluation stage. Ask your demo or sales contact.' },
-  { question: 'What if my results are different?', answer: 'Results vary by industry, spend, and starting point. We provide benchmarks and a free audit so you have realistic expectations before you start.' },
-  { question: 'Do you have travel or hospitality case studies?', answer: 'Yes. We have examples from hotels, OTAs, and travel brands using Advertising Systems for Google, Meta, and OTA campaigns.' },
-  { question: 'What metrics do you typically report?', answer: 'We often report ROAS, CPA, time saved, and revenue impact. Exact metrics depend on what the customer cared about most.' },
+  { question: 'Why is there only one case study?', answer: 'Because we only publish what we can verify. Every case on this page is a real platform export, reconciled against its own daily data, published with the property’s details withheld until we have written consent to name them. More cases appear as they clear that bar.' },
+  { question: 'Are the numbers verified?', answer: 'Yes, and here is what that means: every headline figure is recomputed from the platform export’s own daily series — spend, bookings, room nights and revenue summed line by line — not copied from a summary screen. Where the export itself contained internal errors, we corrected them and used the reconciled figures.' },
+  { question: 'Why is the property not named?', answer: 'Naming a property requires its written consent, which we have not published without. The case identifies the segment and market type only. The numbers lose nothing by the name being withheld.' },
+  { question: 'How long does it take to see results?', answer: 'It depends on your starting point, ad spend, tracking quality, and market. The published case covers a single 30-day window on one channel. We provide a free audit before onboarding so you have realistic expectations for your own accounts.' },
+  { question: 'Do you work with small businesses?', answer: 'Yes. Our Launch plan is built for smaller teams — one ad account, one operator. The same AI and workflows apply at every scale.' },
+  { question: 'Can I talk to a reference customer?', answer: 'We can sometimes connect you with a reference after you’re in a serious evaluation stage. Ask your demo contact.' },
+  { question: 'What if my results are different?', answer: 'They will be — results vary by industry, spend, and starting point, and a single-property case is not a forecast. That is exactly why we publish reconciled data instead of aggregate claims.' },
+  { question: 'What metrics do you report?', answer: 'What the platform export reports: spend, impressions, clicks, CTR, CPC, bookings, room nights, booking revenue, ROAS, sponsored rank, and pacing. If it isn’t in the export, it isn’t in the case.' },
   { question: 'Can I use a case study in my own materials?', answer: 'Contact us for permission. We often allow quotes or summaries with attribution and approval.' },
   { question: 'How do I get results like these?', answer: 'Start with a demo. We will review your ad accounts, plan fit, goals, and current reporting before you connect accounts and start using AI recommendations.' },
 ];
@@ -110,11 +110,11 @@ export const signupFaqs = [
 export const bookDemoFaqs = [
   { question: 'Is the demo really free?', answer: 'Yes. The demo is free and there’s no obligation. We show you the platform and discuss how it could work for your business.' },
   { question: 'How long is the demo?', answer: 'About 30 minutes. We’ll walk through the modules that matter most to you and leave time for your questions.' },
-  { question: 'What if I selected a plan from the pricing page?', answer: 'That plan is carried into the demo form automatically and shown as selected from pricing. If you came directly to the demo page, we do not ask for plan interest up front. You can compare plans or discuss a better fit during the call.' },
-  { question: 'What if I need to reschedule?', answer: 'Reply to the confirmation email or calendar invite. We’re happy to find another time that works.' },
+  { question: 'What if I selected a plan from the pricing page?', answer: 'That plan is carried through to the booking page and shown above the scheduler, so you know which one you picked. If you came directly to the demo page, we do not ask for plan interest up front. You can compare plans or discuss a better fit during the call.' },
+  { question: 'What if I need to reschedule?', answer: 'Use the reschedule or cancel link in your booking confirmation email, or reply to the calendar invite. We’re happy to find another time that works.' },
   { question: 'Who will I meet with?', answer: 'A product specialist or solutions lead who knows the platform and can answer technical and commercial questions.' },
   { question: 'Can I invite my team?', answer: 'Yes. Include their email when you book or reply to the confirmation, and we’ll send them the meeting link.' },
-  { question: 'Do you do demos in my time zone?', answer: 'We schedule across time zones. When you book, you’ll see available slots; we’ll work to find a time that fits.' },
+  { question: 'Do you do demos in my time zone?', answer: 'Yes. The scheduler detects your timezone and shows every available slot in local time, so what you pick is what you get.' },
   { question: 'What do I need to prepare?', answer: 'Nothing required. If you have ad account metrics or goals in mind, that helps us tailor the walkthrough.' },
   { question: 'Will you try to sell me something?', answer: 'We’ll show you the product and discuss fit and pricing. There’s no pressure; the goal is to help you decide if Advertising Systems is right for you.' },
   { question: 'Can we review billing and ad spend on the call?', answer: 'Yes. We can review software plan cost, media spend, expected account count, and whether Launch, Growth, Scale, or Enterprise is the right starting point.' },

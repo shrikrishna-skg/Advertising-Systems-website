@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-import { faqs } from '../data/faq';
 import PostHog from '../components/posthog.astro';
+import SiteControls from '../components/SiteControls.astro';
 
 interface BreadcrumbItem {
   name: string;
@@ -46,7 +46,7 @@ const organizationSchema = {
   '@id': `${siteUrl}/#organization`,
   name: 'Advertising Systems',
   url: siteUrl,
-  logo: `${siteUrl}/logo.svg`,
+  logo: `${siteUrl}/logos/advertisingsystems-logo.svg`,
   description: 'AI-Powered Advertising Management Platform by Multisystems',
   parentOrganization: {
     '@type': 'Organization',
@@ -54,36 +54,59 @@ const organizationSchema = {
     name: 'Multisystems',
     url: 'https://www.multisystems.ai',
   },
+  // Family graph: the hub's product page for this brand plus every live
+  // sibling at its canonical host (reputation/hotel/ota/image serve on apex;
+  // revenue 308s apex → www). Mirrors revenuesystems.app, the one sibling
+  // that already enumerates us.
   sameAs: [
     'https://www.linkedin.com/company/multisystems-ai',
+    'https://www.multisystems.ai/products/advertising-systems',
+    'https://www.revenuesystems.app',
+    'https://reputationsystems.ai',
+    'https://hotelsystems.ai',
+    'https://otasystems.ai',
+    'https://imagesystems.ai',
   ],
+};
+
+// WebSite node: Google reads name/alternateName from here for the site name
+// shown in search results; the @id anchor lets WebPage nodes reference it.
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  url: siteUrl,
+  name: 'Advertising Systems',
+  alternateName: ['AdvertisingSystems', 'Advertising Systems by Multisystems'],
+  inLanguage: 'en',
+  publisher: { '@id': `${siteUrl}/#organization` },
 };
 
 const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
+  '@id': `${siteUrl}/#software`,
   name: 'Advertising Systems',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   description: description,
   url: siteUrl,
+  /* Prices mirror src/data/pricing.ts (Launch $199 – Scale $1,299; Enterprise
+     is custom so it is not counted). The aggregateRating that used to sit here
+     (4.9, 127 ratings) is gone: no review system exists, so the markup was
+     fabricated — exactly what Google's structured-data guidelines penalize. */
   offers: {
     '@type': 'AggregateOffer',
-    lowPrice: '99',
-    highPrice: '249',
+    lowPrice: '199',
+    highPrice: '1299',
     priceCurrency: 'USD',
     offerCount: '3',
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    ratingCount: '127',
-    bestRating: '5',
+    url: `${siteUrl}/pricing`,
   },
   provider: {
     '@type': 'Organization',
     name: 'Multisystems',
-    url: 'https://multisystems.ai',
+    url: 'https://www.multisystems.ai',
   },
 };
 
@@ -101,26 +124,14 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   ],
 } : null;
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-};
-
 const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: title,
   description: description,
   url: canonical,
-  isPartOf: { '@type': 'WebSite', name: 'Advertising Systems', url: siteUrl },
+  isPartOf: { '@id': `${siteUrl}/#website` },
+  about: { '@id': `${siteUrl}/#organization` },
   ...(breadcrumbs.length > 0 && { breadcrumb: breadcrumbSchema }),
 };
 
@@ -128,7 +139,10 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
 ---
 
 <!doctype html>
-<html lang="en">
+<!-- Terminal is dark-first: the SSR default is dark, so the ground is correct
+     before a single byte of JS runs. The pre-paint script below only ever
+     corrects it downward for a visitor who has chosen light or auto. -->
+<html lang="en" data-theme-pref="dark" data-theme="dark" data-accent="green">
 	  <head>
 	    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -143,7 +157,8 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
     <meta name="bingbot" content={robotsContent} />
 
     <!-- Theme and mobile -->
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#070D18" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0A1B3D" media="(prefers-color-scheme: light)" />
     <meta name="format-detection" content="telephone=no" />
 
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
@@ -179,54 +194,60 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
     <!-- PostHog analytics -->
     <PostHog />
 
-    <!-- Apply saved theme before paint to avoid flash (site-wide dark mode) -->
+    <!-- Replays the stored preference before first paint — no flash, no mismatch.
+         3-state: light → dark → auto. `as-theme` holds the PREFERENCE;
+         `data-theme` holds what it RESOLVES to, which is all the CSS reads. -->
     <script is:inline>
       (function() {
+        var pref = 'dark';
         try {
-          if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+          var stored = localStorage.getItem('as-theme');
+          if (!stored) {
+            // Migrate visitors carrying the pre-Terminal `theme` key.
+            var legacy = localStorage.getItem('theme');
+            if (legacy === 'light' || legacy === 'dark') {
+              stored = legacy;
+              localStorage.setItem('as-theme', stored);
+            }
+          }
+          if (stored === 'light' || stored === 'dark' || stored === 'auto') pref = stored;
         } catch (e) {}
+
+        var resolved = pref;
+        if (pref === 'auto') {
+          resolved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        /* Green is the default (owner call, 2026-08-16). This fallback MUST stay
+           in sync with data-accent on <html> above — the attribute is what SSR
+           paints, this is what runs pre-paint. If they disagree, first-time
+           visitors get a colour flash on every load.
+           A stored choice always wins, so a visitor who picks Rose keeps Rose. */
+        var accent = 'green';
+        try {
+          var storedAccent = localStorage.getItem('as-accent');
+          if (storedAccent === 'rose' || storedAccent === 'green') accent = storedAccent;
+        } catch (e) {}
+
+        var root = document.documentElement;
+        root.setAttribute('data-theme-pref', pref);
+        root.setAttribute('data-theme', resolved);
+        root.setAttribute('data-accent', accent);
       })();
     </script>
 
     <!-- JSON-LD Schemas (help search engines understand and index content) -->
 	    <script type="application/ld+json" set:html={serializeJsonLd(organizationSchema)} />
+	    <script type="application/ld+json" set:html={serializeJsonLd(websiteSchema)} />
 	    <script type="application/ld+json" set:html={serializeJsonLd(softwareSchema)} />
 	    <script type="application/ld+json" set:html={serializeJsonLd(webPageSchema)} />
-	    <script type="application/ld+json" set:html={serializeJsonLd(faqSchema)} />
 	    {breadcrumbSchema && <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />}
 	    {jsonLd && <script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />}
 	  </head>
 	  <body class="bg-[var(--surface)] text-[var(--text-secondary)] transition-colors duration-300 min-w-0 pb-safe">
-	    <!-- Dark mode toggle: sync with html.dark and localStorage (applies site-wide on every page) -->
-    <input type="checkbox" id="dark-mode-toggle" class="hidden" aria-hidden="true" />
-    <script is:inline>
-      (function() {
-        var toggle = document.getElementById('dark-mode-toggle');
-        if (!toggle) return;
-        if (document.documentElement.classList.contains('dark')) toggle.checked = true;
-        toggle.addEventListener('change', function() {
-          if (this.checked) {
-            document.documentElement.classList.add('dark');
-            try { localStorage.setItem('theme', 'dark'); } catch (e) {}
-          } else {
-            document.documentElement.classList.remove('dark');
-            try { localStorage.setItem('theme', 'light'); } catch (e) {}
-          }
-        });
-      })();
-    </script>
     <slot />
 
-    <!-- Fixed bottom bar: theme toggle (left, peeks out; full bar on hover) -->
-    <div class="theme-switcher-dock fixed bottom-6 left-0 z-40 flex items-center gap-2 glass rounded-full pl-4 pr-3 py-2 shadow-lg transition-transform duration-300 ease-out translate-x-[calc(-100%+1.5rem)] hover:translate-x-0" aria-label="Theme switcher">
-      <svg class="w-4 h-4 text-amber-500 theme-icon-sun" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
-      </svg>
-      <label for="dark-mode-toggle" class="theme-switch" aria-label="Toggle dark mode"></label>
-      <svg class="w-4 h-4 text-slate-500 theme-icon-moon" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-      </svg>
-    </div>
+    <SiteControls />
+
 
 	    <div id="cookie-consent-banner" class="hidden fixed inset-x-3 sm:inset-x-4 bottom-3 sm:bottom-4 z-50 max-w-xl mx-auto rounded-xl sm:rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] shadow-2xl p-3 sm:p-4" role="dialog" aria-live="polite" aria-label="Cookie consent">
 	      <p class="text-xs sm:text-sm leading-relaxed">
@@ -234,7 +255,7 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
 	      </p>
 	      <div class="mt-3 grid grid-cols-2 sm:flex gap-2 sm:justify-end">
 	        <button type="button" id="cookie-consent-decline" class="px-4 py-2 rounded-lg border border-[var(--border)] text-xs sm:text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Decline</button>
-	        <button type="button" id="cookie-consent-accept" class="px-4 py-2 rounded-lg bg-royal-green-500 text-white text-xs sm:text-sm font-semibold hover:bg-royal-green-600 transition-colors">Accept</button>
+	        <button type="button" id="cookie-consent-accept" class="px-4 py-2 rounded-lg bg-acc-500 text-white text-xs sm:text-sm font-semibold hover:bg-acc-600 transition-colors">Accept</button>
 	      </div>
 	    </div>
 
@@ -287,6 +308,30 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
 	        }
 
 	        function initConsent() {
+	          var banner = document.getElementById('cookie-consent-banner');
+	          var accept = document.getElementById('cookie-consent-accept');
+	          var decline = document.getElementById('cookie-consent-decline');
+
+	          // Listeners attach regardless of the stored choice. They used to be
+	          // wired only when consent was unset, which meant a visitor who had
+	          // already chosen could never change their mind — the banner had no
+	          // working buttons left. The bottom-left control reopens it.
+	          if (banner && accept && decline) {
+	            accept.addEventListener('click', function() {
+	              setConsent('accepted');
+	              hideBanner();
+	              loadMarketingTools();
+	              window.dispatchEvent(new CustomEvent('ads-cookie-consent-accepted'));
+	            });
+	            decline.addEventListener('click', function() {
+	              setConsent('declined');
+	              hideBanner();
+	            });
+	            window.adsOpenCookieSettings = function() {
+	              banner.classList.remove('hidden');
+	            };
+	          }
+
 	          var consent = getConsent();
 	          if (consent === 'accepted') {
 	            loadMarketingTools();
@@ -294,22 +339,7 @@ const serializeJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\
 	          }
 	          if (consent === 'declined') return;
 
-	          var banner = document.getElementById('cookie-consent-banner');
-	          var accept = document.getElementById('cookie-consent-accept');
-	          var decline = document.getElementById('cookie-consent-decline');
-	          if (!banner || !accept || !decline) return;
-
-	          banner.classList.remove('hidden');
-	          accept.addEventListener('click', function() {
-	            setConsent('accepted');
-	            hideBanner();
-	            loadMarketingTools();
-	            window.dispatchEvent(new CustomEvent('ads-cookie-consent-accepted'));
-	          });
-	          decline.addEventListener('click', function() {
-	            setConsent('declined');
-	            hideBanner();
-	          });
+	          if (banner) banner.classList.remove('hidden');
 	        }
 
 	        if (document.readyState === 'loading') {

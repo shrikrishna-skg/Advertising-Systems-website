@@ -7,8 +7,21 @@ interface Props {
 }
 
 const { title = 'Common questions', faqs, showContactLink = true, name = 'page-faq' } = Astro.props;
+
+// Page-scoped FAQPage JSON-LD: schema always mirrors the questions actually
+// rendered on this page (Google requires markup to match visible content).
+const faqSchemaJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+}).replace(/</g, '\\u003c');
 ---
 
+<script type="application/ld+json" set:html={faqSchemaJson} />
 <section class="py-16 sm:py-20 lg:py-28" aria-labelledby="section-faq-heading">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
     <h2 id="section-faq-heading" class="reveal text-center text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em] mb-12">
@@ -16,7 +29,7 @@ const { title = 'Common questions', faqs, showContactLink = true, name = 'page-f
     </h2>
     <div class="space-y-3">
       {faqs.map((faq) => (
-        <details class="reveal group glass rounded-xl hover:border-royal-blue-500/20 transition-colors" name={name}>
+        <details class="reveal group glass rounded-xl hover:border-ink-500/20 transition-colors" name={name}>
           <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 list-none [&::-webkit-details-marker]:hidden">
             <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] pr-4">{faq.question}</h3>
             <svg class="w-5 h-5 text-[var(--text-muted)] shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

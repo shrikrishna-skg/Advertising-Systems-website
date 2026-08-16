@@ -1,0 +1,115 @@
+---
+/**
+ * Section 01 — channel coverage.
+ *
+ * Live vs early access is not a design choice: `src/data/faq.ts` names Google
+ * Ads, Meta, Expedia TravelAds, Microsoft/Bing, YouTube and Google Analytics as
+ * live support. Booking.com and Reddit are NOT in that list, so they ship as
+ * "Early access" (amber, a status colour — never the brand accent). If a
+ * channel goes live, change `status` here and in the hero blotter together.
+ */
+const channels = [
+  {
+    n: '01',
+    name: 'Expedia TravelAds',
+    copy: 'Property-level sponsored placement bidding tied to booking revenue, with inventory-aware weekend and season pacing.',
+    status: 'live',
+  },
+  {
+    n: '02',
+    name: 'Booking.com',
+    copy: 'Sponsored visibility and commission-tier positioning, reconciled against the same revenue ledger as paid search.',
+    status: 'early',
+  },
+  {
+    n: '03',
+    name: 'Google Ads',
+    copy: 'Search, Performance Max and Display, with keyword-level waste detection and shared negative lists.',
+    status: 'live',
+  },
+  {
+    n: '04',
+    name: 'Meta Ads',
+    copy: 'Facebook and Instagram campaigns, creative fatigue signals and audience overlap control.',
+    status: 'live',
+  },
+  {
+    n: '05',
+    name: 'Microsoft / Bing Ads',
+    copy: 'Search coverage for the desktop and older-demographic booking window, sharing negatives with Google.',
+    status: 'live',
+  },
+  {
+    n: '06',
+    name: 'Reddit Ads',
+    copy: 'Community and intent targeting for destination research, measured on assisted bookings rather than clicks.',
+    status: 'early',
+  },
+];
+---
+
+<section class="sec" id="channels" aria-labelledby="channels-heading">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="no" aria-hidden="true">01</span>
+      <div>
+        <h2 id="channels-heading">Every channel is a position. Every position is on one screen.</h2>
+        <p class="sub">
+          No tab-switching, no exported spreadsheets, no reconciling six definitions of
+          "conversion". Connected accounts report into a single ledger with one set of rules.
+        </p>
+      </div>
+    </div>
+
+    <div class="chgrid">
+      {channels.map(({ n, name, copy, status }) => (
+        <div class="ch">
+          <div class="cn">{n}</div>
+          <h3>{name}</h3>
+          <p>{copy}</p>
+          <div class={status === 'live' ? 'st' : 'st early'}>
+            <i aria-hidden="true"></i>{status === 'live' ? 'Live' : 'Early access'}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="fine">
+      Channels marked <b>Early access</b> are enabled per account during onboarding.
+      Google Analytics and YouTube also connect for attribution context. Additional OTA and
+      ad-network integrations are reviewed during onboarding and shown as planned until they
+      are live on your account.
+    </p>
+  </div>
+</section>
+
+<style>
+  .chgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+  .ch {
+    padding: 22px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-raised);
+  }
+  .cn { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--text-tertiary); }
+  .ch h3 {
+    margin-top: 6px; font-size: 16px; font-weight: 800;
+    letter-spacing: -0.015em; color: var(--text-primary);
+  }
+  .ch p { margin-top: 7px; font-size: 13.5px; color: var(--text-tertiary); line-height: 1.55; }
+  .st {
+    margin-top: 13px; display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--pos);
+  }
+  .st i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; font-style: normal; }
+  .st.early { color: var(--warn); }
+
+  @media (max-width: 1000px) { .chgrid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .chgrid { grid-template-columns: 1fr; } }
+</style>

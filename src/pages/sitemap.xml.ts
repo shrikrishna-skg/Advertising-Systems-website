@@ -1,10 +1,24 @@
 import type { APIRoute } from 'astro';
-import { getAllSlugs } from '../data/blog-posts';
+import { blogPosts } from '../data/blog-posts';
 import { getAllDecisionGuideSlugs } from '../data/decision-guides';
 
 const siteUrl = 'https://www.advertisingsystems.ai';
 
-const blogUrls = getAllSlugs().map((slug) => ({ url: `/blog/${slug}`, priority: '0.7', changefreq: 'monthly' }));
+// Honest lastmod: bump when site content materially changes. A per-request
+// `new Date()` teaches crawlers to ignore our lastmod entirely.
+const SITE_UPDATED = '2026-08-15';
+
+const toIsoDate = (human: string) => {
+  const d = new Date(human);
+  return Number.isNaN(d.getTime()) ? SITE_UPDATED : d.toISOString().split('T')[0];
+};
+
+const blogUrls = blogPosts.map((post) => ({
+  url: `/blog/${post.slug}`,
+  priority: '0.7',
+  changefreq: 'monthly',
+  lastmod: toIsoDate(post.date),
+}));
 const decisionGuideUrls = getAllDecisionGuideSlugs().map((slug) => ({ url: `/decision-guides/${slug}`, priority: '0.8', changefreq: 'monthly' }));
 
 const pages = [
@@ -63,7 +77,7 @@ export const GET: APIRoute = () => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages.map((page) => `  <url>
     <loc>${siteUrl}${page.url}</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <lastmod>${(page as { lastmod?: string }).lastmod ?? SITE_UPDATED}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
   </url>`).join('\n')}

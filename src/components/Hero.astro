@@ -1,147 +1,294 @@
 ---
-import { AnimatedHero } from './ui/animated-hero';
+/**
+ * Terminal hero — Wave 1.2.
+ *
+ * Replaces the React <AnimatedHero client:load>: the rotating headline is now
+ * CSS-only with all four words server-rendered, which kills the client bundle
+ * AND closes the crawler gap (the old version hid the headline behind
+ * hydration, so bots and LLMs never read it).
+ *
+ * PROVENANCE — playbook honesty rule 1. Every number on this screen is
+ * illustrative and is labelled as such in two places: the blotter header and
+ * the caption under the KPI strip. (A third tag pinned to the ticker was
+ * removed 2026-08-16 by owner ruling — it overlapped the scrolling items;
+ * the two remaining labels carry the disclosure.) The only real figures on
+ * the homepage live in <VerifiedCase />, which links from here.
+ */
+const ticker = [
+  { ch: 'EXPEDIA', metric: 'ROAS', value: '5.7×', dir: 'up' },
+  { ch: 'BOOKING.COM', metric: 'ROAS', value: '3.4×', dir: 'up' },
+  { ch: 'GOOGLE ADS', metric: 'ROAS', value: '6.1×', dir: 'up' },
+  { ch: 'META', metric: 'ROAS', value: '2.8×', dir: 'up' },
+  { ch: 'MICROSOFT ADS', metric: 'ROAS', value: '1.9×', dir: 'dn' },
+  { ch: 'REDDIT', metric: 'ROAS', value: '1.6×', dir: 'dn' },
+  { ch: 'PORTFOLIO', metric: 'WASTE', value: '−38%', dir: 'up' },
+];
+
+/* Channel order is fixed family-wide: Expedia · Booking · Google · Meta ·
+   Microsoft · Reddit. Booking.com and Reddit are early access — they carry the
+   same "Early access" marker here as in the channel grid, so the two sections
+   can never contradict each other. */
+const positions = [
+  { channel: 'Expedia TravelAds', spend: '$14,900', roas: '5.7×', delta: '+1.4', dir: 'up' },
+  { channel: 'Booking.com', spend: '$9,480', roas: '3.4×', delta: 'Early access', dir: 'soon' },
+  { channel: 'Google Ads', spend: '$18,400', roas: '6.1×', delta: '+0.9', dir: 'up' },
+  { channel: 'Meta Ads', spend: '$11,250', roas: '2.8×', delta: '+0.3', dir: 'up' },
+  { channel: 'Microsoft Ads', spend: '$3,120', roas: '1.9×', delta: '−0.2', dir: 'dn' },
+  { channel: 'Reddit Ads', spend: '$1,640', roas: '1.6×', delta: 'Early access', dir: 'soon' },
+];
+
+const kpis = [
+  { v: '4.6×', l: 'Blended ROAS', d: '+142% vs. baseline' },
+  { v: '$12.40', l: 'Cost per acquisition', d: '−31% in 47 days' },
+  { v: '2,847', l: 'Conversions', d: 'Across 6 channels' },
+  { v: '−38%', l: 'Wasted spend', d: 'Reallocated, not cut' },
+];
 ---
 
-<section class="relative pt-24 pb-16 sm:pt-40 sm:pb-28 md:pt-48 md:pb-36 lg:pt-52 lg:pb-40 overflow-hidden" aria-labelledby="hero-heading">
-  <!-- Background effects -->
-  <div class="mesh-gradient absolute inset-0"></div>
-  <div class="dot-grid absolute inset-0"></div>
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(800px,100vw)] h-[min(600px,80vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]" aria-hidden="true"></div>
-
-  <div class="watermark-brand watermark-brand-hero" aria-hidden="true"></div>
-
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-    <div class="text-center max-w-5xl mx-auto min-w-0">
-      <!-- Logo -->
-      <div class="reveal mb-4 flex justify-center">
-        <a href="/" class="inline-block" aria-label="Advertising Systems home">
-          <svg class="w-10 h-10 sm:w-12 sm:h-12 text-[var(--text-primary)]" viewBox="10 -1 44 58" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M26 16 A8 8 0 0 1 38 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.4"/>
-            <path d="M22 11 A13 11 0 0 1 42 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.22"/>
-            <line x1="32" y1="20" x2="22" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="32" y1="20" x2="42" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="22" y1="38" x2="14" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.7"/>
-            <line x1="42" y1="38" x2="50" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.7"/>
-            <line x1="22" y1="38" x2="42" y2="38" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.8"/>
-            <line x1="14" y1="54" x2="50" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.15"/>
-            <circle cx="32" cy="20" r="4.2" fill="currentColor"/>
-            <circle cx="22" cy="38" r="3.5" fill="currentColor" opacity="0.85"/>
-            <circle cx="42" cy="38" r="3.5" fill="currentColor" opacity="0.85"/>
-            <circle cx="14" cy="54" r="2.8" fill="currentColor" opacity="0.5"/>
-            <circle cx="50" cy="54" r="2.8" fill="currentColor" opacity="0.5"/>
-          </svg>
-        </a>
-      </div>
-      <!-- Trust badge — Google-style subtle -->
-      <div class="reveal inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 sm:px-3.5 sm:py-2 mb-6 sm:mb-8 bg-[var(--surface-alt)] border border-[var(--border-subtle)]">
-        <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full shrink-0"></span>
-        <span class="text-[10px] sm:text-xs font-medium text-[var(--text-tertiary)]">AI-powered advertising management — by Multisystems</span>
-      </div>
-
-      <!-- Headline: rotating titles (Make money, Increase Reach, Scale Smarter, Save Time) -->
-      <div class="reveal">
-        <AnimatedHero
-          client:load
-          titles={['Make money', 'Increase Reach', 'Scale Smarter', 'Save Time']}
-          prefix="Your ads should "
-          suffix=""
-          subheadline="The AI advertising engine that unifies Google, Meta & Expedia ads into one system — then optimizes every dollar while you sleep."
-        />
-      </div>
-
-      <!-- CTAs — Google style: one green primary, one secondary link -->
-      <div class="reveal mt-10 sm:mt-12 flex flex-col xs:flex-row sm:flex-row items-center justify-center gap-3 sm:gap-4">
-        <a
-          href="/signup"
-          class="btn-cta-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
-        >
-          <span class="cta-accent-line rounded-lg" aria-hidden="true"></span>
-          <span class="relative">Start now</span>
-          <svg class="w-4 h-4 relative" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </a>
-        <a href="/book-demo" class="link-secondary text-base font-medium px-4 py-2">Schedule a meeting</a>
-      </div>
-
-      <!-- Trust text -->
-      <p class="reveal mt-6 text-sm font-medium text-[var(--text-muted)]">Secure signup · Guided onboarding · Cancel anytime</p>
-
-    </div>
-
-    <!-- Hero Dashboard Mockup -->
-    <div class="reveal mt-16 sm:mt-20 max-w-4xl mx-auto">
-      <div class="glass rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl">
-        <!-- Browser chrome -->
-        <div class="flex items-center gap-2 px-3 sm:px-5 py-2.5 sm:py-3.5 border-b border-[var(--browser-border)] bg-[var(--browser-chrome-bg)]">
-          <div class="flex gap-1 sm:gap-1.5">
-            <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-          </div>
-          <div class="flex-1 ml-2 sm:ml-3 min-w-0">
-            <div class="bg-[var(--browser-url-bg)] rounded-md px-2 sm:px-3 py-1 text-[10px] sm:text-xs text-[var(--browser-url-text)] truncate max-w-[180px] sm:max-w-xs">app.advertisingsystems.ai/dashboard</div>
-          </div>
-        </div>
-
-        <!-- Dashboard content -->
-        <div class="p-4 sm:p-6 lg:p-8 bg-[var(--surface-alt)]">
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-            <div class="glass rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-              <div class="text-xl sm:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">5.2x</div>
-              <div class="text-[10px] sm:text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.1em] mt-1">ROAS</div>
-            </div>
-            <div class="glass rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-              <div class="text-xl sm:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">$12.4</div>
-              <div class="text-[10px] sm:text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.1em] mt-1">CPA</div>
-            </div>
-            <div class="glass rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-              <div class="text-xl sm:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">2,847</div>
-              <div class="text-[10px] sm:text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.1em] mt-1">Conv.</div>
-            </div>
-            <div class="glass rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-              <div class="text-xl sm:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">-38%</div>
-              <div class="text-[10px] sm:text-[11px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.1em] mt-1">Waste</div>
-            </div>
-          </div>
-
-          <div class="glass rounded-xl p-5">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-sm font-medium text-[var(--text-tertiary)]">Revenue by Channel</span>
-              <span class="text-xs font-medium text-[var(--text-muted)]">Last 30 days</span>
-            </div>
-            <div class="flex items-end justify-between h-32 gap-2">
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 45%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 62%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 48%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 71%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 85%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 67%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="height: 92%"></div>
-              <div class="flex-1 rounded-t bg-gradient-to-t from-[var(--bar-fill-from)] to-[var(--bar-fill-to-strong)]" style="height: 100%"></div>
-            </div>
-            <div class="flex justify-between mt-3 text-[10px] font-medium text-[var(--text-muted)]">
-              <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" aria-hidden="true">
+    {[0, 1].map(() => ticker.map(({ ch, metric, value, dir }) => (
+      <span class="tick"><b>{ch}</b> <span>{metric}</span> <span class={dir}>{value}</span></span>
+    )))}
   </div>
+</div>
 
-  <div class="section-line mt-32"></div>
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <span class="badge-line"><i aria-hidden="true"></i> AI advertising management — a Multisystems company</span>
+
+        <h1 id="hero-heading">
+          Your ads should
+          <span class="rotator">
+            <span>make money.</span>
+            <span>reach further.</span>
+            <span>scale smarter.</span>
+            <span>save you time.</span>
+          </span>
+        </h1>
+
+        <p class="lead">
+          Your ad spend is a portfolio. Advertising Systems puts Expedia, Booking.com, Google,
+          Meta, Microsoft and Reddit on one screen — then works the budget every fifteen minutes
+          so nothing bleeds overnight.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-p" href="/book-demo">
+            Book a demo
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M13.5 4.5L21 12l-7.5 7.5M21 12H3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-l" href="/pricing">See pricing</a>
+        </div>
+        <p class="fine">Secure signup · Guided onboarding · Cancel anytime</p>
+      </div>
+
+      <div class="blotter">
+        <div class="blotter-hd">
+          <h2>Channel positions — last 30 days</h2>
+          <a class="illus" href="#case" title="Jump to the verified single-channel export">Illustrative — see real data ↓</a>
+        </div>
+        <table class="pos">
+          <thead>
+            <tr><th>Channel</th><th class="r">Spend</th><th class="r">ROAS</th><th class="r">Δ</th></tr>
+          </thead>
+          <tbody>
+            {positions.map(({ channel, spend, roas, delta, dir }) => (
+              <tr>
+                <td class="ch">{channel}</td>
+                <td class="r num">{spend}</td>
+                <td class="r num">{roas}</td>
+                <td class={`r ${dir}`}>{delta}</td>
+              </tr>
+            ))}
+            <tr>
+              <td class="ch">Portfolio</td>
+              <td class="r num">$58,790</td>
+              <td class="r num">4.6×</td>
+              <td class="r"><span class="bar-mini"><i style="width:76%"></i></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kpis">
+      {kpis.map(({ v, l, d }) => (
+        <div class="kpi">
+          <div class="v num">{v}</div>
+          <div class="l">{l}</div>
+          <div class="d">{d}</div>
+        </div>
+      ))}
+    </div>
+    <p class="fine kpi-note">
+      Illustrative portfolio figures, not company averages or a forecast.
+      The only verified numbers on this page are the platform export in
+      <a href="#case">section 04</a>.
+    </p>
+  </div>
 </section>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', function() {
-    var heroCtas = document.querySelectorAll('.btn-cta-primary[href="/signup"], a.link-secondary[href="/book-demo"]');
-    heroCtas.forEach(function(el) {
-      el.addEventListener('click', function() {
-        window.posthog?.capture('hero_cta_clicked', {
-          cta_text: el.textContent?.trim(),
-          cta_href: el.getAttribute('href'),
-        });
-      });
-    });
-  });
-</script>
+<style>
+  /* -- ticker -- */
+  .ticker {
+    display: flex;
+    align-items: stretch;
+    background: var(--footer-bg);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  /* Pinned, does not scroll: a market ticker reads as a live feed, so the
+     label has to be on screen at all times, not once per 48s loop. */
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-slide 48s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+  }
+  @keyframes ticker-slide { to { transform: translateX(-50%); } }
+  .tick {
+    display: flex; align-items: center; gap: 9px;
+    padding: 9px 26px;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px; white-space: nowrap;
+  }
+  .tick b { color: #fff; font-weight: 700; font-size: 11.5px; letter-spacing: 0.06em; }
+  .tick span { color: var(--footer-text-muted); }
+  .tick .up { color: var(--pos); font-weight: 700; }
+  .tick .dn { color: #F0705C; font-weight: 700; }
+
+  /* -- hero ground: a ruled grid, not a glow -- */
+  .hero {
+    padding: 64px 0 0;
+    background:
+      linear-gradient(var(--dot-grid-color) 1px, transparent 1px) 0 0 / 100% 34px,
+      linear-gradient(90deg, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 34px 100%,
+      var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-top {
+    display: grid;
+    grid-template-columns: 1.02fr 0.98fr;
+    gap: 56px;
+    align-items: end;
+    padding-bottom: 46px;
+  }
+
+  /* -- rotating headline, ported from Multisystems globals.css .rotator --
+     Every word is in the DOM and server-rendered, so crawlers and LLMs read
+     all four. Grid-stacking keeps the block as tall as the longest word, so
+     nothing reflows. Sequential, no crossfade: each word is fully out at 25%,
+     exactly when the next word's delay slot opens. */
+  .rotator { display: grid; min-height: 1.22em; }
+  .rotator > span {
+    grid-area: 1 / 1;
+    /* --acc-btn, not --acc: the headline should be the same saturated red as
+       the primary button (owner call). --acc lightens to rose-400 in dark
+       because SMALL accent text fails AA at #E11D48 on dark — but the rotator
+       is display text (36-60px/800), where AA large is 3.0:1 and #E11D48
+       measures 3.92:1 on the hero ground. Do not copy this to any small use. */
+    color: var(--acc-display, var(--acc-btn));
+    overflow-wrap: break-word;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: as-rotate 10s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  /* Fallback: if the animation never runs — reduced motion, an old engine, a
+     prerender or screenshot pass that freezes CSS animations — every word would
+     sit at opacity 0 and the headline would vanish. Word one stays visible by
+     default; a running animation outranks a normal declaration in the cascade,
+     so this costs nothing when things work. */
+  .rotator > span:first-child { opacity: 1; transform: none; }
+  .rotator > span:nth-child(1) { animation-delay: 0s; }
+  .rotator > span:nth-child(2) { animation-delay: 2.5s; }
+  .rotator > span:nth-child(3) { animation-delay: 5s; }
+  .rotator > span:nth-child(4) { animation-delay: 7.5s; }
+  @keyframes as-rotate {
+    0%   { opacity: 0; transform: translateY(12px); }
+    4%   { opacity: 1; transform: translateY(0); }
+    21%  { opacity: 1; transform: translateY(0); }
+    25%  { opacity: 0; transform: translateY(-12px); }
+    100% { opacity: 0; transform: translateY(-12px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rotator > span { animation: none; }
+    .rotator > span:first-child { opacity: 1; transform: none; }
+  }
+
+  /* -- position blotter -- */
+  /* The table is allowed to be wider than the phone; the PAGE is not.
+     Without this the blotter set document width at 390px and clipped the hero
+     copy off the right edge — content loss, not just a scrollbar. */
+  .blotter { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .blotter table.pos { min-width: 460px; }
+  .blotter {
+    border: 1px solid var(--border);
+    background: var(--surface-raised);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .blotter-hd {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-alt);
+  }
+  .blotter-hd h2 {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-secondary);
+  }
+  table.pos { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.pos th {
+    text-align: left; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    padding: 9px 14px; border-bottom: 1px solid var(--border);
+  }
+  table.pos th.r, table.pos td.r { text-align: right; }
+  table.pos td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  table.pos tbody tr:last-child td { border-bottom: 0; background: var(--surface-alt); }
+  table.pos .ch { font-weight: 700; color: var(--text-primary); }
+  table.pos .up { color: var(--pos); font-weight: 700; }
+  table.pos .dn { color: var(--neg); font-weight: 700; }
+  table.pos .soon { color: var(--warn); font-weight: 700; font-size: 11px; }
+  .bar-mini {
+    height: 4px; border-radius: 2px; background: var(--border);
+    overflow: hidden; width: 56px; display: inline-block; vertical-align: middle;
+  }
+  .bar-mini i { display: block; height: 100%; background: var(--acc); font-style: normal; }
+
+  /* -- KPI strip -- */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
+  .kpi { padding: 20px 0 24px; border-right: 1px solid var(--border); }
+  .kpi:last-child { border-right: 0; }
+  .kpi:not(:first-child) { padding-left: 22px; }
+  .kpi .v {
+    font-size: clamp(26px, 3vw, 36px); font-weight: 800;
+    letter-spacing: -0.035em; line-height: 1; color: var(--text-primary);
+  }
+  .kpi .l {
+    margin-top: 7px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--text-tertiary);
+  }
+  .kpi .d { font-size: 12px; font-weight: 700; color: var(--pos); margin-top: 4px; }
+  .kpi-note { padding-bottom: 26px; }
+  .kpi-note a { color: var(--acc); font-weight: 600; }
+
+  @media (max-width: 1000px) {
+    .hero-top { grid-template-columns: 1fr; gap: 36px; align-items: start; }
+  }
+  @media (max-width: 640px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .kpi {
+      border-bottom: 1px solid var(--border);
+      padding-left: 0 !important;
+      padding-inline: 14px;
+    }
+    .kpi:nth-child(2n) { border-right: 0; }
+  }
+</style>

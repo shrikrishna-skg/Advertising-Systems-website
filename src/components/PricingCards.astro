@@ -29,26 +29,32 @@ const getDemoHref = (planName: string) => {
 };
 
 const toneClasses: Record<string, { wrap: string; icon: string; border: string; button: string; badge: string }> = {
+  // Routed through --pos rather than Tailwind's raw emerald ramp, which is
+  // theme-blind — the 100-step wrap stayed a pale mint card in dark mode.
+  // The badge label is --surface, not white — that inverts correctly in both
+  // themes (5.79:1 light, 12.0:1 dark).
+  // Class names are NOT spelled out in these comments on purpose: Tailwind
+  // scans comment text and would re-emit the dead utility into the bundle.
   emerald: {
-    wrap: 'bg-emerald-100 text-emerald-700',
-    icon: 'text-emerald-700',
-    border: 'border-emerald-200',
+    wrap: 'bg-[var(--pos-tint)] text-[var(--pos)]',
+    icon: 'text-[var(--pos)]',
+    border: 'border-[var(--pos-line)]',
     button: 'btn-secondary',
-    badge: 'bg-emerald-600 text-white',
+    badge: 'bg-[var(--pos)] text-[var(--surface)]',
   },
   amber: {
     wrap: 'bg-amber-100 text-amber-700',
     icon: 'text-amber-700',
     border: 'border-blue-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
     button: 'bg-amber-200 text-amber-950 hover:bg-amber-300',
-    badge: 'bg-royal-blue-600 text-white',
+    badge: 'bg-ink-600 text-white',
   },
   blue: {
     wrap: 'bg-blue-100 text-blue-700',
     icon: 'text-blue-700',
     border: 'border-blue-100',
     button: 'btn-secondary',
-    badge: 'bg-royal-blue-600 text-white',
+    badge: 'bg-ink-600 text-white',
   },
   violet: {
     wrap: 'bg-violet-100 text-violet-700',
@@ -63,8 +69,8 @@ const getPlanState = (planName: string) => {
   if (isBillingMode && planName === currentPlan) {
     return {
       badge: 'CURRENT',
-      badgeClass: 'bg-royal-blue-600 text-white',
-      borderClass: 'border-royal-blue-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
+      badgeClass: 'bg-ink-600 text-white',
+      borderClass: 'border-ink-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
       isCurrent: true,
     };
   }
@@ -105,7 +111,7 @@ const getPlanState = (planName: string) => {
     >
       Annual
     </button>
-    <span class="rounded-lg bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700 shadow-sm">Save 20%</span>
+    <span class="rounded-lg bg-[var(--pos-tint)] px-4 py-2 text-sm font-bold text-[var(--pos)] shadow-sm">Save 20%</span>
   </div>
 
   <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -220,7 +226,7 @@ const getPlanState = (planName: string) => {
           <ul class="mt-6 space-y-3" role="list">
             {plan.features.map((feature) => (
               <li class="flex gap-3 text-sm font-medium leading-relaxed text-slate-700">
-                <svg class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-[var(--pos)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                   <path d="m5 12 4 4L19 6" />
                 </svg>
                 <span>{feature}</span>
@@ -229,15 +235,6 @@ const getPlanState = (planName: string) => {
           </ul>
 
           <div class="mt-auto pt-7 space-y-3">
-            {plan.capabilities.map((capability) => (
-              <div class="grid grid-cols-[6.5rem_1fr_2.25rem] items-center gap-3">
-                <span class="text-sm font-medium text-slate-500">{capability.label}</span>
-                <span class="h-2 rounded-full bg-slate-100">
-                  <span class="block h-2 rounded-full bg-slate-500" style={`width: ${capability.value}%`}></span>
-                </span>
-                <span class="text-right text-sm font-black text-slate-700">{capability.value}</span>
-              </div>
-            ))}
           </div>
         </article>
       );
@@ -250,7 +247,7 @@ const getPlanState = (planName: string) => {
     const buttons = Array.from(pricingRoot.querySelectorAll('[data-billing-option]'));
     const prices = Array.from(pricingRoot.querySelectorAll('[data-plan-price]'));
 
-    const setBilling = (billing) => {
+    const setBilling = (billing: string) => {
       buttons.forEach((button) => {
         const isActive = button.getAttribute('data-billing-option') === billing;
         button.setAttribute('aria-pressed', String(isActive));

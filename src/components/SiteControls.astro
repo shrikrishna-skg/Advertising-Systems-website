@@ -1,0 +1,232 @@
+---
+/**
+ * Bottom-left site controls — accent, theme and cookie settings behind one
+ * launcher. The launcher shows the live accent swatch, so the control looks
+ * like what it does.
+ *
+ * Active state for both option groups is pure CSS off the <html> attributes
+ * (`data-accent`, `data-theme-pref`), so this panel and the header theme button
+ * can never disagree — there is no state to keep in sync, only one source read
+ * twice.
+ */
+---
+
+<div class="sc" id="site-controls">
+  <div class="sc-panel" id="sc-panel" hidden>
+    <div class="sc-group" role="group" aria-label="Accent colour">
+      <p class="sc-label">Accent</p>
+      <div class="sc-opts">
+        <button type="button" class="sc-opt" data-accent-opt="rose">
+          <span class="sc-dot sc-dot-rose" aria-hidden="true"></span>Rose
+        </button>
+        <button type="button" class="sc-opt" data-accent-opt="green">
+          <span class="sc-dot sc-dot-green" aria-hidden="true"></span>Green
+        </button>
+      </div>
+    </div>
+
+    <div class="sc-group" role="group" aria-label="Theme">
+      <p class="sc-label">Theme</p>
+      <div class="sc-opts">
+        <button type="button" class="sc-opt" data-theme-opt="light">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>Light
+        </button>
+        <button type="button" class="sc-opt" data-theme-opt="dark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 0 1 9.5 3a7 7 0 1 0 11.5 11.5z"/></svg>Dark
+        </button>
+        <button type="button" class="sc-opt" data-theme-opt="auto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>Auto
+        </button>
+      </div>
+    </div>
+
+    <div class="sc-group">
+      <p class="sc-label">Privacy</p>
+      <button type="button" class="sc-opt sc-opt-wide" id="sc-cookies">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="9.5" cy="10" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="9.5" r="1" fill="currentColor" stroke="none"/><circle cx="12.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Cookie settings
+      </button>
+      <a class="sc-link" href="/cookies">Read the cookie policy →</a>
+    </div>
+  </div>
+
+  <button type="button" class="sc-launch" id="sc-launch" aria-expanded="false" aria-controls="sc-panel" aria-label="Site settings: accent, theme and cookies">
+    <span class="sc-swatch" aria-hidden="true"></span>
+  </button>
+</div>
+
+<style>
+  .sc {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .sc-launch {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-frame);
+    cursor: pointer;
+    transition: border-color 0.16s;
+  }
+  .sc-launch:hover { border-color: var(--text-tertiary); }
+  .sc-swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    background: var(--acc-btn);
+    display: block;
+  }
+
+  .sc-panel {
+    width: 232px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    /* The one shadowed surface pattern: overlays lift, page surfaces stay flat. */
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-frame);
+  }
+  .sc-panel[hidden] { display: none; }
+
+  .sc-group + .sc-group { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .sc-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .sc-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .sc-opt {
+    flex: 1 1 auto;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .sc-opt:hover { color: var(--text-primary); border-color: var(--text-tertiary); background: var(--surface-alt); }
+  .sc-opt svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .sc-opt-wide { width: 100%; }
+
+  .sc-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+  /* Literal, not var(--acc-btn): these two swatches have to show what you would
+     be switching TO, so neither can follow the currently-selected accent. */
+  .sc-dot-rose { background: #E11D48; }
+  /* Swatch previews what the accent actually resolves to, so it splits by theme
+     the same way --acc does: deep on light, neon on dark. */
+  .sc-dot-green { background: #08753F; }
+  :global([data-theme="dark"]) .sc-dot-green { background: #00E97B; }
+
+  /* Selected state, driven straight off the <html> attributes. */
+  :global([data-accent="rose"]) .sc-opt[data-accent-opt="rose"],
+  :global([data-accent="green"]) .sc-opt[data-accent-opt="green"],
+  :global([data-theme-pref="light"]) .sc-opt[data-theme-opt="light"],
+  :global([data-theme-pref="dark"]) .sc-opt[data-theme-opt="dark"],
+  :global([data-theme-pref="auto"]) .sc-opt[data-theme-opt="auto"] {
+    border-color: var(--acc);
+    color: var(--text-primary);
+    background: var(--acc-tint);
+  }
+
+  .sc-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--acc);
+    text-decoration: none;
+  }
+  .sc-link:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .sc { left: 12px; bottom: 12px; }
+    /* Clear of the cookie banner, which pins to the bottom edge. */
+    .sc-panel { width: min(232px, calc(100vw - 24px)); }
+  }
+
+  @media print { .sc { display: none; } }
+</style>
+
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var wrap = document.getElementById('site-controls');
+    var launch = document.getElementById('sc-launch');
+    var panel = document.getElementById('sc-panel');
+    if (!wrap || !launch || !panel) return;
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      launch.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    launch.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(panel.hidden);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.hidden && !wrap.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hidden) { setOpen(false); launch.focus(); }
+    });
+
+    panel.querySelectorAll('[data-accent-opt]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var next = btn.getAttribute('data-accent-opt');
+        root.setAttribute('data-accent', next);
+        try { localStorage.setItem('as-accent', next); } catch (err) {}
+      });
+    });
+
+    var systemDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    panel.querySelectorAll('[data-theme-opt]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var pref = btn.getAttribute('data-theme-opt');
+        var resolved = pref === 'auto'
+          ? (systemDark && systemDark.matches ? 'dark' : 'light')
+          : pref;
+        root.setAttribute('data-theme-pref', pref);
+        root.setAttribute('data-theme', resolved);
+        try { localStorage.setItem('as-theme', pref); } catch (err) {}
+      });
+    });
+
+    var cookies = document.getElementById('sc-cookies');
+    if (cookies) {
+      cookies.addEventListener('click', function () {
+        setOpen(false);
+        if (typeof window.adsOpenCookieSettings === 'function') {
+          window.adsOpenCookieSettings();
+        } else {
+          window.location.href = '/cookies';
+        }
+      });
+    }
+  })();
+</script>

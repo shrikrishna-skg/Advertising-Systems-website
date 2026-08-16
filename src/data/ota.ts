@@ -170,11 +170,15 @@ export const otaCapabilities: OTACapability[] = [
   },
 ];
 
+/* Verified-export figures (single managed property, 30 days, Expedia
+   TravelAds, clicked-path attribution) — the same reconciled numbers as the
+   case study. The previous aggregates here ($40K/mo, $480K+, 30% lift, $12M+)
+   had no provenance anywhere in the repo and are gone. */
 export const otaStats: OTAStat[] = [
-  { value: '$40K/mo', label: 'Hotel Ad Spend Managed', detail: 'Paid digital advertising managed through Advertising Systems' },
-  { value: '$480K+', label: 'Annual Spend Optimized', detail: 'Hotel partner spend optimized across managed campaigns' },
-  { value: '30%', label: 'Booking Lift', detail: 'Increase in bookings partners have seen from managed campaigns' },
-  { value: '$12M+', label: 'Customer Revenue', detail: 'Revenue generated through Advertising Systems-managed campaigns' },
+  { value: '$592.93', label: 'Ad Spend, 30 Days', detail: 'One managed property, Expedia TravelAds — verified export' },
+  { value: '$16,175', label: 'Booking Revenue', detail: '86 reservations · 192 room nights, same export' },
+  { value: '27.3:1', label: 'Return on Ad Spend', detail: 'Platform cites an 8:1–12:1 lodging benchmark' },
+  { value: '6.03%', label: 'Click-Through Rate', detail: 'Against a 2–3% platform lodging benchmark' },
 ];
 
 export const otaMarketInsights = [

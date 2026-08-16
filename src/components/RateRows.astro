@@ -1,0 +1,97 @@
+---
+/**
+ * Section 06 — pricing as a rate card, not a card wall.
+ * Reads `src/data/pricing.ts` so the homepage can never drift from /pricing.
+ */
+import { pricingPlans } from '../data/pricing';
+
+const rates = pricingPlans.map((plan) => ({
+  name: plan.name,
+  badge: plan.badge,
+  highlighted: plan.highlighted,
+  /* '$199.00' reads as a rate row at '$199'; the cents are noise at this size
+     and /pricing still shows the exact figure. 'Custom' passes through. */
+  price: plan.price.replace(/\.00$/, ''),
+  period: plan.period === '/month' ? '/mo' : '',
+  description: plan.description,
+  spend: plan.spend.replace(/•/g, '·'),
+  cta: plan.cta,
+}));
+---
+
+<section class="sec" id="pricing" aria-labelledby="pricing-heading">
+  <div class="wrap">
+    <div class="sec-hd">
+      <span class="no" aria-hidden="true">06</span>
+      <div>
+        <h2 id="pricing-heading">Priced by accounts under management.</h2>
+        <p class="sub">
+          Ad spend is billed by the platforms, separately and directly. You are paying us for the
+          system, not a percentage of your media.
+        </p>
+      </div>
+    </div>
+
+    <div class="rates">
+      {rates.map(({ name, badge, highlighted, price, period, description, spend, cta }) => (
+        <div class={highlighted ? 'rate hl' : 'rate'}>
+          <h3>
+            {name}
+            {badge && <span class="pop">{badge}</span>}
+          </h3>
+          <div class="px num">{price}{period && <em>{period}</em>}</div>
+          <div class="desc">{description}<span>{spend}</span></div>
+          <a class={highlighted ? 'btn btn-p btn-sm' : 'btn btn-l btn-sm'} href={cta.href}>{cta.text}</a>
+        </div>
+      ))}
+    </div>
+
+    <p class="fine">
+      Annual billing is 20% lower. Choosing a plan carries it into the demo booking so the call
+      starts with the right account scope. <a href="/pricing">Full plan comparison →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .rates {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--surface-raised);
+  }
+  .rate {
+    display: grid;
+    grid-template-columns: 150px 150px 1fr 190px;
+    gap: 20px;
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .rate:last-child { border-bottom: 0; }
+  .rate.hl { background: var(--acc-tint); border-left: 3px solid var(--acc-btn); }
+  .rate h3 {
+    font-size: 17px; font-weight: 800; letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 9px; color: var(--text-primary);
+  }
+  .pop {
+    font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em;
+    color: var(--acc-btn-fg, #fff); background: var(--acc-btn); border-radius: 2px; padding: 2px 6px;
+  }
+  .px {
+    font-size: 22px; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+  .px em { font-style: normal; font-size: 12.5px; font-weight: 600; color: var(--text-tertiary); }
+  .desc { font-size: 13.5px; color: var(--text-secondary); }
+  .desc span { display: block; font-size: 12px; color: var(--text-tertiary); margin-top: 3px; }
+  .fine a { color: var(--acc); font-weight: 600; }
+
+  @media (max-width: 1000px) {
+    .rate { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .rate .desc { grid-column: 1 / -1; }
+  }
+  @media (max-width: 640px) {
+    .rate { grid-template-columns: 1fr; }
+  }
+</style>

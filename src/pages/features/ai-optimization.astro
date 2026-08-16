@@ -48,23 +48,23 @@ const capabilities = [
 ];
 
 const relatedFeatures = [
-  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: '14 campaigns in 20min' },
-  { title: 'Performance Analytics', href: '/features/analytics', stat: '$180K attributed' },
-  { title: 'Automation Studio', href: '/features/automation', stat: '12hrs saved/week' },
-  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: '5.2x ROAS' },
+  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: 'One dashboard, every channel' },
+  { title: 'Performance Analytics', href: '/features/analytics', stat: 'Attribution to booking revenue' },
+  { title: 'Automation Studio', href: '/features/automation', stat: 'Rules run around the clock' },
+  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: 'Cross-channel reallocation' },
 ];
 ---
 
 <Layout
   breadcrumbs={[{ name: 'Features', href: '/features' }, { name: 'AI Optimization', href: '/features/ai-optimization' }]}
-  title="AI Optimization Engine — Advertising Systems | Autonomous Campaign Optimization"
+  title="AI Optimization Engine — Autonomous Campaigns | Advertising Systems"
   description="Your campaigns optimize themselves. Autonomous bidding, smart budget reallocation, and audience discovery powered by machine learning."
 >
   <Navbar />
-  <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'AI Optimization', href: '/features/ai-optimization' }]} />
-  <main>
+  <main class="terminal">
+    <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'AI Optimization', href: '/features/ai-optimization' }]} />
     <!-- Hero -->
-    <section class="relative pt-40 pb-20 sm:pt-48 sm:pb-28 overflow-hidden" aria-labelledby="ai-heading">
+    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="ai-heading">
       <div class="mesh-gradient absolute inset-0"></div>
       <div class="dot-grid absolute inset-0"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
@@ -72,7 +72,7 @@ const relatedFeatures = [
       <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
           <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">40% lower CPA in week one</span>
+          <span class="text-sm font-medium text-[var(--text-tertiary)]">Bids, budgets and audiences — worked around the clock</span>
         </div>
 
         <h1 id="ai-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
@@ -85,7 +85,7 @@ const relatedFeatures = [
           Machine learning that analyzes 50,000+ data points per campaign to autonomously adjust bids, reallocate budgets, and discover hidden audiences — around the clock.
         </p>
         <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
+          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
             See It In Action
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -144,6 +144,7 @@ const relatedFeatures = [
             <div class="flex-1 ml-3">
               <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/optimization</div>
             </div>
+            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
           </div>
           <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
             <!-- AI Status Bar -->
@@ -264,27 +265,6 @@ const relatedFeatures = [
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Testimonial -->
-    <section class="py-28" aria-labelledby="testimonial-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal glass rounded-2xl p-10 sm:p-14">
-          <svg class="w-10 h-10 text-[var(--text-primary)]/30 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11h4v10H0z" />
-          </svg>
-          <blockquote>
-            <p id="testimonial-heading" class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] leading-relaxed">
-              "In the first week, the AI cut our cost-per-acquisition by 40%. We didn't change a single setting — it just figured it out."
-            </p>
-          </blockquote>
-          <div class="mt-8">
-            <div class="font-semibold text-[var(--text-primary)]">Sarah Chen</div>
-            <div class="text-sm text-[var(--text-muted)]">VP of Digital Marketing, Horizon Hospitality Group</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <div class="section-line"></div>
 
@@ -333,7 +313,7 @@ const relatedFeatures = [
           See how the AI Optimization Engine can reduce your CPA and discover untapped audiences automatically.
         </p>
         <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
+          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
             Book Your Demo
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />

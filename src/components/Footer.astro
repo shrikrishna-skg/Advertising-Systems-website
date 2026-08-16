@@ -1,4 +1,25 @@
 ---
+/**
+ * Terminal footer — ported 1:1 from the RevenueSystems footer pattern
+ * (www.revenuesystems.app) at the user's direction, 2026-08-16:
+ *   1. Full-bleed watermark BEHIND the link columns using the SVG
+ *      textLength/lengthAdjust stretch — the wordmark spans edge to edge at
+ *      any viewport, one merged line on desktop, two stacked lines on mobile.
+ *   2. Brand mark on a rounded accent tile (RS's logo treatment applied to
+ *      our A-mark).
+ *   3. CTA card inside the footer, ecosystem strip with sibling logo chips,
+ *      and the Multisystems hub logo at the very bottom.
+ *
+ * The CTA card renders unconditionally (user decision 2026-08-16): RS shows it
+ * on every page, including pages that also have a pre-footer CTA band — the
+ * band sells, the footer card catches whoever scrolled past it. The old
+ * `showCta` prop is gone (owner ruling: the CTA card shows on every page,
+ * RS parity). No page passes it anymore.
+ *
+ * All existing link columns are preserved verbatim — footer links are the
+ * site's internal-linking backbone.
+ */
+
 const footerColumns = [
   {
     title: 'Product',
@@ -55,104 +76,312 @@ const footerColumns = [
     ],
   },
 ];
+
+// Spaced names match the family's brand-consistency convention (RS footer).
+const family = [
+  { name: 'Hotel Systems', href: 'https://hotelsystems.ai', logo: '/logos/hotel-systems-logo.png' },
+  { name: 'Reputation Systems', href: 'https://reputationsystems.ai', logo: '/logos/reputation-systems-logo.svg' },
+  { name: 'OTA Systems', href: 'https://otasystems.ai', logo: '/logos/ota-systems-logo.svg' },
+  { name: 'Image Systems', href: 'https://imagesystems.ai', logo: '/logos/image-systems-logo.svg' },
+];
 ---
 
-<!-- Pre-footer CTA band — Google-style: clean strip, one green CTA -->
-<section class="py-12 sm:py-16 lg:py-20 bg-[var(--surface-alt)] border-y border-[var(--border)]" aria-labelledby="footer-cta-heading">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center min-w-0">
-    <h2 id="footer-cta-heading" class="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-      Ready to master your advertising?
-    </h2>
-    <a
-      href="/book-demo"
-      class="btn-cta-primary mt-8 w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors"
-    >
-      <span class="cta-accent-line rounded-lg" aria-hidden="true"></span>
-      <span class="relative">Schedule a meeting</span>
-      <svg class="w-4 h-4 relative" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-      </svg>
-    </a>
-  </div>
-</section>
+<footer class="t-footer" role="contentinfo">
+  <div class="fwrap frel">
 
-<footer class="footer-block relative overflow-hidden bg-[var(--footer-bg)] border-t border-[var(--footer-border)] pt-14 pb-10 text-[var(--footer-text)]" role="contentinfo">
-  <div class="watermark-brand watermark-brand-on-dark" aria-hidden="true"></div>
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-    <!-- Columns -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-10 mb-10 sm:mb-12">
+    <!-- End-to-end watermark, behind the columns (RS textLength stretch) -->
+    <div class="fmark" aria-hidden="true">
+      <svg viewBox="0 -3 458 164" class="fmark-m">
+        <text x="0" y="70" font-size="100" textLength="458" lengthAdjust="spacingAndGlyphs">ADVERTISING</text>
+        <text x="0" y="158" font-size="100" textLength="458" lengthAdjust="spacingAndGlyphs">SYSTEMS</text>
+      </svg>
+      <svg viewBox="0 -3 1170 76" class="fmark-d">
+        <text x="0" y="70" font-size="100" textLength="1170" lengthAdjust="spacingAndGlyphs">ADVERTISINGSYSTEMS</text>
+      </svg>
+    </div>
+
+    <div class="fgrid">
+      <div class="fbrand-col">
+        <a class="fbrand" href="/" aria-label="Advertising Systems home">
+          <svg viewBox="0 0 64 64" class="ftile" role="img" aria-label="Advertising Systems">
+            <rect width="64" height="64" rx="13" class="ftile-bg" />
+            <svg x="12" y="4" width="40" height="56" viewBox="10 -1 44 58" fill="none">
+              <path d="M26 16 A8 8 0 0 1 38 16" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".45"/>
+              <path d="M22 11 A13 11 0 0 1 42 11" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".25"/>
+              <line x1="32" y1="20" x2="22" y2="38" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              <line x1="32" y1="20" x2="42" y2="38" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              <line x1="22" y1="38" x2="14" y2="54" stroke="#fff" stroke-width="2.8" stroke-linecap="round" opacity=".7"/>
+              <line x1="42" y1="38" x2="50" y2="54" stroke="#fff" stroke-width="2.8" stroke-linecap="round" opacity=".7"/>
+              <line x1="22" y1="38" x2="42" y2="38" stroke="#fff" stroke-width="2.8" stroke-linecap="round" opacity=".8"/>
+              <circle cx="32" cy="20" r="4.2" fill="#fff"/>
+              <circle cx="22" cy="38" r="3.5" fill="#fff" opacity=".85"/>
+              <circle cx="42" cy="38" r="3.5" fill="#fff" opacity=".85"/>
+              <circle cx="14" cy="54" r="2.8" fill="#fff" opacity=".5"/>
+              <circle cx="50" cy="54" r="2.8" fill="#fff" opacity=".5"/>
+            </svg>
+          </svg>
+          <span class="fword"><b>Advertising <span>Systems</span></b><em>by Multisystems</em></span>
+        </a>
+        <p class="fnote">
+          AI advertising management for hospitality and multi-location operators.
+          One screen for Expedia, Google, Meta and the OTAs. Part of the
+          <a href="https://www.multisystems.ai" rel="noopener">Multisystems</a> ecosystem.
+        </p>
+        <p class="fmeta">
+          <span>Shared Multisystems account sign-in</span>
+          <span aria-hidden="true">·</span>
+          <a href="/security">Security details</a>
+        </p>
+      </div>
+
       {footerColumns.map((column) => (
         <nav aria-label={column.title}>
-          <h3 class="text-xs font-semibold uppercase tracking-[0.1em] mb-4">{column.title}</h3>
-          <ul class="space-y-3" role="list">
-            {column.links.map((link) => (
-              <li>
-                <a href={link.href} class="text-sm font-medium transition-colors">{link.text}</a>
-              </li>
-            ))}
-          </ul>
+          <h3>{column.title}</h3>
+          {column.links.map((link) => <a href={link.href}>{link.text}</a>)}
         </nav>
       ))}
     </div>
 
-    <!-- Multisystems product family strip -->
-    <div class="border-t border-[var(--footer-border)] pt-8 pb-6">
-      <p class="text-center text-[10px] font-semibold tracking-[0.2em] footer-faint uppercase mb-4">A Multisystems.ai Product</p>
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-        <a href="https://imagesystems.ai" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[var(--footer-border)] text-xs font-semibold footer-muted hover:border-white/20 hover:footer-text transition-colors">
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shrink-0"></span>ImageSystems
-        </a>
-        <a href="https://reputationsystems.ai" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[var(--footer-border)] text-xs font-semibold footer-muted hover:border-white/20 hover:footer-text transition-colors">
-          <span class="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0"></span>ReputationSystems
-        </a>
-        <a href="https://hotelsystems.ai" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[var(--footer-border)] text-xs font-semibold footer-muted hover:border-white/20 hover:footer-text transition-colors">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>HotelSystems
-        </a>
-        <span
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-royal-green-500 bg-royal-green-500/10 text-xs font-semibold text-royal-green-400">
-          <span class="w-1.5 h-1.5 rounded-full bg-royal-green-400 shrink-0"></span>Advertising Systems
-        </span>
-        <span
-          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--footer-border)] text-xs font-semibold footer-faint">
-          <span class="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0"></span>RevenueSystems
-          <span class="text-[9px] font-bold tracking-wide bg-white/10 text-white/40 px-1.5 py-0.5 rounded">SOON</span>
-        </span>
-        <a href="https://otasystems.ai" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[var(--footer-border)] text-xs font-semibold footer-muted hover:border-white/20 hover:footer-text transition-colors">
-          <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>OTA Systems
-        </a>
+    <div class="fcta">
+      <p>Ready to master your advertising? Bring your channels, budgets, and current ROAS. We show what we would change and why.</p>
+      <div class="fcta-actions">
+        <a class="fcta-primary" href="/book-demo">Book a 30-min Demo</a>
+        <a class="fcta-secondary" href="mailto:contact@multisystems.ai">Ask a Direct Question</a>
       </div>
     </div>
 
-    <!-- Bottom bar: brand left, copyright right -->
-    <div class="border-t border-[var(--footer-border)] pt-6 pb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-center sm:text-left">
-      <!-- Left: Advertising Systems logo + name -->
-      <div class="flex items-center justify-center sm:justify-start gap-3 shrink-0">
-        <svg class="w-8 h-8 shrink-0 footer-muted" viewBox="10 -1 44 58" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M26 16 A8 8 0 0 1 38 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity="0.5"/>
-          <path d="M22 11 A13 11 0 0 1 42 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
-          <line x1="32" y1="20" x2="22" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-          <line x1="32" y1="20" x2="42" y2="38" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-          <line x1="22" y1="38" x2="14" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.8"/>
-          <line x1="42" y1="38" x2="50" y2="54" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.8"/>
-          <line x1="22" y1="38" x2="42" y2="38" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" opacity="0.9"/>
-          <line x1="14" y1="54" x2="50" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.2"/>
-          <circle cx="32" cy="20" r="4.2" fill="currentColor"/>
-          <circle cx="22" cy="38" r="3.5" fill="currentColor" opacity="0.9"/>
-          <circle cx="42" cy="38" r="3.5" fill="currentColor" opacity="0.9"/>
-          <circle cx="14" cy="54" r="2.8" fill="currentColor" opacity="0.6"/>
-          <circle cx="50" cy="54" r="2.8" fill="currentColor" opacity="0.6"/>
-        </svg>
-        <div>
-          <span class="text-sm font-bold footer-muted">Advertising Systems</span>
-          <span class="text-xs font-medium footer-faint block mt-0.5">by Multisystems</span>
-        </div>
-      </div>
-      <!-- Right: copyright -->
-      <p class="text-sm font-medium footer-muted sm:text-right">&copy; 2026 Multisystems Inc. All rights reserved.</p>
+    <div class="fbot">
+      <span>© 2026 Multisystems Inc. All rights reserved.</span>
+      <span class="fbot-links">
+        <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> ·
+        <a href="/security">Security</a> · <a href="/cookies">Cookies</a>
+      </span>
     </div>
   </div>
+
+  <!-- Ecosystem strip (RS pattern: logo chips, self highlighted) -->
+  <div class="ffamily">
+    <div class="fwrap">
+      <p class="ffamily-label">A Multisystems.ai product</p>
+      <ul class="ffamily-row">
+        <li>
+          <span class="fchip is-self" aria-current="page">
+            <svg viewBox="0 0 64 64" class="fchip-logo" aria-hidden="true">
+              <rect width="64" height="64" rx="13" class="ftile-bg" />
+              <svg x="14" y="6" width="36" height="52" viewBox="10 -1 44 58" fill="none">
+                <line x1="32" y1="20" x2="22" y2="38" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+                <line x1="32" y1="20" x2="42" y2="38" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+                <line x1="22" y1="38" x2="42" y2="38" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/>
+                <circle cx="32" cy="20" r="5" fill="#fff"/>
+              </svg>
+            </svg>
+            Advertising Systems
+          </span>
+        </li>
+        {family.map(({ name, href, logo }) => (
+          <li>
+            <a class="fchip" href={href} rel="noopener noreferrer" target="_blank">
+              <img src={logo} alt="" class="fchip-logo" loading="lazy" width="16" height="16" />
+              {name}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a class="fchip" href="https://www.revenuesystems.app" rel="noopener noreferrer" target="_blank">
+            <svg viewBox="0 0 64 64" class="fchip-logo" aria-hidden="true">
+              <rect width="64" height="64" rx="13" fill="#4f46e5"/>
+              <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 50 C 25 49.5 29 31 45 19"/>
+                <path d="M42.6 26.8 L47.9 15.4 L36.8 17.3"/>
+              </g>
+            </svg>
+            Revenue Systems
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Hub logo, bottom of everything (RS pattern) -->
+  <div class="fhub">
+    <a href="https://www.multisystems.ai" rel="noopener" aria-label="Visit Multisystems">
+      <img src="/multisystems-logo.svg" alt="" class="fhub-logo" width="36" height="36" />
+    </a>
+  </div>
 </footer>
+
+<style>
+  .fwrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+  .frel { position: relative; padding-top: 64px; padding-bottom: 10px; }
+
+  .t-footer {
+    background: var(--footer-bg);
+    color: var(--footer-text-muted);
+    overflow: hidden;
+    border-top: 1px solid var(--footer-border);
+  }
+
+  /* -- end-to-end watermark (RS textLength stretch, full-bleed) -- */
+  .fmark {
+    /* RS rhythm: the wordmark owns the breathing band between the link
+       columns and the CTA card — anchored just above the card, clear of both. */
+    position: absolute; left: 0; right: 0; top: 100px; bottom: 245px;
+    display: flex; align-items: flex-end; overflow: hidden;
+    pointer-events: none; user-select: none;
+  }
+  .fmark svg {
+    width: 100%; height: auto;
+    fill: rgba(255, 255, 255, 0.07); font-weight: 900;
+  }
+  .fmark-d { display: none; }
+  @media (min-width: 640px) {
+    .fmark-m { display: none; }
+    .fmark-d { display: block; }
+  }
+
+  .fgrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(5, 1fr);
+    gap: 32px;
+    padding-bottom: 140px;
+  }
+  .fgrid h3 {
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #fff; margin-bottom: 13px;
+  }
+  .fgrid nav a {
+    display: block; text-decoration: none; font-size: 13.5px;
+    color: var(--footer-text-muted); padding: 4px 0;
+    transition: color 0.15s;
+  }
+  .fgrid nav a:hover { color: #fff; }
+
+  /* -- brand block with tile logo (RS logo treatment) -- */
+  .fbrand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; width: fit-content; }
+  .ftile { width: 30px; height: 30px; flex-shrink: 0; }
+  .ftile-bg { fill: var(--acc-btn, #E11D48); }
+  /* Glyph follows the accent's label token: near-black on neon green, white
+     on rose — same rule as every accent-filled button. */
+  .ftile line, .ftile path { stroke: var(--acc-btn-fg, #fff); }
+  .ftile circle { fill: var(--acc-btn-fg, #fff); }
+  /* The glyph sits ON --acc-btn, so it follows --acc-btn-fg for the same reason
+     button labels do: in dark+green the tile is neon #00E97B and a white mark
+     measures 1.62:1. Matched by attribute so the stroked arcs keep their
+     fill="none" and the filled dots keep having no stroke. */
+  .ftile [stroke], .fchip-logo [stroke] { stroke: var(--acc-btn-fg, #fff); }
+  .ftile circle[fill], .fchip-logo circle[fill] { fill: var(--acc-btn-fg, #fff); }
+  .fword { display: flex; flex-direction: column; line-height: 1; }
+  .fword b { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; }
+  /* --acc-300 never existed — the ramp is named --color-acc-*, so this silently
+     fell back to the literal #FDA4AF (rose-300) and never followed the accent.
+     --color-acc-400, not --acc: the footer ground is dark in BOTH themes, while
+     --acc darkens in light mode. On this ground --acc measures 3.61:1 (rose)
+     and 2.93:1 (green); --color-acc-400 gives 6.31:1 and 10.46:1 and still
+     retints per accent. The navbar keeps var(--acc) because its bar DOES follow
+     the theme — the footer is the exception, not an inconsistency. */
+  .fword b span { color: var(--color-acc-400, #FB7185); }
+  .fword em {
+    margin-top: 4px; font-style: normal; font-size: 9px; font-weight: 400;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--footer-text-muted);
+  }
+  .fnote {
+    font-size: 13px; color: var(--footer-text-muted);
+    margin-top: 14px; max-width: 26em; line-height: 1.6;
+  }
+  .fnote a { color: #cbd5e1; text-decoration: underline; text-underline-offset: 2px; }
+  .fnote a:hover { color: #fff; }
+  .fmeta {
+    margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;
+    font-size: 12px; color: var(--footer-text-faint);
+  }
+  .fmeta a { color: inherit; text-decoration: none; }
+  .fmeta a:hover { color: #fff; }
+
+  /* -- CTA card inside footer (RS pattern) -- */
+  .fcta {
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 20px 24px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .fcta p { font-size: 14px; line-height: 1.6; color: #cbd5e1; max-width: 58ch; margin: 0; }
+  .fcta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .fcta-primary, .fcta-secondary {
+    display: inline-flex; align-items: center; min-height: 44px;
+    padding: 8px 16px; border-radius: 3px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    transition: background 0.16s, border-color 0.16s;
+  }
+  .fcta-primary { background: #fff; color: #0f172a; }
+  .fcta-primary:hover { background: rgba(255, 255, 255, 0.9); }
+  .fcta-secondary { border: 1px solid rgba(255, 255, 255, 0.35); color: #fff; }
+  .fcta-secondary:hover { border-color: #fff; }
+  @media (min-width: 640px) {
+    .fcta { flex-direction: row; align-items: center; justify-content: space-between; }
+  }
+
+  .fbot {
+    position: relative;
+    border-top: 1px solid var(--footer-border);
+    margin-top: 56px; padding: 24px 0;
+    display: flex; justify-content: space-between;
+    gap: 16px; font-size: 12.5px; flex-wrap: wrap;
+  }
+  .fbot a { color: var(--footer-text-muted); text-decoration: none; }
+  .fbot a:hover { color: #fff; }
+
+  /* -- ecosystem strip (RS pattern) -- */
+  .ffamily {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 40px 0;
+  }
+  .ffamily-label {
+    text-align: center; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--footer-text-faint);
+  }
+  .ffamily-row {
+    margin: 24px 0 0; padding: 0; list-style: none;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 12px;
+  }
+  .fchip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 3px;
+    border: 1px solid #1e293b; background: #0f172a;
+    font-size: 12.5px; font-weight: 500;
+    color: var(--footer-text-muted); text-decoration: none;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .fchip:hover { color: #fff; border-color: #334155; }
+  .fchip-logo { width: 16px; height: 16px; flex-shrink: 0; border-radius: 4px; object-fit: contain; }
+  .fchip.is-self {
+    color: #fff;
+    border-color: color-mix(in srgb, var(--acc-btn, #E11D48) 60%, transparent);
+    background: color-mix(in srgb, var(--acc-btn, #E11D48) 15%, transparent);
+  }
+  .fchip.is-self .fchip-logo line { stroke: var(--acc-btn-fg, #fff); }
+  .fchip.is-self .fchip-logo circle { fill: var(--acc-btn-fg, #fff); }
+
+  /* -- hub logo footer (RS pattern) -- */
+  .fhub {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 24px 0;
+    display: flex; justify-content: center;
+  }
+  .fhub a { display: flex; padding: 6px 12px; }
+  .fhub-logo { width: 36px; height: 36px; transition: transform 0.3s ease; }
+  .fhub a:hover .fhub-logo { transform: translateY(-3px); }
+
+  @media (max-width: 1100px) { .fgrid { grid-template-columns: repeat(3, 1fr); } .fbrand-col { grid-column: 1 / -1; } }
+  @media (max-width: 700px)  { .fgrid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) {
+    .fwrap { padding-inline: 18px; }
+    .fbot { justify-content: center; text-align: center; }
+  }
+</style>

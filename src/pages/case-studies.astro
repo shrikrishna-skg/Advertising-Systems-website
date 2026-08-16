@@ -2,154 +2,76 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
+import VerifiedCase from '../components/VerifiedCase.astro';
+import CTABand from '../components/CTABand.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { caseStudiesFaqs } from '../data/page-faqs';
 
+/**
+ * Case studies — Wave 4, Terminal conversion.
+ *
+ * HONESTY PASS — this page was rebuilt, not restyled. The old version carried
+ * three fictional companies (TravelCorp, MetroRetail, GlobalTech) with invented
+ * results (340% ROAS, 52% CPA cut, "8 channels" including TikTok, which is not
+ * an integration), under the headline "Real teams. Real results." and an FAQ
+ * asserting the numbers were verified. All of it is gone. The page now carries
+ * the ONE case that reconciles — the 30-day Expedia TravelAds export — and says
+ * plainly why there is only one.
+ */
 const breadcrumbs = [{ name: 'Case Studies', href: '/case-studies' }];
-
-const caseStudies = [
-  {
-    id: 'travel',
-    industry: 'Travel & Hospitality',
-    company: 'TravelCorp',
-    headline: 'How TravelCorp increased ROAS by 340%',
-    stat: '340%',
-    statLabel: 'ROAS increase',
-    description: 'TravelCorp was managing campaigns across Google Ads, Meta, and 3 OTAs with separate dashboards and manual bid adjustments. After switching to Advertising Systems, their AI-optimized bidding and unified reporting helped them reallocate budget to top-performing channels — tripling their return on ad spend in under 90 days.',
-  },
-  {
-    id: 'ecommerce',
-    industry: 'E-commerce',
-    company: 'MetroRetail',
-    headline: 'MetroRetail cut CPA by 52% in 30 days',
-    stat: '52%',
-    statLabel: 'CPA reduction',
-    description: 'MetroRetail struggled with rising acquisition costs across their multi-channel ad strategy. Advertising Systems identified underperforming audience segments and automated budget reallocation, cutting their cost per acquisition by more than half within the first month.',
-  },
-  {
-    id: 'technology',
-    industry: 'Technology',
-    company: 'GlobalTech',
-    headline: 'GlobalTech unified 8 ad channels in one dashboard',
-    stat: '8',
-    statLabel: 'Channels unified',
-    description: 'GlobalTech\'s marketing team was spending 15+ hours per week pulling reports from different platforms. With Advertising Systems, they consolidated Google Ads, Meta Ads, Microsoft Ads, TikTok, and 4 partner networks into a single real-time dashboard — saving over 60 hours per month.',
-  },
-];
 ---
 
 <Layout
-  title="Case Studies — Advertising Systems | Real Results From Real Customers"
-  description="See how TravelCorp, MetroRetail, and GlobalTech cut CPA, raised ROAS, and saved hours with AI-powered advertising management."
+  title="Case Studies — Advertising Systems | Verified Platform Data"
+  description="One property, thirty days, every number straight from the Expedia TravelAds export — reconciled line by line. We publish verified cases only."
   breadcrumbs={breadcrumbs}
 >
   <Navbar />
-  <Breadcrumb items={breadcrumbs} />
-  <main>
-    <!-- Hero -->
-    <section class="pt-36 pb-20 relative overflow-hidden">
-      <div class="absolute inset-0 mesh-gradient opacity-30"></div>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center">
-          <h1 class="reveal text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Customer <span class="text-[var(--text-primary)]">Success Stories</span>
-          </h1>
-          <p class="reveal mt-5 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-            See how teams use Advertising Systems to drive measurable results across their advertising channels.
-          </p>
+  <main class="terminal">
+    <PageHero
+      badge="Verified casework"
+      title="We publish what we can"
+      titleAccent="prove."
+      lead="No composite customers, no rounded-up multiples. Every case on this page is a real platform export, reconciled against its own daily series. Today that is one case — more appear as they clear the same bar."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'How we verify', href: '#standard' }}
+    />
+
+    <VerifiedCase number="01" />
+
+    <!-- 02 · The verification standard -->
+    <section class="sec soft" id="standard" aria-labelledby="standard-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="standard-heading">What it takes to appear on this page.</h2>
+            <p class="sub">Three rules, applied to every case — including the one above.</p>
+          </div>
+        </div>
+        <div class="cardgrid">
+          <div>
+            <div class="cn">01</div>
+            <h3>Platform export, not screenshots</h3>
+            <p>The source is the ad platform's own data export. Headline figures are recomputed from the daily series, never copied from a summary panel — the export above contained seven internal errors we corrected that way.</p>
+          </div>
+          <div>
+            <div class="cn">02</div>
+            <h3>Named only with written consent</h3>
+            <p>Until a property consents in writing, it is identified by segment and market only. A withheld name changes nothing about the numbers.</p>
+          </div>
+          <div>
+            <div class="cn">03</div>
+            <h3>Limits stated with the results</h3>
+            <p>Single property, single channel, one window — and platform ROAS definitions differ by channel. Every case states what it does not show.</p>
+          </div>
         </div>
       </div>
     </section>
-
-    <div class="section-line"></div>
-
-    <!-- Intro -->
-    <section class="py-16" aria-labelledby="case-intro-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="case-intro-heading" class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">
-          Real teams. <span class="text-[var(--text-primary)]">Real results.</span>
-        </h2>
-        <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          Businesses like yours have improved ROAS, cut CPA, and saved hours by unifying Google, Meta, and OTA campaigns in one AI-powered platform. Browse by industry to find the story that fits.
-        </p>
-      </div>
-    </section>
-
-    <!-- Case Studies -->
-    <section id="studies" class="pb-20" aria-label="Case studies">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-wrap justify-center gap-2 mb-10">
-          <a href="#studies" class="reveal px-4 py-2 rounded-full text-sm font-semibold bg-[var(--surface-alt)] text-[var(--text-primary)] border border-[var(--border)] transition-colors">All</a>
-          <a href="#travel" class="reveal px-4 py-2 rounded-full text-sm font-semibold text-[var(--text-tertiary)] hover:bg-[var(--surface-alt)] link-secondary border border-[var(--border)] transition-colors">Travel &amp; Hospitality</a>
-          <a href="#ecommerce" class="reveal px-4 py-2 rounded-full text-sm font-semibold text-[var(--text-tertiary)] hover:bg-[var(--surface-alt)] link-secondary border border-[var(--border)] transition-colors">E-commerce</a>
-          <a href="#technology" class="reveal px-4 py-2 rounded-full text-sm font-semibold text-[var(--text-tertiary)] hover:bg-[var(--surface-alt)] link-secondary border border-[var(--border)] transition-colors">Technology</a>
-        </div>
-
-        <div class="space-y-8">
-          {caseStudies.map((study) => (
-            <article id={study.id} class="reveal glass rounded-2xl p-8 sm:p-10 hover:border-[var(--border)] transition-colors scroll-mt-24">
-              <div class="flex flex-col lg:flex-row lg:items-start gap-8">
-                <div class="flex-1">
-                  <span class="inline-block glass text-xs font-semibold text-[var(--color-link)] px-3 py-1.5 rounded-full mb-4">
-                    {study.industry}
-                  </span>
-                  <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em] mb-4">
-                    {study.headline}
-                  </h2>
-                  <p class="text-[var(--text-tertiary)] font-medium leading-relaxed mb-6">
-                    {study.description}
-                  </p>
-                  <span class="inline-flex items-center gap-1.5 text-[var(--color-link)] font-semibold">
-                    Key results
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                  </span>
-                  <p class="text-xs text-[var(--text-muted)] mt-1">Full case study write-up coming soon.</p>
-                </div>
-              <div class="lg:shrink-0 lg:w-48 text-center glass rounded-xl p-6">
-                <p class="text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">{study.stat}</p>
-                <p class="text-sm text-[var(--text-tertiary)] mt-1 font-medium">{study.statLabel}</p>
-                <p class="text-xs text-[var(--text-muted)] mt-2">{study.company}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <div class="section-line"></div>
 
     <FAQSection title="Common questions" faqs={caseStudiesFaqs} name="case-studies-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="case-cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="case-cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Get results <span class="text-[var(--text-primary)]">like these.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          See how teams use Advertising Systems to run smarter campaigns. Create a signup request or book a personalized demo.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-royal-green-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-royal-green-600 transition-colors shadow-lg ">
-            Book a demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[var(--text-secondary)] font-semibold text-base px-8 py-3.5 rounded-lg border border-[var(--border)] btn-secondary transition-colors">
-            Get started
-          </a>
-        </div>
-      </div>
-    </section>
+    <CTABand />
   </main>
   <Footer />
 </Layout>

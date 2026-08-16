@@ -8,7 +8,7 @@ export const GET: APIRoute = () => {
 Advertising Systems is an AI-powered advertising management platform that unifies Google Ads, Meta Ads, and OTA (Online Travel Agency) advertising campaigns into a single intelligent dashboard. It automates campaign optimization, provides real-time analytics, and uses AI to maximize return on ad spend (ROAS).
 
 ## Parent Company
-Multisystems (https://multisystems.ai) — builds AI operating systems for service-driven businesses. Advertising Systems is part of the Multisystems product ecosystem alongside Hotel Systems and ReputationSystems.
+Multisystems (https://www.multisystems.ai) — builds AI operating systems for service-driven businesses. Advertising Systems is part of the Multisystems product family alongside Hotel Systems (https://hotelsystems.ai), Reputation Systems (https://reputationsystems.ai), Revenue Systems (https://www.revenuesystems.app), OTA Systems (https://otasystems.ai), and Image Systems (https://imagesystems.ai).
 
 ## Core Features
 - Multi-Platform Campaign Management: Manage Google Ads, Meta Ads (Facebook/Instagram), and OTA campaigns from one dashboard
@@ -29,8 +29,6 @@ Google Ads, Meta Ads (Facebook & Instagram), Booking.com, Expedia, TripAdvisor, 
 Ad spend is separate. All plans include unlimited campaigns, AI optimization, and real-time analytics.
 
 ## Key Metrics
-- $12M+ in customer revenue generated through managed campaigns
-- Up to 30% booking lift for hotel partners
 - $40K/month in hotel paid digital advertising managed through the platform
 - $480K+ in annual hotel ad spend optimized
 - 12 hours per week saved on average
@@ -46,7 +44,7 @@ Business owners, marketing directors, and hotel/hospitality operators who manage
 - Performance Analytics: https://www.advertisingsystems.ai/features/analytics
 - Automation Studio: https://www.advertisingsystems.ai/features/automation
 - Budget Allocator: https://www.advertisingsystems.ai/features/budget-intelligence
-- Pricing: https://www.advertisingsystems.ai/#pricing
+- Pricing: https://www.advertisingsystems.ai/pricing
 - About: https://www.advertisingsystems.ai/about
 - Blog: https://www.advertisingsystems.ai/blog
 - Contact: https://www.advertisingsystems.ai/contact
@@ -72,8 +70,8 @@ Business owners, marketing directors, and hotel/hospitality operators who manage
 ## Contact
 - Website: https://www.advertisingsystems.ai
 - Demo: https://www.advertisingsystems.ai/book-demo
-- Email: hello@advertisingsystems.ai
-- Parent: https://multisystems.ai
+- Email: contact@multisystems.ai
+- Parent: https://www.multisystems.ai
 `;
 
   return new Response(llmsTxt, {

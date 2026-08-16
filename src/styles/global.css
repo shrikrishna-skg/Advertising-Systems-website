@@ -1,31 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  /* Primary green — #10B981 across the site */
-  --color-royal-green-50: #e6fbf5;
-  --color-royal-green-100: #ccf7eb;
-  --color-royal-green-200: #99efd7;
-  --color-royal-green-300: #66e7c3;
-  --color-royal-green-400: #33dfaf;
-  --color-royal-green-500: #10B981;
-  --color-royal-green-600: #0e9d6d;
-  --color-royal-green-700: #0b7150;
-  --color-royal-green-800: #084533;
-  --color-royal-green-900: #051a16;
-  --color-royal-green-950: #020d0b;
+  /* ── Brand accent — rose #E11D48 ──────────────────────────────────────────
+     Canonical value from the Multisystems registry (Multisystems-Website
+     src/lib/brand.ts sets Advertising = #e11d48). Ramp is deliberately keyed so
+     500 = brand and 600 = hover, because the codebase already wrote
+     `bg-<ramp>-500 hover:bg-<ramp>-600` in ~35 files — keying the ramp this way
+     reskinned every one of them without touching a single class.
+     The ramp was named `acc-*` until Wave 0.2 renamed it to `acc-*`
+     across all 35 files; values moved first (Wave 0.1), the name followed, so
+     each change stayed reviewable on its own.
 
-  /* Blue — Reputation Systems secondary (Multisystems #3283F0) */
-  --color-royal-blue-50: #eff6ff;
-  --color-royal-blue-100: #dbeafe;
-  --color-royal-blue-200: #bfdbfe;
-  --color-royal-blue-300: #93c5fd;
-  --color-royal-blue-400: #60a5fa;
-  --color-royal-blue-500: #3283f0;
-  --color-royal-blue-600: #2563eb;
-  --color-royal-blue-700: #1d4ed8;
-  --color-royal-blue-800: #1e40af;
-  --color-royal-blue-900: #1e3a8a;
-  --color-royal-blue-950: #172554;
+     Green did not simply lose a beauty contest: in this direction green is a
+     SEMANTIC (gains, up-deltas, "Live"). A green brand would make "+1.4" and
+     "Book a demo" the same colour and break the blotter at a glance. */
+  --color-acc-50: #fff1f2;
+  --color-acc-100: #ffe4e6;
+  --color-acc-200: #fecdd3;
+  --color-acc-300: #fda4af;
+  --color-acc-400: #fb7185;
+  --color-acc-500: #E11D48;
+  --color-acc-600: #be123c;
+  --color-acc-700: #9f1239;
+  --color-acc-800: #881337;
+  --color-acc-900: #4c0519;
+  --color-acc-950: #2e0310;
+
+  /* ── Ink — the navy structure scale ───────────────────────────────────────
+     Was `royal-blue`, a second brand colour used for badges, hover borders and
+     chips. The Terminal has exactly one accent; everything else is structure,
+     so the ramp is repointed to the family navy and renamed. Anything that was
+     genuinely a brand moment (the POPULAR plan badge) gets promoted to acc-*
+     by hand rather than by find-and-replace. */
+  --color-ink-50:  #F6F8FB;
+  --color-ink-100: #EEF2F7;
+  --color-ink-200: #E3E8F0;
+  --color-ink-300: #C6CFDE;
+  --color-ink-400: #93A0BC;
+  --color-ink-500: #5F6E8C;
+  --color-ink-600: #4E5F85;
+  --color-ink-700: #3D4E70;
+  --color-ink-800: #22345A;
+  --color-ink-900: #0A1B3D;
+  --color-ink-950: #070D18;
 
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;
@@ -39,143 +56,329 @@
   --color-slate-900: #0f172a;
   --color-slate-950: #020617;
 
-  /* Google-style: green ONLY for primary buttons; links/accents use blue */
+  /* ── Status semantics — NOT brand ─────────────────────────────────────────
+     Green and red state a direction: up/down, live/early-access, pass/fail.
+     The brand accent is never allowed to mean "good". Keep these separate from
+     the accent ramp above; if they ever converge, the blotter stops reading.
+
+     Light values are darker than the obvious emerald/red: the first pass used
+     #0E9F6E / #D64545, which measure 3.39:1 and 4.38:1 on white and fail WCAG
+     AA for normal text. These carry 10px "Live" chips and 12.5px blotter
+     deltas — normal text, not large — so they must clear 4.5:1. Now 5.79:1 and
+     5.55:1.
+
+     HUE, and why green is #08753F rather than the old #047857: the dark green
+     was retuned (see [data-theme="dark"]) from teal H163 to true-green H152,
+     because teal shares blue with the navy ground and half-blends into it.
+     Light follows the same hue so the two themes stay one colour family. */
+  --color-pos: #08753F;
+  --color-pos-tint: #E6F7EC;
+  --color-neg: #C03434;
+  --color-neg-tint: #FDEBEB;
+  --color-warn: #B45309;
+  --color-warn-tint: #FEF3C7;
+
   --color-background: #ffffff;
-  --color-foreground: #202124;
-  --color-primary: #10B981;
+  --color-foreground: #0A1B3D;
+  --color-primary: #E11D48;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #f1f5f9;
-  --color-secondary-foreground: #202124;
-  --color-destructive: #dc2626;
+  --color-secondary: #F6F8FB;
+  --color-secondary-foreground: #0A1B3D;
+  --color-destructive: #D64545;
   --color-destructive-foreground: #ffffff;
-  --color-muted: #f8f9fa;
-  --color-muted-foreground: #5f6368;
-  --color-accent: #f8f9fa;
-  --color-accent-foreground: #202124;
-  --color-ring: #10B981;
-  --color-input: #e2e8f0;
-  --color-border: #dadce0;
-  --color-link: #1a73e8;
-  --color-link-hover: #1557b0;
+  --color-muted: #F6F8FB;
+  --color-muted-foreground: #68779A;
+  --color-accent: #FFF1F2;
+  --color-accent-foreground: #0A1B3D;
+  --color-ring: #E11D48;
+  --color-input: #E3E8F0;
+  --color-border: #E3E8F0;
+  --color-link: #E11D48;
+  --color-link-hover: #be123c;
 
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
-/* ── Theme System (CSS Custom Properties) ──────── */
-/* Light mode (default — enterprise standard) */
+/* ── Theme System (CSS Custom Properties) ──────────────────────────────────
+   Resolved theme lives on <html data-theme="light|dark">; the visitor's
+   PREFERENCE (which may be "auto") lives on data-theme-pref. CSS only ever
+   reads data-theme. The Terminal ships dark-first — see Layout.astro, where
+   the SSR default and the pre-paint script both resolve to dark. `:root`
+   below is therefore the light OVERRIDE, not the shipped default. */
 :root {
+  /* Terminal light. Surfaces are FLAT — borders do the work, no card shadows
+     (Multisystems owner rule). The glass tokens survive by name so the ~35
+     files using `.glass` keep working, but they now resolve to a plain card
+     plus a hairline instead of a blur. */
   --surface: #ffffff;
-  --surface-alt: #f8fafc;
+  --surface-alt: #F6F8FB;
   --surface-raised: #ffffff;
   --surface-overlay: rgba(255, 255, 255, 0.95);
-  --surface-glass: rgba(255, 255, 255, 0.7);
-  --surface-glass-strong: rgba(255, 255, 255, 0.85);
-  --surface-glass-border: rgba(0, 0, 0, 0.06);
-  --surface-glass-border-hover: rgba(16, 185, 129, 0.25);
-  --surface-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --surface-card-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
+  --surface-glass: #ffffff;
+  --surface-glass-strong: #ffffff;
+  --surface-glass-border: #E3E8F0;
+  --surface-glass-border-hover: #C6CFDE;
+  --surface-card-shadow: none;
+  --surface-card-shadow-hover: none;
 
-  --text-primary: #202124;
-  --text-secondary: #3c4043;
-  --text-tertiary: #5f6368;
-  --text-muted: #80868b;
-  --text-faint: #9aa0a6;
+  --text-primary: #0A1B3D;
+  --text-secondary: #3D4E70;
+  --text-tertiary: #5F6E8C;
+  --text-muted: #5F6E8C;
+  --text-faint: #76849F;
 
-  --border: #dadce0;
-  --border-subtle: #f1f3f4;
+  --border: #E3E8F0;
+  --border-subtle: #EEF2F7;
 
-  --nav-bg: rgba(255, 255, 255, 0.98);
-  --nav-border: rgba(0, 0, 0, 0.08);
+  --nav-bg: rgba(255, 255, 255, 0.88);
+  --nav-border: #E3E8F0;
 
-  --hero-glow: rgba(0, 0, 0, 0.02);
-  --dot-grid-color: rgba(0, 0, 0, 0.04);
-  --mesh-c1: rgba(0, 0, 0, 0.02);
-  --mesh-c2: rgba(0, 0, 0, 0.01);
+  /* Terminal ground is a ruled grid, not a glow or a mesh. Mesh tokens are
+     zeroed rather than deleted so the components referencing them still parse. */
+  --hero-glow: transparent;
+  --dot-grid-color: rgba(10, 27, 61, 0.05);
+  --mesh-c1: transparent;
+  --mesh-c2: transparent;
   --mesh-c3: transparent;
 
-  --footer-bg: #202124;
-  --footer-text: #e8eaed;
-  --footer-text-muted: rgba(232, 234, 237, 0.9);
-  --footer-text-faint: rgba(232, 234, 237, 0.7);
-  --footer-border: rgba(255, 255, 255, 0.08);
+  --footer-bg: #0A1B3D;
+  --footer-text: #ffffff;
+  --footer-text-muted: #A9B7D4;
+  --footer-text-faint: rgba(169, 183, 212, 0.72);
+  --footer-border: rgba(255, 255, 255, 0.1);
 
-  --bar-fill-from: rgba(26, 115, 232, 0.15);
-  --bar-fill-to: rgba(26, 115, 232, 0.5);
-  --bar-fill-to-strong: #1a73e8;
+  --bar-fill-from: color-mix(in oklab, var(--acc-btn) 28%, transparent);
+  --bar-fill-to: color-mix(in oklab, var(--acc-btn) 55%, transparent);
+  --bar-fill-to-strong: var(--acc-btn);
 
-  --browser-chrome-bg: #f8fafc;
-  --browser-dot: #e2e8f0;
-  --browser-url-bg: #f1f5f9;
-  --browser-url-text: #94a3b8;
-  --browser-border: #e2e8f0;
+  --browser-chrome-bg: #F6F8FB;
+  --browser-dot: #C6CFDE;
+  --browser-url-bg: #ffffff;
+  --browser-url-text: #68779A;
+  --browser-border: #E3E8F0;
 
-  --badge-glow: rgba(0, 0, 0, 0.04);
-  --mockup-inner-bg: rgba(248, 250, 252, 0.8);
-  --progress-track: #e8eaed;
+  --badge-glow: transparent;
+  --mockup-inner-bg: #F6F8FB;
+  --progress-track: #E3E8F0;
 
-  --section-line-color: rgba(0, 0, 0, 0.08);
-  --color-link: #1a73e8;
-  --color-link-hover: #1557b0;
+  --section-line-color: #E3E8F0;
+  /* Links follow whatever the accent resolves to — never a second hardcoded
+     copy of the brand colour that has to be kept in sync by hand. */
+  --color-link: var(--acc);
+  --color-link-hover: var(--acc-hover);
+
+  /* Status — mirrors the @theme semantics so runtime and utility layers agree */
+  --pos: #08753F;
+  --pos-tint: #E6F7EC;
+  --pos-line: #A7E4C1;
+  --neg: #C03434;
+  --neg-tint: #FDEBEB;
+  --warn: #B45309;
+  --warn-tint: #FEF3C7;
+  /* --acc* live in the [data-accent] blocks below, not here. */
+
+  --shadow-frame: 0 12px 32px -18px rgba(10, 27, 61, 0.35);
+
+  /* Display-text accent (H1 tails, the rotator word): follows the button fill
+     so headline and CTA read as one colour — EXCEPT where the fill itself is
+     not text-legible on the page ground. Green-light overrides below. */
+  --acc-display: var(--acc-btn);
+
+  /* Exact height of the fixed Terminal header (Navbar.astro pins .t-nav to
+     62px + a 1px rule). Converted pages offset by this instead of guessing
+     with a Tailwind pt-* that drifts out of sync with the bar. */
+  --t-header-h: 63px;
 
   color-scheme: light;
 }
 
-/* Dark mode — toggled via checkbox */
-html.dark {
-  --surface: #050a0e;
-  --surface-alt: #0a1118;
-  --surface-raised: #0f1923;
-  --surface-overlay: rgba(5, 10, 14, 0.95);
-  --surface-glass: rgba(255, 255, 255, 0.03);
-  --surface-glass-strong: rgba(255, 255, 255, 0.05);
-  --surface-glass-border: rgba(255, 255, 255, 0.06);
-  --surface-glass-border-hover: rgba(16, 185, 129, 0.3);
+/* Dark mode — the shipped default for this direction */
+[data-theme="dark"] {
+  /* Terminal dark — the direction's default. Same navy family as
+     multisystems.ai (#070d18 ground, #0e1c33 card, #1d3252 line). */
+  --surface: #070D18;
+  --surface-alt: #0B1424;
+  --surface-raised: #0E1C33;
+  --surface-overlay: rgba(7, 13, 24, 0.95);
+  --surface-glass: #0E1C33;
+  --surface-glass-strong: #0E1C33;
+  --surface-glass-border: #1D3252;
+  --surface-glass-border-hover: #2C4270;
   --surface-card-shadow: none;
   --surface-card-shadow-hover: none;
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --text-muted: #64748b;
-  --text-faint: rgba(255, 255, 255, 0.35);
+  --text-primary: #E8ECF4;
+  --text-secondary: #B9C5DC;
+  --text-tertiary: #8FA3BF;
+  --text-muted: #8FA3BF;
+  --text-faint: #6C7F9E;
 
-  --border: rgba(255, 255, 255, 0.06);
-  --border-subtle: rgba(255, 255, 255, 0.03);
+  --border: #1D3252;
+  --border-subtle: #16233C;
 
-  --nav-bg: rgba(5, 10, 14, 0.8);
-  --nav-border: rgba(255, 255, 255, 0.06);
+  --nav-bg: rgba(7, 13, 24, 0.88);
+  --nav-border: #1D3252;
 
-  --hero-glow: rgba(255, 255, 255, 0.03);
-  --dot-grid-color: rgba(255, 255, 255, 0.05);
-  --mesh-c1: rgba(255, 255, 255, 0.03);
-  --mesh-c2: rgba(255, 255, 255, 0.02);
+  --hero-glow: transparent;
+  --dot-grid-color: rgba(255, 255, 255, 0.045);
+  --mesh-c1: transparent;
+  --mesh-c2: transparent;
   --mesh-c3: transparent;
 
-  --footer-bg: #030608;
-  --footer-text: #e8eaed;
-  --footer-text-muted: rgba(232, 234, 237, 0.9);
-  --footer-text-faint: rgba(232, 234, 237, 0.7);
-  --footer-border: rgba(255, 255, 255, 0.08);
+  --footer-bg: #040914;
+  --footer-text: #ffffff;
+  --footer-text-muted: #8FA3BF;
+  --footer-text-faint: rgba(143, 163, 191, 0.72);
+  --footer-border: rgba(255, 255, 255, 0.1);
 
-  --bar-fill-from: rgba(138, 180, 248, 0.3);
-  --bar-fill-to: rgba(138, 180, 248, 0.6);
-  --bar-fill-to-strong: #8ab4f8;
+  --bar-fill-from: color-mix(in oklab, var(--acc) 30%, transparent);
+  --bar-fill-to: color-mix(in oklab, var(--acc) 60%, transparent);
+  --bar-fill-to-strong: var(--acc);
 
-  --browser-chrome-bg: rgba(255, 255, 255, 0.02);
-  --browser-dot: rgba(255, 255, 255, 0.1);
-  --browser-url-bg: rgba(255, 255, 255, 0.04);
-  --browser-url-text: rgba(255, 255, 255, 0.2);
-  --browser-border: rgba(255, 255, 255, 0.06);
+  --browser-chrome-bg: #0B1424;
+  --browser-dot: #2C4270;
+  --browser-url-bg: #0E1C33;
+  --browser-url-text: #8FA3BF;
+  --browser-border: #1D3252;
 
-  --badge-glow: rgba(255, 255, 255, 0.06);
-  --mockup-inner-bg: rgba(255, 255, 255, 0.03);
-  --progress-track: rgba(255, 255, 255, 0.08);
+  --badge-glow: transparent;
+  --mockup-inner-bg: #0B1424;
+  --progress-track: #1D3252;
 
-  --section-line-color: rgba(255, 255, 255, 0.08);
-  --color-link: #8ab4f8;
-  --color-link-hover: #aecbfa;
+  --section-line-color: #1D3252;
+
+  /* Status flips brighter on the dark ground; the accent stays off-duty.
+
+     --pos was emerald-400 #34D399 and read flat next to the rose. The cause was
+     not contrast — #34D399 measures 10.1:1 on this ground while rose-400
+     manages 7.2:1 — it was CHROMA: #34D399 sits at OKLCH C 0.153, the least
+     saturated value in the whole palette, against 0.169 for --acc and 0.222 for
+     --acc-btn. #00E97B is C 0.213, matched to the button rose so a gain and a
+     CTA carry equal weight, and stopping there is deliberate: green is a
+     semantic and must not out-rank the brand accent. Hue moves 163 → 152 in the
+     same edit; teal carried blue and half-blended into the navy ground (H 261).
+     Still 12.0:1 on --surface, 10.5:1 on --surface-raised, 8.9:1 on --pos-tint,
+     which is re-cut to the new hue. */
+  --pos: #00E97B;
+  --pos-tint: #06301F;
+  --pos-line: #0A5B37;
+  --neg: #F0705C;
+  --neg-tint: #3A1B17;
+  --warn: #FBBF24;
+  --warn-tint: #3A2E10;
+
+  --shadow-frame: 0 12px 32px -18px rgba(0, 0, 0, 0.75);
 
   color-scheme: dark;
+}
+
+/* ══ ACCENT ═══════════════════════════════════════════════════════════════
+   Switchable at runtime via <html data-accent>. These blocks must stay AFTER
+   :root and [data-theme="dark"]: `[data-accent="…"]` and `:root` have equal
+   specificity, so source order is what decides. The two-attribute selectors
+   outrank both, which is how dark gets its own accent pair.
+
+   Overriding the Tailwind `--color-acc-*` ramp here is what makes the switch
+   reach the 35 files that use `bg-acc-500` etc. — Tailwind v4 compiles those
+   utilities to `var(--color-acc-500)`, so retinting the variable retints every
+   one of them without touching a class. Verified in the built stylesheet.
+
+   CONTRAST: every fill below carries a white label and clears 4.5:1; every
+   --acc clears 4.5:1 as text on its own ground. The mockup's dark rose hover
+   (#F43F5E, 3.67:1) and its green pair (#0E9D6D, 3.46:1) both failed and are
+   corrected here.
+
+   A WARNING ABOUT GREEN, kept where the values are: in this direction green is
+   already load-bearing as a SEMANTIC — --pos carries gains, up-deltas and
+   "Live". An accessible green brand has to sit at #0A7150, which is a shade of
+   the same hue as --pos #08753F. In green mode "+1.4" and "Book a demo" read
+   as the same colour and the blotter stops being scannable, which is the one
+   thing this direction sells. Rose is the shipping default for that reason.
+   ═══════════════════════════════════════════════════════════════════════ */
+[data-accent="rose"] {
+  --acc: #E11D48;
+  --acc-hover: #BE123C;
+  --acc-tint: #FFF1F2;
+  --acc-line: #FECDD3;
+  --acc-btn: #E11D48;
+  --acc-btn-h: #BE123C;
+  --acc-btn-fg: #fff;
+}
+[data-theme="dark"][data-accent="rose"] {
+  --acc: #FB7185;
+  --acc-hover: #FDA4AF;
+  --acc-tint: #38141C;
+  --acc-line: #7F1D3A;
+  /* Fill stays saturated on dark — rose-400 under a white label is 2.4:1.
+     Only accent TEXT lightens. */
+  --acc-btn: #E11D48;
+  --acc-btn-h: #BE123C;
+  --acc-btn-fg: #fff;
+}
+
+/* The green accent was left on the pre-retune values when --pos moved to the
+   neon #00E97B, so flipping the SiteControls switch to Green still produced the
+   old flat teal. Re-cut to the new hue family (H~152) below.
+
+   THE LABEL, NOT JUST THE FILL. #00E97B under a WHITE label measures 1.62:1 —
+   the neon reads at 12:1 on dark precisely because it is a light colour, and
+   that same property makes it illegal under white text. So the neon fill is
+   paid for with --acc-btn-fg, which flips the label to near-black. Rose keeps
+   #fff and is untouched; only dark+green goes neon.
+
+   LIGHT green: owner ruling 2026-08-16 — green means NEON FILL + NEAR-BLACK
+   LABEL in BOTH themes. The label (#070D18 on #00E97B) is 11.99:1, always
+   legal. The fill itself has little contrast against a white page (~1.9:1);
+   accepted trade-off, decided with eyes open. Hover DARKENS on light ground
+   (#00CC6C) and LIGHTENS on dark (see the dark block). Rose is untouched. */
+[data-accent="green"] {
+  /* Neon #00E97B is 1.53:1 on the light hero ground — illegible even at
+     display sizes — so display text falls back to the deep text accent
+     (5.44:1). The dark+green block restores the neon (11.35:1 there). */
+  --acc-display: var(--acc);
+  --acc: #08753F;
+  --acc-hover: #065F46;
+  --acc-tint: #E6F7EC;
+  --acc-line: #A7E4C1;
+  --acc-btn: #00E97B;
+  --acc-btn-h: #00CC6C;
+  --acc-btn-fg: #070D18;
+
+  --color-acc-50: #E6F7EC;
+  --color-acc-100: #C6EFD8;
+  --color-acc-200: #A7E4C1;
+  --color-acc-300: #5FD69E;
+  --color-acc-400: #00E97B;
+  --color-acc-500: #00E97B;
+  --color-acc-600: #00CC6C;
+  --color-acc-700: #064E3B;
+  --color-acc-800: #043D2F;
+  --color-acc-900: #032C22;
+  --color-acc-950: #011A14;
+}
+[data-theme="dark"][data-accent="green"] {
+  --acc-display: var(--acc-btn);
+  --acc: #00E97B;
+  --acc-hover: #5BFF8F;
+  --acc-tint: #06301F;
+  --acc-line: #0A5B37;
+
+  /* The neon CTA. Legal only because --acc-btn-fg flips the label to the page
+     ground: #070D18 on #00E97B is 11.99:1, the highest-contrast button on the
+     site. Hover LIGHTENS here (unlike every other accent pair, which darkens),
+     because on a dark ground brighter reads as raised. */
+  --acc-btn: #00E97B;
+  --acc-btn-h: #5BFF8F;
+  --acc-btn-fg: #070D18;
+
+  /* The ramp follows the fill. ~43 buttons across 21 files are written
+     `bg-acc-500 hover:bg-acc-600` rather than .btn-p; leaving the ramp deep
+     would ship two different-looking primary buttons in the same theme. */
+  --color-acc-500: #00E97B;
+  --color-acc-600: #5BFF8F;
+  /* text-acc-700 is used as TEXT; the light ramp's #064E3B vanishes on a dark
+     ground, so dark+green lifts it to a readable light green. */
+  --color-acc-700: #5FD69E;
 }
 
 /* ── Footer: force visible light text on dark background ── */
@@ -360,23 +563,17 @@ img, video {
 
 /* ── Gradient text: use sparingly; Google-style uses dark gray headlines ───────── */
 .text-gradient {
-  background: linear-gradient(90deg, #0e9d6d 0%, #10B981 35%, #33dfaf 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-html.dark .text-gradient {
-  background: linear-gradient(90deg, #0b7150 0%, #10B981 40%, #66e7c3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  /* Was a 3-stop green gradient. The family ships solid fills only — no
+     gradients on type — so this resolves to the flat accent in both themes
+     and the class keeps working everywhere it is already used. */
+  color: var(--acc);
+  background: none;
+  -webkit-text-fill-color: currentColor;
 }
 
 /* ── Glass card ─────────────────────────────────── */
 .glass {
   background: var(--surface-glass);
-  backdrop-filter: blur(12px);
   border: 1px solid var(--surface-glass-border);
   box-shadow: var(--surface-card-shadow);
   transition: all 0.3s ease;
@@ -384,7 +581,6 @@ html.dark .text-gradient {
 
 .glass-strong {
   background: var(--surface-glass-strong);
-  backdrop-filter: blur(20px);
   border: 1px solid var(--surface-glass-border);
   box-shadow: var(--surface-card-shadow);
 }
@@ -401,11 +597,6 @@ html.dark .text-gradient {
 .dot-grid {
   background-image: radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px);
   background-size: 24px 24px;
-}
-
-/* ── Glow effect (emerald) ──────────────────── */
-.glow-royal-green {
-  box-shadow: 0 0 60px rgba(16, 185, 129, 0.1), 0 0 120px rgba(16, 185, 129, 0.04);
 }
 
 /* ── Subtle noise texture overlay ───────────────── */
@@ -438,7 +629,7 @@ html.dark .text-gradient {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 1px solid #10B981;
+  border: 1px solid var(--acc);
   animation: pulse-ring 2s ease-out infinite;
 }
 
@@ -448,46 +639,7 @@ html.dark .text-gradient {
   background: linear-gradient(90deg, transparent, var(--section-line-color), transparent);
 }
 
-/* ── Theme toggle switch ────────────────────────── */
-.theme-switch {
-  width: 44px;
-  height: 24px;
-  background: var(--border);
-  border-radius: 12px;
-  position: relative;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  display: flex;
-  align-items: center;
-  padding: 2px;
-}
-
-.theme-switch::after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-}
-
-html.dark .theme-switch {
-  background: #10B981;
-}
-
-html.dark .theme-switch::after {
-  transform: translateX(20px);
-}
-
-/* ── Theme-aware icon colors ────────────────────── */
-.theme-icon-sun { opacity: 1; }
-.theme-icon-moon { opacity: 0.4; }
-
-html.dark .theme-icon-sun { opacity: 0.4; }
-html.dark .theme-icon-moon { opacity: 1; }
-
-/* ── Primary CTA: whole green (solid fill) ── */
+/* ── Primary CTA: solid accent fill ── */
 .btn-cta-primary {
   position: relative;
   overflow: hidden;
@@ -499,27 +651,30 @@ html.dark .theme-icon-moon { opacity: 1; }
   left: 0;
   right: 0;
   height: 100%;
-  background: #10B981; /* emerald primary */
+  background: var(--acc);
   pointer-events: none;
   transition: background 0.3s ease;
 }
 .btn-cta-primary:hover .cta-accent-line {
-  background: #0e9d6d; /* royal-green-600 */
+  background: var(--acc-hover);
 }
 .btn-cta-primary.rounded-lg { border-radius: 0.5rem; }
 .btn-cta-primary .cta-accent-line.rounded-t-lg { border-radius: 0.5rem; }
 
-/* ── Secondary / links: Google blue (green only on primary buttons) ── */
+/* ── Secondary / links ────────────────────────────────────────────────────
+   Was Google blue pinned to literal hex, with a separate [data-theme="dark"] override
+   for every rule. Both themes now resolve through the same tokens, so the
+   dark overrides below are redundant and gone. */
 .btn-secondary {
-  border: 1px solid #dadce0;
-  color: #1a73e8;
-  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  background: var(--surface);
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
 .btn-secondary:hover {
-  border-color: #1a73e8;
-  color: #1557b0;
-  background: rgba(26, 115, 232, 0.04);
+  border-color: var(--text-tertiary);
+  color: var(--text-primary);
+  background: var(--surface-alt);
 }
 .link-secondary {
   color: var(--color-link);
@@ -528,22 +683,6 @@ html.dark .theme-icon-moon { opacity: 1; }
 .link-secondary:hover {
   color: var(--color-link-hover);
 }
-html.dark .btn-secondary {
-  border-color: rgba(255,255,255,0.2);
-  color: #8ab4f8;
-  background: transparent;
-}
-html.dark .btn-secondary:hover {
-  border-color: #8ab4f8;
-  background: rgba(138, 180, 248, 0.08);
-}
-html.dark .link-secondary {
-  color: #8ab4f8;
-}
-html.dark .link-secondary:hover {
-  color: #aecbfa;
-}
-
 /* ── Subtle brand watermark (layering / premium detail) ── */
 .watermark-brand {
   position: absolute;
@@ -580,15 +719,6 @@ html.dark .link-secondary:hover {
 }
 
 @media (max-width: 639px) {
-  .theme-switcher-dock {
-    bottom: max(0.75rem, env(safe-area-inset-bottom));
-    transform: translateX(calc(-100% + 1.25rem));
-  }
-
-  .theme-switcher-dock:hover,
-  .theme-switcher-dock:focus-within {
-    transform: translateX(0);
-  }
 
   .watermark-brand::before {
     opacity: 0;
@@ -617,3 +747,228 @@ html.dark .link-secondary:hover {
 [id] {
   scroll-margin-top: 80px;
 }
+
+/* ==========================================================================
+   THE TERMINAL — shared primitives for the approved direction A.
+   mockups/a-the-terminal.html · reports/2026-08-15-phase2-implementation-plan.md
+
+   EVERYTHING here is scoped under `.terminal`. That is deliberate and load
+   bearing: only the homepage carries the class today, so these element-level
+   rules (h1, h2, table) cannot reach the 37 routes still on the old layout.
+   Converting a page in Waves 2–6 = adding `.terminal` to its wrapper.
+
+   Colour comes from the token layer above — no second vocabulary. --bg-soft is
+   --surface-alt, --card is --surface-raised, --line is --border, and so on.
+   ========================================================================== */
+.terminal {
+  color: var(--text-secondary);
+  /* Clears the fixed header. Padding, not margin, so it cannot collapse
+     through <main> and leave the first band sitting under the bar. */
+  padding-top: var(--t-header-h);
+}
+.terminal .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+.terminal .num { font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+.terminal h1 {
+  font-size: clamp(36px, 4.8vw, 60px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.038em;
+  color: var(--text-primary);
+}
+.terminal h2 {
+  font-size: clamp(26px, 3.1vw, 38px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  max-width: 20em;
+  color: var(--text-primary);
+}
+.terminal .lead {
+  margin-top: 20px;
+  font-size: 17.5px;
+  color: var(--text-secondary);
+  max-width: 34em;
+  text-wrap: pretty;
+}
+.terminal .sub {
+  margin-top: 11px;
+  font-size: 16.5px;
+  color: var(--text-secondary);
+  max-width: 44em;
+  text-wrap: pretty;
+}
+.terminal .fine { margin-top: 14px; font-size: 13px; color: var(--text-tertiary); }
+.terminal .eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-tertiary);
+}
+
+/* -- sections -- */
+.terminal .sec { padding: 78px 0; }
+.terminal .sec.soft {
+  background: var(--surface-alt);
+  border-block: 1px solid var(--border);
+}
+.terminal .sec-hd {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 18px; align-items: baseline; margin-bottom: 38px;
+}
+.terminal .sec-hd .no {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  color: var(--acc); padding-top: 8px;
+}
+
+/* -- buttons: ONE secondary style site-wide (filled primary, ruled secondary) -- */
+.terminal .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  text-decoration: none; font-weight: 700; font-size: 15px;
+  height: 46px; padding: 0 22px;
+  border-radius: 3px; border: 1.5px solid transparent;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
+  transition: background 0.16s, border-color 0.16s, color 0.16s;
+}
+.terminal .btn-p { background: var(--acc-btn); color: var(--acc-btn-fg, #fff); }
+.terminal .btn-p:hover { background: var(--acc-btn-h); color: var(--acc-btn-fg, #fff); }
+
+/* The other ~43 primary buttons spell the label as a literal `text-white`
+   utility across 21 files. Re-pointing them from here rather than editing all
+   21 keeps the label a property of the ACCENT, which is the only thing that
+   knows whether its fill is dark or neon.
+   This rule is deliberately unlayered: Tailwind emits utilities inside
+   `@layer utilities`, and unlayered CSS outranks any layered rule regardless
+   of specificity — so no !important is needed, and none should be added. */
+.bg-acc-500.text-white,
+.bg-acc-600.text-white,
+.hover\:bg-acc-600:hover.text-white { color: var(--acc-btn-fg, #fff); }
+.terminal .btn-l {
+  background: transparent; color: var(--text-primary); border-color: var(--text-primary);
+}
+.terminal .btn-l:hover { background: var(--text-primary); color: var(--surface); }
+.terminal .btn-sm { height: 36px; padding: 0 15px; font-size: 14px; }
+.terminal .cta-row { display: flex; gap: 11px; flex-wrap: wrap; margin-top: 28px; }
+
+/* -- provenance chips. Illustrative and Verified must never look alike. -- */
+.terminal .illus {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); border: 1px solid var(--border);
+  border-radius: 2px; padding: 2px 6px; white-space: nowrap;
+}
+.terminal .illus.ok { color: var(--pos); border-color: var(--pos); }
+.terminal a.illus { text-decoration: none; }
+.terminal a.illus:hover { color: var(--acc); border-color: var(--acc); }
+
+.terminal .badge-line {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  border-radius: 3px; padding: 6px 11px;
+  font-size: 11.5px; font-weight: 600; color: var(--text-secondary);
+  margin-bottom: 22px;
+}
+.terminal .badge-line i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--acc); font-style: normal;
+}
+
+/* -- dark CTA band: a theme-stable fill, so the secondary pins to literal
+      white rather than --text-primary (navy on navy in light theme). -- */
+.terminal .band { background: var(--footer-bg); color: #fff; padding: 64px 0; }
+.terminal .band h2 { color: #fff; max-width: 16em; }
+.terminal .band p {
+  margin-top: 12px; color: var(--footer-text-muted);
+  font-size: 17px; max-width: 38em;
+}
+.terminal .band .btn-l { border-color: rgba(255,255,255,.5); color: #fff; background: transparent; }
+.terminal .band .btn-l:hover { border-color: #fff; background: rgba(255,255,255,.1); color: #fff; }
+
+@media (max-width: 640px) {
+  .terminal .wrap { padding-inline: 18px; }
+  .terminal .sec { padding: 52px 0; }
+  .terminal .sec-hd { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* ── Terminal interior-page primitives (Waves 3–6) ──────────────────────────
+   Generic versions of the homepage's scoped patterns, so converted pages get
+   panels, data tables and flat card grids without redeclaring them. */
+.terminal .panel-box {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+.terminal .panel-hd {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 11px 14px;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+}
+.terminal .panel-hd h3, .terminal .panel-hd h2 {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-secondary); max-width: none;
+}
+
+.terminal table.bench { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.terminal table.bench th {
+  text-align: left; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  padding: 9px 14px; border-bottom: 1px solid var(--border);
+  background: var(--surface-alt);
+}
+.terminal table.bench td {
+  padding: 11px 14px; border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums; color: var(--text-secondary);
+  vertical-align: top;
+}
+.terminal table.bench tr:last-child td { border-bottom: 0; }
+.terminal table.bench th.r, .terminal table.bench td.r { text-align: right; }
+.terminal table.bench th.c, .terminal table.bench td.c { text-align: center; }
+.terminal table.bench .m { font-weight: 700; color: var(--text-primary); }
+.terminal table.bench .up { color: var(--pos); font-weight: 700; }
+.terminal table.bench .hl { background: var(--acc-tint); }
+
+/* Flat card grid — hairline-separated cells, like the homepage channel grid. */
+.terminal .cardgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+.terminal .cardgrid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.terminal .cardgrid > * {
+  padding: 22px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-raised);
+  min-width: 0;
+}
+.terminal .cardgrid h3 {
+  font-size: 16px; font-weight: 800; letter-spacing: -0.015em; color: var(--text-primary);
+}
+.terminal .cardgrid p { margin-top: 7px; font-size: 13.5px; color: var(--text-tertiary); line-height: 1.55; }
+.terminal .cardgrid .cn { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--text-tertiary); margin-bottom: 6px; }
+@media (max-width: 1000px) { .terminal .cardgrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .terminal .cardgrid, .terminal .cardgrid.cols-2 { grid-template-columns: 1fr; } }
+
+/* Wide tables scroll inside their frame instead of stretching the page. */
+.terminal .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* FAQ pattern — <details> with accent marker; answers stay in the DOM. */
+.terminal .faq details { border-bottom: 1px solid var(--border); }
+.terminal .faq summary {
+  cursor: pointer; list-style: none; padding: 18px 0;
+  font-size: 16.5px; font-weight: 700; letter-spacing: -0.015em;
+  color: var(--text-primary);
+  display: flex; justify-content: space-between; gap: 20px; align-items: center;
+}
+.terminal .faq summary::-webkit-details-marker { display: none; }
+.terminal .faq summary::after { content: "+"; color: var(--acc); font-weight: 700; font-size: 20px; line-height: 1; }
+.terminal .faq details[open] summary::after { content: "–"; }
+.terminal .faq details > p { padding: 0 0 20px; font-size: 15px; color: var(--text-secondary); max-width: 60em; text-wrap: pretty; }
+
+/* Radius normalization: inside .terminal, legacy rounded-* utilities and glass
+   cards flatten to the family 4px/3px so unconverted card markup reads
+   Terminal without editing every class. :where() keeps specificity at zero. */
+.terminal :where(.rounded-2xl, .rounded-xl) { border-radius: 4px; }
+.terminal :where(.rounded-lg) { border-radius: 3px; }
+.terminal :where(.glass, .glass-strong) { border-radius: 4px; }
