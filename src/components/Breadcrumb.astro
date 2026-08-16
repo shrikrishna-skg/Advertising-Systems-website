@@ -12,8 +12,10 @@ const { items } = Astro.props;
 if (items.length === 0) return null;
 ---
 
+<!-- Width tracks `.terminal .wrap` (1240px / 28px gutter), not max-w-7xl — the
+     crumb sat wider than the content it labelled on every interior page. -->
 <nav class="border-b border-[var(--border)] bg-[var(--surface-alt)]" aria-label="Breadcrumb">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+  <div class="wrap py-3">
     <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-[var(--text-tertiary)]" itemscope itemtype="https://schema.org/BreadcrumbList">
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <a href="/" class="hover:text-[var(--color-link)] transition-colors" itemprop="item">

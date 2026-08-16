@@ -800,6 +800,9 @@ img, video {
   text-wrap: pretty;
 }
 .terminal .fine { margin-top: 14px; font-size: 13px; color: var(--text-tertiary); }
+/* Every converted page had redeclared this in its own <style>. Declared once. */
+.terminal .fine a { color: var(--acc); font-weight: 600; text-decoration: none; }
+.terminal .fine a:hover { color: var(--acc-hover); text-decoration: underline; }
 .terminal .eyebrow {
   font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--text-tertiary);
@@ -811,6 +814,16 @@ img, video {
   background: var(--surface-alt);
   border-block: 1px solid var(--border);
 }
+
+/* Accent text on the SOFT ground, light theme only.
+   --acc rose #E11D48 measures 4.70:1 on white but 4.41:1 on --surface-alt — it
+   passes AA on the page and fails inside every alternate band. The rail
+   numbers, `.fine` links and FAQ markers that live in those bands are 11–13px,
+   so they need the normal-text threshold, not the large-text one.
+   Rebinding --acc to its hover shade for the subtree fixes all of them at once
+   (5.91:1) without editing the registry brand value, and without touching dark,
+   where #FB7185 already clears on both grounds. */
+[data-theme="light"] .terminal .sec.soft { --acc: var(--acc-hover); }
 .terminal .sec-hd {
   display: grid; grid-template-columns: auto 1fr;
   gap: 18px; align-items: baseline; margin-bottom: 38px;
@@ -924,6 +937,8 @@ img, video {
 .terminal table.bench th.r, .terminal table.bench td.r { text-align: right; }
 .terminal table.bench th.c, .terminal table.bench td.c { text-align: center; }
 .terminal table.bench .m { font-weight: 700; color: var(--text-primary); }
+/* Identifiers (cookie names, header keys) read as code, not prose. */
+.terminal table.bench .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
 .terminal table.bench .up { color: var(--pos); font-weight: 700; }
 .terminal table.bench .hl { background: var(--acc-tint); }
 
@@ -965,6 +980,34 @@ img, video {
 .terminal .faq summary::after { content: "+"; color: var(--acc); font-weight: 700; font-size: 20px; line-height: 1; }
 .terminal .faq details[open] summary::after { content: "–"; }
 .terminal .faq details > p { padding: 0 0 20px; font-size: 15px; color: var(--text-secondary); max-width: 60em; text-wrap: pretty; }
+
+/* Legal / policy prose — privacy, terms, cookies, security.
+   Those four pages were the same page four times: a centered hero over six to
+   nine `glass rounded-2xl` cards. Cards are the wrong container for sequential
+   prose (they say "compare these", not "read these in order"), so the sections
+   are hairline-separated instead, in one measured column. Declared once here
+   rather than as four copies of a page-scoped <style>. */
+.terminal .legal { max-width: 52em; }
+.terminal .legal section {
+  padding: 26px 0;
+  border-top: 1px solid var(--border);
+}
+.terminal .legal section:first-child { border-top: 0; padding-top: 6px; }
+.terminal .legal h2 {
+  font-size: 19px; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--text-primary); max-width: none; margin-bottom: 12px;
+}
+.terminal .legal p { font-size: 15px; line-height: 1.65; color: var(--text-secondary); text-wrap: pretty; }
+.terminal .legal p + p, .terminal .legal p + ul { margin-top: 11px; }
+.terminal .legal ul { margin-top: 11px; padding-left: 18px; list-style: disc; }
+.terminal .legal li {
+  font-size: 15px; line-height: 1.6; color: var(--text-secondary);
+  margin-bottom: 7px; padding-left: 3px;
+}
+.terminal .legal li:last-child { margin-bottom: 0; }
+.terminal .legal strong { color: var(--text-primary); font-weight: 700; }
+.terminal .legal a { color: var(--acc); font-weight: 600; text-decoration: none; }
+.terminal .legal a:hover { color: var(--acc-hover); text-decoration: underline; }
 
 /* Radius normalization: inside .terminal, legacy rounded-* utilities and glass
    cards flatten to the family 4px/3px so unconverted card markup reads

@@ -3,55 +3,85 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
 import FAQSection from '../../components/FAQSection.astro';
 import { featureSubpageFaqs } from '../../data/page-faqs';
 
+/**
+ * Campaign Intelligence — Terminal conversion.
+ *
+ * The Wave 3 pass only added `.terminal` to <main>; the body stayed on glass
+ * cards, mesh grounds and centered headings, so the page read as a different
+ * site from /features. Rebuilt on the same primitives features/index uses:
+ * PageHero, .sec/.sec-hd, .cardgrid, .panel-box + table.bench, CTABand.
+ *
+ * COPY: the hero badge claimed "Launch 14 campaigns across 3 channels in 20
+ * minutes" as fact. That figure exists on the homepage as an ILLUSTRATIVE
+ * example-account readout (EngineCapabilities), chipped as such. A hero badge
+ * has no chip and no frame, so it now states a capability instead.
+ */
 const painPoints = [
   {
-    icon: 'M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18',
-    title: 'Tab-Switching Hell',
-    desc: 'Jumping between Google Ads, Meta Business Suite, OTA dashboards, and spreadsheets just to get a single status update. Context switching kills productivity.',
+    n: '01',
+    title: 'Tab-switching tax',
+    desc: 'Google Ads, Meta Business Suite, the OTA extranets and a spreadsheet — four logins to answer one question about yesterday.',
   },
   {
-    icon: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
-    title: 'Campaign Launch Bottleneck',
-    desc: 'Launching campaigns one platform at a time means hours of duplicate setup, copy-pasting creatives, and re-entering targeting — for every single campaign.',
+    n: '02',
+    title: 'Launch bottleneck',
+    desc: 'Every campaign is set up once per platform: the same creative pasted three times, the same targeting re-entered three times.',
   },
   {
-    icon: 'M3.98 8.223A10.477 10.477 0 001.934 12c1.292 4.338 5.31 7.5 10.066 7.5.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88',
-    title: 'Status Blindness',
-    desc: 'No unified view of what\'s live, paused, or failing across platforms. Problems go unnoticed until budget has already been wasted.',
+    n: '03',
+    title: 'Status blindness',
+    desc: 'Nothing tells you a campaign stalled. You find out at the weekly review, after the budget has already gone.',
   },
 ];
 
 const capabilities = [
   {
-    icon: 'M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5',
-    title: 'Cross-Channel Sync',
-    desc: 'Manage Google Ads, Meta Ads, and OTA campaigns from a single interface. Changes sync across platforms in real time.',
+    n: '01',
+    title: 'Cross-channel sync',
+    desc: 'Google Ads, Meta and OTA campaigns run from one interface. A change made here is written back to the platform that owns it.',
   },
   {
-    icon: 'M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z',
-    title: 'Bulk Campaign Launcher',
-    desc: 'Create and launch multiple campaigns across platforms simultaneously. Templated setups slash launch time from hours to minutes.',
+    n: '02',
+    title: 'Bulk launcher',
+    desc: 'Build once, launch across platforms in one action. Templated setups carry the targeting and creative with them.',
   },
   {
-    icon: 'M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z',
-    title: 'Real-Time Status Monitor',
-    desc: 'Live dashboard showing every campaign\'s status, spend, and performance. Instant alerts when something needs attention.',
+    n: '03',
+    title: 'Live status monitor',
+    desc: 'Every campaign\'s state, spend and pacing on one screen, with alerts that name the campaign and the amount.',
   },
   {
-    icon: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z',
-    title: 'Template Library',
-    desc: 'Save top-performing campaign structures as reusable templates. Launch proven configurations in seconds, not hours.',
+    n: '04',
+    title: 'Template library',
+    desc: 'Save a campaign structure that worked and re-launch it as a starting point rather than rebuilding it from memory.',
   },
 ];
 
+const rows = [
+  { name: 'Summer Brand Push', ch: 'Google Ads', st: 'live', spend: '$1,240', conv: '34', roas: '5.2×', up: true },
+  { name: 'Retargeting — Cart', ch: 'Meta Ads', st: 'live', spend: '$890', conv: '28', roas: '6.1×', up: true },
+  { name: 'Hotel Promo — EU', ch: 'Booking.com', st: 'live', spend: '$1,450', conv: '19', roas: '3.8×', up: false },
+  { name: 'Lookalike — US', ch: 'Meta Ads', st: 'review', spend: '$638', conv: '8', roas: '2.4×', up: false },
+  { name: 'Q1 Search — Brand', ch: 'Google Ads', st: 'paused', spend: '$0', conv: '0', roas: '—', up: false },
+];
+
+const kpis = [
+  { k: 'Active campaigns', v: '14' },
+  { k: 'Spend today', v: '$4,218' },
+  { k: 'Conversions', v: '89' },
+  { k: 'Blended ROAS', v: '4.7×' },
+];
+
 const relatedFeatures = [
-  { title: 'AI Optimization Engine', href: '/features/ai-optimization', stat: 'Adjusts every 15 minutes' },
-  { title: 'Performance Analytics', href: '/features/analytics', stat: 'Attribution to booking revenue' },
-  { title: 'Automation Studio', href: '/features/automation', stat: 'Rules run around the clock' },
-  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: 'Cross-channel reallocation' },
+  { n: '02', title: 'AI Optimization Engine', href: '/features/ai-optimization', fact: 'Adjusts every 15 minutes' },
+  { n: '03', title: 'Performance Analytics', href: '/features/analytics', fact: 'Attribution to booking revenue' },
+  { n: '04', title: 'Automation Studio', href: '/features/automation', fact: 'Rules run around the clock' },
+  { n: '05', title: 'Budget Allocator', href: '/features/budget-intelligence', fact: 'Cross-channel reallocation' },
 ];
 ---
 
@@ -63,252 +93,205 @@ const relatedFeatures = [
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'Campaign Intelligence', href: '/features/campaign-management' }]} />
-    <!-- Hero -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="campaign-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">Launch 14 campaigns across 3 channels in 20 minutes</span>
+    <PageHero
+      badge="Module 01 of 5"
+      title="Campaign Intelligence."
+      titleAccent="One screen for every channel."
+      lead="Launch, manage and monitor Google Ads, Meta, Microsoft and OTA campaigns from a single dashboard — instead of opening four platforms to answer one question."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'See pricing', href: '/pricing' }}
+    />
+
+    <!-- 01 · The problem -->
+    <section class="sec" aria-labelledby="pain-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="pain-heading">Four logins to answer one question.</h2>
+            <p class="sub">What running multi-platform campaigns without a command layer actually costs.</p>
+          </div>
         </div>
-
-        <h1 id="campaign-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          <span class="text-[var(--text-primary)]">Campaign Intelligence</span>
-        </h1>
-        <p class="reveal mt-4 text-xl sm:text-2xl text-[var(--text-secondary)] font-medium">
-          One command center. Every channel.
-        </p>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Stop switching between platforms. Launch, manage, and monitor campaigns across Google Ads, Meta Ads, and OTAs from a single unified dashboard.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            See It In Action
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Pain Points -->
-    <section class="py-28" aria-labelledby="pain-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="pain-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Sound <span class="text-[var(--text-primary)]">familiar?</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">The problems every multi-platform advertiser faces daily.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="cardgrid pain">
           {painPoints.map((point) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8 border-t-4 border-red-400/30">
-              <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={point.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{point.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{point.desc}</p>
+            <div>
+              <div class="cn">{point.n}</div>
+              <h3>{point.title}</h3>
+              <p>{point.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- App Mockup -->
-    <section class="py-28" aria-labelledby="mockup-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="mockup-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Your entire ad operation, <span class="text-[var(--text-primary)]">one screen.</span>
-          </h2>
+    <!-- 02 · The screen -->
+    <section class="sec soft" aria-labelledby="mockup-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="mockup-heading">Your entire ad operation, one screen.</h2>
+            <p class="sub">Every connected channel on the same ledger — same columns, same definitions, no reconciliation step.</p>
+          </div>
         </div>
 
-        <div class="reveal glass rounded-2xl overflow-hidden shadow-2xl">
-          <div class="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--browser-border)] bg-[var(--browser-chrome-bg)]">
-            <div class="flex gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            </div>
-            <div class="flex-1 ml-3">
-              <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/campaigns</div>
-            </div>
-            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
+        <div class="panel-box">
+          <div class="panel-hd">
+            <h3>Campaigns — all channels</h3>
+            <span class="illus">Illustrative</span>
           </div>
-          <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
-            <!-- KPI Row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Active Campaigns</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">14</div>
+
+          <div class="kpis">
+            {kpis.map((kpi) => (
+              <div class="kpi">
+                <span class="k">{kpi.k}</span>
+                <span class="v num">{kpi.v}</span>
               </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Today's Spend</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">$4,218</div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Conversions</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">89</div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">ROAS</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">4.7x</div>
-              </div>
-            </div>
-            <!-- Campaign Table -->
-            <div class="glass rounded-lg overflow-hidden">
-              <div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[var(--border)] text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
-                <div class="col-span-3">Campaign</div>
-                <div class="col-span-2">Platform</div>
-                <div class="col-span-2">Status</div>
-                <div class="col-span-2 text-right">Spend</div>
-                <div class="col-span-1 text-right">Conv.</div>
-                <div class="col-span-2 text-right">ROAS</div>
-              </div>
-              <div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[var(--border)] text-sm items-center">
-                <div class="col-span-3 font-medium text-[var(--text-primary)]">Summer Brand Push</div>
-                <div class="col-span-2"><span class="text-xs bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-full">Google Ads</span></div>
-                <div class="col-span-2"><span class="text-xs bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span> Live</span></div>
-                <div class="col-span-2 text-right text-[var(--text-tertiary)]">$1,240</div>
-                <div class="col-span-1 text-right text-[var(--text-tertiary)]">34</div>
-                <div class="col-span-2 text-right font-medium text-[var(--text-primary)]">5.2x</div>
-              </div>
-              <div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[var(--border)] text-sm items-center">
-                <div class="col-span-3 font-medium text-[var(--text-primary)]">Retargeting — Cart</div>
-                <div class="col-span-2"><span class="text-xs bg-violet-500/10 text-violet-500 px-2 py-0.5 rounded-full">Meta Ads</span></div>
-                <div class="col-span-2"><span class="text-xs bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span> Live</span></div>
-                <div class="col-span-2 text-right text-[var(--text-tertiary)]">$890</div>
-                <div class="col-span-1 text-right text-[var(--text-tertiary)]">28</div>
-                <div class="col-span-2 text-right font-medium text-[var(--text-primary)]">6.1x</div>
-              </div>
-              <div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[var(--border)] text-sm items-center">
-                <div class="col-span-3 font-medium text-[var(--text-primary)]">Hotel Promo — EU</div>
-                <div class="col-span-2"><span class="text-xs bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded-full">Booking.com</span></div>
-                <div class="col-span-2"><span class="text-xs bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span> Live</span></div>
-                <div class="col-span-2 text-right text-[var(--text-tertiary)]">$1,450</div>
-                <div class="col-span-1 text-right text-[var(--text-tertiary)]">19</div>
-                <div class="col-span-2 text-right font-medium text-[var(--text-primary)]">3.8x</div>
-              </div>
-              <div class="grid grid-cols-12 gap-2 px-4 py-3 border-b border-[var(--border)] text-sm items-center">
-                <div class="col-span-3 font-medium text-[var(--text-primary)]">Lookalike — US</div>
-                <div class="col-span-2"><span class="text-xs bg-violet-500/10 text-violet-500 px-2 py-0.5 rounded-full">Meta Ads</span></div>
-                <div class="col-span-2"><span class="text-xs bg-yellow-500/10 text-yellow-600 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><span class="w-1.5 h-1.5 bg-yellow-400 rounded-full"></span> Review</span></div>
-                <div class="col-span-2 text-right text-[var(--text-tertiary)]">$638</div>
-                <div class="col-span-1 text-right text-[var(--text-tertiary)]">8</div>
-                <div class="col-span-2 text-right font-medium text-yellow-500">2.4x</div>
-              </div>
-              <div class="grid grid-cols-12 gap-2 px-4 py-3 text-sm items-center">
-                <div class="col-span-3 font-medium text-[var(--text-primary)]">Q1 Search — Brand</div>
-                <div class="col-span-2"><span class="text-xs bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-full">Google Ads</span></div>
-                <div class="col-span-2"><span class="text-xs bg-gray-500/10 text-gray-400 px-2 py-0.5 rounded-full flex items-center gap-1 w-fit"><span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span> Paused</span></div>
-                <div class="col-span-2 text-right text-[var(--text-tertiary)]">$0</div>
-                <div class="col-span-1 text-right text-[var(--text-tertiary)]">0</div>
-                <div class="col-span-2 text-right font-medium text-[var(--text-muted)]">—</div>
-              </div>
-            </div>
+            ))}
+          </div>
+
+          <div class="scroll-x">
+            <table class="bench">
+              <thead>
+                <tr>
+                  <th>Campaign</th>
+                  <th>Channel</th>
+                  <th>Status</th>
+                  <th class="r">Spend</th>
+                  <th class="r">Conv.</th>
+                  <th class="r">ROAS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr>
+                    <td class="m">{row.name}</td>
+                    <td>{row.ch}</td>
+                    <td><span class={`st st-${row.st}`}>{row.st === 'live' ? 'Live' : row.st === 'review' ? 'Review' : 'Paused'}</span></td>
+                    <td class="r">{row.spend}</td>
+                    <td class="r">{row.conv}</td>
+                    <td class={row.up ? 'r up' : 'r m'}>{row.roas}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Capabilities -->
-    <section class="py-28" aria-labelledby="capabilities-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="capabilities-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Key <span class="text-[var(--text-primary)]">capabilities</span>
-          </h2>
+    <!-- 03 · Capabilities -->
+    <section class="sec" aria-labelledby="capabilities-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="capabilities-heading">What the module does.</h2>
+          </div>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="cardgrid cols-2">
           {capabilities.map((cap) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8">
-              <div class="w-12 h-12 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={cap.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{cap.desc}</p>
+            <div>
+              <div class="cn">{cap.n}</div>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-
-    <div class="section-line"></div>
-
-    <!-- Related Features -->
-    <section class="py-28" aria-labelledby="related-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="related-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Explore more <span class="text-[var(--text-primary)]">features</span>
-          </h2>
+    <!-- 04 · The rest of the stack -->
+    <section class="sec soft" aria-labelledby="related-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="related-heading">The other four modules.</h2>
+            <p class="sub">Same connected accounts, same ledger — nothing needs reconciling between them.</p>
+          </div>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cardgrid cols-2">
           {relatedFeatures.map((feature) => (
-            <a href={feature.href} class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-              <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">{feature.title}</h3>
-              <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">{feature.stat}</span>
-              <div class="mt-4">
-                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </div>
+            <a href={feature.href} class="r-card">
+              <div class="cn">{feature.n}</div>
+              <h3>{feature.title}</h3>
+              <span class="r-fact">{feature.fact}</span>
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="campaign-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Ready to unify your <span class="text-[var(--text-primary)]">campaigns?</span>
-        </h2>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          See how Campaign Intelligence gives you command over every channel from a single dashboard.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book Your Demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Get Started
-          </a>
-        </div>
-      </div>
-    </section>
+    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="campaign-faq" no="05" soft={false} />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    /* Pain rail: the problem number carries --neg so the section reads as cost
+       without importing a second red into the palette. */
+    .pain .cn { color: var(--neg); }
+
+    /* KPI strip above the table — same hairline logic as .cardgrid. */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .kpi {
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+      min-width: 0;
+    }
+    .kpi:last-child { border-right: 0; }
+    .kpi .k {
+      display: block;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+    }
+    .kpi .v {
+      display: block; margin-top: 5px;
+      font-size: 21px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    @media (max-width: 640px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .kpi:nth-child(2) { border-right: 0; }
+      .kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    }
+
+    /* Status chips. Were raw Tailwind yellow/grey steps — 2.76:1 and 2.39:1 on
+       the light card, both below AA — and theme-blind besides. Now the status
+       tokens, which are contrast-checked in both themes.
+       Class names are deliberately NOT spelled out here: Tailwind scans comment
+       text and would re-emit the dead utility into the bundle. */
+    .st {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700;
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 2px 7px; white-space: nowrap;
+      color: var(--text-tertiary);
+    }
+    .st::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor;
+    }
+    .st-live { color: var(--pos); border-color: var(--pos-line); }
+    .st-review { color: var(--warn); border-color: var(--warn); }
+
+    /* Related-module cards reuse .cardgrid cells; only link behaviour is local. */
+    .r-card { text-decoration: none; display: block; transition: background 0.15s; }
+    a.r-card:hover { background: var(--surface); }
+    a.r-card:hover h3 { color: var(--acc); }
+    .r-card h3 { transition: color 0.15s; }
+    .r-fact {
+      display: inline-block; margin-top: 13px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 2px 6px;
+    }
+  </style>
 </Layout>

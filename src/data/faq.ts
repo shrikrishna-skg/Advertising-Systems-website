@@ -17,7 +17,12 @@ export const faqs = [
   {
     question: "What results should I expect?",
     answer:
-      "Results depend on your starting point, market, tracking quality, and ad spend volume, so we don't promise a number up front. What we can show you is real platform data: a verified 30-day Expedia TravelAds export for a managed property is published on our homepage, reconciled line by line. We also provide a free audit before onboarding so you know exactly what to expect for your own accounts.",
+      // "We also provide a free audit before onboarding" removed 2026-08-16 —
+      // owner ruling: no audit is offered, so the sentence promised a
+      // deliverable that does not exist. The answer is stronger without it: it
+      // now ends on what the published case is NOT, which is the same standard
+      // the case-study FAQ already holds.
+      "Results depend on your starting point, market, tracking quality, and ad spend volume, so we don't promise a number up front. What we can show you is real platform data: a verified 30-day Expedia TravelAds export for a managed property is published on our homepage, reconciled line by line. Treat it as evidence that the reporting is real — it is one property on one channel, not a forecast for yours.",
   },
   {
     question: "How fast is the setup?",

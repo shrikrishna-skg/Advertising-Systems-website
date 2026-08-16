@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
 
 const breadcrumbs = [{ name: 'Privacy Policy', href: '/privacy' }];
 ---
@@ -15,93 +16,78 @@ const breadcrumbs = [{ name: 'Privacy Policy', href: '/privacy' }];
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={breadcrumbs} />
-    <!-- Hero -->
-    <section class="pt-14 pb-16 relative overflow-hidden">
-      <div class="absolute inset-0 mesh-gradient opacity-30"></div>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center">
-          <h1 class="reveal text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Privacy <span class="text-[var(--text-primary)]">Policy</span>
-          </h1>
-          <p class="reveal mt-4 text-[var(--text-tertiary)]">Last updated: March 2026</p>
-          <p class="reveal mt-4 text-base font-medium text-[var(--text-secondary)] max-w-2xl mx-auto">
-            In short: we use your data to run and improve the product, we don't sell it to third parties, and you can request access or deletion anytime. Details below.
-          </p>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      title="Privacy Policy."
+      lead="In short: we use your data to run and improve the product, we don't sell it to third parties, and you can request access or deletion anytime. Details below."
+      fine="Last updated: March 2026"
+    />
 
-    <!-- Content -->
-    <section class="pb-28">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section class="sec">
+      <div class="wrap">
+        <div class="legal">
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">1. Data We Collect</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed mb-3">Multisystems Inc. ("we," "us," or "Advertising Systems") collects the following categories of information:</p>
-          <ul class="space-y-2 text-[var(--text-tertiary)] list-disc list-inside">
-            <li><strong class="text-[var(--text-secondary)]">Account Information:</strong> Name, email address, company name, and billing details you provide during registration.</li>
-            <li><strong class="text-[var(--text-secondary)]">Usage Data:</strong> Pages visited, features used, campaign configurations, and interaction logs within the platform.</li>
-            <li><strong class="text-[var(--text-secondary)]">Device &amp; Technical Data:</strong> IP address, browser type, operating system, and device identifiers.</li>
-            <li><strong class="text-[var(--text-secondary)]">Third-Party Data:</strong> Advertising performance metrics synced from connected platforms (Google Ads, Meta Ads, etc.).</li>
+        <section>
+          <h2>1. Data We Collect</h2>
+          <p>Multisystems Inc. ("we," "us," or "Advertising Systems") collects the following categories of information:</p>
+          <ul>
+            <li><strong>Account Information:</strong> Name, email address, company name, and billing details you provide during registration.</li>
+            <li><strong>Usage Data:</strong> Pages visited, features used, campaign configurations, and interaction logs within the platform.</li>
+            <li><strong>Device &amp; Technical Data:</strong> IP address, browser type, operating system, and device identifiers.</li>
+            <li><strong>Third-Party Data:</strong> Advertising performance metrics synced from connected platforms (Google Ads, Meta Ads, etc.).</li>
           </ul>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">2. How We Use Your Data</h2>
-          <ul class="space-y-2 text-[var(--text-tertiary)] list-disc list-inside">
+        <section>
+          <h2>2. How We Use Your Data</h2>
+          <ul>
             <li>To provide, maintain, and improve the Advertising Systems platform.</li>
             <li>To personalize your experience and deliver AI-powered optimization recommendations.</li>
             <li>To process payments and manage your subscription.</li>
             <li>To communicate service updates, security alerts, and product announcements.</li>
             <li>To analyze aggregate usage patterns and improve platform performance.</li>
           </ul>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">3. Data Sharing</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed mb-3">We do not sell your personal data. We may share information with:</p>
-          <ul class="space-y-2 text-[var(--text-tertiary)] list-disc list-inside">
-            <li><strong class="text-[var(--text-secondary)]">Service Providers:</strong> Infrastructure partners (hosting, payment processing) who process data on our behalf under strict agreements.</li>
-            <li><strong class="text-[var(--text-secondary)]">Connected Platforms:</strong> Ad networks you authorize us to connect with, solely to manage your campaigns.</li>
-            <li><strong class="text-[var(--text-secondary)]">Legal Compliance:</strong> When required by law, regulation, or valid legal process.</li>
+        <section>
+          <h2>3. Data Sharing</h2>
+          <p>We do not sell your personal data. We may share information with:</p>
+          <ul>
+            <li><strong>Service Providers:</strong> Infrastructure partners (hosting, payment processing) who process data on our behalf under strict agreements.</li>
+            <li><strong>Connected Platforms:</strong> Ad networks you authorize us to connect with, solely to manage your campaigns.</li>
+            <li><strong>Legal Compliance:</strong> When required by law, regulation, or valid legal process.</li>
           </ul>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">4. Cookies &amp; Tracking</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed">
-            We use essential cookies to keep you signed in and analytics cookies to understand how the platform is used. Marketing cookies are only set with your consent. For full details, see our <a href="/cookies" class="link-secondary transition-colors font-semibold">Cookie Policy</a>.
+        <section>
+          <h2>4. Cookies &amp; Tracking</h2>
+          <p>
+            We use essential cookies to keep you signed in and analytics cookies to understand how the platform is used. Marketing cookies are only set with your consent. For full details, see our <a href="/cookies">Cookie Policy</a>.
           </p>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">5. Your Rights</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed mb-3">Depending on your jurisdiction, you may have the right to:</p>
-          <ul class="space-y-2 text-[var(--text-tertiary)] list-disc list-inside">
+        <section>
+          <h2>5. Your Rights</h2>
+          <p>Depending on your jurisdiction, you may have the right to:</p>
+          <ul>
             <li>Access, correct, or delete your personal data.</li>
             <li>Export your data in a portable format.</li>
             <li>Withdraw consent for optional data processing.</li>
             <li>Object to or restrict certain processing activities.</li>
             <li>Lodge a complaint with your local data protection authority.</li>
           </ul>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">6. Contact Us</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed">
+        <section>
+          <h2>6. Contact Us</h2>
+          <p>
             For privacy-related inquiries, contact our Data Protection team at
-            <a href="mailto:privacy@advertisingsystems.ai" class="link-secondary transition-colors font-semibold">privacy@advertisingsystems.ai</a>
+            <a href="mailto:privacy@advertisingsystems.ai">privacy@advertisingsystems.ai</a>
             or write to: Multisystems Inc., Privacy Team, 548 Market St, Suite 35435, San Francisco, CA 94104.
           </p>
-        </article>
+        </section>
 
-        <div class="reveal mt-12 pt-12 border-t border-[var(--border)] text-center">
-          <p class="text-[var(--text-secondary)] font-medium mb-2">General questions about the product or your account?</p>
-          <a href="/faq" class="link-secondary font-semibold transition-colors">View our FAQ</a>
-          <span class="text-[var(--text-muted)]"> or </span>
-          <a href="/contact" class="link-secondary font-semibold transition-colors">contact us</a>
         </div>
-
+        <p class="fine"><a href="/faq">Read the FAQ →</a> <span> or </span> <a href="/contact">contact us</a></p>
       </div>
     </section>
   </main>

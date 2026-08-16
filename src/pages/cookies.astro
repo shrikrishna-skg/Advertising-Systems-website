@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
+import PageHero from '../components/PageHero.astro';
 
 const breadcrumbs = [{ name: 'Cookie Policy', href: '/cookies' }];
 ---
@@ -15,118 +16,96 @@ const breadcrumbs = [{ name: 'Cookie Policy', href: '/cookies' }];
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={breadcrumbs} />
-    <!-- Hero -->
-    <section class="pt-14 pb-16 relative overflow-hidden">
-      <div class="absolute inset-0 mesh-gradient opacity-30"></div>
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="text-center">
-          <h1 class="reveal text-4xl sm:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Cookie <span class="text-[var(--text-primary)]">Policy</span>
-          </h1>
-          <p class="reveal mt-4 text-[var(--text-tertiary)]">Last updated: March 2026</p>
-          <p class="reveal mt-4 text-base font-medium text-[var(--text-secondary)] max-w-2xl mx-auto">
-            In short: we use cookies to run the site, keep you signed in, and improve the product. You can manage preferences in your browser or our cookie banner.
-          </p>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      title="Cookie Policy."
+      lead="We use cookies to run the site, keep you signed in and improve the product. Optional cookies are only set with your consent, and you can change that at any time."
+      fine="Last updated: March 2026"
+    />
 
-    <!-- Content -->
-    <section class="pb-28">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section class="sec">
+      <div class="wrap">
+        <div class="legal">
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">What Are Cookies?</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed">
+        <section>
+          <h2>What Are Cookies?</h2>
+          <p>
             Cookies are small text files stored on your device when you visit a website. They help the site remember your preferences, keep you signed in, and understand how you interact with the platform. Advertising Systems uses cookies and similar technologies (local storage, session storage) to deliver a seamless experience.
           </p>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Essential Cookies</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed mb-3">
+        <section>
+          <h2>Essential Cookies</h2>
+          <p>
             These cookies are required for the platform to function and cannot be disabled.
           </p>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm text-[var(--text-tertiary)]">
+          <div class="panel-box scroll-x">
+            <table class="bench">
               <thead>
-                <tr class="border-b border-[var(--border)]">
-                  <th class="text-left py-2 pr-4 text-[var(--text-secondary)] font-semibold">Cookie</th>
-                  <th class="text-left py-2 pr-4 text-[var(--text-secondary)] font-semibold">Purpose</th>
-                  <th class="text-left py-2 text-[var(--text-secondary)] font-semibold">Duration</th>
+                <tr>
+                  <th>Cookie</th>
+                  <th>Purpose</th>
+                  <th>Duration</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-b border-[var(--border)]/50">
-                  <td class="py-2 pr-4 font-mono text-xs">as_session</td>
-                  <td class="py-2 pr-4">Maintains your authenticated session</td>
-                  <td class="py-2">Session</td>
-                </tr>
-                <tr class="border-b border-[var(--border)]/50">
-                  <td class="py-2 pr-4 font-mono text-xs">as_csrf</td>
-                  <td class="py-2 pr-4">Protects against cross-site request forgery</td>
-                  <td class="py-2">Session</td>
+                <tr>
+                  <td class="m mono">as_session</td>
+                  <td>Maintains your authenticated session</td>
+                  <td>Session</td>
                 </tr>
                 <tr>
-                  <td class="py-2 pr-4 font-mono text-xs">as_preferences</td>
-                  <td class="py-2 pr-4">Stores UI preferences (theme, language)</td>
-                  <td class="py-2">1 year</td>
+                  <td class="m mono">as_csrf</td>
+                  <td>Protects against cross-site request forgery</td>
+                  <td>Session</td>
+                </tr>
+                <tr>
+                  <td class="m mono">as_preferences</td>
+                  <td>Stores UI preferences (theme, language)</td>
+                  <td>1 year</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Analytics Cookies</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed">
+        <section>
+          <h2>Analytics Cookies</h2>
+          <p>
             We use analytics cookies to understand how users interact with our platform, which features are most popular, and where users encounter issues. This data is aggregated and anonymized. We use privacy-focused analytics and do not create individual user profiles for advertising purposes.
           </p>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Marketing Cookies</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed">
+        <section>
+          <h2>Marketing Cookies</h2>
+          <p>
             Marketing cookies are only set with your explicit consent. They help us measure the effectiveness of our own advertising campaigns and may be used to show you relevant information about Advertising Systems on third-party sites. You can opt out of marketing cookies at any time through your cookie preferences.
           </p>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Managing Cookies</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed mb-3">
+        <section>
+          <h2>Managing Cookies</h2>
+          <p>
             You can control cookies in several ways:
           </p>
-          <ul class="space-y-2 text-[var(--text-tertiary)] list-disc list-inside">
-            <li><strong class="text-[var(--text-secondary)]">Cookie Banner:</strong> Use the cookie consent banner shown on your first visit to accept or decline optional cookies.</li>
-            <li><strong class="text-[var(--text-secondary)]">Browser Settings:</strong> Most browsers allow you to block or delete cookies through their settings menu.</li>
-            <li><strong class="text-[var(--text-secondary)]">Account Settings:</strong> Logged-in users can manage cookie preferences from their account dashboard.</li>
+          <ul>
+            <li><strong>Cookie Banner:</strong> Use the cookie consent banner shown on your first visit to accept or decline optional cookies.</li>
+            <li><strong>Browser Settings:</strong> Most browsers allow you to block or delete cookies through their settings menu.</li>
+            <li><strong>Account Settings:</strong> Logged-in users can manage cookie preferences from their account dashboard.</li>
           </ul>
-          <p class="text-[var(--text-tertiary)] leading-relaxed mt-3">
+          <p>
             Note: Disabling essential cookies may prevent the platform from functioning correctly.
           </p>
-        </article>
+        </section>
 
-        <article class="reveal glass rounded-2xl p-8">
-          <h2 class="text-xl font-bold text-[var(--text-primary)] mb-4">Third-Party Cookies</h2>
-          <p class="text-[var(--text-tertiary)] leading-relaxed">
+        <section>
+          <h2>Third-Party Cookies</h2>
+          <p>
             Some third-party services integrated into the platform (such as payment processors or support chat) may set their own cookies. These are governed by the respective third party's cookie policies. We review our third-party partners regularly to ensure they meet our privacy standards.
           </p>
-        </article>
+        </section>
 
-        <div class="reveal glass rounded-2xl p-8 text-center">
-          <p class="text-[var(--text-tertiary)] font-medium">
-            Questions about our cookie practices? Contact us at
-            <a href="mailto:privacy@advertisingsystems.ai" class="link-secondary font-semibold">privacy@advertisingsystems.ai</a>.
-          </p>
-        </div>
-
-        <div class="reveal mt-12 pt-12 border-t border-[var(--border)] text-center">
-          <p class="text-[var(--text-secondary)] font-medium mb-2">General questions about the product or your account?</p>
-          <a href="/faq" class="link-secondary font-semibold">View our FAQ</a>
-          <span class="text-[var(--text-muted)]"> or </span>
-          <a href="/contact" class="link-secondary font-semibold">contact us</a>
-        </div>
-
+          </div>
+        <p class="fine">Questions about our cookie practices? <a href="mailto:privacy@advertisingsystems.ai">privacy@advertisingsystems.ai</a> <span> or </span> <a href="/contact">contact us</a></p>
       </div>
     </section>
   </main>
