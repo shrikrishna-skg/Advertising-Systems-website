@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import PricingCards from '../components/PricingCards.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
 
 const breadcrumbs = [{ name: 'Pricing Intelligence', href: '/pricing-intelligence' }];
 
@@ -62,217 +64,98 @@ const pricingFaqs = [
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
-    <!-- Hero: one promise -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="pricing-intel-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 id="pricing-intel-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Pricing that <span class="text-[var(--text-primary)]">scales with you.</span>
-        </h1>
-        <p class="reveal mt-6 text-xl sm:text-2xl font-medium text-[var(--text-secondary)] max-w-2xl mx-auto">
-          No hidden fees. No per-click tricks. One price for everything.
-        </p>
-        <div class="reveal mt-10">
-          <a href="#plans" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            See plans
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
+    <PageHero
+      title="Pricing that"
+      titleAccent="scales with you."
+      lead="One price per plan. No per-click fee, no per-campaign fee, no per-integration fee, and no line item that appears at the end of the month."
+      primaryCta={{ text: 'See the plans', href: '#plans' }}
+      secondaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+    />
+
+    <!-- 01 · Why -->
+    <section class="sec" aria-labelledby="why-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="why-heading">Why we keep it simple.</h2>
+            <p class="sub">You should be able to predict next month's invoice from this month's.</p>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Why pricing clarity matters -->
-    <section class="py-28" aria-labelledby="why-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="why-heading" class="reveal text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Why we keep it <span class="text-[var(--text-primary)]">simple</span>
-        </h2>
-        <p class="reveal mt-4 text-center text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          You should know exactly what you’re paying for. No surprises at the end of the month.
-        </p>
-
-        <div class="reveal mt-16 grid md:grid-cols-3 gap-8">
-          {whyClarity.map((item) => (
-            <div class="glass rounded-2xl p-8 border-t-4 border-[var(--border)]">
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-3">{item.title}</h3>
-              <p class="text-[var(--text-tertiary)] font-medium leading-relaxed">{item.body}</p>
+        <div class="cardgrid">
+          {whyClarity.map((item, i) => (
+            <div>
+              <div class="cn">{String(i + 1).padStart(2, '0')}</div>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- What you get in every plan -->
-    <section class="py-28" aria-labelledby="included-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="included-heading" class="reveal text-center text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          What you get in <span class="text-[var(--text-primary)]">every plan</span>
-        </h2>
-        <ul class="reveal mt-10 space-y-4" role="list">
-          {includedInAll.map((item) => (
-            <li class="flex items-start gap-3 text-[var(--text-secondary)] font-medium">
-              <span class="mt-1 w-5 h-5 rounded-full bg-[var(--surface-alt)] flex items-center justify-center shrink-0" aria-hidden="true">
-                <svg class="w-3 h-3 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </span>
-              {item}
-            </li>
-          ))}
+    <!-- 02 · Included -->
+    <section class="sec soft" aria-labelledby="included-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="included-heading">In every plan, including the smallest.</h2>
+            <p class="sub">The tier changes scale, not capability. There are no features locked behind a higher plan.</p>
+          </div>
+        </div>
+        <ul class="incl">
+          {includedInAll.map((item) => <li>{item}</li>)}
         </ul>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Plans (anchoring: Good / Better / Best) -->
-    <section id="plans" class="py-28" aria-labelledby="plans-heading">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="plans-heading" class="reveal text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Plans that <span class="text-[var(--text-primary)]">scale</span>
-        </h2>
-        <p class="reveal mt-4 text-center text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          Start small, grow when you’re ready. No long-term contract.
-        </p>
-
-        <div class="mt-16">
-          <PricingCards />
+    <!-- 03 · Plans -->
+    <section id="plans" class="sec" aria-labelledby="plans-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="plans-heading">Choose the plan that fits.</h2>
+            <p class="sub">Month to month. Upgrade or downgrade at the start of the next cycle; upgrades mid-cycle are prorated.</p>
+          </div>
         </div>
-
-        <p class="reveal text-center mt-10 text-sm font-medium text-[var(--text-muted)]">
-          Ad spend is billed separately. All plans include AI optimization, real-time analytics, and reporting exports.
-        </p>
+        <PricingCards />
+        <p class="fine">Enterprise covers unlimited ad accounts and custom rollout — <a href="/book-demo">book a scoping call</a>.</p>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Your investment, your return (ROI framing) -->
-    <section class="py-28" aria-labelledby="investment-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="investment-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          One platform. One price. <span class="text-[var(--text-primary)]">Predictable.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-          Teams running Google, Meta, and OTA ads use Advertising Systems to turn paid media into measurable booking revenue. For what that looks like on a real account, read the verified 30-day Expedia TravelAds export on our case studies page — spend, bookings and revenue reconciled line by line.
-        </p>
-        <p class="reveal mt-4 text-sm font-medium text-[var(--text-muted)]">
-          Built for teams managing Google, Meta, and OTA advertising — by Multisystems.
-        </p>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Trust: setup, clarity, control -->
-    <section class="py-28" aria-labelledby="trust-heading">
-      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="trust-heading" class="reveal text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Start with clarity
-        </h2>
-        <ul class="reveal mt-8 space-y-3 text-[var(--text-secondary)] font-medium" role="list">
-          <li class="flex items-center justify-center gap-2">
-            <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Guided onboarding
-          </li>
-          <li class="flex items-center justify-center gap-2">
-            <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            No credit card required
-          </li>
-          <li class="flex items-center justify-center gap-2">
-            <svg class="w-5 h-5 text-[var(--text-primary)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Cancel anytime
-          </li>
-        </ul>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book a demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Get started
-          </a>
+    <!-- 04 · FAQ -->
+    <section class="sec soft" aria-labelledby="faq-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div><h2 id="faq-heading">Questions about the bill.</h2></div>
         </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- FAQ: pricing objections -->
-    <section class="py-28" aria-labelledby="faq-heading">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="faq-heading" class="reveal text-center text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          Pricing <span class="text-[var(--text-primary)]">questions</span>
-        </h2>
-
-        <div class="reveal mt-16 space-y-3">
-          {pricingFaqs.map((faq) => (
-            <details class="group glass rounded-xl hover:border-ink-500/20 transition-colors" name="pricing-faq">
-              <summary class="flex items-center justify-between cursor-pointer p-5 sm:p-6 list-none [&::-webkit-details-marker]:hidden">
-                <h3 class="text-base sm:text-lg font-semibold text-[var(--text-primary)] pr-4">{faq.question}</h3>
-                <svg class="w-5 h-5 text-[var(--text-muted)] shrink-0 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </summary>
-              <div class="px-5 sm:px-6 pb-5 sm:pb-6">
-                <p class="text-[var(--text-tertiary)] font-medium leading-relaxed">{faq.answer}</p>
-              </div>
+        <div class="faq">
+          {pricingFaqs.map((faq, i) => (
+            <details name="pricing-faq" open={i === 0}>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
             </details>
           ))}
         </div>
-
-        <div class="reveal text-center mt-12">
-          <p class="text-[var(--text-muted)] font-medium">Still have questions?</p>
-          <a href="/contact" class="link-secondary font-semibold">Contact us</a>
-        </div>
+        <p class="fine">Still have questions? <a href="/contact">Contact us →</a></p>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Final CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="final-cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="final-cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Ready for <span class="text-[var(--text-primary)]">predictable pricing?</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto">
-          See plans, create a signup request, or book a demo. No hidden fees — ever.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book your demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/#pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            View pricing on homepage
-          </a>
-        </div>
-      </div>
-    </section>
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .incl { border-top: 1px solid var(--border); max-width: 56em; }
+    .incl li {
+      display: flex; gap: 12px; align-items: baseline;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+      font-size: 15px; color: var(--text-secondary);
+    }
+    .incl li::before { content: "\2713"; color: var(--pos); font-weight: 700; }
+  </style>
 </Layout>

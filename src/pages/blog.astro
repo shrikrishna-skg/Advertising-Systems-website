@@ -5,6 +5,8 @@ import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { blogFaqs } from '../data/page-faqs';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
 import { blogPosts } from '../data/blog-posts';
 
 const breadcrumbs = [{ name: 'Blog', href: '/blog' }];
@@ -14,25 +16,41 @@ const archivePosts = blogPosts.filter((post) => !post.learningTrack);
 const preferredCategories = ['Start Here', 'Demand Planning', 'OTA Advertising', 'Google Hotel Ads', 'Search & AI Discovery', 'Creative & Trust', 'Meta & Retargeting', 'Conversion Tracking', 'Reporting & ROAS', 'Case Studies'];
 const categories = ['All', ...preferredCategories.filter((category) => hotelPosts.some((post) => post.category === category))];
 
-const categoryColor = (color: string) => {
+/**
+ * Category identity is a RULE, not a fill.
+ *
+ * The old helper returned a Tailwind -700 label over a 10% -500 wash. Those
+ * steps are built for a white page: on `--surface-raised` in the shipped dark
+ * theme the chips measured 2.05–2.43:1, below AA on all five. Rather than
+ * re-tune five washes, category now shows as a 2px left rule plus a dot, and
+ * the label itself uses text tokens — so recall across a 24-post library
+ * survives and every contrast failure disappears by construction.
+ */
+const categoryRule = (color: string) => {
   switch (color) {
-    case 'accent': return 'bg-acc-500/10 border-acc-500/20 text-acc-700';
-    case 'blue': return 'bg-ink-500/10 border-ink-500/20 text-ink-700';
-    case 'violet': return 'bg-violet-500/10 border-violet-500/20 text-violet-700';
-    case 'amber': return 'bg-amber-500/10 border-amber-500/20 text-amber-700';
-    case 'rose': return 'bg-rose-500/10 border-rose-500/20 text-rose-700';
-    default: return 'bg-[var(--surface-alt)] border-[var(--border)] text-[var(--text-tertiary)]';
+    case 'accent': return 'k-acc';
+    case 'blue': return 'k-blue';
+    case 'violet': return 'k-violet';
+    case 'amber': return 'k-amber';
+    case 'rose': return 'k-rose';
+    default: return 'k-none';
   }
 };
 
+/**
+ * Metric tone. THE BUG: `case 'green'` returned an accent-ramp step — and the
+ * accent is ROSE — so every `tone: 'green'` metric on the site (including the
+ * Read-time stat on all 24 posts) rendered dark red. Green means --pos, which
+ * is what --pos is for. Blue was a second brand colour that this direction
+ * does not have; it resolves to structure.
+ */
 const toneText = (tone = 'slate') => {
   switch (tone) {
-    case 'green': return 'text-acc-700';
-    case 'blue': return 'text-ink-600';
-    case 'amber': return 'text-amber-600';
-    case 'violet': return 'text-violet-600';
-    case 'rose': return 'text-rose-600';
-    default: return 'text-[var(--text-primary)]';
+    case 'green': return 't-pos';
+    case 'rose': return 't-neg';
+    case 'amber': return 't-warn';
+    case 'violet': return 't-acc';
+    default: return 't-plain';
   }
 };
 
@@ -75,143 +93,86 @@ const proofCards = [
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={breadcrumbs} />
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="blog-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
 
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-[minmax(0,1fr)_420px] gap-10 lg:gap-14 items-center">
-          <div class="max-w-3xl">
-            <div class="reveal inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-glass)] px-4 py-2 mb-7">
-              <span class="w-2 h-2 rounded-full bg-acc-500"></span>
-              <span class="text-sm font-semibold text-[var(--text-tertiary)]">{hotelPosts.length} hotel learning modules</span>
-            </div>
+    <PageHero
+      badge={`${hotelPosts.length} hotel learning modules`}
+      title="Learn the report"
+      titleAccent="before you buy the software."
+      lead="Short visual guides for hotel owners, GMs and revenue teams who want to understand OTA ads, direct bookings, ROAS and budget automation without reading platform manuals."
+      primaryCta={{ text: 'View sample report', href: '/sample-report' }}
+      secondaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+    />
 
-            <p class="reveal text-sm font-bold text-ink-600 uppercase tracking-[0.16em] mb-4">
-              Hotel advertising learning center
-            </p>
-            <h1 id="blog-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-              Learn the report before you buy the software.
-            </h1>
-            <p class="reveal mt-6 text-lg sm:text-xl text-[var(--text-tertiary)] max-w-2xl leading-relaxed">
-              Short visual guides for hotel owners, GMs, and revenue teams who want to understand OTA ads, direct bookings, ROAS, and budget automation without reading platform manuals.
-            </p>
-
-            <div class="reveal mt-8 flex flex-col sm:flex-row gap-3">
-              <a href="/sample-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-acc-600 transition-colors">
-                View Sample Report
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </a>
-              <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-6 py-3.5 rounded-lg">
-                Book a Demo
-              </a>
-            </div>
+    <!-- 01 · What a report looks like -->
+    <section class="sec" aria-labelledby="snapshot-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="snapshot-heading">What these modules are teaching you to read.</h2>
+            <p class="sub">Every guide ends at the same place: a report an owner can act on without a translator.</p>
           </div>
+        </div>
 
-          <div class="reveal glass-strong rounded-2xl p-5 sm:p-6 border border-[var(--border)]">
-            <div class="flex items-center justify-between gap-4 mb-5">
-              <div>
-                <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.12em]">Owner view</p>
-                <h2 class="text-lg font-bold text-[var(--text-primary)] mt-1">Ad mix snapshot</h2>
-              </div>
-              <span class="text-xs font-bold rounded-full bg-acc-500/10 text-acc-700 px-3 py-1">Live report</span>
+        <div class="snap">
+          <div class="panel-box">
+            <div class="panel-hd">
+              <h3>Ad mix — owner view</h3>
+              <span class="illus">Illustrative</span>
             </div>
-
-            <div class="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)]">
-              <div class="bg-[var(--surface)] p-4">
-                <p class="text-xs font-semibold text-[var(--text-muted)]">Spend</p>
-                <p class="text-2xl font-bold text-[var(--text-primary)] mt-1">$255k</p>
-              </div>
-              <div class="bg-[var(--surface)] p-4">
-                <p class="text-xs font-semibold text-[var(--text-muted)]">ROAS</p>
-                <p class="text-2xl font-bold text-ink-600 mt-1">4.8x</p>
-              </div>
-              <div class="bg-[var(--surface)] p-4">
-                <p class="text-xs font-semibold text-[var(--text-muted)]">Revenue</p>
-                <p class="text-2xl font-bold text-acc-700 mt-1">$1.23M</p>
-              </div>
-              <div class="bg-[var(--surface)] p-4">
-                <p class="text-xs font-semibold text-[var(--text-muted)]">Campaigns</p>
-                <p class="text-2xl font-bold text-amber-600 mt-1">3</p>
-              </div>
+            <div class="kpis">
+              <div class="kpi"><span class="k">Spend</span><span class="v num">$255k</span></div>
+              <div class="kpi"><span class="k">ROAS</span><span class="v num">4.8×</span></div>
+              <div class="kpi"><span class="k">Revenue</span><span class="v num">$1.23M</span></div>
+              <div class="kpi"><span class="k">Campaigns</span><span class="v num">3</span></div>
             </div>
-
-            <div class="mt-6 space-y-4">
+            <div class="mixes">
               {[
-                { name: 'Google Hotel Ads', value: '42%', color: 'bg-ink-500' },
-                { name: 'Expedia TravelAds', value: '28%', color: 'bg-amber-500' },
-                { name: 'Meta Retargeting', value: '18%', color: 'bg-rose-500' },
-                { name: 'Booking Sponsored', value: '12%', color: 'bg-violet-500' },
+                { name: 'Google Hotel Ads', value: '42%' },
+                { name: 'Expedia TravelAds', value: '28%' },
+                { name: 'Meta Retargeting', value: '18%' },
+                { name: 'Booking Sponsored', value: '12%' },
               ].map((row) => (
-                <div>
-                  <div class="flex items-center justify-between gap-4 text-sm font-semibold">
-                    <span class="text-[var(--text-secondary)]">{row.name}</span>
-                    <span class="text-[var(--text-primary)]">{row.value}</span>
-                  </div>
-                  <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                    <div class={`h-full rounded-full ${row.color}`} style={`width: ${row.value}`}></div>
-                  </div>
+                <div class="mix">
+                  <span class="mn">{row.name}</span>
+                  <span class="mb" aria-hidden="true"><i style={`width:${row.value}`}></i></span>
+                  <span class="mv num">{row.value}</span>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="py-10" aria-label="Report previews">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-5">
-          {proofCards.map((card) => (
-            <a href={card.href} class="group block rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-7 hover:border-ink-500/30 hover:bg-ink-500/5 transition-all">
-              <div class="flex flex-col min-[420px]:flex-row min-[420px]:items-start min-[420px]:justify-between gap-4">
-                <div>
-                  <span class={`inline-flex text-xs font-bold px-2.5 py-1 rounded-full border ${card.tone === 'green' ? 'bg-acc-500/10 border-acc-500/20 text-acc-700' : 'bg-ink-500/10 border-ink-500/20 text-ink-700'}`}>
-                    {card.label}
-                  </span>
-                  <h2 class="mt-4 text-2xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{card.title}</h2>
-                  <p class="mt-3 text-sm sm:text-base text-[var(--text-tertiary)] leading-relaxed">{card.body}</p>
-                </div>
-                <div class="shrink-0 w-14 h-14 rounded-xl border border-[var(--border)] bg-[var(--surface-alt)] flex items-center justify-center text-[var(--text-primary)] group-hover:text-ink-600 transition-colors">
-                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25m0 0h7.5m-7.5 0l3 3m-3-3l3-3m4.5 3H18A2.25 2.25 0 0020.25 14.25V3m-16.5 0h16.5m-16.5 0H3m17.25 0H21" />
-                  </svg>
-                </div>
-              </div>
-              <div class="mt-5 flex flex-col min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between gap-3 min-[420px]:gap-4 pt-5 border-t border-[var(--border)]">
-                <span class="text-sm font-bold text-[var(--text-primary)]">{card.metric}</span>
-                <span class="inline-flex items-center gap-1 text-sm font-semibold text-ink-600 group-hover:gap-2 transition-all">Open report -></span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <section class="py-16 sm:py-20" aria-labelledby="learning-path-heading">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-9">
-          <div>
-            <p class="text-sm font-bold text-ink-600 uppercase tracking-[0.16em] mb-3">Step-by-step modules</p>
-            <h2 id="learning-path-heading" class="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-              Learn hotel ads in the order owners ask questions.
-            </h2>
+          <div class="proofs">
+            {proofCards.map((card) => (
+              <a href={card.href} class="proof">
+                <span class="pl">{card.label}</span>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+                <span class="pm">{card.metric} →</span>
+              </a>
+            ))}
           </div>
-          <p class="max-w-xl text-[var(--text-tertiary)] leading-relaxed">
-            Each module is designed to be scanned first: metrics, diagrams, comparisons, then a report or demo action.
-          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Modules -->
+    <section class="sec soft" aria-labelledby="learning-path-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="learning-path-heading">Hotel ads, in the order owners ask.</h2>
+            <p class="sub">Each module is built to be scanned first — metrics, diagram, comparison — then acted on.</p>
+          </div>
         </div>
 
-        <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] gap-4 lg:items-start mb-8">
-          <div class="flex flex-wrap gap-2" role="tablist" aria-label="Filter hotel advertising modules">
+        <div class="tools">
+          <div class="filters" role="tablist" aria-label="Filter hotel advertising modules">
             {categories.map((cat) => (
               <button
                 type="button"
-                class="blog-filter px-4 py-2 rounded-full text-sm font-semibold transition-colors data-[active]:bg-[var(--surface-alt)] data-[active]:text-[var(--text-primary)] data-[active]:border-[var(--border)] border border-[var(--border)] text-[var(--text-tertiary)] hover:bg-[var(--surface-alt)] hover:text-[var(--text-primary)]"
+                class="blog-filter"
                 data-category={cat === 'All' ? '*' : cat}
                 data-active={cat === 'All' ? 'true' : undefined}
               >
@@ -220,167 +181,120 @@ const proofCards = [
             ))}
           </div>
 
-          <div class="w-full">
+          <div class="searchbox">
             <label for="blog-search" class="sr-only">Search blog articles</label>
-            <div class="relative">
-              <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>
-              <input
-                id="blog-search"
-                type="search"
-                autocomplete="off"
-                placeholder="Search hotel ads, ROAS, Expedia..."
-                class="w-full rounded-full border border-[var(--border)] bg-[var(--surface)] py-3 pl-11 pr-12 text-sm font-semibold text-[var(--text-primary)] outline-none transition-colors placeholder:text-[var(--text-muted)] focus:border-ink-500/60 focus:bg-ink-500/5"
-              />
-              <button
-                type="button"
-                id="blog-search-clear"
-                class="absolute right-3 top-1/2 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-alt)] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
-                aria-label="Clear blog search"
-              >
-                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <p id="blog-search-status" class="mt-3 text-xs font-semibold text-[var(--text-muted)]" aria-live="polite">
-              Showing all hotel learning modules.
-            </p>
+            <input
+              id="blog-search"
+              type="search"
+              autocomplete="off"
+              placeholder="Search hotel ads, ROAS, Expedia…"
+            />
+            <button type="button" id="blog-search-clear" class="hidden" aria-label="Clear blog search">✕</button>
           </div>
         </div>
+        <p id="blog-search-status" class="fine" aria-live="polite">Showing all hotel learning modules.</p>
 
-        <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-5" id="blog-grid">
+        <div class="posts" id="blog-grid">
           {hotelPosts.map((post, index) => (
             <a
               href={`/blog/${post.slug}`}
-              class="blog-card group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 hover:border-ink-500/30 hover:bg-ink-500/5 transition-all flex flex-col min-h-[360px]"
+              class={`blog-card ${categoryRule(post.color)}`}
               data-category={post.category}
               data-search={`${post.title} ${post.excerpt} ${post.category} ${post.learningTrack ?? ''} ${post.intent ?? ''} ${(post.heroStats ?? []).map((stat) => `${stat.label} ${stat.value} ${stat.caption ?? ''}`).join(' ')}`}
             >
-              <div class="flex flex-col min-[420px]:flex-row min-[420px]:items-start min-[420px]:justify-between gap-3">
-                <span class={`inline-flex text-xs font-bold px-2.5 py-1 rounded-full border ${categoryColor(post.color)}`}>
-                  {post.category}
-                </span>
-                <span class="text-xs font-bold text-[var(--text-muted)]">{String(index + 1).padStart(2, '0')}</span>
+              <div class="bc-hd">
+                <span class="cat"><i aria-hidden="true"></i>{post.category}</span>
+                <span class="idx num">{String(index + 1).padStart(2, '0')}</span>
               </div>
-
-              <h3 class="mt-5 text-xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.02em] group-hover:text-ink-600 transition-colors">
-                {post.title}
-              </h3>
-              <p class="mt-3 text-sm text-[var(--text-tertiary)] leading-relaxed">
-                {post.excerpt}
-              </p>
-
-              <div class="mt-5 grid grid-cols-1 min-[420px]:grid-cols-3 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)]">
+              <h3>{post.title}</h3>
+              <p class="bc-ex">{post.excerpt}</p>
+              <div class="bc-stats">
                 {(post.heroStats ?? []).slice(0, 3).map((stat) => (
-                  <div class="bg-[var(--surface)] p-3 min-w-0">
-                    <p class={`text-base font-bold truncate ${toneText(stat.tone)}`}>{stat.value}</p>
-                    <p class="mt-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)] truncate">{stat.label}</p>
+                  <div class="bc-stat">
+                    <span class={`bs-v num ${toneText(stat.tone)}`}>{stat.value}</span>
+                    <span class="bs-l">{stat.label}</span>
                   </div>
                 ))}
               </div>
-
-              <div class="mt-auto pt-6 flex items-center justify-between gap-3">
-                <span class="text-xs font-semibold text-[var(--text-muted)]">{post.readTime}</span>
-                <span class="inline-flex items-center gap-1 text-sm font-semibold text-ink-600 group-hover:gap-2 transition-all">Read module -></span>
+              <div class="bc-ft">
+                <span>{post.readTime}</span>
+                <span class="rd">Read module →</span>
               </div>
             </a>
           ))}
         </div>
 
-        <div id="blog-empty-state" class="hidden rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-8 text-center">
-          <h3 class="text-xl font-bold text-[var(--text-primary)]">No matching blog modules</h3>
-          <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)]">
-            Try a broader search like “Expedia”, “ROAS”, “Booking”, “Google”, or clear the selected category.
-          </p>
+        <div id="blog-empty-state" class="hidden empty">
+          <h3>No matching modules</h3>
+          <p>Try a broader search — “Expedia”, “ROAS”, “Booking”, “Google” — or clear the selected category.</p>
         </div>
       </div>
     </section>
 
     {archivePosts.length > 0 && (
-      <>
-        <div class="section-line"></div>
-        <section id="archive-section" class="py-16" aria-labelledby="archive-heading">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7">
-              <div>
-                <p class="text-sm font-bold text-[var(--text-muted)] uppercase tracking-[0.16em] mb-3">More resources</p>
-                <h2 id="archive-heading" class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">Advertising Systems archive</h2>
-              </div>
-              <p class="max-w-lg text-sm text-[var(--text-tertiary)] leading-relaxed">
-                Product updates, case studies, and broader ad strategy posts are still available below.
-              </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {archivePosts.map((post) => (
-                <a
-                  href={`/blog/${post.slug}`}
-                  class="archive-card group rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 hover:border-ink-500/30 hover:bg-ink-500/5 transition-all"
-                  data-search={`${post.title} ${post.excerpt} ${post.category} ${post.author.name} ${post.author.role ?? ''}`}
-                >
-                  <span class={`inline-flex text-xs font-bold px-2.5 py-1 rounded-full border ${categoryColor(post.color)}`}>
-                    {post.category}
-                  </span>
-                  <h3 class="mt-4 text-lg font-bold text-[var(--text-primary)] group-hover:text-ink-600 transition-colors leading-snug">
-                    {post.title}
-                  </h3>
-                  <p class="mt-2 text-sm text-[var(--text-tertiary)] leading-relaxed">{post.excerpt}</p>
-                </a>
-              ))}
+      <section id="archive-section" class="sec" aria-labelledby="archive-heading">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="no" aria-hidden="true">03</span>
+            <div>
+              <h2 id="archive-heading">Archive.</h2>
+              <p class="sub">Product updates, case studies and broader strategy posts.</p>
             </div>
           </div>
-        </section>
-      </>
-    )}
-
-    <div class="section-line"></div>
-
-    <section class="py-16 sm:py-20" aria-labelledby="newsletter-heading">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8">
-          <div class="grid lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] gap-6 lg:items-end">
-            <div>
-              <p class="text-sm font-bold text-ink-600 uppercase tracking-[0.16em] mb-3">AdvertisingSystems updates</p>
-              <h2 id="newsletter-heading" class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">
-                Get hotel advertising notes in your inbox.
-              </h2>
-              <p class="mt-3 text-sm sm:text-base text-[var(--text-tertiary)] leading-relaxed">
-                Short updates on OTA ads, ROAS reporting, budget automation, and owner-ready reporting.
-              </p>
-            </div>
-            <form id="blog-newsletter-form" action="/api/newsletter" method="POST" class="space-y-3" aria-label="Newsletter subscription form">
-              <label for="newsletter-email" class="sr-only">Email address</label>
-              <div class="flex flex-col sm:flex-row gap-3">
-                <input
-                  id="newsletter-email"
-                  name="email"
-                  type="email"
-                  required
-                  autocomplete="email"
-                  maxlength="254"
-                  placeholder="you@company.com"
-                  class="min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface-alt)] px-4 py-3 text-sm font-semibold text-[var(--text-primary)] outline-none transition-colors placeholder:text-[var(--text-muted)] focus:border-ink-500/60"
-                />
-                <button
-                  id="blog-newsletter-submit"
-                  type="submit"
-                  class="inline-flex items-center justify-center rounded-lg bg-acc-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-acc-600 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  Subscribe
-                </button>
-              </div>
-              <div class="hidden" aria-hidden="true">
-                <label for="newsletter-website">Website</label>
-                <input id="newsletter-website" name="website" type="text" tabindex="-1" autocomplete="off" />
-              </div>
-              <p id="blog-newsletter-message" class="hidden rounded-lg p-3 text-sm font-semibold" role="alert"></p>
-            </form>
+          <div class="posts arch">
+            {archivePosts.map((post) => (
+              <a
+                href={`/blog/${post.slug}`}
+                class={`archive-card blog-card ${categoryRule(post.color)}`}
+                data-search={`${post.title} ${post.excerpt} ${post.category} ${post.author.name} ${post.author.role ?? ''}`}
+              >
+                <div class="bc-hd">
+                  <span class="cat"><i aria-hidden="true"></i>{post.category}</span>
+                </div>
+                <h3>{post.title}</h3>
+                <p class="bc-ex">{post.excerpt}</p>
+              </a>
+            ))}
           </div>
         </div>
+      </section>
+    )}
+
+    <!-- 04 · Newsletter -->
+    <section class="sec soft" aria-labelledby="newsletter-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="newsletter-heading">Hotel advertising notes, by email.</h2>
+            <p class="sub">Short updates on OTA ads, ROAS reporting, budget automation and owner-ready reporting.</p>
+          </div>
+        </div>
+        <form id="blog-newsletter-form" action="/api/newsletter" method="POST" class="nl" aria-label="Newsletter subscription form">
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <div class="nl-row">
+            <input
+              id="newsletter-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              maxlength="254"
+              placeholder="you@company.com"
+            />
+            <button id="blog-newsletter-submit" type="submit" class="btn btn-p">Subscribe</button>
+          </div>
+          <div class="hidden" aria-hidden="true">
+            <label for="newsletter-website">Website</label>
+            <input id="newsletter-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <p id="blog-newsletter-message" class="hidden nl-msg" role="alert"></p>
+        </form>
       </div>
     </section>
+
+    <FAQSection title="Common questions" faqs={blogFaqs} name="blog-faq" no="05" soft={false} />
+    <CTABand />
 
     <script>
       const searchInput = document.getElementById('blog-search') as HTMLInputElement | null;
@@ -553,33 +467,146 @@ const proofCards = [
       applyBlogFilters();
     </script>
 
-    <div class="section-line"></div>
-
-    <FAQSection title="Common questions" faqs={blogFaqs} name="blog-faq" />
-
-    <div class="section-line"></div>
-
-    <section class="relative py-24 sm:py-28 overflow-hidden" aria-labelledby="blog-cta-heading">
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-sm font-bold text-ink-600 uppercase tracking-[0.16em] mb-4">Ready to map this to your hotel?</p>
-        <h2 id="blog-cta-heading" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Bring your channels into one owner-ready report.
-        </h2>
-        <p class="mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Walk through your Google, Meta, Expedia, and Booking.com advertising mix with a real report view.
-        </p>
-
-        <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors">
-            Book a Demo
-          </a>
-          <a href="/expedia-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Open Expedia Report
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
   <Footer />
+  <style>
+    /* Category rules — one hue each, from tokens, never as a text colour. */
+    .k-acc  { --k: var(--acc); }
+    .k-blue { --k: var(--text-tertiary); }
+    .k-violet { --k: var(--acc); }
+    .k-amber { --k: var(--warn); }
+    .k-rose { --k: var(--neg); }
+    .k-none { --k: var(--border); }
+
+    .snap { display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 900px) { .snap { grid-template-columns: 1fr; } }
+
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+    .kpi { padding: 14px 16px; border-right: 1px solid var(--border); min-width: 0; }
+    .kpi:last-child { border-right: 0; }
+    .kpi .k { display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--text-tertiary); }
+    .kpi .v { display: block; margin-top: 5px; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+    @media (max-width: 640px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .kpi:nth-child(2) { border-right: 0; }
+      .kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    }
+
+    .mixes { padding: 6px 16px 14px; }
+    .mix { display: grid; grid-template-columns: 1fr 96px 40px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); }
+    .mix:last-child { border-bottom: 0; }
+    .mn { font-size: 13px; color: var(--text-secondary); }
+    .mb { display: block; height: 6px; background: var(--progress-track); border-radius: 1px; overflow: hidden; }
+    .mb i { display: block; height: 100%; background: var(--acc); }
+    .mv { font-size: 12.5px; font-weight: 700; color: var(--text-primary); text-align: right; }
+
+    .proofs { display: grid; gap: 14px; }
+    .proof {
+      display: block; text-decoration: none; padding: 20px;
+      border: 1px solid var(--border); border-radius: 4px; background: var(--surface-raised);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .proof:hover { border-color: var(--acc); background: var(--surface-alt); }
+    .pl { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc); }
+    .proof h3 { margin-top: 9px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+    .proof p { margin-top: 8px; font-size: 13.5px; color: var(--text-tertiary); line-height: 1.55; }
+    .pm { display: inline-block; margin-top: 14px; font-size: 12.5px; font-weight: 700; color: var(--acc); }
+
+    .tools { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: flex-start; }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; }
+    .blog-filter {
+      font-size: 12.5px; font-weight: 700; padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: 3px;
+      background: var(--surface); color: var(--text-tertiary);
+      cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .blog-filter:hover { color: var(--text-primary); background: var(--surface-alt); }
+    .blog-filter[data-active] { background: var(--text-primary); color: var(--surface); border-color: var(--text-primary); }
+
+    .searchbox { position: relative; min-width: 260px; flex: 1 1 260px; max-width: 360px; }
+    .searchbox input {
+      width: 100%; height: 36px; padding: 0 34px 0 12px;
+      border: 1px solid var(--border); border-radius: 3px;
+      background: var(--surface); color: var(--text-primary);
+      font-size: 13px; font-weight: 600; font-family: inherit; outline: none;
+    }
+    .searchbox input::placeholder { color: var(--text-faint); font-weight: 500; }
+    .searchbox input:focus { border-color: var(--acc); }
+    .searchbox button {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      display: inline-flex; width: 24px; height: 24px; align-items: center; justify-content: center;
+      border: 0; background: transparent; color: var(--text-tertiary);
+      cursor: pointer; font-size: 12px; line-height: 1;
+    }
+    .searchbox button:hover { color: var(--text-primary); }
+
+    .posts {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      margin-top: 22px;
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .posts.arch { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 1100px) { .posts, .posts.arch { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px)  { .posts, .posts.arch { grid-template-columns: 1fr; } }
+
+    .blog-card {
+      display: flex; flex-direction: column;
+      padding: 20px; text-decoration: none; min-width: 0;
+      background: var(--surface-raised);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: 2px solid var(--k, var(--border));
+      transition: background 0.15s;
+    }
+    .blog-card:hover { background: var(--surface-alt); }
+    /* The filter script sets the `hidden` ATTRIBUTE on cards. An unlayered
+       `display:flex` outranks the UA `[hidden]` rule, so filtering would have
+       silently stopped working — state it explicitly. */
+    .blog-card[hidden] { display: none; }
+    .searchbox button.hidden { display: none; }
+    .blog-card:hover h3 { color: var(--acc); }
+    .bc-hd { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .cat {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+    .cat i { width: 6px; height: 6px; border-radius: 50%; background: var(--k, var(--border)); }
+    .idx { font-size: 11px; font-weight: 700; color: var(--text-tertiary); }
+    .blog-card h3 {
+      margin-top: 13px; font-size: 16.5px; font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.28; color: var(--text-primary);
+      transition: color 0.15s;
+    }
+    .bc-ex { margin-top: 9px; font-size: 13px; color: var(--text-tertiary); line-height: 1.55; }
+    .bc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; padding-top: 13px; border-top: 1px solid var(--border); }
+    .bs-v { display: block; font-size: 14.5px; font-weight: 800; color: var(--text-primary); }
+    .bs-l { display: block; margin-top: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); }
+    .t-pos { color: var(--pos) !important; }
+    .t-neg { color: var(--neg) !important; }
+    .t-warn { color: var(--warn) !important; }
+    .t-acc { color: var(--acc) !important; }
+    .bc-ft {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      margin-top: auto; padding-top: 16px;
+      font-size: 11.5px; font-weight: 600; color: var(--text-tertiary);
+    }
+    .bc-ft .rd { color: var(--acc); font-weight: 700; }
+
+    .empty { margin-top: 22px; padding: 30px; border: 1px dashed var(--border); border-radius: 4px; }
+    .empty h3 { font-size: 17px; font-weight: 800; color: var(--text-primary); }
+    .empty p { margin-top: 8px; font-size: 13.5px; color: var(--text-tertiary); }
+    .hidden { display: none; }
+
+    .nl { max-width: 34em; }
+    .nl-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .nl-row input {
+      flex: 1 1 220px; min-width: 0; height: 46px; padding: 0 14px;
+      border: 1px solid var(--border); border-radius: 3px;
+      background: var(--surface); color: var(--text-primary);
+      font-size: 14px; font-weight: 600; font-family: inherit; outline: none;
+    }
+    .nl-row input:focus { border-color: var(--acc); }
+    .nl-msg { margin-top: 12px; padding: 11px 13px; border: 1px solid var(--border); border-radius: 3px; font-size: 13px; font-weight: 600; }
+  </style>
 </Layout>

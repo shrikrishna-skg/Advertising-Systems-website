@@ -3,336 +3,320 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
 import FAQSection from '../../components/FAQSection.astro';
 import { featureSubpageFaqs } from '../../data/page-faqs';
 
+/**
+ * Budget Allocator — Terminal conversion.
+ *
+ * The allocation bar was four raw Tailwind hues (blue/violet/amber) — the one
+ * place on these pages where colour actually CARRIES meaning, and the one
+ * place it was theme-blind. Rebuilt as a ruled stack in accent tints, which
+ * survives both themes and the green accent switch.
+ */
 const painPoints = [
   {
-    icon: 'M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5',
-    title: 'Blind Budget Spreading',
-    desc: "Dividing budget equally across channels with no data-driven rationale. You're guessing instead of investing where returns are highest.",
+    n: '01',
+    title: 'Budget split by habit',
+    desc: 'Last year\'s split, carried forward. Nothing in it reflects what each channel returned last month.',
   },
   {
-    icon: 'M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941',
-    title: 'Top Performers Starved',
-    desc: 'Your best campaigns hit budget caps by noon while mediocre campaigns have budget left to waste. Revenue opportunities lost daily.',
+    n: '02',
+    title: 'Best campaign capped by noon',
+    desc: 'The campaign earning 6× hits its daily cap while a 2× campaign still has budget left to spend by midnight.',
   },
   {
-    icon: 'M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
-    title: 'Overspending on Underperformers',
-    desc: 'Campaigns with declining returns keep running at full budget because nobody has time to continuously reallocate. Thousands wasted weekly.',
+    n: '03',
+    title: 'Nobody has time to rebalance',
+    desc: 'Reallocation is a Monday job at best. Between Mondays, the split is wrong in a way everyone can see and nobody can fix.',
   },
 ];
 
 const capabilities = [
   {
-    icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z',
-    title: 'AI Budget Distribution',
-    desc: 'Machine learning allocates your total budget across channels and campaigns based on real-time performance, predicted returns, and diminishing-returns curves.',
+    n: '01',
+    title: 'Cross-channel distribution',
+    desc: 'Total budget distributed across channels and campaigns on live performance and diminishing-returns curves, not a fixed percentage split.',
   },
   {
-    icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
-    title: 'Channel Scoring',
-    desc: 'Every channel gets a real-time performance score factoring in ROAS, CPA, conversion volume, and growth trajectory — updated continuously.',
+    n: '02',
+    title: 'Channel scoring',
+    desc: 'Each channel carries a score built from ROAS, CPA, conversion volume and trajectory — so a reallocation can be explained, not just applied.',
   },
   {
-    icon: 'M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605',
-    title: 'Spend Forecasting',
-    desc: 'See exactly how budget changes would impact projected revenue before committing. Model scenarios and compare outcomes in seconds.',
+    n: '03',
+    title: 'Spend forecasting',
+    desc: 'Model a budget change and see the projected effect before committing it. Compare scenarios side by side.',
   },
   {
-    icon: 'M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0',
-    title: 'Reallocation Alerts',
-    desc: 'Instant notifications when the AI shifts budget between channels, with full reasoning. Approve changes or let them auto-apply.',
+    n: '04',
+    title: 'Reallocation alerts',
+    desc: 'Every shift is announced with its reasoning and its amount. Approve them, or let them apply and read the log.',
   },
 ];
 
+const totals = [
+  { k: 'Monthly budget', v: '$50,000' },
+  { k: 'Projected revenue', v: '$260,000' },
+  { k: 'Reallocations this month', v: '23' },
+  { k: 'Held for approval', v: '2' },
+];
+
+const channels = [
+  { ch: 'Google Ads', alloc: '$21,000', pct: 42, score: '94', roas: '5.8×', delta: '+$2,400', up: true },
+  { ch: 'Meta Ads', alloc: '$16,500', pct: 33, score: '87', roas: '5.1×', delta: '+$1,800', up: true },
+  { ch: 'Booking.com', alloc: '$9,000', pct: 18, score: '72', roas: '4.2×', delta: '−$600', up: false },
+  { ch: 'Reserve', alloc: '$3,500', pct: 7, score: '—', roas: '—', delta: 'Held', up: false },
+];
+
+const moves = [
+  { t: '2h ago', body: 'Shifted <b>$1,200</b> from Booking.com to Google Ads — trailing 7-day ROAS gap above threshold.' },
+  { t: '5h ago', body: 'Released <b>$800</b> from reserve into Meta Ads — pacing short with 6 days left in the cycle.' },
+  { t: '1d ago', body: 'Held <b>$400</b> back from Microsoft Ads — conversion volume below the minimum for a reliable read.' },
+];
+
 const relatedFeatures = [
-  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: 'One dashboard, every channel' },
-  { title: 'AI Optimization Engine', href: '/features/ai-optimization', stat: 'Adjusts every 15 minutes' },
-  { title: 'Performance Analytics', href: '/features/analytics', stat: 'Attribution to booking revenue' },
-  { title: 'Automation Studio', href: '/features/automation', stat: 'Rules run around the clock' },
+  { n: '01', title: 'Campaign Intelligence', href: '/features/campaign-management', fact: 'One dashboard, every channel' },
+  { n: '02', title: 'AI Optimization Engine', href: '/features/ai-optimization', fact: 'Adjusts every 15 minutes' },
+  { n: '03', title: 'Performance Analytics', href: '/features/analytics', fact: 'Attribution to booking revenue' },
+  { n: '04', title: 'Automation Studio', href: '/features/automation', fact: 'Rules run around the clock' },
 ];
 ---
 
 <Layout
   breadcrumbs={[{ name: 'Features', href: '/features' }, { name: 'Budget Allocator', href: '/features/budget-intelligence' }]}
   title="Budget Allocator — AI Budget Distribution | Advertising Systems"
-  description="Every dollar in its highest-return channel. AI-driven cross-channel budget distribution that shifts spend to your best-performing campaigns in real time."
+  description="Cross-channel budget distribution that moves spend toward the campaigns earning it, with a score behind every shift and an approval step when you want one."
 >
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'Budget Allocator', href: '/features/budget-intelligence' }]} />
-    <!-- Hero -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="budget-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">Budget follows performance, automatically</span>
+    <PageHero
+      badge="Module 05 of 5"
+      title="Budget Allocator."
+      titleAccent="Every dollar in its best channel."
+      lead="Cross-channel distribution that moves spend toward what is earning it — with a score behind every shift, and an approval step whenever you want the final word."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'See pricing', href: '/pricing' }}
+    />
+
+    <!-- 01 · The problem -->
+    <section class="sec" aria-labelledby="pain-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="pain-heading">The split is wrong between Mondays.</h2>
+            <p class="sub">A budget set once a month is a budget that is right once a month.</p>
+          </div>
         </div>
-
-        <h1 id="budget-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          <span class="text-[var(--text-primary)]">Budget Allocator</span>
-        </h1>
-        <p class="reveal mt-4 text-xl sm:text-2xl text-[var(--text-secondary)] font-medium">
-          Every dollar in its highest-return channel.
-        </p>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          AI-driven cross-channel budget distribution that continuously shifts spend to your best-performing campaigns. Stop guessing where to invest — let the data decide.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            See It In Action
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Pain Points -->
-    <section class="py-28" aria-labelledby="pain-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="pain-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Sound <span class="text-[var(--text-primary)]">familiar?</span>
-          </h2>
-          <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] max-w-xl mx-auto">The budget allocation mistakes costing you revenue every day.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="cardgrid pain">
           {painPoints.map((point) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8 border-t-4 border-red-400/30">
-              <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={point.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{point.title}</h3>
-              <p class="text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{point.desc}</p>
+            <div>
+              <div class="cn">{point.n}</div>
+              <h3>{point.title}</h3>
+              <p>{point.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- App Mockup -->
-    <section class="py-28" aria-labelledby="mockup-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="mockup-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Budget allocation, <span class="text-[var(--text-primary)]">optimized.</span>
-          </h2>
+    <!-- 02 · The allocation -->
+    <section class="sec soft" aria-labelledby="mockup-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="mockup-heading">The split, and why it is that split.</h2>
+            <p class="sub">Allocation, score and the last move that changed it — on one screen, in one place.</p>
+          </div>
         </div>
 
-        <div class="reveal glass rounded-2xl overflow-hidden shadow-2xl">
-          <div class="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--browser-border)] bg-[var(--browser-chrome-bg)]">
-            <div class="flex gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            </div>
-            <div class="flex-1 ml-3">
-              <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/budget</div>
-            </div>
-            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
+        <div class="panel-box">
+          <div class="panel-hd">
+            <h3>Allocation — current cycle</h3>
+            <span class="illus">Illustrative</span>
           </div>
-          <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
-            <!-- Total Budget -->
-            <div class="glass rounded-lg p-5 mb-6">
-              <div class="flex items-center justify-between mb-4">
-                <div>
-                  <div class="text-xs text-[var(--text-muted)] mb-1">Monthly Budget</div>
-                  <div class="text-3xl font-bold text-[var(--text-primary)]">$50,000</div>
-                </div>
-                <div class="text-right">
-                  <div class="text-xs text-[var(--text-muted)] mb-1">Projected Revenue</div>
-                  <div class="text-3xl font-bold text-[var(--text-primary)]">$260,000</div>
-                </div>
+
+          <div class="kpis">
+            {totals.map((item) => (
+              <div class="kpi">
+                <span class="k">{item.k}</span>
+                <span class="v num">{item.v}</span>
               </div>
-              <div class="h-4 rounded-full bg-[var(--progress-track)] overflow-hidden flex">
-                <div class="h-full bg-blue-500" style="width: 42%" title="Google Ads"></div>
-                <div class="h-full bg-violet-500" style="width: 33%" title="Meta Ads"></div>
-                <div class="h-full bg-amber-500" style="width: 18%" title="Booking.com"></div>
-                <div class="h-full bg-[var(--text-primary)]" style="width: 7%" title="Reserve"></div>
-              </div>
-              <div class="flex items-center gap-6 mt-3 text-xs text-[var(--text-muted)]">
-                <span class="flex items-center gap-1"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Google Ads 42%</span>
-                <span class="flex items-center gap-1"><span class="w-2 h-2 bg-violet-500 rounded-full"></span> Meta Ads 33%</span>
-                <span class="flex items-center gap-1"><span class="w-2 h-2 bg-amber-500 rounded-full"></span> Booking.com 18%</span>
-                <span class="flex items-center gap-1"><span class="w-2 h-2 bg-[var(--text-primary)] rounded-full"></span> Reserve 7%</span>
-              </div>
+            ))}
+          </div>
+
+          <div class="allocbar-wrap">
+            <div class="allocbar" role="img" aria-label="Budget split: Google Ads 42%, Meta Ads 33%, Booking.com 18%, reserve 7%">
+              {channels.map((c, i) => (
+                <span class={`seg seg-${i}`} style={`width:${c.pct}%`}></span>
+              ))}
             </div>
-            <!-- Channel Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="text-sm font-semibold text-[var(--text-primary)]">Google Ads</span>
-                  <span class="text-xs bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-full">Score: 94</span>
-                </div>
-                <div class="text-lg font-bold text-[var(--text-primary)] mb-1">$21,000</div>
-                <div class="text-xs text-[var(--text-primary)] mb-3">ROAS: 5.8x</div>
-                <div class="h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-600" style="width: 94%"></div>
-                </div>
-                <div class="text-xs text-[var(--text-muted)] mt-2 flex items-center gap-1">
-                  <svg class="w-3 h-3 text-[var(--text-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg>
-                  +$2,400 from last month
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="text-sm font-semibold text-[var(--text-primary)]">Meta Ads</span>
-                  <span class="text-xs bg-violet-500/10 text-violet-500 px-2 py-0.5 rounded-full">Score: 87</span>
-                </div>
-                <div class="text-lg font-bold text-[var(--text-primary)] mb-1">$16,500</div>
-                <div class="text-xs text-[var(--text-primary)] mb-3">ROAS: 5.1x</div>
-                <div class="h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-violet-400 to-violet-600" style="width: 87%"></div>
-                </div>
-                <div class="text-xs text-[var(--text-muted)] mt-2 flex items-center gap-1">
-                  <svg class="w-3 h-3 text-[var(--text-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" /></svg>
-                  +$1,800 from last month
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-center justify-between mb-3">
-                  <span class="text-sm font-semibold text-[var(--text-primary)]">Booking.com</span>
-                  <span class="text-xs bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded-full">Score: 72</span>
-                </div>
-                <div class="text-lg font-bold text-[var(--text-primary)] mb-1">$9,000</div>
-                <div class="text-xs text-[var(--text-primary)] mb-3">ROAS: 4.2x</div>
-                <div class="h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-600" style="width: 72%"></div>
-                </div>
-                <div class="text-xs text-[var(--text-muted)] mt-2 flex items-center gap-1">
-                  <svg class="w-3 h-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" /></svg>
-                  -$600 from last month
-                </div>
-              </div>
+            <div class="legend">
+              {channels.map((c, i) => (
+                <span class="lg"><i class={`sw seg-${i}`}></i>{c.ch} {c.pct}%</span>
+              ))}
             </div>
-            <!-- Recent Reallocation -->
-            <div class="glass rounded-lg p-4">
-              <div class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">Recent AI Reallocations</div>
-              <div class="space-y-2">
-                <div class="flex items-center gap-3 text-sm">
-                  <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span>
-                  <span class="text-[var(--text-tertiary)]">Shifted <span class="font-semibold text-[var(--text-primary)]">$1,200</span> from Booking.com to Google Ads</span>
-                  <span class="text-xs text-[var(--text-muted)] ml-auto">2h ago</span>
-                </div>
-                <div class="flex items-center gap-3 text-sm">
-                  <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span>
-                  <span class="text-[var(--text-tertiary)]">Increased Meta Ads budget by <span class="font-semibold text-[var(--text-primary)]">$800</span> from reserve</span>
-                  <span class="text-xs text-[var(--text-muted)] ml-auto">5h ago</span>
-                </div>
-                <div class="flex items-center gap-3 text-sm">
-                  <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span>
-                  <span class="text-[var(--text-tertiary)]">Reduced Booking.com daily cap by <span class="font-semibold text-[var(--text-primary)]">15%</span> — declining ROAS</span>
-                  <span class="text-xs text-[var(--text-muted)] ml-auto">1d ago</span>
-                </div>
+          </div>
+
+          <div class="scroll-x">
+            <table class="bench">
+              <thead>
+                <tr>
+                  <th>Channel</th>
+                  <th class="r">Allocated</th>
+                  <th class="r">Score</th>
+                  <th class="r">ROAS</th>
+                  <th class="r">Change this month</th>
+                </tr>
+              </thead>
+              <tbody>
+                {channels.map((row) => (
+                  <tr>
+                    <td class="m">{row.ch}</td>
+                    <td class="r">{row.alloc}</td>
+                    <td class="r m">{row.score}</td>
+                    <td class="r">{row.roas}</td>
+                    <td class={row.up ? 'r up' : 'r'}>{row.delta}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="moves">
+            <div class="moves-hd">Recent reallocations</div>
+            {moves.map((m) => (
+              <div class="move">
+                <p set:html={m.body}></p>
+                <span class="t">{m.t}</span>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Capabilities -->
-    <section class="py-28" aria-labelledby="capabilities-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="capabilities-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Key <span class="text-[var(--text-primary)]">capabilities</span>
-          </h2>
+    <!-- 03 · Capabilities -->
+    <section class="sec" aria-labelledby="capabilities-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="capabilities-heading">What the module does.</h2>
+          </div>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="cardgrid cols-2">
           {capabilities.map((cap) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8">
-              <div class="w-12 h-12 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={cap.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-              <p class="text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{cap.desc}</p>
+            <div>
+              <div class="cn">{cap.n}</div>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-
-    <div class="section-line"></div>
-
-    <!-- Related Features -->
-    <section class="py-28" aria-labelledby="related-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="related-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Explore more <span class="text-[var(--text-primary)]">features</span>
-          </h2>
+    <!-- 04 · The rest of the stack -->
+    <section class="sec soft" aria-labelledby="related-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="related-heading">The other four modules.</h2>
+            <p class="sub">Same connected accounts, same ledger — nothing needs reconciling between them.</p>
+          </div>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cardgrid cols-2">
           {relatedFeatures.map((feature) => (
-            <a href={feature.href} class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-              <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">{feature.title}</h3>
-              <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">{feature.stat}</span>
-              <div class="mt-4">
-                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </div>
+            <a href={feature.href} class="r-card">
+              <div class="cn">{feature.n}</div>
+              <h3>{feature.title}</h3>
+              <span class="r-fact">{feature.fact}</span>
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="budget-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Put every dollar to <span class="text-[var(--text-primary)]">work.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          See how Budget Allocator can maximize your ROAS with AI-driven spend distribution across every channel.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book Your Demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Get Started
-          </a>
-        </div>
-      </div>
-    </section>
+    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="budget-faq" no="05" soft={false} />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .pain .cn { color: var(--neg); }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .kpi { padding: 14px 16px; border-right: 1px solid var(--border); min-width: 0; }
+    .kpi:last-child { border-right: 0; }
+    .kpi .k {
+      display: block;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+    }
+    .kpi .v {
+      display: block; margin-top: 5px;
+      font-size: 21px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    @media (max-width: 640px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .kpi:nth-child(2) { border-right: 0; }
+      .kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    }
+
+    /* Allocation bar. Four steps of ONE colour, not four different hues: the
+       direction has a single accent, and the segments are already labelled. */
+    .allocbar-wrap { padding: 16px; border-bottom: 1px solid var(--border); }
+    .allocbar {
+      display: flex; height: 14px; overflow: hidden;
+      border: 1px solid var(--border); border-radius: 2px;
+      background: var(--progress-track);
+    }
+    .seg { display: block; height: 100%; }
+    .seg-0 { background: var(--acc); }
+    .seg-1 { background: color-mix(in oklab, var(--acc) 68%, transparent); }
+    .seg-2 { background: color-mix(in oklab, var(--acc) 40%, transparent); }
+    .seg-3 { background: var(--text-tertiary); }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 11px; font-size: 11.5px; color: var(--text-tertiary); }
+    .lg { display: inline-flex; align-items: center; gap: 7px; }
+    .sw { width: 9px; height: 9px; border-radius: 1px; display: inline-block; }
+
+    .moves { padding: 4px 0; }
+    .moves-hd {
+      padding: 12px 16px 8px;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+    }
+    .move {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      padding: 10px 16px; border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .move p :global(b) { color: var(--text-primary); font-weight: 700; }
+    .move .t { font-size: 11.5px; color: var(--text-tertiary); white-space: nowrap; }
+
+    .r-card { text-decoration: none; display: block; transition: background 0.15s; }
+    a.r-card:hover { background: var(--surface); }
+    a.r-card:hover h3 { color: var(--acc); }
+    .r-card h3 { transition: color 0.15s; }
+    .r-fact {
+      display: inline-block; margin-top: 13px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 2px 6px;
+    }
+  </style>
 </Layout>

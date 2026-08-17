@@ -3,328 +3,278 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
 import FAQSection from '../../components/FAQSection.astro';
 import { featureSubpageFaqs } from '../../data/page-faqs';
 
+/**
+ * AI Optimization Engine — Terminal conversion.
+ *
+ * COPY / HONESTY: the old mockup ended in a "Performance Impact" strip reading
+ * −40% CPA, +38% Budget Efficiency, 12 New Audiences. Those are the same
+ * outcome claims the Wave 3 honesty pass deleted from features/index ("40%
+ * lower CPA"), re-appearing here as tiles. An "Illustrative" chip on the
+ * browser frame does not cover a strip labelled Performance Impact.
+ * Replaced with the decision-log pattern the homepage already uses: what the
+ * engine DID, with its reason and its amount — verifiable in kind, not a
+ * result we cannot stand behind.
+ *
+ * The retained figures ("every 15 minutes", "50,000+ signals per account") are
+ * existing site copy from src/data/faq.ts, not new assertions.
+ */
 const painPoints = [
   {
-    icon: 'M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75',
-    title: 'Manual Bidding Guesswork',
-    desc: 'Adjusting bids by gut feel across hundreds of keywords and audiences. You\'re always a step behind the market — and leaving money on the table.',
+    n: '01',
+    title: 'Bidding by gut feel',
+    desc: 'Hundreds of keywords, audiences and placements, reviewed when someone has time. The market moves between reviews.',
   },
   {
-    icon: 'M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z',
-    title: 'Budget Sitting in Dying Campaigns',
-    desc: 'Underperforming campaigns keep burning cash while top performers are budget-capped. By the time you notice, thousands are wasted.',
+    n: '02',
+    title: 'Budget stuck in the wrong campaign',
+    desc: 'The underperformer keeps its daily cap while the best campaign runs out of budget by 2pm. Nothing moves until a human notices.',
   },
   {
-    icon: 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z',
-    title: 'Hidden Audiences',
-    desc: 'Profitable audience segments exist in your data but stay undiscovered. Manual analysis can\'t keep up with the signals across millions of impressions.',
+    n: '03',
+    title: 'Segments nobody has time to find',
+    desc: 'The signal for a profitable audience is already in your account data. Finding it by hand across millions of impressions is not a job.',
   },
 ];
 
 const capabilities = [
   {
-    icon: 'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z',
-    title: 'Autonomous Bidding',
-    desc: 'AI adjusts bids in real time across every keyword, audience, and placement faster than any manual review cycle.',
+    n: '01',
+    title: 'Autonomous bidding',
+    desc: 'Bids move on a 15-minute cycle across every keyword, audience and placement — inside guardrails you set, not instead of them.',
   },
   {
-    icon: 'M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5',
-    title: 'Smart Budget Reallocation',
-    desc: 'Automatically shifts budget from underperformers to top-performing campaigns. No manual intervention needed.',
+    n: '02',
+    title: 'Budget reallocation',
+    desc: 'Spend shifts from underperformers to the campaigns earning it, across channels, without waiting for a weekly review.',
   },
   {
-    icon: 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z',
-    title: 'Audience Discovery',
-    desc: 'ML models surface high-converting audience segments you never knew existed — from 50,000+ behavioral data points.',
+    n: '03',
+    title: 'Audience discovery',
+    desc: 'Models surface converting segments out of the behavioural signals already in your connected accounts.',
   },
   {
-    icon: 'M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605',
-    title: 'Predictive Forecasting',
-    desc: 'See projected performance before you commit budget. AI models predict near-term CPA, ROAS, and conversion volume before spend is committed.',
+    n: '04',
+    title: 'Approval workflow',
+    desc: 'Run it autonomously or hold every decision for review. The engine proposes; you decide how much rope it gets.',
   },
 ];
 
+const engineState = [
+  { k: 'Decision interval', v: '15 min' },
+  { k: 'Signals per account', v: '50,000+' },
+  { k: 'Decisions logged today', v: '847' },
+  { k: 'Guardrail breaches', v: '0' },
+];
+
+const log = [
+  { t: '01:48', src: 'GOOGLE ADS', body: 'Bid raised on <b>"hotel deals europe"</b> — converting below target CPA at current position.', amt: '−22% CPA', dir: 'up' },
+  { t: '02:14', src: 'PORTFOLIO', body: 'Moved $340 from <b>Q1 Search</b> to <b>Retargeting — Cart</b> on 7-day trailing ROAS.', amt: '$340', dir: '' },
+  { t: '03:40', src: 'META', body: 'Segment surfaced: <b>luxury travel, 35–54, mobile</b>. Held for approval, not launched.', amt: 'Review', dir: '' },
+  { t: '04:02', src: 'MICROSOFT', body: 'Placement excluded — spend without a conversion across the last 14 days.', amt: '+$120/wk', dir: 'up' },
+  { t: '05:31', src: 'EXPEDIA', body: 'Property bid held at tier 2 — incremental cost per booking above the guardrail.', amt: 'Hold', dir: '' },
+];
+
 const relatedFeatures = [
-  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: 'One dashboard, every channel' },
-  { title: 'Performance Analytics', href: '/features/analytics', stat: 'Attribution to booking revenue' },
-  { title: 'Automation Studio', href: '/features/automation', stat: 'Rules run around the clock' },
-  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: 'Cross-channel reallocation' },
+  { n: '01', title: 'Campaign Intelligence', href: '/features/campaign-management', fact: 'One dashboard, every channel' },
+  { n: '03', title: 'Performance Analytics', href: '/features/analytics', fact: 'Attribution to booking revenue' },
+  { n: '04', title: 'Automation Studio', href: '/features/automation', fact: 'Rules run around the clock' },
+  { n: '05', title: 'Budget Allocator', href: '/features/budget-intelligence', fact: 'Cross-channel reallocation' },
 ];
 ---
 
 <Layout
   breadcrumbs={[{ name: 'Features', href: '/features' }, { name: 'AI Optimization', href: '/features/ai-optimization' }]}
   title="AI Optimization Engine — Autonomous Campaigns | Advertising Systems"
-  description="Your campaigns optimize themselves. Autonomous bidding, smart budget reallocation, and audience discovery powered by machine learning."
+  description="Autonomous bidding, budget reallocation and audience discovery. The engine works bids and budgets every 15 minutes inside guardrails you set."
 >
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'AI Optimization', href: '/features/ai-optimization' }]} />
-    <!-- Hero -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="ai-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">Bids, budgets and audiences — worked around the clock</span>
+    <PageHero
+      badge="Module 02 of 5"
+      title="AI Optimization Engine."
+      titleAccent="Bids and budgets, worked continuously."
+      lead="Bids, budgets, targeting and placements adjust on a 15-minute cycle inside guardrails you set — with an approval workflow when you want the final word."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'See pricing', href: '/pricing' }}
+    />
+
+    <!-- 01 · The problem -->
+    <section class="sec" aria-labelledby="pain-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="pain-heading">The market moves between reviews.</h2>
+            <p class="sub">Optimisation done on a human schedule is optimisation done late.</p>
+          </div>
         </div>
-
-        <h1 id="ai-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          <span class="text-[var(--text-primary)]">AI Optimization Engine</span>
-        </h1>
-        <p class="reveal mt-4 text-xl sm:text-2xl text-[var(--text-secondary)] font-medium">
-          Your campaigns optimize themselves.
-        </p>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Machine learning that analyzes 50,000+ data points per campaign to autonomously adjust bids, reallocate budgets, and discover hidden audiences — around the clock.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            See It In Action
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Pain Points -->
-    <section class="py-28" aria-labelledby="pain-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="pain-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Sound <span class="text-[var(--text-primary)]">familiar?</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">The optimization challenges eating your margins.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="cardgrid pain">
           {painPoints.map((point) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8 border-t-4 border-red-400/30">
-              <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={point.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{point.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{point.desc}</p>
+            <div>
+              <div class="cn">{point.n}</div>
+              <h3>{point.title}</h3>
+              <p>{point.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- App Mockup -->
-    <section class="py-28" aria-labelledby="mockup-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="mockup-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            AI that works <span class="text-[var(--text-primary)]">while you sleep.</span>
-          </h2>
-        </div>
-
-        <div class="reveal glass rounded-2xl overflow-hidden shadow-2xl">
-          <div class="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--browser-border)] bg-[var(--browser-chrome-bg)]">
-            <div class="flex gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            </div>
-            <div class="flex-1 ml-3">
-              <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/optimization</div>
-            </div>
-            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
-          </div>
-          <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
-            <!-- AI Status Bar -->
-            <div class="glass rounded-lg p-4 mb-6 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-[var(--surface-alt)] flex items-center justify-center">
-                <span class="w-3 h-3 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-              </div>
-              <div class="flex-1">
-                <div class="text-sm font-semibold text-[var(--text-primary)]">AI Engine Active</div>
-                <div class="text-xs text-[var(--text-muted)]">Last optimization: 3 minutes ago &middot; 847 adjustments today</div>
-              </div>
-              <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-3 py-1 rounded-full">Autonomous Mode</span>
-            </div>
-            <!-- Suggestions List -->
-            <div class="space-y-3 mb-6">
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-start justify-between gap-4">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span>
-                      <span class="text-xs font-semibold text-[var(--text-primary)] uppercase">Auto-Applied</span>
-                    </div>
-                    <div class="text-sm font-medium text-[var(--text-primary)]">Bid increase on "hotel deals europe" — CPA dropped 22%</div>
-                    <div class="text-xs text-[var(--text-muted)] mt-1">Google Ads &middot; Summer Brand Push &middot; 14 min ago</div>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <div class="text-sm font-bold text-[var(--text-primary)]">-22% CPA</div>
-                    <div class="text-xs text-[var(--text-muted)]">$12.40 &rarr; $9.67</div>
-                  </div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-start justify-between gap-4">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span>
-                      <span class="text-xs font-semibold text-[var(--text-primary)] uppercase">Auto-Applied</span>
-                    </div>
-                    <div class="text-sm font-medium text-[var(--text-primary)]">Budget shifted $340 from "Q1 Search" to "Retargeting — Cart"</div>
-                    <div class="text-xs text-[var(--text-muted)] mt-1">Cross-Platform &middot; Budget Reallocation &middot; 47 min ago</div>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <div class="text-sm font-bold text-[var(--text-primary)]">+18% ROAS</div>
-                    <div class="text-xs text-[var(--text-muted)]">4.2x &rarr; 4.9x</div>
-                  </div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-start justify-between gap-4">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
-                      <span class="text-xs font-semibold text-blue-500 uppercase">Suggestion</span>
-                    </div>
-                    <div class="text-sm font-medium text-[var(--text-primary)]">New audience segment found: "Luxury travel, 35-54, mobile"</div>
-                    <div class="text-xs text-[var(--text-muted)] mt-1">Meta Ads &middot; Audience Discovery &middot; 2 hrs ago</div>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <div class="text-sm font-bold text-blue-500">+340 est. conv.</div>
-                    <div class="text-xs text-[var(--text-muted)]">High confidence</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Performance Impact -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">CPA Reduction</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">-40%</div>
-                <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="width: 85%"></div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Budget Efficiency</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">+38%</div>
-                <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="width: 72%"></div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">New Audiences</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">12</div>
-                <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="width: 60%"></div>
-                </div>
-              </div>
-            </div>
+    <!-- 02 · The log -->
+    <section class="sec soft" aria-labelledby="mockup-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="mockup-heading">Every decision, with its reason and its amount.</h2>
+            <p class="sub">
+              An autonomous engine is only worth running if you can read back what it did. Nothing
+              happens to your budget overnight that you cannot audit the next morning.
+            </p>
           </div>
         </div>
+
+        <div class="panel-box">
+          <div class="panel-hd">
+            <h3>Optimization log — last 24 hours</h3>
+            <span class="illus">Illustrative</span>
+          </div>
+
+          <div class="kpis">
+            {engineState.map((item) => (
+              <div class="kpi">
+                <span class="k">{item.k}</span>
+                <span class="v num">{item.v}</span>
+              </div>
+            ))}
+          </div>
+
+          {log.map(({ t, src, body, amt, dir }) => (
+            <div class="log-row">
+              <span class="t num">{t}</span>
+              <span class="src">{src}</span>
+              <p set:html={body}></p>
+              <span class={dir ? `amt ${dir} num` : 'amt num'}>{amt}</span>
+            </div>
+          ))}
+        </div>
+        <p class="fine">Guardrails, approval mode and the log are the same three things on every connected channel.</p>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Capabilities -->
-    <section class="py-28" aria-labelledby="capabilities-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="capabilities-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Key <span class="text-[var(--text-primary)]">capabilities</span>
-          </h2>
+    <!-- 03 · Capabilities -->
+    <section class="sec" aria-labelledby="capabilities-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="capabilities-heading">What the module does.</h2>
+          </div>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="cardgrid cols-2">
           {capabilities.map((cap) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8">
-              <div class="w-12 h-12 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={cap.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{cap.desc}</p>
+            <div>
+              <div class="cn">{cap.n}</div>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-
-    <div class="section-line"></div>
-
-    <!-- Related Features -->
-    <section class="py-28" aria-labelledby="related-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="related-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Explore more <span class="text-[var(--text-primary)]">features</span>
-          </h2>
+    <!-- 04 · The rest of the stack -->
+    <section class="sec soft" aria-labelledby="related-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="related-heading">The other four modules.</h2>
+            <p class="sub">Same connected accounts, same ledger — nothing needs reconciling between them.</p>
+          </div>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cardgrid cols-2">
           {relatedFeatures.map((feature) => (
-            <a href={feature.href} class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-              <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">{feature.title}</h3>
-              <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">{feature.stat}</span>
-              <div class="mt-4">
-                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </div>
+            <a href={feature.href} class="r-card">
+              <div class="cn">{feature.n}</div>
+              <h3>{feature.title}</h3>
+              <span class="r-fact">{feature.fact}</span>
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="ai-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Let AI optimize your <span class="text-[var(--text-primary)]">ad spend.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          See how the AI Optimization Engine can reduce your CPA and discover untapped audiences automatically.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book Your Demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Get Started
-          </a>
-        </div>
-      </div>
-    </section>
+    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="ai-faq" no="05" soft={false} />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .pain .cn { color: var(--neg); }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .kpi { padding: 14px 16px; border-right: 1px solid var(--border); min-width: 0; }
+    .kpi:last-child { border-right: 0; }
+    .kpi .k {
+      display: block;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+    }
+    .kpi .v {
+      display: block; margin-top: 5px;
+      font-size: 21px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    @media (max-width: 640px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .kpi:nth-child(2) { border-right: 0; }
+      .kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    }
+
+    /* Same row grammar as the homepage decision log — one pattern site-wide. */
+    .log-row {
+      display: grid;
+      grid-template-columns: 66px 128px 1fr auto;
+      gap: 16px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      align-items: center;
+    }
+    .log-row:last-child { border-bottom: 0; }
+    .log-row .t { font-size: 11.5px; color: var(--text-tertiary); }
+    .log-row .src { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: var(--text-secondary); }
+    .log-row p { color: var(--text-secondary); line-height: 1.5; }
+    .log-row p :global(b) { color: var(--text-primary); font-weight: 700; }
+    .log-row .amt { font-weight: 700; white-space: nowrap; color: var(--text-primary); }
+    .log-row .amt.up { color: var(--pos); }
+    @media (max-width: 640px) {
+      .log-row { grid-template-columns: 1fr auto; gap: 6px; }
+      .log-row .t, .log-row .src { grid-column: 1 / -1; }
+    }
+
+    .r-card { text-decoration: none; display: block; transition: background 0.15s; }
+    a.r-card:hover { background: var(--surface); }
+    a.r-card:hover h3 { color: var(--acc); }
+    .r-card h3 { transition: color 0.15s; }
+    .r-fact {
+      display: inline-block; margin-top: 13px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 2px 6px;
+    }
+  </style>
 </Layout>

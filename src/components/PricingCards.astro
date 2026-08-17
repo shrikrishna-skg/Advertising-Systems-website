@@ -28,13 +28,29 @@ const getDemoHref = (planName: string) => {
   return `/book-demo?${params.toString()}#book-demo-form`;
 };
 
+/**
+ * Tone → token map.
+ *
+ * The amber/blue/violet tones were raw Tailwind 100/700 steps built for a white
+ * page. On the dark-first ground they rendered pale pastel chips, and — worse —
+ * they made four plans carry four different brand colours in a direction that
+ * has exactly ONE accent. Every tone now resolves to structure (surface-alt +
+ * tertiary text); the accent is spent only on the highlighted plan, which is
+ * the one genuine brand moment on this card set.
+ *
+ * The emerald row was already tokenised through --pos and is unchanged: green
+ * is the "gains" semantic here, and the Starter plan's tone is the one place
+ * that reading is intended.
+ */
+const NEUTRAL_TONE = {
+  wrap: 'bg-[var(--surface-alt)] text-[var(--text-tertiary)]',
+  icon: 'text-[var(--text-tertiary)]',
+  border: 'border-[var(--border)]',
+  button: 'btn-secondary',
+  badge: 'bg-[var(--text-primary)] text-[var(--surface)]',
+};
+
 const toneClasses: Record<string, { wrap: string; icon: string; border: string; button: string; badge: string }> = {
-  // Routed through --pos rather than Tailwind's raw emerald ramp, which is
-  // theme-blind — the 100-step wrap stayed a pale mint card in dark mode.
-  // The badge label is --surface, not white — that inverts correctly in both
-  // themes (5.79:1 light, 12.0:1 dark).
-  // Class names are NOT spelled out in these comments on purpose: Tailwind
-  // scans comment text and would re-emit the dead utility into the bundle.
   emerald: {
     wrap: 'bg-[var(--pos-tint)] text-[var(--pos)]',
     icon: 'text-[var(--pos)]',
@@ -42,35 +58,26 @@ const toneClasses: Record<string, { wrap: string; icon: string; border: string; 
     button: 'btn-secondary',
     badge: 'bg-[var(--pos)] text-[var(--surface)]',
   },
+  // The highlighted plan. Accent border, accent fill on the CTA, accent badge —
+  // label colour comes from --acc-btn-fg so the neon green accent flips it to
+  // near-black instead of shipping white-on-neon at 1.62:1.
   amber: {
-    wrap: 'bg-amber-100 text-amber-700',
-    icon: 'text-amber-700',
-    border: 'border-blue-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
-    button: 'bg-amber-200 text-amber-950 hover:bg-amber-300',
-    badge: 'bg-ink-600 text-white',
+    wrap: 'bg-[var(--acc-tint)] text-[var(--acc)]',
+    icon: 'text-[var(--acc)]',
+    border: 'border-[var(--acc)]',
+    button: 'bg-[var(--acc-btn)] text-[var(--acc-btn-fg)] hover:bg-[var(--acc-btn-h)]',
+    badge: 'bg-[var(--acc-btn)] text-[var(--acc-btn-fg)]',
   },
-  blue: {
-    wrap: 'bg-blue-100 text-blue-700',
-    icon: 'text-blue-700',
-    border: 'border-blue-100',
-    button: 'btn-secondary',
-    badge: 'bg-ink-600 text-white',
-  },
-  violet: {
-    wrap: 'bg-violet-100 text-violet-700',
-    icon: 'text-violet-700',
-    border: 'border-violet-100',
-    button: 'btn-secondary',
-    badge: 'bg-violet-600 text-white',
-  },
+  blue: NEUTRAL_TONE,
+  violet: NEUTRAL_TONE,
 };
 
 const getPlanState = (planName: string) => {
   if (isBillingMode && planName === currentPlan) {
     return {
       badge: 'CURRENT',
-      badgeClass: 'bg-ink-600 text-white',
-      borderClass: 'border-ink-500 shadow-[0_0_0_1px_rgba(50,131,240,0.45),0_18px_36px_rgba(50,131,240,0.10)]',
+      badgeClass: 'bg-[var(--text-primary)] text-[var(--surface)]',
+      borderClass: 'border-[var(--text-primary)]',
       isCurrent: true,
     };
   }
@@ -78,8 +85,8 @@ const getPlanState = (planName: string) => {
   if (isBillingMode && planName === recommendedPlan) {
     return {
       badge: 'RECOMMENDED',
-      badgeClass: 'bg-amber-500 text-white',
-      borderClass: 'border-amber-400 shadow-[0_0_0_1px_rgba(245,158,11,0.45),0_18px_36px_rgba(245,158,11,0.10)]',
+      badgeClass: 'bg-[var(--acc-btn)] text-[var(--acc-btn-fg)]',
+      borderClass: 'border-[var(--acc)]',
       isCurrent: false,
     };
   }
@@ -97,7 +104,7 @@ const getPlanState = (planName: string) => {
   <div class="mb-10 flex flex-wrap items-center gap-3" role="group" aria-label="Billing frequency">
     <button
       type="button"
-      class="pricing-billing-button rounded-lg px-5 py-3 text-sm sm:text-base font-bold transition-colors bg-slate-950 text-white"
+      class="pricing-billing-button is-active"
       data-billing-option="monthly"
       aria-pressed="true"
     >
@@ -105,13 +112,13 @@ const getPlanState = (planName: string) => {
     </button>
     <button
       type="button"
-      class="pricing-billing-button rounded-lg px-5 py-3 text-sm sm:text-base font-bold text-slate-600 hover:bg-slate-100"
+      class="pricing-billing-button"
       data-billing-option="annual"
       aria-pressed="false"
     >
       Annual
     </button>
-    <span class="rounded-lg bg-[var(--pos-tint)] px-4 py-2 text-sm font-bold text-[var(--pos)] shadow-sm">Save 20%</span>
+    <span class="rounded-[3px] bg-[var(--pos-tint)] border border-[var(--pos-line)] px-4 py-2 text-sm font-bold text-[var(--pos)]">Save 20%</span>
   </div>
 
   <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -125,14 +132,14 @@ const getPlanState = (planName: string) => {
       const ctaClass = state.isCurrent
         ? 'border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] cursor-default'
         : (isBillingMode && plan.name === recommendedPlan
-          ? 'bg-amber-500 text-white hover:bg-amber-600 shadow-[0_8px_18px_rgba(245,158,11,0.18)]'
+          ? 'bg-[var(--acc-btn)] text-[var(--acc-btn-fg)] hover:bg-[var(--acc-btn-h)]'
           : tone.button);
 
       return (
-        <article class={`relative flex min-h-full flex-col rounded-lg border bg-[var(--surface)] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.10),0_10px_30px_rgba(0,0,0,0.04)] ${borderClass}`}>
+        <article class={`relative flex min-h-full flex-col rounded-lg border bg-[var(--surface-raised)] p-6 ${borderClass}`}>
           {badge && (
             <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-              <span class={`rounded-full px-4 py-1.5 text-xs font-black tracking-[0.08em] ${badgeClass}`}>{badge}</span>
+              <span class={`rounded-[2px] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] ${badgeClass}`}>{badge}</span>
             </div>
           )}
 
@@ -174,25 +181,25 @@ const getPlanState = (planName: string) => {
 
           <div class="mt-5 flex flex-wrap items-end gap-x-2 gap-y-1">
             <span
-              class="whitespace-nowrap text-[2rem] font-black leading-none text-slate-950"
+              class="num whitespace-nowrap text-[2rem] font-black leading-none text-[var(--text-primary)]"
               data-plan-price
               data-monthly-price={plan.price}
               data-annual-price={plan.annualPrice}
             >
               {plan.price}
             </span>
-            <span class="mb-0.5 whitespace-nowrap text-base font-medium text-slate-500">{plan.period}</span>
+            <span class="mb-0.5 whitespace-nowrap text-base font-medium text-[var(--text-tertiary)]">{plan.period}</span>
           </div>
 
-          <p class="mt-3 text-sm font-bold text-slate-600">{plan.spend}</p>
+          <p class="mt-3 text-sm font-bold text-[var(--text-secondary)]">{plan.spend}</p>
 
           <div class="mt-5 grid grid-cols-3 gap-1.5">
             {plan.quotas.map((quota) => (
-              <div class="min-w-0 rounded-md border border-blue-100 bg-slate-50 px-1.5 py-3 text-center">
-                <div class={`mx-auto min-h-5 max-w-full leading-none text-slate-950 ${quota.value === 'Unlimited' ? 'text-[13px] font-black' : 'text-base font-black'}`}>
+              <div class="min-w-0 rounded-[3px] border border-[var(--border)] bg-[var(--surface-alt)] px-1.5 py-3 text-center">
+                <div class={`num mx-auto min-h-5 max-w-full leading-none text-[var(--text-primary)] ${quota.value === 'Unlimited' ? 'text-[13px] font-black' : 'text-base font-black'}`}>
                   {quota.value}
                 </div>
-                <div class="mx-auto mt-1 max-w-full text-[9px] font-bold uppercase leading-tight tracking-[0.02em] text-slate-500">
+                <div class="mx-auto mt-1 max-w-full text-[9px] font-bold uppercase leading-tight tracking-[0.02em] text-[var(--text-tertiary)]">
                   {quota.label}
                 </div>
               </div>
@@ -225,7 +232,7 @@ const getPlanState = (planName: string) => {
 
           <ul class="mt-6 space-y-3" role="list">
             {plan.features.map((feature) => (
-              <li class="flex gap-3 text-sm font-medium leading-relaxed text-slate-700">
+              <li class="flex gap-3 text-sm font-medium leading-relaxed text-[var(--text-secondary)]">
                 <svg class="mt-0.5 h-4 w-4 shrink-0 text-[var(--pos)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                   <path d="m5 12 4 4L19 6" />
                 </svg>
@@ -242,6 +249,25 @@ const getPlanState = (planName: string) => {
   </div>
 </div>
 
+<style>
+  .pricing-billing-button {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--surface);
+    transition: background 0.16s, color 0.16s, border-color 0.16s;
+  }
+  .pricing-billing-button:hover { background: var(--surface-alt); color: var(--text-primary); }
+  .pricing-billing-button.is-active {
+    background: var(--text-primary);
+    color: var(--surface);
+    border-color: var(--text-primary);
+  }
+</style>
+
 <script>
   document.querySelectorAll('[data-pricing-cards]').forEach((pricingRoot) => {
     const buttons = Array.from(pricingRoot.querySelectorAll('[data-billing-option]'));
@@ -251,10 +277,10 @@ const getPlanState = (planName: string) => {
       buttons.forEach((button) => {
         const isActive = button.getAttribute('data-billing-option') === billing;
         button.setAttribute('aria-pressed', String(isActive));
-        button.classList.toggle('bg-slate-950', isActive);
-        button.classList.toggle('text-white', isActive);
-        button.classList.toggle('text-slate-600', !isActive);
-        button.classList.toggle('hover:bg-slate-100', !isActive);
+        // One class, styled from tokens below. The old version toggled four
+        // literal Tailwind greys, which is how the inactive state ended up
+        // slate-600 on a navy ground.
+        button.classList.toggle('is-active', isActive);
       });
 
       prices.forEach((price) => {

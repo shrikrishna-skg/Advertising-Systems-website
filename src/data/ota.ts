@@ -32,7 +32,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'expedia',
     description: 'TravelAds sponsored listings across the full Expedia Group network — Expedia, Hotels.com, Vrbo, Orbitz, Travelocity, Hotwire, and 200+ white-label partner sites. One campaign, maximum reach.',
     adModel: 'CPC (Pay-Per-Click)',
-    reach: '10M+ daily visitors across 200+ sites',
+    reach: 'Full Expedia Group network and its partner sites',
     features: ['Hotels.com & Vrbo cross-brand reach', 'Orbitz, Travelocity & Hotwire included', 'Automated AI-powered bidding', 'Real-time ROAS & occupancy reporting'],
     status: 'live',
   },
@@ -41,7 +41,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'booking',
     description: 'Booking Network Sponsored Ads across the entire Booking Holdings portfolio — Booking.com, Priceline, Agoda, Kayak, and Rentalcars.com. CPC second-price auction with first-page placement guarantees.',
     adModel: 'CPC (Second-Price Auction)',
-    reach: '28M+ listings, 150M+ monthly visitors',
+    reach: 'Booking Holdings portfolio, incl. Priceline and Agoda',
     features: ['Priceline, Agoda & Kayak network reach', 'First-page placement guarantee', 'Check-in date & travel window targeting', 'Real-time ROAS reporting'],
     status: 'live',
   },
@@ -50,7 +50,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'tripadvisor',
     description: 'Sponsored Placements and Business Advantage listings. CPC model with Standard, Direct Booking, and Enterprise tiers.',
     adModel: 'CPC / Subscription',
-    reach: '463M monthly visitors',
+    reach: 'Global review and travel-planning audience',
     features: ['Market comparison placements', 'Direct booking integration', 'Business Advantage profiles', 'Review management tools'],
     status: 'coming-soon',
   },
@@ -59,7 +59,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'google',
     description: 'Free booking links and paid Hotel Ads across Google Search, Maps, and Travel. Reach travelers at the moment of intent.',
     adModel: 'CPC / CPA / Free Links',
-    reach: '#1 search engine globally',
+    reach: 'Search, Maps and Google Travel surfaces',
     features: ['Free booking links', 'Google Maps integration', 'Real-time price accuracy', 'Commission-based option'],
     status: 'coming-soon',
   },
@@ -68,7 +68,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'trivago',
     description: 'Hotel metasearch with CPA-based advertising (transitioned from CPC in 2025). Pay only when a guest completes a booking.',
     adModel: 'CPA (Commission-Based)',
-    reach: '190+ countries',
+    reach: 'Broad international coverage',
     features: ['Pay-per-booking model', 'Visibility-based commission tiers', '+32% higher conversion vs CPC', 'Direct booking support'],
     status: 'coming-soon',
   },
@@ -86,7 +86,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'vrbo',
     description: 'Promotion tools for vacation rentals across the Expedia Group network. Early booking, last minute, and mobile promotions.',
     adModel: 'Promotion-Based',
-    reach: '2M+ vacation rentals',
+    reach: 'Vacation-rental and whole-home demand',
     features: ['Early booking promotions', 'Last minute deals', 'Mobile-specific boosts', 'Loyalty member targeting'],
     status: 'coming-soon',
   },
@@ -104,7 +104,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'priceline',
     description: 'Sponsored ads and programmatic display through Priceline Media Group. First-party traveler data targeting.',
     adModel: 'CPC / Programmatic',
-    reach: '19.5M unique monthly visitors',
+    reach: 'Metasearch audience comparing rates across OTAs',
     features: ['First-party data targeting', 'Custom audience creation', 'Email sponsorships', 'Booking lift analysis'],
     status: 'coming-soon',
   },
@@ -113,7 +113,7 @@ export const otaPlatforms: OTAPlatform[] = [
     logo: 'skyscanner',
     description: 'Metasearch for flights, hotels, and car rentals. Sponsored placement opportunities for accommodation providers.',
     adModel: 'CPC (Metasearch)',
-    reach: '100M+ monthly users',
+    reach: 'Metasearch audience across flights and stays',
     features: ['Flight + hotel bundle visibility', 'Price alert integration', 'Redirect-to-book model', 'Global traveler reach'],
     status: 'coming-soon',
   },
@@ -181,25 +181,39 @@ export const otaStats: OTAStat[] = [
   { value: '6.03%', label: 'Click-Through Rate', detail: 'Against a 2–3% platform lodging benchmark' },
 ];
 
+/**
+ * HONESTY PASS 2026-08-16 (owner ruling). The `spend` field carried $8.2B /
+ * $7.4B / $2.6B / $2.1B annual marketing spend with no source anywhere on the
+ * site, plus "50% of revenue goes to marketing" and "+25% YoY". Third-party
+ * figures need a citation or they are just numbers we typed.
+ *
+ * What replaces them is the part a reader can verify in ten seconds and that
+ * actually makes the point: WHICH BRANDS sit under each group. A property
+ * competing on Booking.com is competing with Priceline, Agoda and Kayak money
+ * whether or not anyone knows the exact figure.
+ *
+ * If the spend numbers are wanted back, they belong beside a named source and
+ * a year, the way the decision guides already do it with `sourceNotes`.
+ */
 export const otaMarketInsights = [
   {
     title: 'Booking Holdings',
-    spend: '$8.2B',
-    detail: 'Largest OTA advertiser globally. Booking.com, Priceline, Agoda, and Kayak under one umbrella.',
+    brands: 'Booking.com · Priceline · Agoda · Kayak · Rentalcars',
+    detail: 'The largest OTA advertiser globally. A bid on Booking.com is a bid against the whole portfolio\u2019s marketing budget.',
   },
   {
     title: 'Expedia Group',
-    spend: '$7.4B',
-    detail: 'Expedia, Hotels.com, Vrbo, and Trivago. 50% of revenue goes to marketing.',
+    brands: 'Expedia · Hotels.com · Vrbo · Orbitz · Travelocity · Hotwire',
+    detail: 'One TravelAds campaign reaches the full network, which is why a single placement carries further here than the brand name suggests.',
   },
   {
     title: 'Airbnb',
-    spend: '$2.6B',
-    detail: 'Investing heavily in brand and performance marketing for vacation rental dominance.',
+    brands: 'Airbnb',
+    detail: 'Invests heavily in brand and performance marketing for vacation rentals \u2014 competing for the same traveller earlier in the journey.',
   },
   {
     title: 'Trip.com Group',
-    spend: '$2.1B',
-    detail: 'Fastest growing at +25% YoY. Ctrip, Trip.com, and Skyscanner.',
+    brands: 'Ctrip · Trip.com · Skyscanner',
+    detail: 'The strongest APAC demand engine, and the route into that market for most Western properties.',
   },
 ];

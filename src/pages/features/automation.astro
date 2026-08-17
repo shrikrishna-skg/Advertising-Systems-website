@@ -3,331 +3,305 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
 import FAQSection from '../../components/FAQSection.astro';
 import { featureSubpageFaqs } from '../../data/page-faqs';
 
+/**
+ * Automation Studio — Terminal conversion.
+ *
+ * COPY / HONESTY: "saves 12 hours per week" was in the meta DESCRIPTION — the
+ * SERP snippet, where no Illustrative chip can reach — and repeated in the
+ * closing CTA and as a "Time Saved · 12h" tile. The Wave 3 honesty pass
+ * explicitly removed "12 hours saved per week" from the hero badges of these
+ * pages and from the features/index stats band; it survived here in three
+ * places. All three now state what the module does, not what it saves.
+ *
+ * The IF/AND/THEN rule chips were a raw Tailwind amber step — 2.02:1 on the
+ * light card, the worst contrast measurement on the site. Now structure tokens.
+ * (Class names are not spelled out in these comments: Tailwind scans comment
+ * text and would re-emit the dead utility into the bundle.)
+ */
 const painPoints = [
   {
-    icon: 'M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182M21.015 4.356v4.992',
-    title: 'Repetitive Manual Tasks',
-    desc: 'Pausing underperformers, adjusting budgets, updating bids, rotating creatives — the same tasks every day, stealing hours from strategic work.',
+    n: '01',
+    title: 'The same work every morning',
+    desc: 'Pause the underperformers, nudge the budgets, rotate the tired creative. Same list, every day, before the actual job starts.',
   },
   {
-    icon: 'M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061A1.125 1.125 0 013 16.811V8.69zM12.75 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 010 1.954l-7.108 4.061a1.125 1.125 0 01-1.683-.977V8.69z',
-    title: 'Slow Reaction to Performance Drops',
-    desc: "By the time you notice a campaign tanking, it's burned through hundreds or thousands in budget. Manual monitoring can't keep up with real-time changes.",
+    n: '02',
+    title: 'Reaction time measured in days',
+    desc: 'A campaign starts losing money on Tuesday and is caught at Friday\'s review. The rule that would have caught it takes a minute to write.',
   },
   {
-    icon: 'M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z',
-    title: 'Night & Weekend Gaps',
-    desc: "Your campaigns keep running after hours, but your team may not be watching every change. Performance issues can go unchecked until the next manual review.",
+    n: '03',
+    title: 'Nights and weekends',
+    desc: 'Campaigns keep spending when nobody is watching. Most of the damage a bad Saturday does is done before anyone opens a dashboard.',
   },
 ];
 
 const capabilities = [
   {
-    icon: 'M11.42 15.17l-5.648-3.015A2.25 2.25 0 013 10.055V6.838a2.25 2.25 0 011.172-1.972l5.648-3.015a2.25 2.25 0 012.36 0l5.648 3.015A2.25 2.25 0 0121 6.838v3.217a2.25 2.25 0 01-1.172 1.972l-5.648 3.015a2.25 2.25 0 01-2.36 0z',
-    title: 'Rule Builder',
-    desc: 'Visual drag-and-drop rule creation. Set conditions based on any metric — CPA, ROAS, spend, impressions — and define the actions to execute.',
+    n: '01',
+    title: 'Rule builder',
+    desc: 'Conditions on any metric the platform reports — CPA, ROAS, spend, impressions, pacing — combined with AND/OR, no scripting.',
   },
   {
-    icon: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z',
-    title: 'Trigger Actions',
-    desc: 'Automated responses to performance changes: pause campaigns, adjust bids, shift budgets, send alerts — all executing in seconds, not hours.',
+    n: '02',
+    title: 'Trigger actions',
+    desc: 'Pause a campaign, move a budget, change a bid, raise an alert. Actions execute against the platform that owns the campaign.',
   },
   {
-    icon: 'M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5',
-    title: 'Scheduling Engine',
-    desc: 'Time-based campaign actions: dayparting, weekly budget cycles, seasonal adjustments, and scheduled launches — all running on autopilot.',
+    n: '03',
+    title: 'Scheduling engine',
+    desc: 'Dayparting, weekly budget cycles, seasonal adjustments and scheduled launches, expressed as time conditions on the same rules.',
   },
   {
-    icon: 'M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0',
-    title: 'Alert System',
-    desc: 'Customizable notifications via email, Slack, or SMS when rules trigger. Always know what happened, why, and what was done about it.',
+    n: '04',
+    title: 'Alerts with the reason attached',
+    desc: 'Email or Slack when a rule fires, naming the rule, the campaign and what was changed — not just that something happened.',
+  },
+];
+
+const ruleState = [
+  { k: 'Active rules', v: '18' },
+  { k: 'Actions today', v: '47' },
+  { k: 'Channels covered', v: '6' },
+  { k: 'Silent failures', v: '0' },
+];
+
+const rules = [
+  {
+    name: 'Pause high-CPA campaigns',
+    conds: ['CPA > $25', 'Spend > $200'],
+    then: 'Pause campaign',
+    meta: 'Triggered 3× today · last 2 hours ago · all channels',
+  },
+  {
+    name: 'Scale winners',
+    conds: ['ROAS > 5×', 'Conversions > 10'],
+    then: 'Increase budget 20%',
+    meta: 'Triggered 5× today · last 45 min ago · Google Ads, Meta',
+  },
+  {
+    name: 'Weekend budget guard',
+    conds: ['Day = Sat/Sun', 'CPA rises 30%+'],
+    then: 'Reduce budget 50% + alert',
+    meta: 'Triggered 1× this week · last Saturday 03:14 · all channels',
   },
 ];
 
 const relatedFeatures = [
-  { title: 'Campaign Intelligence', href: '/features/campaign-management', stat: 'One dashboard, every channel' },
-  { title: 'AI Optimization Engine', href: '/features/ai-optimization', stat: 'Adjusts every 15 minutes' },
-  { title: 'Performance Analytics', href: '/features/analytics', stat: 'Attribution to booking revenue' },
-  { title: 'Budget Allocator', href: '/features/budget-intelligence', stat: 'Cross-channel reallocation' },
+  { n: '01', title: 'Campaign Intelligence', href: '/features/campaign-management', fact: 'One dashboard, every channel' },
+  { n: '02', title: 'AI Optimization Engine', href: '/features/ai-optimization', fact: 'Adjusts every 15 minutes' },
+  { n: '03', title: 'Performance Analytics', href: '/features/analytics', fact: 'Attribution to booking revenue' },
+  { n: '05', title: 'Budget Allocator', href: '/features/budget-intelligence', fact: 'Cross-channel reallocation' },
 ];
 ---
 
 <Layout
   breadcrumbs={[{ name: 'Features', href: '/features' }, { name: 'Automation Studio', href: '/features/automation' }]}
   title="Automation Studio — Rules-Based Campaigns | Advertising Systems"
-  description="Set the rules. Let the system run. Rules-based campaign automation that saves 12 hours per week on repetitive tasks."
+  description="Set the rules, let the system run. Conditions on any metric, actions that execute across Google, Meta, Microsoft and OTA campaigns, and an alert naming what changed."
 >
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Features', href: '/features' }, { name: 'Automation Studio', href: '/features/automation' }]} />
-    <!-- Hero -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="automation-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">Set the rules once — they run around the clock</span>
+    <PageHero
+      badge="Module 04 of 5"
+      title="Automation Studio."
+      titleAccent="Set the rules. Let the system run."
+      lead="Conditions, triggers and actions you define once, running against every connected channel around the clock — with the rule that fired named in the alert."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'See pricing', href: '/pricing' }}
+    />
+
+    <!-- 01 · The problem -->
+    <section class="sec" aria-labelledby="pain-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="pain-heading">The work that repeats.</h2>
+            <p class="sub">Every one of these is a rule somebody has been running manually.</p>
+          </div>
         </div>
-
-        <h1 id="automation-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          <span class="text-[var(--text-primary)]">Automation Studio</span>
-        </h1>
-        <p class="reveal mt-4 text-xl sm:text-2xl text-[var(--text-secondary)] font-medium">
-          Set the rules. Let the system run.
-        </p>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Build rules that automatically manage your campaigns around the clock. Define conditions, triggers, and actions — then focus on strategy while the system executes.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            See It In Action
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Pain Points -->
-    <section class="py-28" aria-labelledby="pain-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="pain-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Sound <span class="text-[var(--text-primary)]">familiar?</span>
-          </h2>
-          <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] max-w-xl mx-auto">The repetitive work draining your team's bandwidth.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="cardgrid pain">
           {painPoints.map((point) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8 border-t-4 border-red-400/30">
-              <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={point.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{point.title}</h3>
-              <p class="text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{point.desc}</p>
+            <div>
+              <div class="cn">{point.n}</div>
+              <h3>{point.title}</h3>
+              <p>{point.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- App Mockup -->
-    <section class="py-28" aria-labelledby="mockup-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="mockup-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            If this, then <span class="text-[var(--text-primary)]">that.</span> Automatically.
-          </h2>
+    <!-- 02 · The rules -->
+    <section class="sec soft" aria-labelledby="mockup-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="mockup-heading">If this, then that — across every channel.</h2>
+            <p class="sub">
+              A rule reads the same whether it acts on Google Ads or an OTA extranet. One condition
+              language, one action list, one log.
+            </p>
+          </div>
         </div>
 
-        <div class="reveal glass rounded-2xl overflow-hidden shadow-2xl">
-          <div class="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--browser-border)] bg-[var(--browser-chrome-bg)]">
-            <div class="flex gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            </div>
-            <div class="flex-1 ml-3">
-              <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/automation</div>
-            </div>
-            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
+        <div class="panel-box">
+          <div class="panel-hd">
+            <h3>Rules — active</h3>
+            <span class="illus">Illustrative</span>
           </div>
-          <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
-            <!-- Active Rules Summary -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Active Rules</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">18</div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Actions Today</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">47</div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Time Saved</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">12h</div>
-              </div>
-            </div>
-            <!-- Automation Rules -->
-            <div class="space-y-3">
-              <div class="glass rounded-lg p-5">
-                <div class="flex items-center justify-between mb-3">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full"></span>
-                    <span class="text-sm font-semibold text-[var(--text-primary)]">Pause High-CPA Campaigns</span>
-                  </div>
-                  <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-2.5 py-1 rounded-full">Active</span>
-                </div>
-                <div class="flex items-center gap-2 text-xs flex-wrap">
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-amber-500">IF</span> CPA &gt; $25
-                  </div>
-                  <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-amber-500">AND</span> Spend &gt; $200
-                  </div>
-                  <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-[var(--text-primary)]">THEN</span> Pause campaign
-                  </div>
-                </div>
-                <div class="mt-3 text-xs text-[var(--text-muted)]">Triggered 3 times today &middot; Last: 2 hours ago &middot; All platforms</div>
-              </div>
 
-              <div class="glass rounded-lg p-5">
-                <div class="flex items-center justify-between mb-3">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full"></span>
-                    <span class="text-sm font-semibold text-[var(--text-primary)]">Scale Winners</span>
-                  </div>
-                  <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-2.5 py-1 rounded-full">Active</span>
-                </div>
-                <div class="flex items-center gap-2 text-xs flex-wrap">
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-amber-500">IF</span> ROAS &gt; 5x
-                  </div>
-                  <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-amber-500">AND</span> Conv. &gt; 10
-                  </div>
-                  <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-[var(--text-primary)]">THEN</span> Increase budget 20%
-                  </div>
-                </div>
-                <div class="mt-3 text-xs text-[var(--text-muted)]">Triggered 5 times today &middot; Last: 45 min ago &middot; Google Ads, Meta</div>
+          <div class="kpis">
+            {ruleState.map((item) => (
+              <div class="kpi">
+                <span class="k">{item.k}</span>
+                <span class="v num">{item.v}</span>
               </div>
-
-              <div class="glass rounded-lg p-5">
-                <div class="flex items-center justify-between mb-3">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full"></span>
-                    <span class="text-sm font-semibold text-[var(--text-primary)]">Weekend Budget Guard</span>
-                  </div>
-                  <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-primary)] px-2.5 py-1 rounded-full">Active</span>
-                </div>
-                <div class="flex items-center gap-2 text-xs flex-wrap">
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-amber-500">IF</span> Day = Sat/Sun
-                  </div>
-                  <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-amber-500">AND</span> CPA rises 30%+
-                  </div>
-                  <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                  <div class="glass rounded-md px-3 py-1.5 text-[var(--text-tertiary)]">
-                    <span class="font-semibold text-[var(--text-primary)]">THEN</span> Reduce budget 50% + alert
-                  </div>
-                </div>
-                <div class="mt-3 text-xs text-[var(--text-muted)]">Triggered 1 time this week &middot; Last: Saturday 3:14 AM &middot; All platforms</div>
-              </div>
-            </div>
+            ))}
           </div>
+
+          {rules.map((rule) => (
+            <div class="rule">
+              <div class="rule-hd">
+                <span class="rule-name">{rule.name}</span>
+                <span class="st st-live">Active</span>
+              </div>
+              <div class="rule-flow">
+                {rule.conds.map((cond, i) => (
+                  <span class="tok"><em>{i === 0 ? 'IF' : 'AND'}</em> {cond}</span>
+                ))}
+                <span class="tok tok-then"><em>THEN</em> {rule.then}</span>
+              </div>
+              <p class="rule-meta">{rule.meta}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Capabilities -->
-    <section class="py-28" aria-labelledby="capabilities-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="capabilities-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Key <span class="text-[var(--text-primary)]">capabilities</span>
-          </h2>
+    <!-- 03 · Capabilities -->
+    <section class="sec" aria-labelledby="capabilities-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="capabilities-heading">What the module does.</h2>
+          </div>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="cardgrid cols-2">
           {capabilities.map((cap) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8">
-              <div class="w-12 h-12 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={cap.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{cap.desc}</p>
+            <div>
+              <div class="cn">{cap.n}</div>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-
-    <div class="section-line"></div>
-
-    <!-- Related Features -->
-    <section class="py-28" aria-labelledby="related-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="related-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Explore more <span class="text-[var(--text-primary)]">features</span>
-          </h2>
+    <!-- 04 · The rest of the stack -->
+    <section class="sec soft" aria-labelledby="related-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="related-heading">The other four modules.</h2>
+            <p class="sub">Same connected accounts, same ledger — nothing needs reconciling between them.</p>
+          </div>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cardgrid cols-2">
           {relatedFeatures.map((feature) => (
-            <a href={feature.href} class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-              <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">{feature.title}</h3>
-              <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">{feature.stat}</span>
-              <div class="mt-4">
-                <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </div>
+            <a href={feature.href} class="r-card">
+              <div class="cn">{feature.n}</div>
+              <h3>{feature.title}</h3>
+              <span class="r-fact">{feature.fact}</span>
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="automation-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Automate the work you <span class="text-[var(--text-primary)]">shouldn't be doing.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg font-medium text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          See how Automation Studio can save your team 12+ hours per week on campaign management tasks.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book Your Demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Get Started
-          </a>
-        </div>
-      </div>
-    </section>
+    <FAQSection title="Common questions" faqs={featureSubpageFaqs} name="automation-faq" no="05" soft={false} />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .pain .cn { color: var(--neg); }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+    .kpi { padding: 14px 16px; border-right: 1px solid var(--border); min-width: 0; }
+    .kpi:last-child { border-right: 0; }
+    .kpi .k {
+      display: block;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em;
+      text-transform: uppercase; color: var(--text-tertiary);
+    }
+    .kpi .v {
+      display: block; margin-top: 5px;
+      font-size: 21px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+    @media (max-width: 640px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .kpi:nth-child(2) { border-right: 0; }
+      .kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    }
+
+    .rule { padding: 16px; border-bottom: 1px solid var(--border); }
+    .rule:last-child { border-bottom: 0; }
+    .rule-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .rule-name { font-size: 14.5px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.015em; }
+    .rule-flow { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .tok {
+      display: inline-flex; align-items: baseline; gap: 7px;
+      font-size: 12.5px; color: var(--text-secondary);
+      border: 1px solid var(--border); border-radius: 3px;
+      padding: 5px 10px; background: var(--surface-alt);
+      font-variant-numeric: tabular-nums;
+    }
+    .tok em {
+      font-style: normal; font-size: 9.5px; font-weight: 800;
+      letter-spacing: 0.12em; color: var(--text-tertiary);
+    }
+    .tok-then { border-color: var(--text-primary); color: var(--text-primary); font-weight: 700; }
+    .tok-then em { color: var(--text-primary); }
+    .rule-meta { margin-top: 11px; font-size: 12px; color: var(--text-tertiary); }
+
+    .st {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700;
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 2px 7px; white-space: nowrap;
+      color: var(--text-tertiary);
+    }
+    .st::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .st-live { color: var(--pos); border-color: var(--pos-line); }
+
+    .r-card { text-decoration: none; display: block; transition: background 0.15s; }
+    a.r-card:hover { background: var(--surface); }
+    a.r-card:hover h3 { color: var(--acc); }
+    .r-card h3 { transition: color 0.15s; }
+    .r-fact {
+      display: inline-block; margin-top: 13px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 2px 6px;
+    }
+  </style>
 </Layout>

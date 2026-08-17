@@ -3,7 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import { decisionGuides, futureDecisionGuideIdeas } from '../data/decision-guides';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
+import { decisionGuides } from '../data/decision-guides';
 
 const breadcrumbs = [{ name: 'Decision Guides', href: '/decision-guides' }];
 
@@ -42,120 +44,111 @@ const pillars = [
 
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
-    <!-- Top padding normalised to the site standard (pt-14 sm:pt-16). The old
-         pt-28/40/48 was written before .terminal cleared the fixed header, so it
-         was stacking a second 192px offset on top of --t-header-h. -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 md:pb-24 overflow-hidden" aria-labelledby="decision-guides-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
 
-      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl">
-          <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
-            <span class="w-2 h-2 bg-acc-500 rounded-full animate-pulse shrink-0"></span>
-            <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">Hotel advertising decision guides</span>
-          </div>
+    <PageHero
+      badge="Hotel advertising decision guides"
+      title="Know where to spend"
+      titleAccent="before you spend more."
+      lead="Visual guides for hotel owners, GMs and revenue teams deciding when Expedia, Booking, Google, Meta and OTA advertising should get budget — and when they should not."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'View the Expedia report', href: '/expedia-report' }}
+    />
 
-          <h1 id="decision-guides-heading" class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-            Know where to spend before you spend more.
-          </h1>
-          <p class="reveal mt-6 text-lg sm:text-xl font-medium text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-            Simple visual guides for hotel owners, GMs, and revenue teams deciding when Expedia, Booking, Google, Meta, and OTA advertising should receive budget.
-          </p>
-
-          <div class="reveal mt-10 flex flex-col sm:flex-row gap-3">
-            <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-acc-600 transition-colors">
-              Book a Demo
-            </a>
-            <a href="/expedia-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-6 py-3 rounded-lg">
-              View Expedia Report
-            </a>
+    <!-- 01 · The method -->
+    <section class="sec" aria-labelledby="method-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="method-heading">Three steps, in this order.</h2>
+            <p class="sub">Every guide below follows the same sequence, because doing them out of order is how budget gets spent on the wrong channel.</p>
           </div>
         </div>
-
-        <div class="reveal mt-14 grid sm:grid-cols-3 gap-4">
-          {pillars.map((pillar) => (
-            <article class="glass rounded-2xl p-6">
-              <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{pillar.label}</p>
-              <h2 class="mt-4 text-lg font-bold text-[var(--text-primary)]">{pillar.title}</h2>
-              <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{pillar.body}</p>
-            </article>
+        <div class="cardgrid">
+          {pillars.map((pillar, i) => (
+            <div>
+              <div class="cn">{String(i + 1).padStart(2, '0')}</div>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.body}</p>
+            </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <section class="py-24" aria-labelledby="guide-library-heading">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl">
-          <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Guide library</p>
-          <h2 id="guide-library-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            OTA visibility, channel choice, and reporting proof
-          </h2>
-          <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-            Each guide explains what the platform does, how visibility is earned, what changes near the top of search, and how Advertising Systems reports the decision.
-          </p>
+    <!-- 02 · Library -->
+    <section class="sec soft" aria-labelledby="guide-library-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="guide-library-heading">OTA visibility, channel choice, reporting proof.</h2>
+            <p class="sub">
+              Each guide explains what the platform does, how visibility is earned, what changes near the
+              top of search, and how the decision gets reported afterwards.
+            </p>
+          </div>
         </div>
 
-        <div class="reveal mt-12 grid md:grid-cols-2 gap-6">
+        <div class="guides">
           {decisionGuides.map((guide) => (
-            <article class="glass hover-glow rounded-2xl p-7 flex flex-col min-w-0">
-              <div class="flex items-center justify-between gap-4">
-                <span class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{guide.category}</span>
-                <span class="text-xs font-semibold text-[var(--text-tertiary)]">{guide.eyebrow}</span>
+            <article class="guide">
+              <div class="guide-hd">
+                <span class="cat">{guide.category}</span>
+                <span class="eyb">{guide.eyebrow}</span>
               </div>
-              <h3 class="mt-5 text-2xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{guide.title}</h3>
-              <p class="mt-4 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{guide.excerpt}</p>
-              <div class="mt-6 grid sm:grid-cols-3 gap-3">
+              <h3><a href={`/decision-guides/${guide.slug}`}>{guide.title}</a></h3>
+              <p class="ex">{guide.excerpt}</p>
+              <div class="stats">
                 {guide.heroStats.map((stat) => (
-                  <div class="rounded-xl border border-[var(--border)] bg-[var(--surface-alt)] p-4">
-                    <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{stat.label}</p>
-                    <p class="mt-2 text-lg font-bold text-[var(--text-primary)]">{stat.value}</p>
-                    <p class="mt-1 text-xs font-medium text-[var(--text-tertiary)] leading-snug">{stat.caption}</p>
+                  <div class="stat">
+                    <span class="sl">{stat.label}</span>
+                    <span class="sv num">{stat.value}</span>
+                    <span class="sc">{stat.caption}</span>
                   </div>
                 ))}
               </div>
-              <a href={`/decision-guides/${guide.slug}`} class="mt-7 inline-flex w-fit items-center gap-2 text-sm font-bold text-[var(--text-primary)] hover:opacity-70 transition-opacity">
-                Read guide
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </a>
+              <a class="rd" href={`/decision-guides/${guide.slug}`}>Read guide →</a>
             </article>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <section class="py-24" aria-labelledby="future-guides-heading">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
-          <div>
-            <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Next guide queue</p>
-            <h2 id="future-guides-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-              More pages we can add next
-            </h2>
-            <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-              These should become pages once the first Expedia and Booking guide set is live and we can see what users click.
-            </p>
-          </div>
-
-          <div class="reveal grid sm:grid-cols-2 gap-4">
-            {futureDecisionGuideIdeas.map((idea) => (
-              <div class="glass rounded-xl p-5">
-                <p class="text-sm font-bold text-[var(--text-primary)]">{idea}</p>
-                <p class="mt-2 text-xs font-medium text-[var(--text-tertiary)] leading-relaxed">Future decision guide topic</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
+    <CTABand />
   </main>
 
   <Footer />
+
+  <style>
+    .guides { border-top: 1px solid var(--border); }
+    .guide { padding: 26px 0; border-bottom: 1px solid var(--border); }
+    .guide-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+    .cat, .eyb {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-tertiary);
+    }
+    .cat { color: var(--acc); }
+    .guide h3 { margin-top: 12px; font-size: 22px; font-weight: 800; letter-spacing: -0.025em; }
+    .guide h3 a { color: var(--text-primary); text-decoration: none; }
+    .guide h3 a:hover { color: var(--acc); }
+    .guide .ex { margin-top: 10px; font-size: 14.5px; color: var(--text-secondary); max-width: 46em; line-height: 1.55; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      margin-top: 18px;
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .stat {
+      padding: 13px 15px;
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--surface-raised);
+      min-width: 0;
+    }
+    .sl { display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--text-tertiary); }
+    .sv { display: block; margin-top: 5px; font-size: 18px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em; }
+    .sc { display: block; margin-top: 4px; font-size: 11.5px; color: var(--text-tertiary); line-height: 1.4; }
+    .rd { display: inline-block; margin-top: 16px; font-size: 13.5px; font-weight: 700; color: var(--acc); text-decoration: none; }
+    .rd:hover { color: var(--acc-hover); }
+    @media (max-width: 640px) { .stats { grid-template-columns: 1fr; } }
+  </style>
 </Layout>

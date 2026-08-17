@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FAQSection from '../components/FAQSection.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
 import { otaAdvertisingFaqs } from '../data/page-faqs';
 import { otaPlatforms, otaPainPoints, otaCapabilities, otaStats, otaMarketInsights } from '../data/ota';
 
@@ -11,18 +13,12 @@ const breadcrumbs = [
   { name: 'OTA Advertising', href: '/ota-advertising' },
 ];
 
-const platformLogos: Record<string, { letter: string; bg: string; text: string }> = {
-  booking: { letter: 'B', bg: 'bg-blue-600', text: 'text-white' },
-  expedia: { letter: 'E', bg: 'bg-yellow-500', text: 'text-gray-900' },
-  tripadvisor: { letter: 'T', bg: 'bg-emerald-500', text: 'text-white' },
-  google: { letter: 'G', bg: 'bg-red-500', text: 'text-white' },
-  trivago: { letter: 'Tv', bg: 'bg-sky-500', text: 'text-white' },
-  agoda: { letter: 'A', bg: 'bg-rose-600', text: 'text-white' },
-  vrbo: { letter: 'V', bg: 'bg-indigo-600', text: 'text-white' },
-  kayak: { letter: 'K', bg: 'bg-orange-500', text: 'text-white' },
-  priceline: { letter: 'P', bg: 'bg-blue-800', text: 'text-white' },
-  skyscanner: { letter: 'S', bg: 'bg-teal-500', text: 'text-white' },
-};
+/**
+ * The platform letter-tiles are gone, not restyled. They were ten raw Tailwind
+ * fills (a brand colour per OTA) which is exactly the thing this direction does
+ * not do: one accent, everything else structure. The platform name and its ad
+ * model carry the same information without importing ten more colours.
+ */
 ---
 
 <Layout
@@ -40,495 +36,345 @@ const platformLogos: Record<string, { letter: string; bg: string; text: string }
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={breadcrumbs} />
-    <!-- Hero -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="ota-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]" aria-hidden="true"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center min-w-0">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
-          <span class="w-2 h-2 bg-[var(--pos)] rounded-full animate-pulse shrink-0"></span>
-          <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">Now Live — Expedia TravelAds</span>
-        </div>
+    <PageHero
+      badge="Live — Expedia TravelAds"
+      title="OTA advertising."
+      titleAccent="Every platform on one ledger."
+      lead="Sponsored listings across Booking.com, Expedia, TripAdvisor, Google Hotel Ads and Trivago — bid, budget and paced from one place, against one set of definitions."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo?source_page=ota-advertising&cta=ota-hero-demo' }}
+      secondaryCta={{ text: 'Get started', href: '/signup?source_page=ota-advertising&cta=ota-hero-get-started' }}
+    />
 
-        <h1 id="ota-heading" class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em] break-words">
-          <span class="text-[var(--text-primary)]">OTA Advertising</span>
-        </h1>
-        <p class="reveal mt-4 text-xl sm:text-2xl text-[var(--text-secondary)] font-medium">
-          Every OTA. One dashboard. AI-optimized.
-        </p>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Manage sponsored listings across Booking.com, Expedia, TripAdvisor, Google Hotel Ads, Trivago, and more — with AI that optimizes bids, budgets, and targeting across every platform simultaneously.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/signup?source_page=ota-advertising&cta=ota-hero-get-started" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg">
-            Get Started
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/book-demo?source_page=ota-advertising&cta=ota-hero-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Book a Demo
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Market Stats -->
-    <section class="py-12 sm:py-16 lg:py-20" aria-labelledby="stats-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-12">
-          <h2 id="stats-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            The hotel advertising <span class="text-[var(--text-primary)]">proof</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">One managed property, thirty days, every number from the platform export — reconciled line by line. <a href="/case-studies" class="link-secondary font-semibold">Read the full case</a>.</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-          {otaStats.map((stat) => (
-            <div class="reveal glass hover-glow rounded-2xl p-4 sm:p-6 lg:p-8 text-center min-w-0">
-              <div class="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-2">{stat.value}</div>
-              <div class="text-sm font-bold text-[var(--text-primary)] mb-1">{stat.label}</div>
-              <div class="text-xs text-[var(--text-muted)] leading-relaxed">{stat.detail}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Pain Points -->
-    <section class="py-28" aria-labelledby="pain-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="pain-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Sound <span class="text-[var(--text-primary)]">familiar?</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">The OTA advertising problems every hotel faces.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-          {otaPainPoints.map((point) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8 border-t-4 border-red-400/30">
-              <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={point.icon} />
-                </svg>
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{point.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{point.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Supported OTA Platforms -->
-    <section class="py-28" aria-labelledby="platforms-heading">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="platforms-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Supported <span class="text-[var(--text-primary)]">platforms</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto">Live OTA integrations you can activate today. More platforms being added continuously.</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {otaPlatforms.filter(p => p.status === 'live').map((platform) => {
-            const logo = platformLogos[platform.logo];
-            return (
-              <div class="reveal glass hover-glow rounded-2xl p-6 relative group">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class={`w-10 h-10 rounded-lg ${logo.bg} ${logo.text} flex items-center justify-center font-bold text-sm shrink-0`}>
-                    {logo.letter}
-                  </div>
-                  <div>
-                    <h3 class="text-base font-bold text-[var(--text-primary)]">{platform.name}</h3>
-                    <span class="text-xs font-medium text-[var(--text-muted)]">{platform.adModel}</span>
-                  </div>
-                </div>
-                <p class="text-sm text-[var(--text-tertiary)] leading-relaxed mb-4">{platform.description}</p>
-                <div class="flex items-center gap-1.5 mb-3">
-                  <svg class="w-3.5 h-3.5 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-                  </svg>
-                  <span class="text-xs font-medium text-[var(--text-muted)]">{platform.reach}</span>
-                </div>
-                <ul class="space-y-1.5">
-                  {platform.features.map((feature) => (
-                    <li class="flex items-start gap-2 text-xs text-[var(--text-tertiary)]">
-                      <svg class="w-3.5 h-3.5 text-[var(--text-primary)] mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- App Mockup: Unified OTA Dashboard -->
-    <section class="py-28" aria-labelledby="mockup-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="mockup-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            One dashboard for <span class="text-[var(--text-primary)]">every OTA.</span>
-          </h2>
-        </div>
-
-        <div class="reveal glass rounded-2xl overflow-hidden shadow-2xl">
-          <div class="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--browser-border)] bg-[var(--browser-chrome-bg)]">
-            <div class="flex gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[var(--browser-dot)]"></span>
-            </div>
-            <div class="flex-1 ml-3">
-              <div class="bg-[var(--browser-url-bg)] rounded-md px-3 py-1 text-xs text-[var(--browser-url-text)] max-w-xs">app.advertisingsystems.ai/ota</div>
-            </div>
-            <span class="ml-auto shrink-0 text-[9.5px] font-bold uppercase tracking-[0.1em] text-[var(--text-tertiary)] border border-[var(--border)] rounded-[2px] px-1.5 py-0.5">Illustrative</span>
-          </div>
-          <div class="p-6 sm:p-8 bg-[var(--surface-alt)]">
-            <!-- OTA Status Bar -->
-            <div class="glass rounded-lg p-4 mb-6 flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-[var(--surface-alt)] flex items-center justify-center">
-                <span class="w-3 h-3 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-              </div>
-              <div class="flex-1">
-                <div class="text-sm font-semibold text-[var(--text-primary)]">OTA Campaign Manager</div>
-                <div class="text-xs text-[var(--text-muted)]">6 platforms connected &middot; 42 active campaigns &middot; AI optimizing</div>
-              </div>
-              <span class="text-xs font-semibold bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full">Preview Mode</span>
-            </div>
-
-            <!-- OTA Performance Cards -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-              <div class="glass rounded-lg p-3">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-6 h-6 rounded bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">B</div>
-                  <span class="text-xs font-semibold text-[var(--text-primary)]">Booking.com</span>
-                </div>
-                <div class="text-lg font-bold text-[var(--text-primary)]">4.8x ROAS</div>
-                <div class="text-xs text-[var(--text-muted)]">$1.24 avg CPC &middot; 312 clicks</div>
-              </div>
-              <div class="glass rounded-lg p-3">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-6 h-6 rounded bg-yellow-500 text-gray-900 flex items-center justify-center text-[10px] font-bold">E</div>
-                  <span class="text-xs font-semibold text-[var(--text-primary)]">Expedia</span>
-                </div>
-                <div class="text-lg font-bold text-[var(--text-primary)]">5.2x ROAS</div>
-                <div class="text-xs text-[var(--text-muted)]">$0.98 avg CPC &middot; 487 clicks</div>
-              </div>
-              <div class="glass rounded-lg p-3">
-                <div class="flex items-center gap-2 mb-2">
-                  <div class="w-6 h-6 rounded bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold">T</div>
-                  <span class="text-xs font-semibold text-[var(--text-primary)]">TripAdvisor</span>
-                </div>
-                <div class="text-lg font-bold text-[var(--text-primary)]">3.9x ROAS</div>
-                <div class="text-xs text-[var(--text-muted)]">$1.96 avg CPC &middot; 189 clicks</div>
-              </div>
-            </div>
-
-            <!-- AI Suggestions -->
-            <div class="space-y-3 mb-6">
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-start justify-between gap-4">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="w-1.5 h-1.5 bg-[var(--text-muted)] rounded-full"></span>
-                      <span class="text-xs font-semibold text-[var(--text-primary)] uppercase">AI Recommendation</span>
-                    </div>
-                    <div class="text-sm font-medium text-[var(--text-primary)]">Shift $280 from Booking.com to Expedia — higher ROAS this week</div>
-                    <div class="text-xs text-[var(--text-muted)] mt-1">Cross-OTA Budget &middot; AI Engine &middot; 8 min ago</div>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <div class="text-sm font-bold text-[var(--text-primary)]">+18% ROAS</div>
-                    <div class="text-xs text-[var(--text-muted)]">Est. impact</div>
-                  </div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4">
-                <div class="flex items-start justify-between gap-4">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
-                      <span class="text-xs font-semibold text-amber-500 uppercase">Occupancy Alert</span>
-                    </div>
-                    <div class="text-sm font-medium text-[var(--text-primary)]">85% occupancy Mar 21-24 — pausing Booking.com ads for those dates</div>
-                    <div class="text-xs text-[var(--text-muted)] mt-1">Occupancy Pacing &middot; Auto-Applied &middot; 23 min ago</div>
-                  </div>
-                  <div class="text-right shrink-0">
-                    <div class="text-sm font-bold text-amber-500">$140 saved</div>
-                    <div class="text-xs text-[var(--text-muted)]">Avoided waste</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Performance Summary -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Total OTA ROAS</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">4.6x</div>
-                <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="width: 78%"></div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Budget Saved</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">$2.4K</div>
-                <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="width: 65%"></div>
-                </div>
-              </div>
-              <div class="glass rounded-lg p-4 text-center">
-                <div class="text-xs text-[var(--text-muted)] mb-1">Platforms Active</div>
-                <div class="text-2xl font-bold text-[var(--text-primary)]">6</div>
-                <div class="mt-2 h-2 rounded-full bg-[var(--progress-track)] overflow-hidden">
-                  <div class="h-full rounded-full bg-gradient-to-r from-[var(--bar-fill-from)] to-[var(--bar-fill-to)]" style="width: 60%"></div>
-                </div>
-              </div>
-            </div>
+    <!-- 01 · Verified proof -->
+    <section class="sec" aria-labelledby="stats-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="stats-heading">The hotel advertising proof.</h2>
+            <p class="sub">
+              One managed property, thirty days, every number taken from the platform export and
+              reconciled line by line against its own daily series.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Capabilities -->
-    <section class="py-28" aria-labelledby="capabilities-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="capabilities-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            What you'll <span class="text-[var(--text-primary)]">get</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">AI-powered OTA advertising management, built into your existing workflow.</p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
-          {otaCapabilities.map((cap) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8">
-              <div class="w-12 h-12 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-5">
-                <svg class="w-6 h-6 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d={cap.icon} />
-                </svg>
+        <div class="panel-box">
+          <div class="panel-hd">
+            <h3>Expedia TravelAds — 30-day export</h3>
+            <span class="illus ok">Verified</span>
+          </div>
+          <div class="kpis">
+            {otaStats.map((stat) => (
+              <div class="kpi">
+                <span class="k">{stat.label}</span>
+                <span class="v num">{stat.value}</span>
+                <span class="d">{stat.detail}</span>
               </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{cap.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Market Landscape -->
-    <section class="py-28" aria-labelledby="market-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="market-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            The OTA <span class="text-[var(--text-primary)]">landscape</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">OTAs invest billions in marketing. Your property competes against that spend for every booking.</p>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {otaMarketInsights.map((insight) => (
-            <div class="reveal glass hover-glow rounded-2xl p-6">
-              <div class="text-2xl font-bold text-[var(--text-primary)] mb-1">{insight.spend}</div>
-              <h3 class="text-base font-bold text-[var(--text-primary)] mb-2">{insight.title}</h3>
-              <p class="text-xs text-[var(--text-tertiary)] leading-relaxed">{insight.detail}</p>
-            </div>
-          ))}
-        </div>
-
-        <div class="reveal glass rounded-2xl p-8 mt-10">
-          <h3 class="text-lg font-bold text-[var(--text-primary)] mb-4">How OTA Advertising Works</h3>
-          <div class="grid sm:grid-cols-3 gap-6">
-            <div>
-              <div class="w-8 h-8 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-3">
-                <span class="text-sm font-bold text-[var(--text-tertiary)]">1</span>
-              </div>
-              <h4 class="text-sm font-bold text-[var(--text-primary)] mb-1">Bid for Placement</h4>
-              <p class="text-xs text-[var(--text-tertiary)] leading-relaxed">Properties bid CPC or CPA to appear in premium positions within OTA search results. Higher bids = higher visibility.</p>
-            </div>
-            <div>
-              <div class="w-8 h-8 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-3">
-                <span class="text-sm font-bold text-[var(--text-tertiary)]">2</span>
-              </div>
-              <h4 class="text-sm font-bold text-[var(--text-primary)] mb-1">Travelers Click</h4>
-              <p class="text-xs text-[var(--text-tertiary)] leading-relaxed">When a traveler searches for accommodation, your sponsored listing appears prominently. You pay only when they click (CPC) or book (CPA).</p>
-            </div>
-            <div>
-              <div class="w-8 h-8 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mb-3">
-                <span class="text-sm font-bold text-[var(--text-tertiary)]">3</span>
-              </div>
-              <h4 class="text-sm font-bold text-[var(--text-primary)] mb-1">Convert & Measure</h4>
-              <p class="text-xs text-[var(--text-tertiary)] leading-relaxed">Track bookings, revenue, and ROAS per platform. Advertising Systems unifies this data and optimizes bids across all OTAs automatically.</p>
-            </div>
+            ))}
           </div>
         </div>
+        <p class="fine"><a href="/case-studies">Read the full case →</a></p>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- How We Compare -->
-    <section class="py-28" aria-labelledby="compare-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="compare-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Why not manage OTAs <span class="text-[var(--text-primary)]">manually?</span>
-          </h2>
+    <!-- 02 · The problem -->
+    <section class="sec soft" aria-labelledby="pain-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
+          <div>
+            <h2 id="pain-heading">Four extranets, four sets of rules.</h2>
+            <p class="sub">What OTA advertising costs before a single bid is placed.</p>
+          </div>
         </div>
+        <div class="cardgrid pain">
+          {otaPainPoints.map((point, i) => (
+            <div>
+              <div class="cn">{String(i + 1).padStart(2, '0')}</div>
+              <h3>{point.title}</h3>
+              <p>{point.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
-        <div class="reveal glass rounded-2xl overflow-hidden">
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm">
+    <!-- 03 · Platforms -->
+    <section class="sec" aria-labelledby="platforms-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="platforms-heading">Platforms you can activate today.</h2>
+            <p class="sub">Live integrations only. Everything else on the roadmap is listed as planned on <a href="/integrations">integrations</a>, not shown here as if it shipped.</p>
+          </div>
+        </div>
+        <div class="plats">
+          {otaPlatforms.filter((platform) => platform.status === 'live').map((platform) => (
+            <article class="plat">
+              <div class="plat-hd">
+                <h3>{platform.name}</h3>
+                <span class="illus ok">Live</span>
+              </div>
+              <div class="plat-meta">
+                <span>{platform.adModel}</span>
+                <span>{platform.reach}</span>
+              </div>
+              <p class="plat-desc">{platform.description}</p>
+              <ul class="plat-feats">
+                {platform.features.map((feature) => <li>{feature}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · The screen -->
+    <section class="sec soft" aria-labelledby="mockup-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="mockup-heading">One dashboard for every OTA.</h2>
+            <p class="sub">Same columns on every platform, so a comparison between them is an actual comparison.</p>
+          </div>
+        </div>
+        <div class="panel-box">
+          <div class="panel-hd">
+            <h3>OTA campaign manager</h3>
+            <span class="illus">Illustrative</span>
+          </div>
+          <div class="scroll-x">
+            <table class="bench">
               <thead>
-                <tr class="border-b border-[var(--border)]">
-                  <th class="text-left p-4 text-[var(--text-muted)] font-semibold text-xs uppercase tracking-wider">Capability</th>
-                  <th class="text-center p-4 text-[var(--text-muted)] font-semibold text-xs uppercase tracking-wider">Manual (OTA Extranets)</th>
-                  <th class="text-center p-4 text-[var(--text-tertiary)] font-semibold text-xs uppercase tracking-wider bg-[var(--surface-alt)]">Advertising Systems</th>
+                <tr>
+                  <th>Platform</th>
+                  <th class="r">Avg CPC</th>
+                  <th class="r">Clicks</th>
+                  <th class="r">ROAS</th>
+                  <th>State</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-[var(--border-subtle)]">
-                <tr>
-                  <td class="p-4 text-[var(--text-primary)] font-medium">Unified dashboard</td>
-                  <td class="p-4 text-center text-red-400">&#x2717; Separate logins per OTA</td>
-                  <td class="p-4 text-center text-[var(--text-primary)] bg-[var(--surface-alt)]">&#x2713; All OTAs in one view</td>
-                </tr>
-                <tr>
-                  <td class="p-4 text-[var(--text-primary)] font-medium">AI bid optimization</td>
-                  <td class="p-4 text-center text-red-400">&#x2717; Manual CPC adjustments</td>
-                  <td class="p-4 text-center text-[var(--text-primary)] bg-[var(--surface-alt)]">&#x2713; Real-time ML optimization</td>
-                </tr>
-                <tr>
-                  <td class="p-4 text-[var(--text-primary)] font-medium">Cross-OTA budget allocation</td>
-                  <td class="p-4 text-center text-red-400">&#x2717; Fixed budgets per platform</td>
-                  <td class="p-4 text-center text-[var(--text-primary)] bg-[var(--surface-alt)]">&#x2713; Automatic reallocation</td>
-                </tr>
-                <tr>
-                  <td class="p-4 text-[var(--text-primary)] font-medium">Occupancy-aware pacing</td>
-                  <td class="p-4 text-center text-red-400">&#x2717; Ads run at all times</td>
-                  <td class="p-4 text-center text-[var(--text-primary)] bg-[var(--surface-alt)]">&#x2713; Auto-pause at high occupancy</td>
-                </tr>
-                <tr>
-                  <td class="p-4 text-[var(--text-primary)] font-medium">Cross-channel attribution</td>
-                  <td class="p-4 text-center text-red-400">&#x2717; Each OTA reports alone</td>
-                  <td class="p-4 text-center text-[var(--text-primary)] bg-[var(--surface-alt)]">&#x2713; OTA + Google + Meta together</td>
-                </tr>
-                <tr>
-                  <td class="p-4 text-[var(--text-primary)] font-medium">Time investment</td>
-                  <td class="p-4 text-center text-red-400">2-4 hours daily</td>
-                  <td class="p-4 text-center text-[var(--text-primary)] bg-[var(--surface-alt)]">15 minutes setup, then automated</td>
-                </tr>
+              <tbody>
+                <tr><td class="m">Expedia</td><td class="r">$0.98</td><td class="r">487</td><td class="r up">5.2×</td><td><span class="st st-live">Optimising</span></td></tr>
+                <tr><td class="m">Booking.com</td><td class="r">$1.24</td><td class="r">312</td><td class="r up">4.8×</td><td><span class="st st-live">Optimising</span></td></tr>
+                <tr><td class="m">TripAdvisor</td><td class="r">$1.96</td><td class="r">189</td><td class="r">3.9×</td><td><span class="st st-warn">Watch</span></td></tr>
               </tbody>
             </table>
           </div>
+          <div class="log-row">
+            <span class="src">CROSS-OTA</span>
+            <p>Shifted <b>$280</b> from Booking.com to Expedia — higher trailing ROAS this week.</p>
+            <span class="amt up num">+18% ROAS</span>
+          </div>
+          <div class="log-row">
+            <span class="src">OCCUPANCY</span>
+            <p>85% occupancy Mar 21–24 — Booking.com ads paused for those dates.</p>
+            <span class="amt num">$140 held</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Related Features -->
-    <section class="py-28" aria-labelledby="related-heading">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-        <div class="text-center mb-16">
-          <h2 id="related-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Works with your <span class="text-[var(--text-primary)]">full stack</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-xl mx-auto">OTA advertising plugs into the same AI engine that optimizes Google, Meta, and everything else.</p>
+    <!-- 05 · Capabilities -->
+    <section class="sec" aria-labelledby="capabilities-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">05</span>
+          <div><h2 id="capabilities-heading">What the OTA layer does.</h2></div>
         </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <a href="/features/campaign-management" class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-            <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">Campaign Intelligence</h3>
-            <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">One command center</span>
-            <div class="mt-4">
-              <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
+        <div class="cardgrid cols-2">
+          {otaCapabilities.map((cap, i) => (
+            <div>
+              <div class="cn">{String(i + 1).padStart(2, '0')}</div>
+              <h3>{cap.title}</h3>
+              <p>{cap.desc}</p>
             </div>
-          </a>
-          <a href="/features/ai-optimization" class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-            <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">AI Optimization</h3>
-            <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">Autonomous bidding</span>
-            <div class="mt-4">
-              <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </div>
-          </a>
-          <a href="/features/analytics" class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-            <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">Performance Analytics</h3>
-            <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">Cross-OTA reporting</span>
-            <div class="mt-4">
-              <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </div>
-          </a>
-          <a href="/features/budget-intelligence" class="reveal group glass hover-glow rounded-2xl p-6 transition-all duration-300 block">
-            <h3 class="text-base font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--text-tertiary)] transition-colors">Budget Allocator</h3>
-            <span class="text-xs font-semibold bg-[var(--surface-alt)] border border-[var(--border)] text-[var(--text-tertiary)] px-2.5 py-1 rounded-full">Cross-channel budgets</span>
-            <div class="mt-4">
-              <svg class="w-5 h-5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </div>
-          </a>
+          ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
+    <!-- 06 · Landscape -->
+    <section class="sec soft" aria-labelledby="market-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">06</span>
+          <div>
+            <h2 id="market-heading">Who you are bidding against.</h2>
+            <p class="sub">Each of these is a portfolio, not a single site. Sponsored placement is how a property competes inside that marketing rather than under it.</p>
+          </div>
+        </div>
+        <div class="scroll-x panel-box">
+          <table class="bench">
+            <thead>
+              <tr><th>Group</th><th>Brands under it</th><th>Why it matters to your bid</th></tr>
+            </thead>
+            <tbody>
+              {otaMarketInsights.map((insight) => (
+                <tr>
+                  <td class="m">{insight.title}</td>
+                  <td>{insight.brands}</td>
+                  <td>{insight.detail}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-    <FAQSection title="OTA Advertising — Common Questions" faqs={otaAdvertisingFaqs} name="ota-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Be first to master <span class="text-[var(--text-primary)]">OTA advertising.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          We're building the first unified AI-powered OTA advertising platform. Join the waitlist to get early access when we launch integrations for Booking.com, Expedia, TripAdvisor, and more.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo?source_page=ota-advertising&cta=ota-waitlist" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Join the Waitlist
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/signup?source_page=ota-advertising&cta=ota-final-start" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-8 py-3.5 rounded-lg">
-            Get Started
-          </a>
+        <div class="how">
+          <div class="how-step">
+            <span class="cn">01</span>
+            <h3>Bid for placement</h3>
+            <p>Properties bid CPC or CPA to appear in premium positions inside OTA search results.</p>
+          </div>
+          <div class="how-step">
+            <span class="cn">02</span>
+            <h3>Travellers click</h3>
+            <p>Your listing appears on the searches that match it. You pay on the click, or on the booking.</p>
+          </div>
+          <div class="how-step">
+            <span class="cn">03</span>
+            <h3>Convert and measure</h3>
+            <p>Bookings, revenue and ROAS per platform — unified, so bids move on evidence rather than habit.</p>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- 07 · Manual comparison -->
+    <section class="sec" aria-labelledby="compare-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">07</span>
+          <div><h2 id="compare-heading">Why not run the extranets by hand?</h2></div>
+        </div>
+        <div class="panel-box scroll-x">
+          <table class="bench">
+            <thead>
+              <tr><th>Capability</th><th>Manual (OTA extranets)</th><th>Advertising Systems</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="m">Unified dashboard</td><td class="cmp-them">Separate logins per OTA</td><td class="cmp-us">All OTAs in one view</td></tr>
+              <tr><td class="m">Bid optimisation</td><td class="cmp-them">Manual CPC adjustments</td><td class="cmp-us">Continuous, inside guardrails</td></tr>
+              <tr><td class="m">Cross-OTA budget</td><td class="cmp-them">Fixed budget per platform</td><td class="cmp-us">Reallocated on performance</td></tr>
+              <tr><td class="m">Occupancy-aware pacing</td><td class="cmp-them">Ads run regardless</td><td class="cmp-us">Paused at high occupancy</td></tr>
+              <tr><td class="m">Attribution</td><td class="cmp-them">Each OTA reports alone</td><td class="cmp-us">OTA + Google + Meta together</td></tr>
+              <tr><td class="m">Time to run it</td><td class="cmp-them">Hours, daily</td><td class="cmp-us">Setup, then reviewed</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 · Related -->
+    <section class="sec soft" aria-labelledby="related-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">08</span>
+          <div><h2 id="related-heading">The modules behind it.</h2></div>
+        </div>
+        <div class="cardgrid cols-2">
+          <a href="/features/campaign-management" class="r-card"><div class="cn">01</div><h3>Campaign Intelligence</h3><span class="r-fact">One dashboard, every channel</span></a>
+          <a href="/features/ai-optimization" class="r-card"><div class="cn">02</div><h3>AI Optimization Engine</h3><span class="r-fact">Adjusts every 15 minutes</span></a>
+          <a href="/features/analytics" class="r-card"><div class="cn">03</div><h3>Performance Analytics</h3><span class="r-fact">Attribution to booking revenue</span></a>
+          <a href="/features/budget-intelligence" class="r-card"><div class="cn">05</div><h3>Budget Allocator</h3><span class="r-fact">Cross-channel reallocation</span></a>
+        </div>
+      </div>
+    </section>
+
+    <FAQSection title="OTA advertising — common questions" faqs={otaAdvertisingFaqs} name="ota-faq" no="09" soft={false} />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .pain .cn { color: var(--neg); }
+    .sec-hd .sub a { color: var(--acc); font-weight: 600; text-decoration: none; }
+
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .kpi { padding: 16px; border-right: 1px solid var(--border); min-width: 0; }
+    .kpi:last-child { border-right: 0; }
+    .kpi .k { display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--text-tertiary); }
+    .kpi .v { display: block; margin-top: 6px; font-size: 24px; font-weight: 800; letter-spacing: -0.025em; color: var(--text-primary); }
+    .kpi .d { display: block; margin-top: 6px; font-size: 11.5px; color: var(--text-tertiary); line-height: 1.45; }
+    @media (max-width: 900px) {
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .kpi:nth-child(2) { border-right: 0; }
+      .kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    }
+    @media (max-width: 520px) {
+      .kpis { grid-template-columns: 1fr; }
+      .kpi { border-right: 0; border-bottom: 1px solid var(--border); }
+      .kpi:last-child { border-bottom: 0; }
+    }
+
+    .plats { border-top: 1px solid var(--border); }
+    .plat { padding: 24px 0; border-bottom: 1px solid var(--border); }
+    .plat-hd { display: flex; align-items: center; gap: 12px; }
+    .plat-hd h3 { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+    .plat-meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 8px; font-size: 11.5px; font-weight: 600; color: var(--text-tertiary); }
+    .plat-desc { margin-top: 11px; font-size: 14px; color: var(--text-secondary); max-width: 54em; line-height: 1.55; }
+    .plat-feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 22px; margin-top: 14px; }
+    .plat-feats li { font-size: 12.5px; color: var(--text-tertiary); display: flex; gap: 8px; }
+    .plat-feats li::before { content: "\2713"; color: var(--pos); font-weight: 700; }
+    @media (max-width: 640px) { .plat-feats { grid-template-columns: 1fr; } }
+
+    .st {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700;
+      border: 1px solid var(--border); border-radius: 2px; padding: 2px 7px;
+      white-space: nowrap; color: var(--text-tertiary);
+    }
+    .st::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .st-live { color: var(--pos); border-color: var(--pos-line); }
+    .st-warn { color: var(--warn); border-color: var(--warn); }
+
+    .log-row {
+      display: grid; grid-template-columns: 120px 1fr auto; gap: 16px;
+      padding: 12px 16px; border-top: 1px solid var(--border);
+      font-size: 13px; align-items: center;
+    }
+    .log-row .src { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: var(--text-secondary); }
+    .log-row p { color: var(--text-secondary); line-height: 1.5; }
+    .log-row p :global(b) { color: var(--text-primary); font-weight: 700; }
+    .log-row .amt { font-weight: 700; white-space: nowrap; color: var(--text-primary); }
+    .log-row .amt.up { color: var(--pos); }
+    @media (max-width: 640px) {
+      .log-row { grid-template-columns: 1fr auto; gap: 6px; }
+      .log-row .src { grid-column: 1 / -1; }
+    }
+
+    .how {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      margin-top: 26px;
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .how-step {
+      padding: 20px; background: var(--surface-raised);
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      min-width: 0;
+    }
+    .how-step .cn { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--acc); }
+    .how-step h3 { margin-top: 7px; font-size: 15.5px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.015em; }
+    .how-step p { margin-top: 6px; font-size: 13px; color: var(--text-tertiary); line-height: 1.55; }
+    @media (max-width: 800px) { .how { grid-template-columns: 1fr; } }
+
+    .cmp-us { color: var(--text-primary); font-weight: 600; }
+    .cmp-us::before { content: "\2713"; color: var(--pos); font-weight: 700; margin-right: 9px; }
+    .cmp-them { color: var(--text-tertiary); }
+    .cmp-them::before { content: "\2715"; color: var(--neg); font-weight: 700; margin-right: 9px; }
+
+    .r-card { text-decoration: none; display: block; transition: background 0.15s; }
+    a.r-card:hover { background: var(--surface); }
+    a.r-card:hover h3 { color: var(--acc); }
+    .r-card h3 { transition: color 0.15s; }
+    .r-fact {
+      display: inline-block; margin-top: 13px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-tertiary); border: 1px solid var(--border); border-radius: 2px; padding: 2px 6px;
+    }
+  </style>
 </Layout>

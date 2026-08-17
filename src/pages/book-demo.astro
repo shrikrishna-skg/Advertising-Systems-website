@@ -14,17 +14,25 @@ import { pricingPlans } from '../data/pricing';
 const CAL_BOOKING_URL = 'https://cal.com/multisystems';
 const CAL_EMBED_URL = `${CAL_BOOKING_URL}?embed=1`;
 
+/**
+ * COPY, 2026-08-16. Two of these promised things the call does not deliver:
+ * "See real data for your industry" implies a benchmark set we do not publish,
+ * and "Custom ROI projection for your budget" promises a forecast produced live
+ * — the exact kind of number the honesty pass stripped everywhere else.
+ * Replaced with the two things we can actually put on screen: the verified
+ * Expedia export, and a plan recommendation based on account count and spend.
+ */
 const benefits = [
-  'Personalized walk-through of all 5 modules',
-  'See real data for your industry',
-  'Custom ROI projection for your budget',
-  'No prep required before the call',
+  'Personalised walk-through of all 5 modules',
+  'The verified 30-day Expedia export, read line by line',
+  'Which plan fits your account count and spend',
+  'No prep required, and no access to your accounts',
   'Clear next steps after the demo',
 ];
 
 const coverage = [
   'Google, Meta, and OTA campaigns in one dashboard',
-  'How the AI engine allocates and paces your budget',
+  'How the engine allocates and paces budget inside guardrails',
   'Reporting your team and your owners actually read',
   'Pricing, account count, and the right starting plan',
 ];
@@ -46,7 +54,7 @@ const planOptions = pricingPlans.map((plan) => ({
 
 <Layout
   title="Book a Demo — Advertising Systems | See It in Action"
-  description="Schedule a personalized demo of Advertising Systems. See how AI-powered advertising management can transform your campaigns in just 30 minutes."
+  description="Book a 30-minute walkthrough of all five modules: the unified dashboard, how the engine paces budget, and the reporting owners read. No prep and no account access needed."
   breadcrumbs={[{ name: 'Book a Demo', href: '/book-demo' }]}
   jsonLd={{
     '@context': 'https://schema.org',
@@ -69,7 +77,7 @@ const planOptions = pricingPlans.map((plan) => ({
         <div class="bd-left">
           <span class="badge-line"><i aria-hidden="true"></i> Get started in minutes</span>
           <h1 id="demo-hero-heading">Book your <span class="bd-accent">personalized demo.</span></h1>
-          <p class="lead">We'll walk you through every module, show you real data for your industry, and answer all your questions.</p>
+          <p class="lead">We'll walk you through every module, open the one verified export we publish, and answer your questions. Nothing to connect, nothing to prepare.</p>
 
           <ul class="bd-benefits" aria-label="Benefits">
             {benefits.map((text) => <li>{text}</li>)}

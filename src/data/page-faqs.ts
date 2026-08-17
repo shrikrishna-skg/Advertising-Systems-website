@@ -5,24 +5,35 @@
 
 export const aboutFaqs = [
   { question: 'Who is behind Advertising Systems?', answer: "Advertising Systems is built by Multisystems, the same team behind Hotel Systems and ReputationSystems. We're a distributed team of engineers, data scientists, and marketers focused on making advertising profitable and effortless for businesses of every size." },
-  { question: 'How long have you been in business?', answer: "We've been powering advertising and revenue systems for years. Today we support teams managing advertising workflows across Google, Meta, and OTA channels in 30+ countries." },
+  // "in 30+ countries" removed 2026-08-16: an unverifiable aggregate of the same
+  // class as the claims the honesty pass stripped from the feature pages. The
+  // capability statement stands on its own without a number nobody can check.
+  // "for years" removed 2026-08-16 (owner ruling) — same class as the "30+
+  // countries" and "free audit" claims. The question is really "are you real",
+  // and the verified export answers that better than a tenure number would.
+  { question: 'How long have you been in business?', answer: "Advertising Systems is a Multisystems product, built by a team that has run this work from the operator side. Rather than lean on how long we have been around, we publish one verified 30-day platform export, reconciled line by line — judge us on that." },
   { question: 'Where is Advertising Systems available?', answer: 'Advertising Systems is available globally. Live platform support depends on the regions supported by Google Ads, Meta Ads, Expedia TravelAds, Microsoft/Bing Ads, YouTube, and any custom channels approved during onboarding. Support is offered in English with more languages coming.' },
   { question: 'What makes you different from other ad tech companies?', answer: "We unify Google, Meta, and OTA advertising in one AI engine and one dashboard. We're also part of the Multisystems ecosystem, so your ads can connect to reputation and revenue systems." },
   { question: 'Do you work with agencies?', answer: 'Yes. Agencies use Advertising Systems to manage multiple client accounts, get unified reporting, and deliver better ROAS. Contact us for agency-specific pricing and workflows.' },
   { question: 'What industries do you serve?', answer: 'We serve travel and hospitality, e-commerce, SaaS, and any business running paid campaigns across Google, Meta, or OTAs. Case studies span these verticals.' },
   { question: 'Can I evaluate the platform before buying?', answer: 'Yes. Choose the plan you are considering and book a demo. The demo form keeps that plan selected so we can walk through your account setup, plan fit, integrations, and onboarding path before you commit.' },
-  { question: 'How do I get in touch with the team?', answer: 'Use the Contact page or book a demo. For support, log in to your account or email the address in your plan. Enterprise has dedicated channels.' },
+  // "Enterprise has dedicated channels" cut 2026-08-16 (owner: we don't do it)
+  // — one of four places that invented an Enterprise service tier.
+  { question: 'How do I get in touch with the team?', answer: 'Use the Contact page or book a demo. For product support once you are set up, email the address in your plan. Every plan reaches the same team — there is no separate queue you have to buy into.' },
   { question: 'Where is your company headquartered?', answer: 'Multisystems operates as a distributed company. Our team is spread across time zones; you can reach us via contact form, email, or demo booking.' },
   { question: 'Do you have a partner or reseller program?', answer: "We work with select partners. If you're interested in reselling or referring Advertising Systems, reach out via the contact form and we'll follow up." },
 ];
 
 export const contactFaqs = [
-  { question: 'How quickly do you respond?', answer: 'We aim to respond to all inquiries within 24 hours on business days. Demo requests typically get a suggested time within one business day.' },
+  // Second instance of the 24-hour SLA (the contact PAGE carried the other two).
+  // Cut 2026-08-16 with the rest: a response-time guarantee with nobody on a
+  // rota is a promise that breaks exactly when the inbox is busiest.
+  { question: 'How quickly do you respond?', answer: 'A person reads every message and replies as soon as they can — we would rather not quote a turnaround we cannot hold to every time. If something is urgent, say so in the first line and it gets moved up. Booking a demo is the fastest route to a scheduled conversation, since it goes straight into the calendar.' },
   { question: 'Can I get a personalized demo?', answer: "Yes. Book a demo and we'll walk you through the platform with your use case in mind. Demos are free, about 30 minutes, and there's no commitment." },
-  { question: 'Do you have phone support?', answer: "Enterprise customers have access to dedicated support channels. For general inquiries, email or the contact form is the fastest way to reach us. We'll escalate to a call if needed." },
+  { question: 'Do you have phone support?', answer: "Not as a standing line. Email or the contact form is the fastest way to reach us, and we will move to a call whenever that is genuinely quicker than typing — say so in your message and we will set one up." },
   { question: 'What should I include in my message?', answer: 'Your name, company, and what you need (demo, pricing, technical question). The more context you give, the faster we can help.' },
   { question: 'Can I request a specific integration?', answer: 'Yes. Tell us which platform or tool you need. We prioritize based on demand and will let you know if and when we can support it.' },
-  { question: 'Do you offer onboarding or implementation help?', answer: 'Yes. Setup is included; we have guides and in-app flows. Enterprise plans get dedicated onboarding. Ask in your message if you need extra help.' },
+  { question: 'Do you offer onboarding or implementation help?', answer: 'Yes, and it is included on every plan rather than sold as a tier — we walk you through connecting accounts and checking that the numbers reconcile before spend moves. Ask in your message if your setup has anything unusual in it.' },
   { question: 'Where do I go for product support after I sign up?', answer: 'In-app chat and email support are available on all plans. Check the Knowledge Base first; our team is there for anything that is not covered.' },
   { question: 'I have a press or partnership inquiry. Where do I send it?', answer: 'Use the contact form and select or mention "Partnership" or "Press" in your message. We route those to the right team.' },
   { question: 'Can you help with a security or privacy concern?', answer: 'For security issues, email security@advertisingsystems.ai. For privacy and data requests, see our Privacy Policy or email privacy@advertisingsystems.ai.' },
@@ -59,7 +70,10 @@ export const caseStudiesFaqs = [
   { question: 'Why is there only one case study?', answer: 'Because we only publish what we can verify. Every case on this page is a real platform export, reconciled against its own daily data, published with the property’s details withheld until we have written consent to name them. More cases appear as they clear that bar.' },
   { question: 'Are the numbers verified?', answer: 'Yes, and here is what that means: every headline figure is recomputed from the platform export’s own daily series — spend, bookings, room nights and revenue summed line by line — not copied from a summary screen. Where the export itself contained internal errors, we corrected them and used the reconciled figures.' },
   { question: 'Why is the property not named?', answer: 'Naming a property requires its written consent, which we have not published without. The case identifies the segment and market type only. The numbers lose nothing by the name being withheld.' },
-  { question: 'How long does it take to see results?', answer: 'It depends on your starting point, ad spend, tracking quality, and market. The published case covers a single 30-day window on one channel. We provide a free audit before onboarding so you have realistic expectations for your own accounts.' },
+  // "We provide a free audit before onboarding" removed 2026-08-16 (owner
+  // ruling: not a service we offer). Replaced with an actual answer to the
+  // timing question, drawn from behaviour the site already documents.
+  { question: 'How long does it take to see results?', answer: 'It depends on your starting point, ad spend, tracking quality, and market. Once accounts are connected the engine works on its normal 15-minute cycle from day one, but a channel needs enough conversion volume before its numbers mean anything. The published case covers a single 30-day window on one channel — evidence, not a forecast for your property.' },
   { question: 'Do you work with small businesses?', answer: 'Yes. Our Launch plan is built for smaller teams — one ad account, one operator. The same AI and workflows apply at every scale.' },
   { question: 'Can I talk to a reference customer?', answer: 'We can sometimes connect you with a reference after you’re in a serious evaluation stage. Ask your demo contact.' },
   { question: 'What if my results are different?', answer: 'They will be — results vary by industry, spend, and starting point, and a single-property case is not a forecast. That is exactly why we publish reconciled data instead of aggregate claims.' },
@@ -70,7 +84,10 @@ export const caseStudiesFaqs = [
 
 export const integrationsFaqs = [
   { question: 'How do I connect my ad accounts?', answer: 'Use OAuth for supported live platforms such as Google, Meta, Expedia TravelAds, Google Analytics, Microsoft/Bing Ads, and YouTube. You sign in with your existing credentials; we request the access needed for reporting and optimization.' },
-  { question: 'Is there an API for custom integrations?', answer: 'Yes. Growth, Scale, and Enterprise plans include REST API access for custom connections to your CRM, BI tools, or internal systems. See our API docs or contact us for details.' },
+  // Second REST API claim (the integrations page carried the other). Cut
+  // 2026-08-16 with it — and note it also pointed at "our API docs", which do
+  // not exist anywhere in the repo or the sitemap.
+  { question: 'Is there an API for custom integrations?', answer: 'Not yet. A REST API for CRM, BI and internal-tool connections is planned rather than shipped, and we list it that way so nobody picks a plan for it. Tell us what you would connect and to what — that is what decides the order things get built in.' },
   { question: "What if my platform isn't listed?", answer: "We add new integrations regularly. Tell us what you use via the Request Integration link or contact form — we prioritize based on demand." },
   { question: 'Can I request TikTok, LinkedIn, Reddit, or another ad network?', answer: 'Yes. Some networks are planned or early-access rather than live for every account. Tell us which channels you need during the demo, and we will confirm what is available now versus what requires custom rollout.' },
   { question: 'Can I connect multiple Google or Meta accounts?', answer: 'Yes. Your plan limits how many ad accounts you can connect: Launch includes 1, Growth includes up to 5, Scale includes up to 15, and Enterprise is unlimited. Each account is connected via OAuth.' },
@@ -121,17 +138,25 @@ export const bookDemoFaqs = [
   { question: 'What happens after the demo?', answer: 'You’ll get follow-up next steps based on the plan and account setup we discussed, including the secure signup or onboarding path if you decide to continue.' },
 ];
 
+/**
+ * HONESTY PASS 2026-08-16 — owner ruling: we do not hold SOC 2 Type II.
+ * "Yes. We're SOC 2 Type II certified" was the single highest-risk sentence on
+ * the site: it is the one claim enterprise procurement verifies, and answering
+ * a direct compliance question falsely is worse than having no certification.
+ * The answer now says where we actually are. Third-party penetration testing
+ * and the hardware security module went with it — same class, same absence of
+ * an artefact to show.
+ */
 export const securityFaqs = [
-  { question: 'Is my data encrypted?', answer: 'Yes. Data is encrypted in transit (TLS 1.3) and at rest (AES-256). API tokens and credentials are stored with separate keys in a hardware security module.' },
-  { question: 'Are you SOC 2 compliant?', answer: 'Yes. We’re SOC 2 Type II certified. Enterprise customers can request our compliance report under NDA.' },
+  { question: 'Is my data encrypted?', answer: 'Yes. Data is encrypted in transit with TLS and at rest with AES-256. API tokens and OAuth credentials are stored encrypted, under keys separate from the application data.' },
+  { question: 'Are you SOC 2 certified?', answer: 'Not today. We are not going to claim a certification we do not hold — if you ask this question, you will check. We are happy to complete your security questionnaire and walk through our controls in detail, and we will say plainly where a control is a practice rather than an audited artefact.' },
   { question: 'How do I report a security issue?', answer: 'Email security@advertisingsystems.ai with details. We respond within 2 business days and don’t pursue legal action against researchers who follow responsible disclosure.' },
-  { question: 'Do you sell or share my data?', answer: 'No. We don’t sell your data to third parties or use it for advertising. We use it only to provide and improve the product. See our Privacy Policy.' },
-  { question: 'Where is data stored?', answer: 'We use cloud infrastructure in regions that meet our compliance requirements. Data residency options may be available for Enterprise; contact us.' },
-  { question: 'How do you handle access to production?', answer: 'Access requires multi-factor authentication and is restricted to authorized personnel. We follow a zero-trust model and least-privilege access.' },
-  { question: 'Do you do penetration testing?', answer: 'Yes. We run regular internal and third-party security assessments and act on findings.' },
-  { question: 'What about GDPR or CCPA?', answer: 'We support data subject requests and have processes for GDPR and CCPA. See our Privacy Policy and Data Processing terms.' },
-  { question: 'Can I get a security questionnaire or SIG?', answer: 'Enterprise customers can request our security documentation and complete questionnaires. Contact your account lead or security@advertisingsystems.ai.' },
-  { question: 'How are credentials stored?', answer: 'OAuth tokens and API keys are encrypted and stored in a secure vault. We never store your Google or Meta passwords.' },
+  { question: 'Do you sell or share my data?', answer: 'No. We don’t sell your data, share it with other customers, use it to target advertising, or train models on it. It is used to run your account and nothing else. See our Privacy Policy.' },
+  { question: 'Where is data stored?', answer: 'On managed cloud infrastructure. If you have a specific residency requirement, ask before you sign — we will tell you whether we can meet it rather than assume.' },
+  { question: 'How do you handle access to production?', answer: 'Production access requires multi-factor authentication, is limited to the people whose job needs it, and is granted per task rather than standing.' },
+  { question: 'What about GDPR or CCPA?', answer: 'We support data subject access, export and deletion requests. See our Privacy Policy for the full detail and how to make a request.' },
+  { question: 'Can I get a security questionnaire or SIG?', answer: 'Yes. Send it over and we will complete it, including the questions where the honest answer is “not yet”. Contact security@advertisingsystems.ai.' },
+  { question: 'How are credentials stored?', answer: 'Ad platforms connect over OAuth, so we never receive or store your Google, Meta or Microsoft passwords. The OAuth tokens we do hold are encrypted, and you can revoke our access from the platform at any time.' },
 ];
 
 export const featuresIndexFaqs = [
@@ -158,7 +183,7 @@ export const featureSubpageFaqs = [
   { question: 'Does this replace my existing ad accounts?', answer: 'No. We connect to your existing Google, Meta, and OTA accounts. We optimize and report; your accounts stay where they are.' },
   { question: 'What if I use an agency or freelancer?', answer: 'You can add team members and control their access. Agencies often use Advertising Systems to manage multiple client accounts from one place.' },
   { question: 'Can I evaluate this feature first?', answer: 'Yes. Book a demo and we can walk through the feature, connected account requirements, and plan fit before you commit.' },
-  { question: 'Where do I get support?', answer: 'In-app help, Knowledge Base, and email support on all plans. Enterprise has dedicated support. Our team can walk you through this feature if needed.' },
+  { question: 'Where do I get support?', answer: 'Knowledge Base first, then email support — on every plan, from the same team. Our team can walk you through any feature on this page if the guide does not cover your case.' },
 ];
 
 /** OTA Advertising page FAQ */
@@ -185,6 +210,8 @@ export const vsPageFaqs = [
   { question: 'Is pricing similar?', answer: 'We use simple subscription pricing by ad account count — no per-click or percentage-of-spend fees. Compare with your current tool; many teams save while gaining cross-channel capability.' },
   { question: 'Can I import my campaigns or structure?', answer: 'We connect to your existing accounts; campaigns stay where they are. We don’t require you to recreate structure. The AI optimizes within your current setup.' },
   { question: 'What if my team is used to the other tool?', answer: 'We have a familiar dashboard and clear reporting. Many teams adopt Advertising Systems quickly. We also offer onboarding and support to smooth the transition.' },
-  { question: 'Do you have a migration or switch playbook?', answer: 'Yes. We’ll walk you through connect, audit, and optimization steps. Book a demo and we can outline a migration plan for your case.' },
+  // "audit" as a migration step read as the same offer; "verify" is what the
+  // step actually is — checking the connection and tracking before spend moves.
+  { question: 'Do you have a migration or switch playbook?', answer: 'Yes. We’ll walk you through the connect, verify, and optimization steps. Book a demo and we can outline a migration plan for your case.' },
   { question: 'Why would I switch from a tool I already use?', answer: 'If you run Google, Meta, and OTAs (or plan to), one platform and one AI can replace multiple tools, reduce manual work, and improve cross-channel ROAS. A demo or guided evaluation shows the difference.' },
 ];

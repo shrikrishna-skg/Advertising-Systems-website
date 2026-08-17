@@ -1,13 +1,25 @@
 ---
-/** Closing CTA band. Styling lives in `.terminal .band` (global.css). */
+/**
+ * Closing CTA band. Styling lives in `.terminal .band` (global.css).
+ *
+ * COPY, 2026-08-16: this promised "a 30-minute working session on your live
+ * accounts: where the spend is leaking… and what it is worth" — on every page
+ * of the site. That is an audit of the visitor's own account plus a valuation
+ * of the finding, and it is not what the demo is. `book-demo.astro` describes
+ * the actual thing ("personalised walk-through of all 5 modules", "no prep
+ * required before the call") and bookDemoFaqs confirms it ("we show you the
+ * platform and discuss how it could work for your business").
+ * The band now offers the demo we actually run, and turns "no account access"
+ * from a missing promise into the objection-remover it really is.
+ */
 ---
 
 <section class="band" id="demo" aria-labelledby="cta-heading">
   <div class="wrap">
     <h2 id="cta-heading">Bring the whole portfolio onto one screen.</h2>
     <p>
-      A 30-minute working session on your live accounts: where the spend is leaking, what the
-      engine would change first, and what it is worth.
+      A 30-minute walkthrough of all five modules — the unified dashboard, how the engine paces
+      budget, and the reporting owners actually read. No prep, and no access to your accounts.
     </p>
     <div class="cta-row">
       <a class="btn btn-p" href="/book-demo">Book a demo</a>

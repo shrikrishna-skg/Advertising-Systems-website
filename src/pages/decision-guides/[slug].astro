@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
 import { getDecisionGuide, getRelatedDecisionGuides } from '../../data/decision-guides';
 
 const guide = getDecisionGuide(Astro.params.slug ?? '');
@@ -18,14 +20,20 @@ const breadcrumbs = [
 
 const relatedGuides = getRelatedDecisionGuides(guide.relatedSlugs);
 
+/**
+ * Hero-stat tones. Four of the five were raw Tailwind washes (a -600 label over
+ * a 10% -500 wash), which measured around 3:1 on the dark ground and did not
+ * move with the theme or the accent switch. They now resolve to the three
+ * status tokens plus the accent — the only four meanings this site has.
+ * Class names are not spelled out in this comment on purpose: Tailwind scans
+ * comment text and would re-emit the dead utilities into the bundle.
+ */
 const toneClasses = {
-  blue: 'border-blue-500/30 bg-blue-500/10 text-blue-600',
-  // Token, not the raw emerald ramp: its 600 step over a 10% wash on the dark
-  // ground measured ~3:1 and was the dimmest chip in the set.
-  green: 'border-[var(--pos-line)] bg-[var(--pos-tint)] text-[var(--pos)]',
-  amber: 'border-amber-500/30 bg-amber-500/10 text-amber-600',
-  rose: 'border-rose-500/30 bg-rose-500/10 text-rose-600',
-  violet: 'border-violet-500/30 bg-violet-500/10 text-violet-600',
+  green: 'tone-pos',
+  rose: 'tone-neg',
+  amber: 'tone-warn',
+  blue: 'tone-acc',
+  violet: 'tone-acc',
 };
 ---
 
@@ -54,171 +62,121 @@ const toneClasses = {
   <main class="terminal">
     <Breadcrumb items={[{ name: 'Home', href: '/' }, ...breadcrumbs]} />
     <article>
-      <!-- See decision-guides.astro — same pre-.terminal double offset. -->
-      <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 md:pb-24 overflow-hidden" aria-labelledby="guide-heading">
-        <div class="mesh-gradient absolute inset-0"></div>
-        <div class="dot-grid absolute inset-0"></div>
-
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-4xl">
-            <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 sm:px-5 mb-6 sm:mb-8">
-              <span class="w-2 h-2 bg-acc-500 rounded-full animate-pulse shrink-0"></span>
-              <span class="text-xs sm:text-sm font-medium text-[var(--text-tertiary)]">{guide.eyebrow}</span>
+      <PageHero
+        badge={guide.eyebrow}
+        title={guide.title}
+        lead={guide.excerpt}
+        primaryCta={{ text: guide.primaryCta.label, href: guide.primaryCta.href }}
+        secondaryCta={{ text: guide.secondaryCta.label, href: guide.secondaryCta.href }}
+      >
+        <div class="hstats">
+          {guide.heroStats.map((stat) => (
+            <div class={`hstat ${toneClasses[stat.tone]}`}>
+              <span class="hl">{stat.label}</span>
+              <span class="hv num">{stat.value}</span>
+              <span class="hc">{stat.caption}</span>
             </div>
-
-            <h1 id="guide-heading" class="reveal text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-              {guide.title}
-            </h1>
-            <p class="reveal mt-6 text-lg sm:text-xl font-medium text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-              {guide.excerpt}
-            </p>
-
-            <div class="reveal mt-10 flex flex-col sm:flex-row gap-3">
-              <a href={guide.primaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-acc-600 transition-colors">
-                {guide.primaryCta.label}
-              </a>
-              <a href={guide.secondaryCta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-6 py-3 rounded-lg">
-                {guide.secondaryCta.label}
-              </a>
-            </div>
-          </div>
-
-          <div class="reveal mt-14 grid sm:grid-cols-3 gap-4">
-            {guide.heroStats.map((stat) => (
-              <div class={`rounded-2xl border p-5 ${toneClasses[stat.tone]}`}>
-                <p class="text-xs font-bold uppercase tracking-[0.14em] opacity-80">{stat.label}</p>
-                <p class="mt-3 text-2xl font-bold">{stat.value}</p>
-                <p class="mt-2 text-sm font-semibold opacity-80 leading-relaxed">{stat.caption}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
-      </section>
-
-      <div class="section-line"></div>
+      </PageHero>
 
       {guide.sections.map((section, sectionIndex) => (
-        <>
-          <section class="py-24" aria-labelledby={`section-${sectionIndex}`}>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div class="max-w-3xl">
-                <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">{section.eyebrow}</p>
-                <h2 id={`section-${sectionIndex}`} class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-                  {section.title}
-                </h2>
-                <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-                  {section.intro}
-                </p>
-              </div>
-
-              <div class="reveal mt-12 grid md:grid-cols-3 gap-5">
-                {section.cards.map((card) => (
-                  <article class="glass rounded-2xl p-6">
-                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{card.label}</p>
-                    <h3 class="mt-4 text-xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{card.title}</h3>
-                    <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{card.body}</p>
-                  </article>
-                ))}
+        <section class:list={['sec', { soft: sectionIndex % 2 === 1 }]} aria-labelledby={`section-${sectionIndex}`}>
+          <div class="wrap">
+            <div class="sec-hd">
+              <span class="no" aria-hidden="true">{String(sectionIndex + 1).padStart(2, '0')}</span>
+              <div>
+                <span class="eyebrow">{section.eyebrow}</span>
+                <h2 id={`section-${sectionIndex}`}>{section.title}</h2>
+                <p class="sub">{section.intro}</p>
               </div>
             </div>
-          </section>
-
-          <div class="section-line"></div>
-        </>
-      ))}
-
-      {guide.table && (
-        <>
-          <section class="py-24" aria-labelledby="guide-table-heading">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div class="max-w-3xl">
-                <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Decision table</p>
-                <h2 id="guide-table-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-                  {guide.table.title}
-                </h2>
-                <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-                  {guide.table.intro}
-                </p>
-              </div>
-
-              <div class="reveal mt-12 overflow-x-auto">
-                <table class="w-full min-w-[760px] border-collapse glass rounded-2xl overflow-hidden" role="table">
-                  <thead>
-                    <tr class="border-b border-[var(--border)]">
-                      {guide.table.columns.map((column) => (
-                        <th class="text-left p-4 sm:p-5 font-semibold text-[var(--text-primary)] bg-[var(--surface-alt)]">{column}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {guide.table.rows.map((row, rowIndex) => (
-                      <tr class={`border-b border-[var(--border)] last:border-b-0 ${rowIndex % 2 === 1 ? 'bg-[var(--surface-alt)]/50' : ''}`}>
-                        {row.map((cell) => (
-                          <td class="p-4 sm:p-5 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{cell}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-
-          <div class="section-line"></div>
-        </>
-      )}
-
-      <section class="py-24" aria-labelledby="reporting-heading">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
-            <div>
-              <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Advertising Systems report layer</p>
-              <h2 id="reporting-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-                The guide ends where the dashboard begins.
-              </h2>
-              <p class="reveal mt-4 text-lg font-medium text-[var(--text-tertiary)] leading-relaxed">
-                Channel education is useful, but the software has to prove whether the spend should continue, move, or stop.
-              </p>
-              <div class="reveal mt-8 flex flex-col sm:flex-row gap-3">
-                <a href="/sample-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-5 py-3 rounded-lg">
-                  Sample Report
-                </a>
-                <a href="/expedia-report" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold px-5 py-3 rounded-lg">
-                  Expedia Report
-                </a>
-              </div>
-            </div>
-
-            <div class="reveal grid sm:grid-cols-3 gap-4">
-              {guide.proofMetrics.map((metric) => (
-                <article class="glass rounded-2xl p-5">
-                  <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{metric.label}</p>
-                  <h3 class="mt-4 text-lg font-bold text-[var(--text-primary)]">{metric.title}</h3>
-                  <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{metric.body}</p>
-                </article>
+            <div class="cardgrid">
+              {section.cards.map((card) => (
+                <div>
+                  <div class="cn">{card.label}</div>
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </div>
               ))}
             </div>
           </div>
+        </section>
+      ))}
+
+      {guide.table && (
+        <section class="sec" aria-labelledby="guide-table-heading">
+          <div class="wrap">
+            <div class="sec-hd">
+              <span class="no" aria-hidden="true">→</span>
+              <div>
+                <span class="eyebrow">Decision table</span>
+                <h2 id="guide-table-heading">{guide.table.title}</h2>
+                <p class="sub">{guide.table.intro}</p>
+              </div>
+            </div>
+            <div class="panel-box scroll-x">
+              <table class="bench" role="table">
+                <thead>
+                  <tr>{guide.table.columns.map((column) => <th>{column}</th>)}</tr>
+                </thead>
+                <tbody>
+                  {guide.table.rows.map((row) => (
+                    <tr>{row.map((cell, ci) => <td class={ci === 0 ? 'm' : ''}>{cell}</td>)}</tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="sec soft" aria-labelledby="reporting-heading">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="no" aria-hidden="true">→</span>
+            <div>
+              <span class="eyebrow">Report layer</span>
+              <h2 id="reporting-heading">The guide ends where the dashboard begins.</h2>
+              <p class="sub">
+                Channel education is useful, but the software has to prove whether the spend should
+                continue, move, or stop.
+              </p>
+            </div>
+          </div>
+          <div class="cardgrid">
+            {guide.proofMetrics.map((metric) => (
+              <div>
+                <div class="cn">{metric.label}</div>
+                <h3>{metric.title}</h3>
+                <p>{metric.body}</p>
+              </div>
+            ))}
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-l btn-sm" href="/sample-report">Sample report</a>
+            <a class="btn btn-l btn-sm" href="/expedia-report">Expedia report</a>
+          </div>
         </div>
       </section>
 
-      <div class="section-line"></div>
-
-      <section class="py-24" aria-labelledby="sources-heading">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p class="reveal text-sm font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">Research notes</p>
-          <h2 id="sources-heading" class="reveal mt-3 text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            Official sources used for this guide
-          </h2>
-
-          <div class="reveal mt-10 space-y-4">
+      <section class="sec" aria-labelledby="sources-heading">
+        <div class="wrap">
+          <div class="sec-hd">
+            <span class="no" aria-hidden="true">§</span>
+            <div>
+              <span class="eyebrow">Research notes</span>
+              <h2 id="sources-heading">Official sources used for this guide.</h2>
+            </div>
+          </div>
+          <div class="srcs">
             {guide.sourceNotes.map((source) => (
-              <a href={source.href} target="_blank" rel="noopener noreferrer" class="glass rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover-glow">
-                <div class="min-w-0 flex-1">
-                  <h3 class="text-base font-bold text-[var(--text-primary)]">{source.label}</h3>
-                  <p class="mt-2 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{source.note}</p>
+              <a class="src" href={source.href} target="_blank" rel="noopener noreferrer">
+                <div>
+                  <h3>{source.label}</h3>
+                  <p>{source.note}</p>
                 </div>
-                <span class="text-sm font-bold text-[var(--text-primary)] shrink-0">Open source</span>
+                <span class="open">Open →</span>
               </a>
             ))}
           </div>
@@ -227,29 +185,69 @@ const toneClasses = {
     </article>
 
     {relatedGuides.length > 0 && (
-      <>
-        <div class="section-line"></div>
-
-        <section class="py-24" aria-labelledby="related-guides-heading">
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 id="related-guides-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-              Read next
-            </h2>
-
-            <div class="reveal mt-10 grid md:grid-cols-3 gap-5">
-              {relatedGuides.map((related) => (
-                <a href={`/decision-guides/${related.slug}`} class="glass hover-glow rounded-2xl p-6">
-                  <p class="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{related.category}</p>
-                  <h3 class="mt-4 text-xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{related.shortTitle}</h3>
-                  <p class="mt-3 text-sm font-medium text-[var(--text-tertiary)] leading-relaxed">{related.excerpt}</p>
-                </a>
-              ))}
-            </div>
+      <section class="sec soft" aria-labelledby="related-guides-heading">
+        <div class="wrap">
+          <div class="sec-hd no-rail">
+            <div><h2 id="related-guides-heading">Read next.</h2></div>
           </div>
-        </section>
-      </>
+          <div class="cardgrid">
+            {relatedGuides.map((related) => (
+              <a href={`/decision-guides/${related.slug}`} class="r-card">
+                <div class="cn">{related.category}</div>
+                <h3>{related.shortTitle}</h3>
+                <p>{related.excerpt}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
     )}
+
+    <CTABand />
   </main>
 
   <Footer />
+
+  <style>
+    .sec-hd.no-rail { grid-template-columns: 1fr; }
+    .sec-hd .eyebrow { display: block; margin-bottom: 8px; }
+
+    .hstats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      margin-top: 30px;
+      border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+      max-width: 62em;
+    }
+    .hstat {
+      padding: 15px 16px;
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--surface-raised);
+      border-left: 2px solid var(--border);
+      min-width: 0;
+    }
+    .hstat.tone-pos { border-left-color: var(--pos); }
+    .hstat.tone-neg { border-left-color: var(--neg); }
+    .hstat.tone-warn { border-left-color: var(--warn); }
+    .hstat.tone-acc { border-left-color: var(--acc); }
+    .hl { display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--text-tertiary); }
+    .hv { display: block; margin-top: 6px; font-size: 22px; font-weight: 800; letter-spacing: -0.025em; color: var(--text-primary); }
+    .hc { display: block; margin-top: 5px; font-size: 12px; color: var(--text-tertiary); line-height: 1.45; }
+    @media (max-width: 640px) { .hstats { grid-template-columns: 1fr; } }
+
+    .srcs { border-top: 1px solid var(--border); }
+    .src {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+      text-decoration: none; transition: color 0.15s;
+    }
+    .src h3 { font-size: 15.5px; font-weight: 700; color: var(--text-primary); }
+    .src p { margin-top: 5px; font-size: 13px; color: var(--text-tertiary); max-width: 52em; line-height: 1.5; }
+    .src .open { font-size: 12.5px; font-weight: 700; color: var(--acc); white-space: nowrap; }
+    .src:hover h3 { color: var(--acc); }
+
+    .r-card { text-decoration: none; display: block; transition: background 0.15s; }
+    a.r-card:hover { background: var(--surface); }
+    a.r-card:hover h3 { color: var(--acc); }
+    .r-card h3 { transition: color 0.15s; }
+  </style>
 </Layout>

@@ -11,29 +11,25 @@ import Footer from '../components/Footer.astro';
 >
   <Navbar />
   <main class="terminal">
-    <section class="pt-14 pb-16 relative overflow-hidden min-h-[60vh] flex items-center">
-      <div class="absolute inset-0 mesh-gradient opacity-20"></div>
-      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-        <p class="reveal text-8xl sm:text-9xl font-bold text-[var(--text-primary)] tracking-[-0.04em] mb-6">404</p>
-        <h1 class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em] mb-4">
-          Page not found
-        </h1>
-        <p class="reveal text-lg text-[var(--text-tertiary)] mb-10 max-w-md mx-auto">
-          The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+    <section class="sec nf">
+      <div class="wrap">
+        <span class="eyebrow">Error 404</span>
+        <h1>Page not found.</h1>
+        <p class="lead">
+          This URL doesn't exist or has moved. The three places most people are heading are below.
         </p>
-        <div class="reveal flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="/" class="inline-block bg-acc-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-acc-600 transition-colors">
-            Back to Homepage
-          </a>
-          <a href="/faq" class="inline-block btn-secondary font-semibold px-8 py-3 rounded-lg">
-            FAQ
-          </a>
-          <a href="/knowledge-base" class="inline-block btn-secondary font-semibold px-8 py-3 rounded-lg">
-            Knowledge Base
-          </a>
+        <div class="cta-row">
+          <a class="btn btn-p" href="/">Homepage</a>
+          <a class="btn btn-l" href="/faq">FAQ</a>
+          <a class="btn btn-l" href="/knowledge-base">Knowledge base</a>
         </div>
       </div>
     </section>
   </main>
   <Footer />
+
+  <style>
+    .nf { min-height: 58vh; display: flex; align-items: center; }
+    .nf .eyebrow { display: block; margin-bottom: 14px; }
+  </style>
 </Layout>

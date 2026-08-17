@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageHero from '../../components/PageHero.astro';
+import CTABand from '../../components/CTABand.astro';
 import { getPostBySlug } from '../../data/blog-posts';
 
 const { slug } = Astro.params;
@@ -25,25 +27,32 @@ const parsedDate = new Date(post.date);
 const datePublished = Number.isNaN(parsedDate.valueOf()) ? post.date : parsedDate.toISOString();
 const primaryCta = post.primaryCta ?? { label: 'Book a Demo', href: '/book-demo' };
 
+/**
+ * Metric tone. THE BUG: `case 'green'` returned an accent-ramp step and the
+ * accent is ROSE — so every `tone: 'green'` metric, including Read time on all
+ * 24 posts, rendered dark red. Green is --pos, which is what --pos is for.
+ * Blue was a second brand colour this direction does not have; it resolves to
+ * structure. (Class names are not spelled out in this comment: Tailwind scans
+ * comment text and would re-emit the dead utilities into the bundle.)
+ */
 const toneText = (tone = 'slate') => {
   switch (tone) {
-    case 'green': return 'text-acc-700';
-    case 'blue': return 'text-ink-600';
-    case 'amber': return 'text-amber-600';
-    case 'violet': return 'text-violet-600';
-    case 'rose': return 'text-rose-600';
-    default: return 'text-[var(--text-primary)]';
+    case 'green': return 't-pos';
+    case 'rose': return 't-neg';
+    case 'amber': return 't-warn';
+    case 'violet': return 't-acc';
+    default: return 't-plain';
   }
 };
 
+/** Chip form of the same map — a ruled chip, never a translucent wash. */
 const toneBg = (tone = 'slate') => {
   switch (tone) {
-    case 'green': return 'bg-acc-500/10 border-acc-500/20 text-acc-700';
-    case 'blue': return 'bg-ink-500/10 border-ink-500/20 text-ink-700';
-    case 'amber': return 'bg-amber-500/10 border-amber-500/20 text-amber-700';
-    case 'violet': return 'bg-violet-500/10 border-violet-500/20 text-violet-700';
-    case 'rose': return 'bg-rose-500/10 border-rose-500/20 text-rose-700';
-    default: return 'bg-[var(--surface-alt)] border-[var(--border)] text-[var(--text-tertiary)]';
+    case 'green': return 'chip c-pos';
+    case 'rose': return 'chip c-neg';
+    case 'amber': return 'chip c-warn';
+    case 'violet': return 'chip c-acc';
+    default: return 'chip';
   }
 };
 
@@ -73,102 +82,52 @@ const externalAttrs = (href: string) => href.startsWith('http')
   <main class="terminal">
     <Breadcrumb items={breadcrumbs} />
     <!-- See decision-guides.astro — same pre-.terminal double offset. -->
-    <article class="relative pt-14 pb-20 sm:pt-16 sm:pb-28" aria-labelledby="post-title">
-      <header class="relative overflow-hidden pb-12 sm:pb-16">
-        <div class="mesh-gradient absolute inset-0"></div>
-        <div class="dot-grid absolute inset-0"></div>
+    <article aria-labelledby="post-title">
+      <PageHero
+        badge={post.learningTrack ?? post.category}
+        title={post.title}
+        lead={post.excerpt}
+        primaryCta={{ text: primaryCta.label, href: primaryCta.href }}
+        secondaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      >
+        <p class="meta">
+          <time datetime={datePublished}>{post.date}</time>
+          <span aria-hidden="true">·</span><span>{post.readTime}</span>
+          <span aria-hidden="true">·</span><span>{post.author.name}{post.author.role ? `, ${post.author.role}` : ''}</span>
+          <span aria-hidden="true">·</span><a href="/blog">All modules</a>
+        </p>
 
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <a
-            href="/blog"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-link)] hover:underline mb-8"
-          >
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            Back to Blog
-          </a>
-
-          <div class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-14 items-start">
-            <div>
-              <div class="flex flex-wrap items-center gap-3 mb-5">
-                <span class="inline-flex text-xs font-bold px-2.5 py-1 rounded-full border bg-[var(--surface-alt)] border-[var(--border)] text-[var(--text-tertiary)]">
-                  {post.category}
-                </span>
-                {post.learningTrack && (
-                  <span class="inline-flex text-xs font-bold px-2.5 py-1 rounded-full border bg-ink-500/10 border-ink-500/20 text-ink-700">
-                    {post.learningTrack}
-                  </span>
-                )}
-              </div>
-
-              <h1 id="post-title" class="text-3xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em] mb-6">
-                {post.title}
-              </h1>
-              <p class="text-lg sm:text-xl text-[var(--text-tertiary)] leading-relaxed max-w-3xl">
-                {post.excerpt}
-              </p>
-
-              <div class="mt-7 flex flex-wrap items-center gap-3 text-sm text-[var(--text-muted)]">
-                <time datetime={datePublished}>{post.date}</time>
-                <span aria-hidden="true">&middot;</span>
-                <span>{post.readTime}</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>{post.author.name}{post.author.role ? `, ${post.author.role}` : ''}</span>
-              </div>
-
-              <div class="mt-8 flex flex-col sm:flex-row gap-3">
-                <a
-                  href={primaryCta.href}
-                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-acc-600 transition-colors"
-                >
-                  {primaryCta.label}
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </a>
-                <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-secondary font-semibold text-base px-6 py-3.5 rounded-lg">
-                  Book a Demo
-                </a>
-              </div>
-            </div>
-
-            <aside class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6">
-              <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.14em] mb-4">Module scorecard</p>
-              <div class="space-y-4">
-                {(post.heroStats ?? [
-                  { label: 'Category', value: post.category, caption: 'Topic area', tone: 'blue' },
-                  { label: 'Read time', value: post.readTime.replace(' read', ''), caption: 'Fast scan', tone: 'green' },
-                ]).map((stat) => (
-                  <div class="flex items-start justify-between gap-4 border-b border-[var(--border-subtle)] last:border-b-0 pb-4 last:pb-0">
-                    <div class="min-w-0">
-                      <p class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-[0.08em]">{stat.label}</p>
-                      {stat.caption && <p class="mt-1 text-sm text-[var(--text-tertiary)] leading-snug">{stat.caption}</p>}
-                    </div>
-                    <p class={`text-xl font-bold text-right shrink ${toneText(stat.tone)}`}>{stat.value}</p>
-                  </div>
-                ))}
-              </div>
-
-              {post.relatedLinks && post.relatedLinks.length > 0 && (
-                <div class="mt-6 pt-5 border-t border-[var(--border)]">
-                  <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.14em] mb-3">Next links</p>
-                  <div class="flex flex-col gap-2">
-                    {post.relatedLinks.map((link) => (
-                      <a href={link.href} {...externalAttrs(link.href)} class="inline-flex items-center justify-between gap-3 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-ink-600 hover:border-ink-500/30 transition-colors">
-                        <span class="min-w-0">{link.label}</span>
-                        <span aria-hidden="true">-></span>
-                      </a>
-                    ))}
-                  </div>
+        <div class="score">
+          <div class="panel-box">
+            <div class="panel-hd"><h3>Module scorecard</h3></div>
+            {(post.heroStats ?? [
+              { label: 'Category', value: post.category, caption: 'Topic area', tone: 'slate' },
+              { label: 'Read time', value: post.readTime.replace(' read', ''), caption: 'Fast scan', tone: 'green' },
+            ]).map((stat) => (
+              <div class="sc-row">
+                <div class="sc-t">
+                  <span class="sc-l">{stat.label}</span>
+                  {stat.caption && <span class="sc-c">{stat.caption}</span>}
                 </div>
-              )}
-            </aside>
+                <span class={`sc-v num ${toneText(stat.tone)}`}>{stat.value}</span>
+              </div>
+            ))}
           </div>
-        </div>
-      </header>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {post.relatedLinks && post.relatedLinks.length > 0 && (
+            <div class="panel-box">
+              <div class="panel-hd"><h3>Next links</h3></div>
+              {post.relatedLinks.map((link) => (
+                <a href={link.href} {...externalAttrs(link.href)} class="nx">
+                  <span>{link.label}</span><span aria-hidden="true">→</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </PageHero>
+
+      <div class="wrap">
         {hasVisualBlocks && post.content.length > 0 && (
           <div class="max-w-3xl py-10">
             {post.content.map((section) => (
@@ -193,11 +152,11 @@ const externalAttrs = (href: string) => href.startsWith('http')
         {hasVisualBlocks ? (
           <div class="space-y-0">
             {visualBlocks.map((block) => (
-              <section class="py-10 sm:py-12 border-t border-[var(--border)]">
+              <section class="vb">
                 <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 mb-7">
                   <div class="max-w-3xl">
                     {block.eyebrow && (
-                      <p class="text-sm font-bold text-ink-600 uppercase tracking-[0.16em] mb-3">{block.eyebrow}</p>
+                      <p class="eyebrow eyebrow-b">{block.eyebrow}</p>
                     )}
                     <h2 class="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] tracking-[-0.02em]">{block.title}</h2>
                     {block.body && (
@@ -223,8 +182,8 @@ const externalAttrs = (href: string) => href.startsWith('http')
                     {(block.steps ?? []).map((step) => (
                       <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
                         <div class="flex items-center justify-between gap-4 mb-4">
-                          <span class="text-sm font-bold text-ink-600">{step.label}</span>
-                          {step.metric && <span class="text-xs font-bold rounded-full bg-[var(--surface-alt)] border border-[var(--border)] px-2 py-1 text-[var(--text-muted)]">{step.metric}</span>}
+                          <span class="sl">{step.label}</span>
+                          {step.metric && <span class="chip">{step.metric}</span>}
                         </div>
                         <h3 class="text-lg font-bold text-[var(--text-primary)] leading-snug">{step.title}</h3>
                         <p class="mt-3 text-sm text-[var(--text-tertiary)] leading-relaxed">{step.body}</p>
@@ -262,7 +221,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                       <div class="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
                         <div class="flex items-start justify-between gap-4">
                           <h3 class="text-lg font-bold text-[var(--text-primary)]">{channel.name}</h3>
-                          <span class={`inline-flex text-xs font-bold px-2 py-1 rounded-full border ${toneBg(channel.tone)}`}>Channel</span>
+                          <span class={`${toneBg(channel.tone)}`}>Channel</span>
                         </div>
                         <div class="mt-5 grid sm:grid-cols-3 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)]">
                           <div class="bg-[var(--surface)] p-3">
@@ -284,7 +243,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                 )}
 
                 {block.type === 'report-preview' && (
-                  <div class="rounded-2xl border border-ink-500/20 bg-ink-500/5 p-6 sm:p-8">
+                  <div class="panel-box rp p-6 sm:p-8">
                     <div class="grid lg:grid-cols-[1fr_280px] gap-6 items-center">
                       <div>
                         <div class="grid sm:grid-cols-2 gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--border)] mb-6">
@@ -297,7 +256,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                           ))}
                         </div>
                         {block.cta && (
-                          <a href={block.cta.href} class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-6 py-3.5 rounded-lg hover:bg-acc-600 transition-colors">
+                          <a href={block.cta.href} class="btn btn-p">
                             {block.cta.label}
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -309,13 +268,13 @@ const externalAttrs = (href: string) => href.startsWith('http')
                         <p class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.12em]">Report preview</p>
                         <div class="mt-4 h-28 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] p-3 flex flex-col justify-between">
                           <div class="flex items-center justify-between gap-3">
-                            <span class="h-2.5 w-20 rounded-full bg-ink-500/40"></span>
-                            <span class="h-2.5 w-12 rounded-full bg-acc-500/50"></span>
+                            <span class="h-2.5 w-20 rounded-full bg-[var(--text-tertiary)]"></span>
+                            <span class="h-2.5 w-12 rounded-full bg-[var(--acc)]"></span>
                           </div>
                           <div class="space-y-2">
-                            <span class="block h-2 rounded-full bg-amber-500/40 w-11/12"></span>
-                            <span class="block h-2 rounded-full bg-rose-500/30 w-8/12"></span>
-                            <span class="block h-2 rounded-full bg-violet-500/30 w-10/12"></span>
+                            <span class="block h-2 rounded-full bg-[var(--warn)] w-11/12"></span>
+                            <span class="block h-2 rounded-full bg-[var(--neg)] w-8/12"></span>
+                            <span class="block h-2 rounded-full bg-[var(--text-faint)] w-10/12"></span>
                           </div>
                         </div>
                       </div>
@@ -324,10 +283,10 @@ const externalAttrs = (href: string) => href.startsWith('http')
                 )}
 
                 {block.type === 'takeaway' && (
-                  <div class="rounded-2xl border border-acc-500/20 bg-acc-500/5 p-6 sm:p-8">
+                  <div class="panel-box tk">
                     <div class="grid lg:grid-cols-[280px_1fr] gap-6">
                       <div>
-                        <p class="text-sm font-bold text-acc-700 uppercase tracking-[0.14em]">Owner takeaway</p>
+                        <p class="eyebrow">Owner takeaway</p>
                         {block.body && <p class="mt-3 text-lg font-semibold text-[var(--text-primary)] leading-relaxed">{block.body}</p>}
                       </div>
                       <div class="grid sm:grid-cols-3 gap-3">
@@ -346,7 +305,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
                     {block.links && block.links.length > 0 && (
                       <div class="flex flex-wrap gap-2">
                         {block.links.map((link) => (
-                          <a href={link.href} {...externalAttrs(link.href)} class="inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-ink-600 hover:border-ink-500/30 transition-colors">
+                          <a href={link.href} {...externalAttrs(link.href)} class="nxl">
                             <span class="min-w-0">{link.label}</span>
                             <span aria-hidden="true">-></span>
                           </a>
@@ -393,7 +352,7 @@ const externalAttrs = (href: string) => href.startsWith('http')
             <div class="flex flex-col sm:flex-row gap-3">
               <a
                 href={primaryCta.href}
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors"
+                class="btn btn-p"
               >
                 {primaryCta.label}
               </a>
@@ -410,10 +369,59 @@ const externalAttrs = (href: string) => href.startsWith('http')
     </article>
   </main>
   <Footer />
-</Layout>
+  <style>
+    .meta {
+      margin-top: 18px; display: flex; flex-wrap: wrap; gap: 9px;
+      font-size: 12.5px; color: var(--text-tertiary);
+    }
+    .meta a { color: var(--acc); font-weight: 600; text-decoration: none; }
 
-<style>
-  .prose-blog p {
-    color: var(--text-secondary);
-  }
-</style>
+    .score { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 30px; max-width: 62em; }
+    @media (max-width: 720px) { .score { grid-template-columns: 1fr; } }
+    .sc-row {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      padding: 11px 14px; border-bottom: 1px solid var(--border);
+    }
+    .sc-row:last-child { border-bottom: 0; }
+    .sc-l { display: block; font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: var(--text-tertiary); }
+    .sc-c { display: block; margin-top: 3px; font-size: 12px; color: var(--text-tertiary); }
+    .sc-v { font-size: 17px; font-weight: 800; color: var(--text-primary); text-align: right; white-space: nowrap; }
+    .nx {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 11px 14px; border-bottom: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--text-secondary); text-decoration: none;
+    }
+    .nx:last-child { border-bottom: 0; }
+    .nx:hover { color: var(--acc); background: var(--surface-alt); }
+
+    .vb { padding: 44px 0; border-top: 1px solid var(--border); }
+    .eyebrow-b { display: block; margin-bottom: 10px; }
+    .sl { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--acc); }
+
+    .chip {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-tertiary); border: 1px solid var(--border);
+      border-radius: 2px; padding: 3px 7px; white-space: nowrap;
+    }
+    .c-pos { color: var(--pos); border-color: var(--pos-line); }
+    .c-neg { color: var(--neg); border-color: var(--neg); }
+    .c-warn { color: var(--warn); border-color: var(--warn); }
+    .c-acc { color: var(--acc); border-color: var(--acc-line); }
+
+    .t-pos { color: var(--pos) !important; }
+    .t-neg { color: var(--neg) !important; }
+    .t-warn { color: var(--warn) !important; }
+    .t-acc { color: var(--acc) !important; }
+
+    .rp, .tk { padding: 24px; }
+    .tk { border-left: 2px solid var(--acc); }
+    .nxl {
+      display: inline-flex; max-width: 100%; align-items: center; gap: 8px;
+      border: 1px solid var(--border); border-radius: 3px;
+      background: var(--surface); padding: 7px 12px;
+      font-size: 13px; font-weight: 600; color: var(--acc); text-decoration: none;
+    }
+    .nxl:hover { border-color: var(--acc); }
+  </style>
+</Layout>

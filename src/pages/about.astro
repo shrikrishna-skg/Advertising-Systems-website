@@ -4,36 +4,45 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FAQSection from '../components/FAQSection.astro';
+import PageHero from '../components/PageHero.astro';
+import CTABand from '../components/CTABand.astro';
 import { aboutFaqs } from '../data/page-faqs';
 
 const breadcrumbs = [{ name: 'About', href: '/about' }];
 
 const values = [
   {
-    icon: 'innovation',
-    title: 'Innovation',
-    desc: 'We push the boundaries of what advertising technology can do, leveraging AI and automation to stay ahead of the curve.',
-  },
-  {
-    icon: 'customer',
-    title: 'Customer Success',
-    desc: 'Your growth is our growth. Every feature we build, every optimization we make, is driven by real customer outcomes.',
-  },
-  {
-    icon: 'data',
-    title: 'Data-Driven',
-    desc: 'Decisions backed by data, not guesswork. We process millions of data points so you can act with confidence.',
-  },
-  {
-    icon: 'transparency',
+    n: '01',
     title: 'Transparency',
-    desc: 'No black boxes. Full visibility into how your budget is spent, how decisions are made, and where every dollar goes.',
+    desc: 'No black box. Every automated decision is logged with its reason and its amount, and you can read the log back the next morning.',
+  },
+  {
+    n: '02',
+    title: 'Proof over claims',
+    desc: 'We publish one reconciled platform export rather than a wall of aggregate numbers nobody can check.',
+  },
+  {
+    n: '03',
+    title: 'Data-driven',
+    desc: 'Decisions come from the signals in your own connected accounts, not from a benchmark taken from someone else\'s business.',
+  },
+  {
+    n: '04',
+    title: 'Customer outcomes',
+    desc: 'Every feature has to survive the same question: does this make the next budget decision easier to get right?',
   },
 ];
 
+/**
+ * Sibling products. Both non-Advertising entries previously pointed at
+ * multisystems.ai rather than their own canonical hosts, so the family links
+ * resolved to the hub instead of the product. Canonical hosts per the family
+ * registry: hotelsystems.ai and reputationsystems.ai are APEX (no www DNS);
+ * advertisingsystems.ai is www.
+ */
 const ecosystem = [
-  { name: 'HotelSystems', desc: 'Property management and booking optimization', href: 'https://multisystems.ai' },
-  { name: 'ReputationSystems', desc: 'Review management and brand monitoring', href: 'https://multisystems.ai' },
+  { name: 'HotelSystems', desc: 'Property management and booking optimisation', href: 'https://hotelsystems.ai' },
+  { name: 'ReputationSystems', desc: 'Review management and brand monitoring', href: 'https://reputationsystems.ai' },
   { name: 'Advertising Systems', desc: 'AI-powered advertising management', href: '/', active: true },
 ];
 ---
@@ -61,220 +70,132 @@ const ecosystem = [
   <Navbar />
   <main class="terminal">
     <Breadcrumb items={breadcrumbs} />
-    <!-- Hero -->
-    <section class="relative pt-14 pb-16 sm:pt-16 sm:pb-20 overflow-hidden" aria-labelledby="about-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
 
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-8">
-          <span class="w-2 h-2 bg-[var(--text-muted)] rounded-full animate-pulse"></span>
-          <span class="text-sm font-medium text-[var(--text-tertiary)]">Built by Multisystems</span>
+    <PageHero
+      badge="Built by Multisystems"
+      title="Simplifying advertising"
+      titleAccent="for every business."
+      lead="One mission: make advertising spend legible. Every channel on one ledger, every automated decision written down, and one verified export instead of a page of claims."
+      primaryCta={{ text: 'Book a demo', href: '/book-demo' }}
+      secondaryCta={{ text: 'Read the verified case', href: '/case-studies' }}
+    />
+
+    <!-- 01 · Mission -->
+    <section class="sec" aria-labelledby="mission-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">01</span>
+          <div>
+            <h2 id="mission-heading">Why this exists.</h2>
+            <p class="sub">
+              Advertising should drive growth, not drain the week. Most operators lose budget to
+              fragmented tools, manual reconciliation and reporting that cannot be checked.
+            </p>
+          </div>
         </div>
-
-        <h1 id="about-heading" class="reveal text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Simplifying advertising <span class="text-[var(--text-primary)]">for every business.</span>
-        </h1>
-        <p class="reveal mt-6 text-lg sm:text-xl text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Advertising Systems was founded with a single mission: make advertising profitable and effortless for businesses of every size.
+        <div class="cardgrid cols-2">
+          <div>
+            <div class="cn">The problem</div>
+            <h3>Five platforms, five versions of the truth</h3>
+            <p>
+              Each channel reports on itself, in its own definitions. Added up, the channels claim more
+              conversions than the business actually had — so nobody trusts the total, and the budget
+              decision gets made on instinct.
+            </p>
+          </div>
+          <div>
+            <div class="cn">The answer</div>
+            <h3>One ledger, one set of definitions</h3>
+            <p>
+              Campaign management, optimisation and attribution reading and writing the same connected
+              accounts. Nothing to reconcile between them, because there is only one of them.
+            </p>
+          </div>
+        </div>
+        <p class="fine">
+          We publish reconciled platform exports rather than aggregate claims — <a href="/case-studies">see the verified case</a>.
         </p>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Mission -->
-    <section class="py-28" aria-labelledby="mission-heading">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-16 items-center">
+    <!-- 02 · Values -->
+    <section class="sec soft" aria-labelledby="values-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">02</span>
           <div>
-            <h2 id="mission-heading" class="reveal text-3xl sm:text-4xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-              Our <span class="text-[var(--text-primary)]">mission</span>
-            </h2>
-            <p class="reveal mt-6 text-[var(--text-tertiary)] leading-relaxed">
-              Advertising should drive growth, not drain resources. Too many businesses waste budget on fragmented tools, manual processes, and opaque reporting that makes it impossible to know what's working.
-            </p>
-            <p class="reveal mt-4 text-[var(--text-tertiary)] leading-relaxed">
-              We built Advertising Systems to change that. By unifying campaign management, AI optimization, and real-time analytics into a single platform, we make advertising profitable and effortless for every business.
-            </p>
-          </div>
-          <div class="reveal glass rounded-2xl p-8">
-            <div class="space-y-6">
-              <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold text-[var(--text-primary)]">Verified casework</div>
-                  <div class="text-sm text-[var(--text-muted)]">We publish reconciled platform exports, not aggregate claims — <a href="/case-studies" class="link-secondary">see the case</a></div>
-                </div>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold text-[var(--text-primary)]">Cross-channel teams</div>
-                  <div class="text-sm text-[var(--text-muted)]">Use us to unify advertising workflows</div>
-                </div>
-              </div>
-              <div class="flex items-start gap-4">
-                <div class="w-10 h-10 rounded-lg bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-semibold text-[var(--text-primary)]">30+ countries</div>
-                  <div class="text-sm text-[var(--text-muted)]">Served across the globe</div>
-                </div>
-              </div>
-            </div>
+            <h2 id="values-heading">What we hold to.</h2>
           </div>
         </div>
-      </div>
-    </section>
-
-    <div class="section-line"></div>
-
-    <!-- Values -->
-    <section class="py-28" aria-labelledby="values-heading">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 id="values-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            What <span class="text-[var(--text-primary)]">drives us</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto">
-            The principles that guide every product decision and customer interaction.
-          </p>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cardgrid cols-2">
           {values.map((value) => (
-            <div class="reveal glass hover-glow rounded-2xl p-8 text-center">
-              <div class="w-12 h-12 rounded-xl bg-[var(--surface-alt)] border border-[var(--border)] flex items-center justify-center mx-auto mb-5">
-                {value.icon === 'innovation' && (
-                  <svg class="w-6 h-6 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-                  </svg>
-                )}
-                {value.icon === 'customer' && (
-                  <svg class="w-6 h-6 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                  </svg>
-                )}
-                {value.icon === 'data' && (
-                  <svg class="w-6 h-6 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                  </svg>
-                )}
-                {value.icon === 'transparency' && (
-                  <svg class="w-6 h-6 text-[var(--color-link)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                )}
-              </div>
-              <h3 class="text-lg font-bold text-[var(--text-primary)] mb-2">{value.title}</h3>
-              <p class="text-sm text-[var(--text-tertiary)] leading-relaxed">{value.desc}</p>
+            <div>
+              <div class="cn">{value.n}</div>
+              <h3>{value.title}</h3>
+              <p>{value.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- Product Ecosystem -->
-    <section class="py-28" aria-labelledby="ecosystem-heading">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <div class="reveal inline-flex items-center gap-2 glass rounded-full px-5 py-2 mb-6">
-            <span class="text-sm font-medium text-[var(--text-tertiary)]">Part of the Multisystems Suite</span>
+    <!-- 03 · Family -->
+    <section class="sec" aria-labelledby="ecosystem-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">03</span>
+          <div>
+            <h2 id="ecosystem-heading">Part of the Multisystems suite.</h2>
+            <p class="sub">
+              Advertising Systems is one product in the <a href="https://www.multisystems.ai">Multisystems</a> family,
+              built to share accounts and definitions rather than sit beside each other.
+            </p>
           </div>
-          <h2 id="ecosystem-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-            One ecosystem, <span class="text-[var(--text-primary)]">infinite possibilities.</span>
-          </h2>
-          <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto">
-            Advertising Systems is part of the <a href="https://multisystems.ai" class="text-[var(--color-link)] hover:text-[var(--color-link)] transition-colors font-medium">Multisystems</a> family of products, designed to work together seamlessly.
-          </p>
         </div>
-
-        <div class="grid sm:grid-cols-3 gap-6">
+        <div class="cardgrid">
           {ecosystem.map((product) => (
-            <a href={product.href} class={`reveal glass hover-glow rounded-2xl p-6 text-center block transition-all duration-300 ${product.active ? 'border border-[var(--border)]' : ''}`}>
-              <h3 class={`text-lg font-bold mb-2 ${product.active ? 'text-[var(--text-primary)]' : 'text-[var(--text-primary)]'}`}>{product.name}</h3>
-              <p class="text-sm text-[var(--text-tertiary)]">{product.desc}</p>
-              {product.active && (
-                <span class="inline-block mt-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-[var(--surface-alt)] text-[var(--text-secondary)]">You are here</span>
-              )}
+            <a href={product.href} class="eco">
+              <h3>{product.name}</h3>
+              <p>{product.desc}</p>
+              {product.active && <span class="here">You are here</span>}
             </a>
           ))}
         </div>
       </div>
     </section>
 
-    <div class="section-line"></div>
-
-    <!-- FAQ -->
-    <FAQSection title="Common questions about us" faqs={aboutFaqs} name="about-faq" />
-
-    <div class="section-line"></div>
-
-    <!-- Team Vision -->
-    <section class="py-28" aria-labelledby="vision-heading">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="vision-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-[-0.03em]">
-          A team with a <span class="text-[var(--text-primary)]">shared vision.</span>
-        </h2>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          We're a distributed team of engineers, data scientists, marketers, and designers united by a common belief: advertising technology should empower businesses, not overwhelm them.
-        </p>
-        <p class="reveal mt-4 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Every member of our team brings deep expertise from the world's leading ad platforms and technology companies. Together, we're building the tools we always wished existed.
-        </p>
-        <div class="reveal mt-8">
-          <a href="/careers" class="inline-flex items-center gap-2 text-[var(--color-link)] hover:text-[var(--color-link)] font-semibold transition-colors">
-            Join our team
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
+    <!-- 04 · Team -->
+    <section class="sec soft" aria-labelledby="vision-heading">
+      <div class="wrap">
+        <div class="sec-hd">
+          <span class="no" aria-hidden="true">04</span>
+          <div>
+            <h2 id="vision-heading">A distributed team with one standard.</h2>
+            <p class="sub">
+              Engineers, data scientists and operators who have run this work from the other side of the
+              dashboard. We are building the tool we wanted while doing that job.
+            </p>
+          </div>
         </div>
+        <p class="fine"><a href="/careers">Open roles →</a></p>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="relative py-32 overflow-hidden" aria-labelledby="about-cta-heading">
-      <div class="mesh-gradient absolute inset-0"></div>
-      <div class="dot-grid absolute inset-0"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[min(400px,60vh)] bg-[var(--hero-glow)] rounded-full blur-[128px]"></div>
-
-      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 id="about-cta-heading" class="reveal text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] leading-tight tracking-[-0.03em]">
-          Ready to see what we've <span class="text-[var(--text-primary)]">built for you?</span>
-        </h2>
-        <p class="reveal mt-6 text-lg text-[var(--text-tertiary)] max-w-2xl mx-auto leading-relaxed">
-          Book a personalized demo and discover how Advertising Systems can transform your advertising performance.
-        </p>
-        <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/book-demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-acc-500 text-white font-semibold text-base px-8 py-3.5 rounded-lg hover:bg-acc-600 transition-colors shadow-lg ">
-            Book Your Demo
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-          <a href="/contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-[var(--text-secondary)] font-semibold text-base px-8 py-3.5 rounded-lg border border-[var(--border)] hover:border-[var(--border)] link-secondary transition-colors">
-            Contact Us
-          </a>
-        </div>
-      </div>
-    </section>
+    <FAQSection title="Common questions about us" faqs={aboutFaqs} name="about-faq" no="05" soft={false} />
+    <CTABand />
   </main>
   <Footer />
+
+  <style>
+    .sec-hd .sub a { color: var(--acc); font-weight: 600; text-decoration: none; }
+    .eco { text-decoration: none; display: block; transition: background 0.15s; }
+    a.eco:hover { background: var(--surface-alt); }
+    a.eco:hover h3 { color: var(--acc); }
+    .eco h3 { transition: color 0.15s; }
+    .here {
+      display: inline-block; margin-top: 12px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--acc); border: 1px solid var(--acc-line); border-radius: 2px; padding: 2px 6px;
+    }
+  </style>
 </Layout>

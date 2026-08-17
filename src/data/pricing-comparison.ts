@@ -66,10 +66,20 @@ export const planFeatureMatrix: PlanFeatureRow[] = [
   { feature: 'Additional OTA and ad network rollout review', launch: false, growth: true, scale: true, enterprise: true },
   { feature: 'Real-time sync (every 15 min)', launch: true, growth: true, scale: true, enterprise: true },
   { feature: 'Email & chat support', launch: true, growth: true, scale: true, enterprise: true },
-  { feature: 'REST API access', launch: false, growth: true, scale: true, enterprise: true },
-  { feature: 'Custom integrations (CRM, PMS, BI)', launch: false, growth: false, scale: true, enterprise: true },
-  { feature: 'Dedicated customer success', launch: false, growth: false, scale: true, enterprise: true },
-  { feature: 'SSO, custom contracts, SLA', launch: false, growth: false, scale: false, enterprise: true },
+  // Third and most consequential REST API claim: this matrix is what someone
+  // picks a plan from. `formatCell` passes strings through, so the row now says
+  // Planned instead of Yes rather than disappearing — a buyer who was counting
+  // on it can still see it is coming, and cannot mistake it for shipped.
+  { feature: 'REST API access', launch: '—', growth: 'Planned', scale: 'Planned', enterprise: 'Planned' },
+  // REMOVED 2026-08-16 (owner: "we don't do it"):
+  //   'Custom integrations (CRM, PMS, BI)'  — scale + enterprise
+  //   'Dedicated customer success'          — scale + enterprise
+  //   'SSO, custom contracts, SLA'          — enterprise
+  // Three service tiers nobody staffs, in the table a buyer picks a plan from.
+  // Deleted rather than marked Planned: unlike the REST API these are not on a
+  // roadmap, and a Planned label would just be the same promise with a delay.
+  // Enterprise's real difference is account scope and a quote, which the
+  // 'Ad accounts included' row already states.
   { feature: 'Guided onboarding', launch: true, growth: true, scale: true, enterprise: true },
 ];
 
@@ -123,6 +133,6 @@ export const pricingPageFaqs = [
   },
   {
     question: 'Why is Enterprise "Custom"?',
-    answer: 'Enterprise is for unlimited ad accounts, dedicated success, SSO, custom SLAs, and tailored contracts. Book an Enterprise demo so we can quote based on your account scope, integration needs, and rollout requirements.',
+    answer: 'Enterprise is for unlimited ad accounts and unlimited seats, priced to your scope rather than off the standard tiers. It is the same product as the other plans — there is no hidden enterprise feature set behind it. Book an Enterprise demo and we will quote against your account count, channels, and rollout.',
   },
 ];
