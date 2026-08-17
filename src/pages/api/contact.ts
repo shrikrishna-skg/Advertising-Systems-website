@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getPostHogServer } from '../../lib/posthog-server';
-import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse } from '../../lib/server-security';
+import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse, sanitizeText } from '../../lib/server-security';
 import { sendIntakeConfirmationEmail } from '../../lib/intake-confirmation-email';
 import {
   ADVERTISING_SYSTEMS_PRODUCT,
@@ -14,11 +14,12 @@ import {
 const MAX_BODY_BYTES = 12 * 1024;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/** Multi-line fields keep their newlines; every other field loses all control chars. */
+const MULTILINE_FIELDS = new Set(['message']);
+
 function getString(body: Record<string, unknown>, key: string, limit: number) {
-  const value = body[key];
-  if (typeof value !== 'string') return undefined;
-  const trimmed = value.trim();
-  return trimmed ? trimmed.slice(0, limit) : undefined;
+  const cleaned = sanitizeText(body[key], { multiline: MULTILINE_FIELDS.has(key) });
+  return cleaned ? cleaned.slice(0, limit) : undefined;
 }
 
 async function readJsonBody(request: Request) {
