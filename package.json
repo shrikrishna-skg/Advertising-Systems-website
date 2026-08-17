@@ -10,7 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "indexnow": "node scripts/indexnow-ping.mjs"
+    "indexnow": "node scripts/indexnow-ping.mjs",
+    "check:input": "node scripts/check-input-sanitize.ts",
+    "check:mail": "node scripts/check-mail-headers.ts",
+    "check": "npm run check:input && npm run check:mail"
   },
   "dependencies": {
     "@astrojs/node": "^10.1.0",
@@ -26,7 +29,7 @@
     "googleapis": "^171.4.0",
     "html-escaper": "^3.0.3",
     "lucide-react": "^0.577.0",
-    "nodemailer": "^8.0.7",
+    "nodemailer": "^9.0.5",
     "posthog-node": "^5.34.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -44,7 +47,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@types/nodemailer": "^8.0.0",
+    "@types/nodemailer": "^8.0.1",
     "typescript": "^6.0.3"
   }
 }

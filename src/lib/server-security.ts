@@ -1,3 +1,38 @@
+/**
+ * Control characters are stripped from every submitted field before it is used.
+ *
+ * WHY: `company` from the demo form is interpolated into a mail Subject header
+ * (`demo-internal-notification-email.ts`), and `name` into a display name. A
+ * CR/LF inside either would terminate that header and let the rest of the value
+ * be read as new headers — the classic header-injection shape. Nodemailer very
+ * likely neutralises this itself (its published CVE covers `List-*` headers,
+ * not Subject), so this is defence in depth, not a patch for a known hole. It
+ * holds regardless of what the mail library does, which is the point: the input
+ * boundary is the part we control.
+ *
+ * The four API routes each had their own `getString` doing trim + length cap
+ * and nothing else. They all call through here now, so the next change to this
+ * rule happens once.
+ *
+ * Replaced with a SPACE rather than removed, deliberately: "Acme\r\nBcc: x"
+ * becomes "Acme  Bcc: x" — visibly odd in the inbox — instead of the silent
+ * "AcmeBcc: x", which reads like a legitimate company name.
+ */
+const CONTROL_CHARS = /[\u0000-\u001F\u007F-\u009F]/g;
+/** Same, but keeps U+000A so textarea bodies survive intact. */
+const CONTROL_CHARS_KEEP_LF = /[\u0000-\u0009\u000B-\u001F\u007F-\u009F]/g;
+
+export function sanitizeText(value: unknown, options: { multiline?: boolean } = {}) {
+  if (typeof value !== 'string') return undefined;
+
+  const cleaned = options.multiline
+    ? value.replace(/\r\n?/g, '\n').replace(CONTROL_CHARS_KEEP_LF, ' ')
+    : value.replace(CONTROL_CHARS, ' ');
+
+  const trimmed = cleaned.trim();
+  return trimmed || undefined;
+}
+
 type RateLimitBucket = {
   count: number;
   resetAt: number;

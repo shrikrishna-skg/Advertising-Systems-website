@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse } from '../../lib/server-security';
+import { checkRateLimit, getClientIp, isAllowedOrigin, jsonResponse, sanitizeText } from '../../lib/server-security';
 import { getPostHogServer } from '../../lib/posthog-server';
 import {
   getDemoInternalNotifyEmail,
@@ -42,14 +42,14 @@ const FIELD_LIMITS = {
   message: 1200,
 };
 
-function getString(body: Record<string, unknown>, key: string, limit: number) {
-  const value = body[key];
-  if (typeof value !== 'string') return { value: undefined, error: undefined };
+/** Multi-line fields keep their newlines; every other field loses all control chars. */
+const MULTILINE_FIELDS = new Set(['message']);
 
-  const trimmed = value.trim();
-  if (!trimmed) return { value: undefined, error: undefined };
-  if (trimmed.length > limit) return { value: undefined, error: `${key} is too long` };
-  return { value: trimmed, error: undefined };
+function getString(body: Record<string, unknown>, key: string, limit: number) {
+  const cleaned = sanitizeText(body[key], { multiline: MULTILINE_FIELDS.has(key) });
+  if (!cleaned) return { value: undefined, error: undefined };
+  if (cleaned.length > limit) return { value: undefined, error: `${key} is too long` };
+  return { value: cleaned, error: undefined };
 }
 
 /** Create a demo request event on Google Calendar if credentials are configured.
