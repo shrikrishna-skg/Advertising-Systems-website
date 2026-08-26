@@ -91,27 +91,29 @@ const kpis = [
           <h2>Channel positions — last 30 days</h2>
           <a class="illus" href="#case" title="Jump to the verified single-channel export">Illustrative — see real data ↓</a>
         </div>
-        <table class="pos">
-          <thead>
-            <tr><th>Channel</th><th class="r">Spend</th><th class="r">ROAS</th><th class="r">Δ</th></tr>
-          </thead>
-          <tbody>
-            {positions.map(({ channel, spend, roas, delta, dir }) => (
+        <div class="table-scroll" role="region" aria-label="Channel positions table; scroll horizontally for all columns" tabindex="0">
+          <table class="pos">
+            <thead>
+              <tr><th>Channel</th><th class="r">Spend</th><th class="r">ROAS</th><th class="r">Δ</th></tr>
+            </thead>
+            <tbody>
+              {positions.map(({ channel, spend, roas, delta, dir }) => (
+                <tr>
+                  <td class="ch">{channel}</td>
+                  <td class="r num">{spend}</td>
+                  <td class="r num">{roas}</td>
+                  <td class={`r ${dir}`}>{delta}</td>
+                </tr>
+              ))}
               <tr>
-                <td class="ch">{channel}</td>
-                <td class="r num">{spend}</td>
-                <td class="r num">{roas}</td>
-                <td class={`r ${dir}`}>{delta}</td>
+                <td class="ch">Portfolio</td>
+                <td class="r num">$58,790</td>
+                <td class="r num">4.6×</td>
+                <td class="r"><span class="bar-mini"><i style="width:76%"></i></span></td>
               </tr>
-            ))}
-            <tr>
-              <td class="ch">Portfolio</td>
-              <td class="r num">$58,790</td>
-              <td class="r num">4.6×</td>
-              <td class="r"><span class="bar-mini"><i style="width:76%"></i></span></td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -222,17 +224,28 @@ const kpis = [
   }
 
   /* -- position blotter -- */
-  /* The table is allowed to be wider than the phone; the PAGE is not.
-     Without this the blotter set document width at 390px and clipped the hero
-     copy off the right edge — content loss, not just a scrollbar. */
-  .blotter { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .blotter table.pos { min-width: 460px; }
   .blotter {
     border: 1px solid var(--border);
     background: var(--surface-raised);
     border-radius: 4px;
     overflow: hidden;
   }
+  /* The table can be wider than a phone, but its header and the page remain
+     fixed. A focusable inner region gives touch and keyboard users every
+     column without letting the table widen the document. */
+  .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-faint) var(--surface-alt);
+  }
+  .table-scroll:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-track { background: var(--surface-alt); }
+  .table-scroll::-webkit-scrollbar-thumb { background: var(--text-faint); border-radius: 4px; }
+  .blotter table.pos { min-width: 460px; }
   .blotter-hd {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     padding: 11px 14px;

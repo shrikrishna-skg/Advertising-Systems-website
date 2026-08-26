@@ -140,8 +140,11 @@ const sheetLinks = [
 
     <div class="t-navmid">
       <div class="t-menu">
-        <button class="t-trigger" type="button" aria-expanded="false" aria-haspopup="true">Platform <i aria-hidden="true">▼</i></button>
-        <div class="t-panel">
+        <button class="t-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="t-platform-panel">
+          Platform
+          <svg class="t-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m1 1.5 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+        <div class="t-panel" id="t-platform-panel">
           <div class="t-panel-in t-panel-wide">
             <div class="t-panel-col">
               {platformLinks.map((item) => (
@@ -182,8 +185,11 @@ const sheetLinks = [
       <a href="/integrations">Channels</a>
 
       <div class="t-menu">
-        <button class="t-trigger" type="button" aria-expanded="false" aria-haspopup="true">Resources <i aria-hidden="true">▼</i></button>
-        <div class="t-panel">
+        <button class="t-trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="t-resources-panel">
+          Resources
+          <svg class="t-chevron" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="m1 1.5 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+        <div class="t-panel" id="t-resources-panel">
           <div class="t-panel-in t-panel-res">
             {resourceCols.map((col) => (
               <div class="t-panel-col">
@@ -228,18 +234,22 @@ const sheetLinks = [
         <svg class="t-ti t-ti-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>
       </button>
 
-      <button class="t-iconbtn t-burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="t-sheet" id="t-burger">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+      <button class="t-iconbtn t-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="t-sheet" id="t-burger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path class="t-burger-line t-burger-line-top" d="M4 7h16" stroke-linecap="round" />
+          <path class="t-burger-line t-burger-line-mid" d="M4 12h16" stroke-linecap="round" />
+          <path class="t-burger-line t-burger-line-bottom" d="M4 17h16" stroke-linecap="round" />
+        </svg>
       </button>
     </div>
   </nav>
 
-  <div class="t-sheet" id="t-sheet">
+  <nav class="t-sheet" id="t-sheet" aria-label="Mobile navigation" aria-hidden="true">
     {sheetLinks.map((link) => <a href={link.href}>{link.text}</a>)}
     <a href={LOGIN_URL}>Log in</a>
     <a class="t-btn t-btn-g" href="/pricing">Get Started</a>
     <a class="t-btn t-btn-p" href="/book-demo">Book a demo</a>
-  </div>
+  </nav>
 </header>
 
 <style>
@@ -300,16 +310,20 @@ const sheetLinks = [
     display: flex; align-items: center; gap: 5px;
     cursor: pointer; background: none; border: 0; font-family: inherit;
   }
-  .t-trigger i { font-style: normal; font-size: 0.6em; color: var(--text-tertiary); transition: transform 0.15s; }
-  .t-menu:hover .t-trigger, .t-menu:focus-within .t-trigger { color: var(--text-primary); }
-  .t-menu:hover .t-trigger i, .t-menu:focus-within .t-trigger i { transform: rotate(180deg); }
+  .t-chevron {
+    width: 10px; height: 7px; color: var(--text-tertiary);
+    transition: transform 0.15s ease;
+  }
+  .t-menu.open .t-trigger { color: var(--text-primary); }
+  .t-menu.open .t-chevron { transform: rotate(180deg); }
 
   .t-panel {
     position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
     padding-top: 8px; z-index: 70;
-    visibility: hidden; opacity: 0; transition: opacity 0.15s;
+    visibility: hidden; opacity: 0; pointer-events: none;
+    transition: opacity 0.15s ease;
   }
-  .t-menu:hover .t-panel, .t-menu:focus-within .t-panel { visibility: visible; opacity: 1; }
+  .t-menu.open .t-panel { visibility: visible; opacity: 1; pointer-events: auto; }
   /* The dropdown is the ONE shadowed surface in the family. */
   .t-panel-in {
     border: 1px solid var(--border);
@@ -403,7 +417,7 @@ const sheetLinks = [
     height: 36px; padding: 0 15px;
     border-radius: 3px; border: 1.5px solid transparent;
     cursor: pointer; font-family: inherit; white-space: nowrap;
-    transition: background 0.16s, border-color 0.16s, color 0.16s;
+    transition: border-color 0.16s ease;
   }
   .t-btn-p { background: var(--acc-btn); color: var(--acc-btn-fg, #fff); }
   .t-btn-p:hover { background: var(--acc-btn-h); color: var(--acc-btn-fg, #fff); }
@@ -419,6 +433,21 @@ const sheetLinks = [
   .t-iconbtn:active { background: var(--surface-alt); }
   .t-iconbtn svg { width: 17px; height: 17px; }
   .t-burger { display: none; }
+  .t-burger-line {
+    transform-box: view-box;
+    transform-origin: center;
+    transition: transform 0.16s ease, opacity 0.12s ease;
+  }
+  .t-burger[aria-expanded="true"] .t-burger-line-top { transform: translateY(5px) rotate(45deg); }
+  .t-burger[aria-expanded="true"] .t-burger-line-mid { opacity: 0; }
+  .t-burger[aria-expanded="true"] .t-burger-line-bottom { transform: translateY(-5px) rotate(-45deg); }
+
+  .t-trigger:focus-visible,
+  .t-iconbtn:focus-visible,
+  .t-sheet a:focus-visible {
+    outline: 3px solid var(--acc);
+    outline-offset: 3px;
+  }
 
   /* Which theme icon shows is pure CSS off [data-theme-pref] — never a JS
      render, so it cannot flash or disagree with the attribute. It reports the
@@ -430,20 +459,42 @@ const sheetLinks = [
 
   .t-sheet {
     display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: calc(100vh - var(--t-header-h));
+    height: calc(100dvh - var(--t-header-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 10px 28px 20px;
+    padding: 10px 28px max(20px, env(safe-area-inset-bottom));
   }
   .t-sheet.open { display: block; }
-  .t-sheet a {
+  .t-sheet a:not(.t-btn) {
     display: block; text-decoration: none; font-size: 15.5px; font-weight: 600;
     color: var(--text-secondary); padding: 11px 0; border-bottom: 1px solid var(--border);
   }
-  .t-sheet .t-btn { width: 100%; margin-top: 12px; height: 46px; font-size: 15px; }
+  .t-sheet a:not(.t-btn):hover { color: var(--text-primary); background: var(--surface-alt); }
+  .t-sheet .t-btn { display: flex; width: 100%; margin-top: 12px; height: 46px; font-size: 15px; }
+  :global(html.t-menu-open),
+  :global(html.t-menu-open body) { overflow: hidden; }
+  :global(html.t-menu-open #zsiq_float),
+  :global(html.t-menu-open #zsiq_chat_wrap),
+  :global(html.t-menu-open #zs-fl-tip) {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 
   @media (max-width: 1140px) {
     .t-navmid { display: none; }
     .t-burger { display: grid; }
+  }
+  @media (min-width: 1141px) {
+    .t-sheet { display: none !important; }
   }
   @media (max-width: 900px) {
     .t-desk { display: none; }
@@ -452,7 +503,30 @@ const sheetLinks = [
      sheet rather than squeezing the logo. */
   @media (max-width: 560px) {
     .t-demo-cta { display: none; }
-    .t-nav { padding-inline: 18px; }
+    .t-nav {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      padding-left: max(18px, env(safe-area-inset-left));
+      padding-right: max(18px, env(safe-area-inset-right));
+    }
+    .t-logo { justify-self: start; }
+    .t-word b span { display: block; }
+    .t-navr { gap: 4px; }
+    .t-iconbtn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-color: transparent;
+    }
+    .t-iconbtn::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .t-iconbtn svg { position: relative; }
     .t-sheet { padding-inline: 18px; }
     .t-word em { display: none; }
   }
@@ -464,12 +538,137 @@ const sheetLinks = [
 
     var burger = document.getElementById('t-burger');
     var sheet = document.getElementById('t-sheet');
+    var desktopBreakpoint = window.matchMedia('(min-width: 1141px)');
+
+    var setSheetOpen = function (open, restoreFocus) {
+      if (!burger || !sheet) return;
+      sheet.classList.toggle('open', open);
+      sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      root.classList.toggle('t-menu-open', open);
+      if (!open && restoreFocus) burger.focus();
+    };
+
     if (burger && sheet) {
       burger.addEventListener('click', function () {
-        var open = sheet.classList.toggle('open');
-        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setSheetOpen(burger.getAttribute('aria-expanded') !== 'true');
+      });
+      sheet.addEventListener('click', function (event) {
+        if (event.target.closest('a')) setSheetOpen(false);
       });
     }
+
+    var menuStates = [];
+    var closeDesktopMenus = function (except) {
+      menuStates.forEach(function (state) {
+        if (state.menu !== except) state.close();
+      });
+    };
+
+    document.querySelectorAll('.t-menu').forEach(function (menu) {
+      var trigger = menu.querySelector('.t-trigger');
+      var pinned = false;
+      var hovered = false;
+      var focusInside = false;
+      var forcedClosed = false;
+
+      var sync = function () {
+        var open = !forcedClosed && (pinned || hovered || focusInside);
+        menu.classList.toggle('open', open);
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+      var state = {
+        menu: menu,
+        close: function (suppressReopen) {
+          pinned = false;
+          hovered = false;
+          focusInside = false;
+          forcedClosed = Boolean(suppressReopen);
+          sync();
+        },
+      };
+      menuStates.push(state);
+
+      menu.addEventListener('pointerenter', function () {
+        if (forcedClosed) return;
+        closeDesktopMenus(menu);
+        hovered = true;
+        sync();
+      });
+      menu.addEventListener('pointerleave', function () {
+        hovered = false;
+        if (!focusInside) forcedClosed = false;
+        sync();
+      });
+      menu.addEventListener('focusin', function () {
+        closeDesktopMenus(menu);
+        focusInside = true;
+        sync();
+      });
+      menu.addEventListener('focusout', function () {
+        window.setTimeout(function () {
+          focusInside = menu.contains(document.activeElement);
+          if (!focusInside) forcedClosed = false;
+          sync();
+        }, 0);
+      });
+      trigger.addEventListener('click', function () {
+        if (pinned) {
+          pinned = false;
+          hovered = false;
+          forcedClosed = true;
+        } else {
+          closeDesktopMenus(menu);
+          pinned = true;
+          forcedClosed = false;
+        }
+        sync();
+      });
+      menu.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        event.preventDefault();
+        state.close(true);
+        trigger.focus();
+      });
+    });
+
+    document.addEventListener('pointerdown', function (event) {
+      if (!event.target.closest('.t-menu')) closeDesktopMenus();
+    });
+    document.addEventListener('keydown', function (event) {
+      var sheetOpen = burger && burger.getAttribute('aria-expanded') === 'true';
+      if (event.key === 'Escape' && sheetOpen) {
+        event.preventDefault();
+        setSheetOpen(false, true);
+      }
+      if (event.key === 'Tab' && sheetOpen) {
+        var focusable = Array.prototype.slice.call(
+          document.querySelectorAll('.t-header a[href], .t-header button:not([disabled])')
+        ).filter(function (item) {
+          return item.getClientRects().length > 0;
+        });
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    var handleBreakpointChange = function () {
+      if (desktopBreakpoint.matches) setSheetOpen(false);
+      else closeDesktopMenus();
+    };
+    desktopBreakpoint.addEventListener('change', handleBreakpointChange);
+    window.addEventListener('pageshow', function () {
+      setSheetOpen(false);
+      closeDesktopMenus();
+    });
 
     /* Theme: light → dark → auto. The attribute is the source of truth. */
     var themeBtn = document.getElementById('t-theme');

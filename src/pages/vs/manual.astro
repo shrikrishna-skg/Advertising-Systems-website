@@ -9,7 +9,15 @@ import { vsPageFaqs } from '../../data/page-faqs';
 
 const breadcrumbs = [{ name: 'vs Manual Management', href: '/vs/manual' }];
 
-const features = [
+type Availability = boolean | 'partial';
+
+interface ComparisonFeature {
+  name: string;
+  us: Availability;
+  them: Availability;
+}
+
+const features: ComparisonFeature[] = [
   { name: 'Cross-channel management', us: true, them: false },
   { name: 'AI-powered bidding', us: true, them: false },
   { name: 'Automated reporting', us: true, them: false },

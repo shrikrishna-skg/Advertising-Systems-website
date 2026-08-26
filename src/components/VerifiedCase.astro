@@ -130,21 +130,23 @@ const findings = [
 
     <div class="panel-box bench-box">
       <div class="ph"><h3>Measured against the platform's own lodging benchmarks</h3></div>
-      <table class="bench">
-        <thead>
-          <tr><th>Metric</th><th class="r">This property</th><th class="r">Benchmark</th><th class="r">Read</th></tr>
-        </thead>
-        <tbody>
-          {benchmarks.map(({ m, mine, bench, read, tone }) => (
-            <tr>
-              <td class="m">{m}</td>
-              <td class="r">{mine}</td>
-              <td class={bench === 'not published' ? 'r flat' : 'r'}>{bench}</td>
-              <td class={`r ${tone}`}>{read}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div class="table-scroll" role="region" aria-label="Lodging benchmark table; scroll horizontally for all columns" tabindex="0">
+        <table class="bench">
+          <thead>
+            <tr><th>Metric</th><th class="r">This property</th><th class="r">Benchmark</th><th class="r">Read</th></tr>
+          </thead>
+          <tbody>
+            {benchmarks.map(({ m, mine, bench, read, tone }) => (
+              <tr>
+                <td class="m">{m}</td>
+                <td class="r">{mine}</td>
+                <td class={bench === 'not published' ? 'r flat' : 'r'}>{bench}</td>
+                <td class={`r ${tone}`}>{read}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="log">
@@ -206,13 +208,24 @@ const findings = [
     display: grid; grid-template-columns: 1.55fr 1fr;
     gap: 18px; margin-bottom: 18px; align-items: start;
   }
-  /* Benchmark table: scroll inside the panel, never widen the page. */
-  .panel-box { overflow-x: auto; }
-  .panel-box table.bench { min-width: 520px; }
   .panel-box {
     border: 1px solid var(--border); border-radius: 4px;
     background: var(--surface-raised); overflow: hidden;
   }
+  /* Benchmark table: scroll inside the panel, never widen the page. */
+  .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-faint) var(--surface-alt);
+  }
+  .table-scroll:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+  .table-scroll::-webkit-scrollbar { height: 8px; }
+  .table-scroll::-webkit-scrollbar-track { background: var(--surface-alt); }
+  .table-scroll::-webkit-scrollbar-thumb { background: var(--text-faint); border-radius: 4px; }
+  .panel-box table.bench { min-width: 520px; }
   .bench-box { margin-bottom: 18px; }
   .panel-box .ph {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
