@@ -491,6 +491,11 @@ const sheetLinks = [
 
   @media (max-width: 1140px) {
     .t-navmid { display: none; }
+    /* navmid generates no box, so the right cluster would auto-place into the
+       centre `auto` column of 1fr/auto/1fr and float mid-bar. Two tracks:
+       logo takes the 1fr, the cluster lands flush right. */
+    .t-nav { grid-template-columns: minmax(0, 1fr) auto; }
+    .t-logo { justify-self: start; }
     .t-burger { display: grid; }
   }
   @media (min-width: 1141px) {
