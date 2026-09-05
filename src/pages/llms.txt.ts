@@ -8,7 +8,7 @@ export const GET: APIRoute = () => {
 Advertising Systems is an AI-powered advertising management platform that unifies Google Ads, Meta Ads, and OTA (Online Travel Agency) advertising campaigns into a single intelligent dashboard. It automates campaign optimization, provides real-time analytics, and uses AI to maximize return on ad spend (ROAS).
 
 ## Parent Company
-Multisystems (https://www.multisystems.ai) — builds AI operating systems for service-driven businesses. Advertising Systems is part of the Multisystems product family alongside Hotel Systems (https://hotelsystems.ai), Reputation Systems (https://reputationsystems.ai), Revenue Systems (https://www.revenuesystems.app), OTA Systems (https://otasystems.ai), and Image Systems (https://imagesystems.ai).
+Multisystems (https://multisystems.ai) — builds AI operating systems for service-driven businesses. Advertising Systems is part of the Multisystems product family alongside Hotel Systems (https://hotelsystems.ai), Reputation Systems (https://reputationsystems.ai), Revenue Systems (https://revenuesystems.app), OTA Systems (https://otasystems.ai), and Image Systems (https://imagesystems.ai).
 
 ## Core Features
 - Multi-Platform Campaign Management: Manage Google Ads, Meta Ads (Facebook/Instagram), and OTA campaigns from one dashboard
@@ -71,7 +71,7 @@ Business owners, marketing directors, and hotel/hospitality operators who manage
 - Website: https://advertisingsystems.ai
 - Demo: https://advertisingsystems.ai/book-demo
 - Email: contact@multisystems.ai
-- Parent: https://www.multisystems.ai
+- Parent: https://multisystems.ai
 `;
 
   return new Response(llmsTxt, {

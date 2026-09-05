@@ -13,7 +13,8 @@
     "indexnow": "node scripts/indexnow-ping.mjs",
     "check:input": "node scripts/check-input-sanitize.ts",
     "check:mail": "node scripts/check-mail-headers.ts",
-    "check": "npm run check:input && npm run check:mail"
+    "check": "npm run check:input && npm run check:mail",
+    "check:seo": "node scripts/check-seo.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.4",

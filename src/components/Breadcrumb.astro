@@ -8,7 +8,8 @@ interface Props {
   items: BreadcrumbItem[];
 }
 
-const { items } = Astro.props;
+// Home is rendered once below, even when callers include it.
+const items = Astro.props.items.filter((item) => item.href !== '/');
 if (items.length === 0) return null;
 ---
 

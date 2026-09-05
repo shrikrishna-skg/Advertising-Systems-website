@@ -56,6 +56,19 @@ jobs:
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN || 'placeholder' }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID || 'primary' }}
 
+      - name: SEO route checks
+        run: |
+          npm run dev -- --host 127.0.0.1 --port 4327 > /tmp/astro-seo.log 2>&1 &
+          seo_server_pid=$!
+          trap 'kill "$seo_server_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4327/sitemap.xml > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          npm run check:seo
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:

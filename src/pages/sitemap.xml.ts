@@ -19,7 +19,7 @@ const blogUrls = blogPosts.map((post) => ({
   changefreq: 'monthly',
   lastmod: toIsoDate(post.date),
 }));
-const decisionGuideUrls = getAllDecisionGuideSlugs().map((slug) => ({ url: `/decision-guides/${slug}`, priority: '0.8', changefreq: 'monthly' }));
+const decisionGuideUrls = getAllDecisionGuideSlugs().map((slug) => ({ url: `/decision-guides/${slug}`, priority: '0.8', changefreq: 'monthly', lastmod: slug === 'expedia-travelads' ? '2026-09-05' : SITE_UPDATED }));
 
 const pages = [
   // Core — highest value pages

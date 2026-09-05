@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { siteUrl, canonicalUrl } from '../data/seo';
 import PostHog from '../components/posthog.astro';
 import SiteControls from '../components/SiteControls.astro';
 
@@ -29,12 +30,8 @@ const {
   noindex = false,
 } = Astro.props;
 
-// www is canonical: the apex 307-redirects to www in production.
-const siteUrl = 'https://advertisingsystems.ai';
-
-// Build canonical URL for search engines: always absolute, no trailing slash (matches sitemap).
-const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
-const canonical = canonicalProp ?? `${siteUrl}${pathname}`;
+// Keep the shared canonical helper aligned with sitemap.xml and robots.txt.
+const canonical = canonicalProp ?? canonicalUrl(Astro.url.pathname);
 
 const robotsContent = noindex
   ? 'noindex, follow'
@@ -50,23 +47,12 @@ const organizationSchema = {
   description: 'AI-Powered Advertising Management Platform by Multisystems',
   parentOrganization: {
     '@type': 'Organization',
-    '@id': 'https://www.multisystems.ai/#organization',
+    '@id': 'https://multisystems.ai/#organization',
     name: 'Multisystems',
-    url: 'https://www.multisystems.ai',
+    url: 'https://multisystems.ai',
   },
-  // Family graph: the hub's product page for this brand plus every live
-  // sibling at its canonical host (reputation/hotel/ota/image serve on apex;
-  // revenue 308s apex → www). Mirrors revenuesystems.app, the one sibling
-  // that already enumerates us.
-  sameAs: [
-    'https://www.linkedin.com/company/multisystems-ai',
-    'https://www.multisystems.ai/products/advertising-systems',
-    'https://www.revenuesystems.app',
-    'https://reputationsystems.ai',
-    'https://hotelsystems.ai',
-    'https://otasystems.ai',
-    'https://imagesystems.ai',
-  ],
+  // sameAs identifies this product, not other products in the family.
+  sameAs: ['https://multisystems.ai/products/advertising-systems'],
 };
 
 // WebSite node: Google reads name/alternateName from here for the site name
@@ -106,7 +92,7 @@ const softwareSchema = {
   provider: {
     '@type': 'Organization',
     name: 'Multisystems',
-    url: 'https://www.multisystems.ai',
+    url: 'https://multisystems.ai',
   },
 };
 
@@ -115,7 +101,7 @@ const breadcrumbSchema = breadcrumbs.length > 0 ? {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-    ...breadcrumbs.map((crumb, i) => ({
+    ...breadcrumbs.filter((crumb) => crumb.href !== '/').map((crumb, i) => ({
       '@type': 'ListItem',
       position: i + 2,
       name: crumb.name,

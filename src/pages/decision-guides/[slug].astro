@@ -10,7 +10,7 @@ import { getDecisionGuide, getRelatedDecisionGuides } from '../../data/decision-
 const guide = getDecisionGuide(Astro.params.slug ?? '');
 
 if (!guide) {
-  return Astro.redirect('/404');
+  return Astro.rewrite('/404');
 }
 
 const breadcrumbs = [

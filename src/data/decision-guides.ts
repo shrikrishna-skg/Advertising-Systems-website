@@ -58,15 +58,15 @@ export interface DecisionGuide {
 export const decisionGuides: DecisionGuide[] = [
   {
     slug: 'expedia-travelads',
-    title: 'Expedia TravelAds: When Hotels Should Pay for Visibility',
+    title: 'Expedia TravelAds: Costs, Bidding, and ROAS for Hotels',
     shortTitle: 'Expedia TravelAds',
     eyebrow: 'OTA advertising guide',
     category: 'Expedia',
     excerpt:
-      'A hotel-first guide to Expedia TravelAds, paid placement, automated bidding, traveler intent targeting, and the reporting needed to prove incremental room nights.',
-    metaTitle: 'Expedia TravelAds Guide for Hotels | Advertising Systems',
+      'Expedia TravelAds is pay-per-click hotel advertising in Expedia Group search results. Learn how bids, daily budgets, traveler targeting, and booking reports work.',
+    metaTitle: 'Expedia TravelAds: Costs, Bidding & ROAS | Advertising Systems',
     metaDescription:
-      'Learn when hotels should use Expedia TravelAds, how paid visibility works, what changes near the top of Expedia search, and how Advertising Systems reports ROAS.',
+      'How Expedia TravelAds works for hotels: CPC costs, daily budgets, automated bidding, and ROAS reporting. Learn what to check before increasing spend.',
     primaryCta: { label: 'View Expedia Report', href: '/expedia-report' },
     secondaryCta: { label: 'Book a Demo', href: '/book-demo' },
     heroStats: [
@@ -77,9 +77,9 @@ export const decisionGuides: DecisionGuide[] = [
     sections: [
       {
         eyebrow: 'Why advertise there',
-        title: 'Expedia is a high-intent shelf, not a billboard',
+        title: 'How Expedia TravelAds works',
         intro:
-          'Travelers on Expedia and Hotels.com are already comparing dates, rooms, prices, and locations. The job of TravelAds is to buy visibility when that traveler is still deciding.',
+          'TravelAds adds paid hotel visibility while travelers compare dates, rooms, and prices. You pay for clicks and control your daily spend. Bids and targeting affect where that budget goes.',
         cards: [
           {
             label: 'Demand capture',
@@ -115,9 +115,9 @@ export const decisionGuides: DecisionGuide[] = [
           },
           {
             label: 'Bid strategy',
-            title: 'Automated bidding reacts to market movement',
+            title: 'CPC bids and daily budgets control spend',
             body:
-              'Expedia describes automated bidding as a way to dynamically adjust bids based on goals, budgets, and market fluctuations.',
+              'There is no single CPC that applies to every hotel. Set bids and a daily budget for your market; automated bidding can adjust bids as demand changes. Check actual spend before raising the budget.',
           },
           {
             label: 'Targeting',
@@ -149,7 +149,7 @@ export const decisionGuides: DecisionGuide[] = [
             label: 'After',
             title: 'Reporting decides whether the spend was worth it',
             body:
-              'The right question is not whether clicks increased. It is whether paid clicks created incremental room nights, revenue, and ROAS.',
+              'Compare ad spend with attributed room revenue, room nights, and ROAS. Attributed bookings alone do not prove incremental demand; evaluate comparable stay dates, cancellations, and net revenue before judging the return.',
           },
         ],
       },
