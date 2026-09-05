@@ -37,39 +37,39 @@ Ad spend is separate. All plans include unlimited campaigns, AI optimization, an
 Business owners, marketing directors, and hotel/hospitality operators who manage advertising across multiple platforms and want to maximize their return on ad spend with AI-powered automation.
 
 ## Pages
-- Homepage: https://www.advertisingsystems.ai/
-- Features Overview: https://www.advertisingsystems.ai/features
-- Campaign Intelligence: https://www.advertisingsystems.ai/features/campaign-management
-- AI Optimization Engine: https://www.advertisingsystems.ai/features/ai-optimization
-- Performance Analytics: https://www.advertisingsystems.ai/features/analytics
-- Automation Studio: https://www.advertisingsystems.ai/features/automation
-- Budget Allocator: https://www.advertisingsystems.ai/features/budget-intelligence
-- Pricing: https://www.advertisingsystems.ai/pricing
-- About: https://www.advertisingsystems.ai/about
-- Blog: https://www.advertisingsystems.ai/blog
-- Contact: https://www.advertisingsystems.ai/contact
-- Book a Demo: https://www.advertisingsystems.ai/book-demo
-- FAQ: https://www.advertisingsystems.ai/faq
-- Case Studies: https://www.advertisingsystems.ai/case-studies
-- Integrations: https://www.advertisingsystems.ai/integrations
-- Knowledge Base: https://www.advertisingsystems.ai/knowledge-base
-- Careers: https://www.advertisingsystems.ai/careers
-- Decision Guides: https://www.advertisingsystems.ai/decision-guides
-- Expedia TravelAds Guide: https://www.advertisingsystems.ai/decision-guides/expedia-travelads
-- Booking Sponsored Listings Guide: https://www.advertisingsystems.ai/decision-guides/booking-sponsored-listings
-- Expedia vs Booking Hotel Ads: https://www.advertisingsystems.ai/decision-guides/expedia-vs-booking-hotel-ads
-- OTA Low Occupancy Ads: https://www.advertisingsystems.ai/decision-guides/ota-ads-low-occupancy
-- vs Manual Management: https://www.advertisingsystems.ai/vs/manual
-- vs Google Ads Only: https://www.advertisingsystems.ai/vs/google-ads
-- vs Meta Ads Only: https://www.advertisingsystems.ai/vs/meta-ads
-- Privacy Policy: https://www.advertisingsystems.ai/privacy
-- Terms of Service: https://www.advertisingsystems.ai/terms
-- Cookie Policy: https://www.advertisingsystems.ai/cookies
-- Security: https://www.advertisingsystems.ai/security
+- Homepage: https://advertisingsystems.ai/
+- Features Overview: https://advertisingsystems.ai/features
+- Campaign Intelligence: https://advertisingsystems.ai/features/campaign-management
+- AI Optimization Engine: https://advertisingsystems.ai/features/ai-optimization
+- Performance Analytics: https://advertisingsystems.ai/features/analytics
+- Automation Studio: https://advertisingsystems.ai/features/automation
+- Budget Allocator: https://advertisingsystems.ai/features/budget-intelligence
+- Pricing: https://advertisingsystems.ai/pricing
+- About: https://advertisingsystems.ai/about
+- Blog: https://advertisingsystems.ai/blog
+- Contact: https://advertisingsystems.ai/contact
+- Book a Demo: https://advertisingsystems.ai/book-demo
+- FAQ: https://advertisingsystems.ai/faq
+- Case Studies: https://advertisingsystems.ai/case-studies
+- Integrations: https://advertisingsystems.ai/integrations
+- Knowledge Base: https://advertisingsystems.ai/knowledge-base
+- Careers: https://advertisingsystems.ai/careers
+- Decision Guides: https://advertisingsystems.ai/decision-guides
+- Expedia TravelAds Guide: https://advertisingsystems.ai/decision-guides/expedia-travelads
+- Booking Sponsored Listings Guide: https://advertisingsystems.ai/decision-guides/booking-sponsored-listings
+- Expedia vs Booking Hotel Ads: https://advertisingsystems.ai/decision-guides/expedia-vs-booking-hotel-ads
+- OTA Low Occupancy Ads: https://advertisingsystems.ai/decision-guides/ota-ads-low-occupancy
+- vs Manual Management: https://advertisingsystems.ai/vs/manual
+- vs Google Ads Only: https://advertisingsystems.ai/vs/google-ads
+- vs Meta Ads Only: https://advertisingsystems.ai/vs/meta-ads
+- Privacy Policy: https://advertisingsystems.ai/privacy
+- Terms of Service: https://advertisingsystems.ai/terms
+- Cookie Policy: https://advertisingsystems.ai/cookies
+- Security: https://advertisingsystems.ai/security
 
 ## Contact
-- Website: https://www.advertisingsystems.ai
-- Demo: https://www.advertisingsystems.ai/book-demo
+- Website: https://advertisingsystems.ai
+- Demo: https://advertisingsystems.ai/book-demo
 - Email: contact@multisystems.ai
 - Parent: https://www.multisystems.ai
 `;

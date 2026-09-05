@@ -32,7 +32,7 @@ function getLogoUrl(siteUrl: string) {
     url.searchParams.set('v', '20260601');
     return url.toString();
   } catch {
-    return 'https://www.advertisingsystems.ai/logos/advertisingsystems-logo.svg?v=20260601';
+    return 'https://advertisingsystems.ai/logos/advertisingsystems-logo.svg?v=20260601';
   }
 }
 

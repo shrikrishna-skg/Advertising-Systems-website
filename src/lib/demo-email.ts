@@ -36,7 +36,7 @@ type SendDemoEmailResult = {
 };
 
 function getSiteUrl() {
-  return (import.meta.env.PUBLIC_SITE_URL || 'https://www.advertisingsystems.ai').replace(/\/$/, '');
+  return (import.meta.env.PUBLIC_SITE_URL || 'https://advertisingsystems.ai').replace(/\/$/, '');
 }
 
 export function getDemoInternalNotifyEmail() {

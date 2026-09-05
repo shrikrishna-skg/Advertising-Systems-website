@@ -30,7 +30,7 @@ const {
 } = Astro.props;
 
 // www is canonical: the apex 307-redirects to www in production.
-const siteUrl = 'https://www.advertisingsystems.ai';
+const siteUrl = 'https://advertisingsystems.ai';
 
 // Build canonical URL for search engines: always absolute, no trailing slash (matches sitemap).
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';

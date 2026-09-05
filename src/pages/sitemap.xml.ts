@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { blogPosts } from '../data/blog-posts';
 import { getAllDecisionGuideSlugs } from '../data/decision-guides';
 
-const siteUrl = 'https://www.advertisingsystems.ai';
+import { siteUrl } from '../data/seo';
 
 // Honest lastmod: bump when site content materially changes. A per-request
 // `new Date()` teaches crawlers to ignore our lastmod entirely.

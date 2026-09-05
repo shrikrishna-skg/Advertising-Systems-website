@@ -41,7 +41,7 @@ const email = buildDemoInternalNotificationEmail({
   company,
   demoTimeText: 'Monday 10:00',
   durationMinutes: 30,
-  siteUrl: 'https://www.advertisingsystems.ai',
+  siteUrl: 'https://advertisingsystems.ai',
 });
 
 const transporter = nodemailer.createTransport({ streamTransport: true, buffer: true });

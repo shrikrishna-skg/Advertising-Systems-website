@@ -7,7 +7,7 @@ export const GET: APIRoute = () => {
     name: 'Shrikrishna',
     company: 'AdvertisingSystems Security Test',
     replyTo: 'contact@multisystems.ai',
-    siteUrl: 'https://www.advertisingsystems.ai',
+    siteUrl: 'https://advertisingsystems.ai',
   });
 
   return new Response(email.html, {

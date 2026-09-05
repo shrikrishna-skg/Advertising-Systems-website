@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-const siteUrl = 'https://www.advertisingsystems.ai';
+import { siteUrl } from '../data/seo';
 
 // Bot tokens verified Aug 2026 against OpenAI/Anthropic/Perplexity docs.
 // Search-citation bots gate whether we appear in AI answers (ChatGPT search,

@@ -52,7 +52,7 @@ function getMailConfig() {
     password,
     from,
     replyTo,
-    siteUrl: (import.meta.env.PUBLIC_SITE_URL || 'https://www.advertisingsystems.ai').replace(/\/$/, ''),
+    siteUrl: (import.meta.env.PUBLIC_SITE_URL || 'https://advertisingsystems.ai').replace(/\/$/, ''),
     secure: port === 465,
   };
 }
@@ -81,7 +81,7 @@ function getLogoUrl(siteUrl: string) {
     }
     return url.toString();
   } catch {
-    return 'https://www.advertisingsystems.ai/logos/advertisingsystems-logo.svg';
+    return 'https://advertisingsystems.ai/logos/advertisingsystems-logo.svg';
   }
 }
 

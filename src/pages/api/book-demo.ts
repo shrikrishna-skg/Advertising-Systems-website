@@ -180,7 +180,7 @@ async function createCalendarEvent(params: {
         },
         source: {
           title: 'Advertising Systems Website',
-          url: 'https://www.advertisingsystems.ai/book-demo',
+          url: 'https://advertisingsystems.ai/book-demo',
         },
         extendedProperties: {
           private: {

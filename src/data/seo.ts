@@ -13,7 +13,7 @@
  * - Semantic HTML: <main>, <article>, <section>, <nav>
  */
 
-export const siteUrl = 'https://www.advertisingsystems.ai';
+export const siteUrl = 'https://advertisingsystems.ai';
 
 export const defaultTitle = 'Advertising Systems — AI-Powered Advertising Management | by Multisystems';
 
