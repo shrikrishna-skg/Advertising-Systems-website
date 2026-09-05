@@ -38,7 +38,6 @@ const pages = [
   { url: '/features/budget-intelligence', priority: '0.8', changefreq: 'monthly' },
 
   // OTA sub-page
-  { url: '/ota-advertising/implementation', priority: '0.7', changefreq: 'monthly' },
 
   // Sample report (lead gen)
   { url: '/sample-report', priority: '0.8', changefreq: 'monthly' },
